@@ -38,23 +38,6 @@
                 'htmlOptions' => array('class' => 'pull-right'),
                 'items' => array(
                     array('label' => 'Register', 'url' => array('/site/register'), 'visible' => Yii::app()->user->isGuest),
-
-                   /* array('label' => 'Cabinet', 'url' => '#', 'visible' => !Yii::app()->user->isGuest, 'items' => array(
-                        array('label' => 'Users', 'url' => '#', 'visible' => Yii::app()->user->role == User::ROLE_ADMIN, 'items' =>
-                            array(
-                                array('label' => 'List', 'url' => array('/user/admin')),
-                                array('label' => 'Create new', 'url' => array('/user/create')),
-                            )
-                        ),
-                        array('label' => 'Albums', 'url' => '#', 'items' =>
-                            array(
-                                array('label' => 'List', 'url' => array('/album/admin')),
-                                array('label' => 'Create new', 'url' => array('/album/create')),
-                            )
-                        ),
-                        '---',
-                        array('label' => 'Logout (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
-                    )),*/
                 ),
             ),
         ),
