@@ -44,6 +44,11 @@ return array(
 			'allowAutoLogin'=>true,
 		),
 		
+	    'authManager' => array(
+	        'class' => 'PhpAuthManager',
+	        'defaultRoles' => array('guest'),
+	    ),
+
         'bootstrap' => array(
                 'class' => 'ext.yiibooster.components.Bootstrap',
                 'responsiveCss' => true,
