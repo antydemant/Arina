@@ -8,10 +8,16 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'My Web Application',
-
+	'theme' =>	'booster',
 	// preloading 'log' component
-	'preload'=>array('log'),
-
+	'preload'=>array(
+		//'log',
+		'booster',
+		),
+	//
+	'aliases' => array(
+		'bootstrap' => 'ext.yiibooster',
+		),
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',
@@ -21,14 +27,14 @@ return array(
 
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
-		/*
+		
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
-			'password'=>'Enter Your Password Here',
+			'password'=>'1',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
-		*/
+		
 	),
 
 	// application components
@@ -37,6 +43,12 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
+		
+        'bootstrap' => array(
+                'class' => 'ext.yiibooster.components.Bootstrap',
+                'responsiveCss' => true,
+                'coreCss' => false,
+        ),
 		// uncomment the following to enable URLs in path-format
 		/*
 		'urlManager'=>array(
