@@ -9,6 +9,18 @@
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 return array(
+    'student'=>array(
+        'type' => CAuthItem::TYPE_ROLE,
+        'description' => 'Student',
+        'bizRule' => null,
+        'data' => null,
+    ),
+    'teacher'=>array(
+        'type' => CAuthItem::TYPE_ROLE,
+        'description' => 'Teacher',
+        'bizRule' => null,
+        'data' => null,
+    ),
     'guest' => array(
         'type' => CAuthItem::TYPE_ROLE,
         'description' => 'Guest',
