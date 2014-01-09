@@ -9,6 +9,14 @@
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 return array(
+    // Студент
+/*
+    Має право перегладати:
+    - дані про себе
+    - розклад
+    - навчальний план
+    - пропуски (свої)
+    - оцінки (свої)*/
     'student'=>array(
         'type' => CAuthItem::TYPE_ROLE,
         'description' => 'Student',
