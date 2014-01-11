@@ -27,9 +27,9 @@
             'bootstrap.widgets.TbButtonGroup',
             array(
                 'buttons' => array(
-                    array('buttonType' => 'button', 'url' => array('/user/restore'), 'label' => Yii::t('base', 'Restore password'),'icon'=>'icon-repeat'),
+                    array('url' => array('/user/restore'), 'label' => Yii::t('base', 'Restore password'),'icon'=>'icon-repeat'),
                     array('buttonType' => 'submit', 'type' => 'primary', 'label' => Yii::t('base', 'Log in'), 'icon'=>'icon-ok'),
-                    array('url' => array('/site/index'), 'label' => Yii::t('base', 'Main page'),'icon'=>'icon-align-justify'),
+                    array('url' => array('/site/index'), 'label' => Yii::t('base', 'Home'),'icon'=>'icon-align-justify'),
                 ),
             )
         ); ?>

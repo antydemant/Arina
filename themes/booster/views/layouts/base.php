@@ -16,7 +16,8 @@
         array(
             'class' => 'bootstrap.widgets.TbMenu',
             'items' => array(
-                array('label' => 'Home', 'url' => array('/site/index')),
+                array('label' => Yii::t('base', 'Home'), 'url' => array('/site/index')),
+                array('label' => Yii::t('base', 'Schedule'), 'url' => array('/schedule/index')),
             ),
         ),
         array(
@@ -24,7 +25,7 @@
             'htmlOptions' => array('class' => 'pull-right'),
             'items' => array(
                 array('label' => 'Register', 'url' => array('/site/register'), 'visible' => Yii::app()->user->isGuest),
-                array('label' => 'Login', 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
+                array('label' => Yii::t('base', 'Log in'), 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
             ),
         ),
     ),
