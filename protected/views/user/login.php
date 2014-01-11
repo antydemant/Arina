@@ -7,13 +7,13 @@
  */
 ?>
 
-<div class="span4 offset4 text-center">
+<div class="span5 offset3 text-center">
     <h2><?php echo Yii::t('base', 'Log in') ?></h2>
 
     <?php $form = $this->beginWidget(
         'bootstrap.widgets.TbActiveForm',
         array(
-            'id' => 'user-form',
+            'id' => 'login-form',
             'type' => 'vertical',
             'htmlOptions' => array('class' => 'well'),
             'enableAjaxValidation' => true,
@@ -27,8 +27,9 @@
             'bootstrap.widgets.TbButtonGroup',
             array(
                 'buttons' => array(
-                    array('buttonType' => 'submit', 'type' => 'primary', 'label' => Yii::t('base', 'Log in'), 'icon'=>'icon-ok'),
                     array('buttonType' => 'button', 'url' => array('/user/restore'), 'label' => Yii::t('base', 'Restore password'),'icon'=>'icon-repeat'),
+                    array('buttonType' => 'submit', 'type' => 'primary', 'label' => Yii::t('base', 'Log in'), 'icon'=>'icon-ok'),
+                    array('url' => array('/site/index'), 'label' => Yii::t('base', 'Main page'),'icon'=>'icon-align-justify'),
                 ),
             )
         ); ?>
