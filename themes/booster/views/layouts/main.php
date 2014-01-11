@@ -19,86 +19,11 @@
 
 <body>
 
-<div class="container" id="page">
-    <?php $this->widget('bootstrap.widgets.TbNavbar', array(
-        'type' => 'inverse', // null or 'inverse'
-        'brand' => 'MWA',
-        'brandUrl' => array('/site/index'),
-        'fixed' => '',
-        'collapse' => true, // requires bootstrap-responsive.css
-        'items' => array(
-            array(
-                'class' => 'bootstrap.widgets.TbMenu',
-                'items' => array(
-                    array('label' => 'Home', 'url' => array('/site/index')),
-                ),
-            ),
-            array(
-                'class' => 'bootstrap.widgets.TbMenu',
-                'htmlOptions' => array('class' => 'pull-right'),
-                'items' => array(
-                    array('label' => 'Register', 'url' => array('/site/register'), 'visible' => Yii::app()->user->isGuest),
-                ),
-            ),
-        ),
-    )); ?>
-    <!-- mainmenu -->
-    <div class="container">
-        <?php if (isset($this->breadcrumbs)): ?>
-            <?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
-			'links' => $this->breadcrumbs,
-		)); ?><!-- breadcrumbs -->
-        <?php endif ?>
+<div class="container">
 
-        <?php echo $content; ?>
-        <hr/>
-        <div id="footer">
-            Copyright &copy; <?php echo date('Y'); ?> by Dmytro Karpovych<br/>
-            All Rights Reserved.<br/>
-            <?php echo Yii::powered(); ?>
-        </div>
-        <!-- footer -->
-    </div>
-</div>
-<!-- page -->
+    <?php echo $content; ?>
+
+</div><!-- container -->
+
 </body>
-<style>
-    #imgFull {
-        cursor: pointer;
-    }
-    #viewer {
-        position: fixed;
-        top:0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        z-index: 300;
-        display: none;
-        background: rgba(127,127,127,0.3);
-    }
-    #viewer img {
-        position: fixed;
-        border: 3px solid #ffffff;
-        border-radius: 3px;
-        top: 2%;
-        left: 20%;
-        cursor: pointer;
-        max-width: 800px;
-        max-height: 800px;
-        margin: 20px;
-    }
-    .error {
-        color: red;
-    }
-</style>
-<script>
-    $('img.img-polaroid').click(function() {
-            $("#bImg").attr("src",$(this).attr("src")).click( function(){$(this).parent().hide();});
-            $("#viewer").show();
-        }
-    )
-</script>
-<div id="viewer">
-    <img id="bImg"/>
-</div>
 </html>
