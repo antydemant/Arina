@@ -9,6 +9,7 @@
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 return array(
+
     // Студент
 /*
     Має право перегладати:
@@ -23,39 +24,29 @@ return array(
         'bizRule' => null,
         'data' => null,
     ),
+
+    //Викладач
+/*
+     Має право перегладати:
+    - дані про себе
+    - розклад
+    - оцінки (виставляти та переглядати)
+     */
     'teacher'=>array(
         'type' => CAuthItem::TYPE_ROLE,
         'description' => 'Teacher',
         'bizRule' => null,
         'data' => null,
     ),
+    'prefect' => array(
+        'type' => CAuthItem::TYPE_ROLE,
+        'description' => 'Prefect',
+        'bizRule' => null,
+        'data' => null
+    ),
     'guest' => array(
         'type' => CAuthItem::TYPE_ROLE,
         'description' => 'Guest',
-        'bizRule' => null,
-        'data' => null
-    ),
-    'private-person' => array(
-        'type' => CAuthItem::TYPE_ROLE,
-        'description' => 'Private person',
-        'bizRule' => null,
-        'data' => null
-    ),
-    'dealer' => array(
-        'type' => CAuthItem::TYPE_ROLE,
-        'description' => 'Dealer',
-        'bizRule' => null,
-        'data' => null
-    ),
-    'specialist' => array(
-        'type' => CAuthItem::TYPE_ROLE,
-        'description' => 'Specialist',
-        'bizRule' => null,
-        'data' => null
-    ),
-    'manager' => array(
-        'type' => CAuthItem::TYPE_ROLE,
-        'description' => 'Manager',
         'bizRule' => null,
         'data' => null
     ),

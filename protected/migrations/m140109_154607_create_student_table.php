@@ -20,7 +20,7 @@ class m140109_154607_create_student_table extends CDbMigration
 	public function down()
 	{
         $this->dropTable('student');
-        echo "success";
+        echo "success".PHP_EOL;
 	}
 
 	/*

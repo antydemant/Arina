@@ -11,7 +11,7 @@ class m140113_071349_table_marks extends CDbMigration
                 'student_id' => 'integer NOT NULL',
                 'load_id' => 'integer NOT NULL',
                 'date' => 'date NOT NULL',
-                'value' => 'byte NOT NULL',
+                'value' => 'integer(4) NOT NULL',
             )
         );
     }

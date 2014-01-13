@@ -5,8 +5,8 @@
 
 class m140105_182946_create_user_table extends CDbMigration
 {
-	public function up()
-	{
+    public function up()
+    {
         $this->createTable(
             'user',
             array(
@@ -15,21 +15,22 @@ class m140105_182946_create_user_table extends CDbMigration
                 'password' => 'string NOT NULL',
             )
         );
-	}
+    }
 
-	public function down()
-	{
-		$this->dropTable('user');
-	}
+    public function down()
+    {
+        $this->dropTable('user');
+        echo "success" . PHP_EOL;
+    }
 
-	/*
-	// Use safeUp/safeDown to do migration with transaction
-	public function safeUp()
-	{
-	}
+    /*
+    // Use safeUp/safeDown to do migration with transaction
+    public function safeUp()
+    {
+    }
 
-	public function safeDown()
-	{
-	}
-	*/
+    public function safeDown()
+    {
+    }
+    */
 }
