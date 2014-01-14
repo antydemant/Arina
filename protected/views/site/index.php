@@ -8,7 +8,7 @@ $this->pageTitle = Yii::app()->name;
 
 <p>Congratulations! You have successfully created your Yii application.</p>
 
-<p>You may changest the content of this pagest by modifying the following two files:</p>
+<p>You may changest the contentest of this pagest by modifying the following two files:</p>
 <ul>
     <li>View file: <code><?php echo __FILE__; ?></code></li>
     <li>Layout file: <code><?php echo $this->getLayoutFile('main'); ?></code></li>
