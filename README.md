@@ -1,5 +1,5 @@
-# Автоматизована система управління ХПК #
-Склад команди:
-1. Вінічук Сергій - [serhiyvinichuk](https://github.com/serhiyvinichuk) 
-2. Карпович Дмитро - [ZAYEC77](https://github.com/ZAYEC77)
-3. Назаров Кирило - [CyrusVorazan](https://github.com/CyrusVorazan)
+# РђС‚РІРѕРјР°С‚РёР·РѕРІР°РЅР° СЃРёСЃС‚РµРјР° СѓРїСЂР°РІР»С–РЅРЅСЏ РҐРџРљ #
+## РЎРєР»Р°Рґ РєРѕРјР°РЅРґРё: ##
+	1. Р’С–РЅС–С‡СѓРє РЎРµСЂРіС–Р№ - [serhiyvinichuk](https://github.com/serhiyvinichuk) 
+	2. РљР°СЂРїРѕРІРёС‡ Р”РјРёС‚СЂРѕ - [ZAYEC77](https://github.com/ZAYEC77)
+	3. РќР°Р·Р°СЂРѕРІ РљРёСЂРёР»Рѕ - [CyrusVorazan](https://github.com/CyrusVorazan)
