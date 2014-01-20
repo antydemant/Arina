@@ -27,7 +27,7 @@ class ActiveRecord extends CActiveRecord
         $criteria->params = array(':value' => $id);
 
         if ($this->exists($criteria) == 0) {
-            throw new CHttpException(404, 'No content for this key');
+            throw new CHttpException(404, Yii::t('error', 'No content for this key'));
         } else {
             return $this->find($criteria);
         }

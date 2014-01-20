@@ -18,6 +18,7 @@
             'items' => array(
                 array('label' => Yii::t('base', 'Home'), 'url' => array('/site/index')),
                 array('label' => Yii::t('base', 'Schedule'), 'url' => array('/schedule/index')),
+                array('label' => Yii::t('group', 'Groups'), 'url' => array('/group/index')),
             ),
         ),
         array(

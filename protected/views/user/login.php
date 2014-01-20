@@ -10,7 +10,8 @@
 <div class="span5 offset3 text-center">
     <h2><?php echo Yii::t('base', 'Log in') ?></h2>
 
-    <?php $form = $this->beginWidget(
+    <?php
+    $form = $this->beginWidget(
         'bootstrap.widgets.TbActiveForm',
         array(
             'id' => 'login-form',
