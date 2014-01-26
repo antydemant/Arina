@@ -4,6 +4,7 @@
  */
 return array(
     'Schedule' => "Розклад",
+    'Actions' => "Дії",
     'Create' => "Створити",
     'Send' => "Надіслати",
     'Home' => "Головна",

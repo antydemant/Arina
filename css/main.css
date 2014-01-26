@@ -10,3 +10,7 @@ span.error {
 body {
     background-color: #efefef;
 }
+
+header {
+    margin-bottom: 20px;
+}

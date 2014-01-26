@@ -18,7 +18,6 @@
             ),
         )
     )
-
     ?>
 </header>
 <?php $this->renderPartial('//tableList',
