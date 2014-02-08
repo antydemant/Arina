@@ -47,6 +47,7 @@ class Group extends ActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'curator' => array(self::BELONGS_TO, 'Teacher', 'curator_id'),
+        	'student' => array(self::HAS_MANY, 'Student', 'student_id'),
         );
     }
 

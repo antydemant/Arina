@@ -122,9 +122,21 @@ class StudentController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Student');
+		$dataProvider = Student::model()->getProvider(array(
+			'criteria' => array(
+	        	'with'=>array('group')
+			)
+		)
+		);
+		
+		$model=new Student('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Student']))
+			$model->attributes=$_GET['Student'];
+		
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
+			'model'=>$model,
 		));
 	}
 

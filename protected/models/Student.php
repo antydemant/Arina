@@ -18,7 +18,7 @@
  * @property string $address
  * @property string $characteristics
  */
-class Student extends CActiveRecord
+class Student extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -28,6 +28,11 @@ class Student extends CActiveRecord
 		return 'student';
 	}
 
+	public function getFullName()
+	{
+		return "$this->last_name $this->first_name $this->middle_name";
+	}
+	
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -59,6 +64,7 @@ class Student extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+				'group'=>array(self::BELONGS_TO, 'Group', 'group_id'),
 		);
 	}
 
