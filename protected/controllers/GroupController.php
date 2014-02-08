@@ -8,6 +8,7 @@
 class GroupController extends Controller
 {
     public $name = 'Groups';
+
     public function actionIndex()
     {
         $provider = Group::model()->getProvider();
@@ -18,16 +19,16 @@ class GroupController extends Controller
                 'header' => Yii::t('base', 'Actions'),
                 'htmlOptions' => array('nowrap' => 'nowrap'),
                 'class' => 'bootstrap.widgets.TbButtonColumn',
-                'template' => '{update}{delete}{view}{parent}{referrals}',
+                'template' => '{update}{delete}{view}{curator}{referrals}',
 
                 'updateButtonUrl' => 'Yii::app()->controller->createUrl("update", array("id"=>1))',
                 'deleteButtonUrl' => 'Yii::app()->controller->createUrl("delete", array("id"=>1))',
                 'viewButtonUrl' => 'Yii::app()->controller->createUrl("view", array("id"=>1))',
 
                 'buttons' => array(
-                    'parent' => array(
-                        'label' => 'Пригласитель',
-                        'url' => 'Yii::app()->createUrl("client/view", array("id"=>2))',
+                    'curator' => array(
+                        'label' => 'Перегляд інформації про куратора',
+                        'url' => 'Yii::app()->createUrl("teacher/view", array("id"=>$data->curator_id))',
                         'icon' => 'icon-user',
                         'visible' => 'true',
                     ),
