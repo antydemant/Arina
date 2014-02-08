@@ -5,13 +5,20 @@
  *
  * The followings are the available columns in table 'student':
  * @property integer $id
- * @property string $number
- * @property string $lastname
- * @property string $firstname
- * @property string $middlename
+ * @property string $code
+ * @property string $last_name
+ * @property string $first_name
+ * @property string $middle_name
  * @property integer $group_id
+ * @property string $phone_number
+ * @property string $mobile_number
+ * @property string $mother_name
+ * @property string $father_name
+ * @property string $gender
+ * @property string $address
+ * @property string $characteristics
  */
-class Student extends ActiveRecord
+class Student extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -29,13 +36,18 @@ class Student extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('number, lastname, firstname, middlename, group_id', 'required'),
+			array('code, last_name, first_name, middle_name, group_id', 'required'),
 			array('group_id', 'numerical', 'integerOnly'=>true),
-			array('number', 'length', 'max'=>12),
-			array('lastname, firstname, middlename', 'length', 'max'=>40),
+			array('code', 'length', 'max'=>12),
+			array('last_name, first_name, middle_name', 'length', 'max'=>40),
+			array('phone_number, mobile_number', 'length', 'max'=>15),
+			array('mother_name, father_name', 'length', 'max'=>60),
+			array('gender', 'length', 'max'=>10),
+			array('address', 'length', 'max'=>200),
+			array('characteristics', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, number, lastname, firstname, middlename, group_id', 'safe', 'on'=>'search'),
+			array('id, code, last_name, first_name, middle_name, group_id, phone_number, mobile_number, mother_name, father_name, gender, address, characteristics', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,11 +69,18 @@ class Student extends ActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'number' => 'Number',
-			'lastname' => 'Lastname',
-			'firstname' => 'Firstname',
-			'middlename' => 'Middlename',
+			'code' => 'Code',
+			'last_name' => 'Last Name',
+			'first_name' => 'First Name',
+			'middle_name' => 'Middle Name',
 			'group_id' => 'Group',
+			'phone_number' => 'Phone Number',
+			'mobile_number' => 'Mobile Number',
+			'mother_name' => 'Mother Name',
+			'father_name' => 'Father Name',
+			'gender' => 'Gender',
+			'address' => 'Address',
+			'characteristics' => 'Characteristics',
 		);
 	}
 
@@ -84,11 +103,18 @@ class Student extends ActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('number',$this->number,true);
-		$criteria->compare('lastname',$this->lastname,true);
-		$criteria->compare('firstname',$this->firstname,true);
-		$criteria->compare('middlename',$this->middlename,true);
+		$criteria->compare('code',$this->code,true);
+		$criteria->compare('last_name',$this->last_name,true);
+		$criteria->compare('first_name',$this->first_name,true);
+		$criteria->compare('middle_name',$this->middle_name,true);
 		$criteria->compare('group_id',$this->group_id);
+		$criteria->compare('phone_number',$this->phone_number,true);
+		$criteria->compare('mobile_number',$this->mobile_number,true);
+		$criteria->compare('mother_name',$this->mother_name,true);
+		$criteria->compare('father_name',$this->father_name,true);
+		$criteria->compare('gender',$this->gender,true);
+		$criteria->compare('address',$this->address,true);
+		$criteria->compare('characteristics',$this->characteristics,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
