@@ -4,6 +4,7 @@ class m140208_154455_data_fill extends CDbMigration
 {
 	public function up()
 	{
+		//Stuff
 		$this->insert("teacher", array(
 			'last_name' => 'Соломко',
 			'first_name' => 'Людмила',
