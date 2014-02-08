@@ -23,14 +23,4 @@ class m140208_145722_add_table_user extends CDbMigration
 		return false;
 	}
 
-	/*
-	// Use safeUp/safeDown to do migration with transaction
-	public function safeUp()
-	{
-	}
-
-	public function safeDown()
-	{
-	}
-	*/
 }

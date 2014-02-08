@@ -2,11 +2,6 @@
 /**
  * PhpAuthManager, extended from CPhpAuthManager
  *
- * @category  commons
- * @package   common.components
- * @author Vadim Poplavskiy <im@demetrodon.com>
- * @copyright 2013 WAO Group
- * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class PhpAuthManager extends CPhpAuthManager
 {
