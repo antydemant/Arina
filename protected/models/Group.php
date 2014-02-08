@@ -9,12 +9,14 @@
  * @property integer $speciality_id
  * @property integer $curator_id
  * @property integer $monitor_id
+ *
+ * @property Student[] $students
  */
 class Group extends ActiveRecord
 {
-    public function getStudentsDropDownList()
+    public function getStudentsList()
     {
-
+        return CHtml::listData($this->students, 'id', 'fullName');
     }
     /**
      * @return string the associated database table name
@@ -52,7 +54,7 @@ class Group extends ActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'curator' => array(self::BELONGS_TO, 'Teacher', 'curator_id'),
-        	'student' => array(self::HAS_MANY, 'Student', 'student_id'),
+        	'students' => array(self::HAS_MANY, 'Student', 'group_id'),
         );
     }
 
