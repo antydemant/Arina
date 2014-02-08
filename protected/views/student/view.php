@@ -43,6 +43,7 @@ $this->widget(
 				),
 		)
 );
+
 ?>
 
 <h1><?php echo Yii::t("student", "View Student") . ' ' . $model->id; ?></h1>
