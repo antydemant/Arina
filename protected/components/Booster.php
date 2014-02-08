@@ -1,9 +1,5 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: dimka
- * Date: 18.01.14
- * Time: 14:15
  */
 
 class Booster {
