@@ -6,9 +6,9 @@
 ?>
 <?php $this->beginContent('//layouts/main'); ?>
 
-<?php $this->widget('bootstrap.widgets.TbNavbar', array(
+<?php $this->widget(Booster::NAVIGATOR, array(
     //'type' => 'inverse', // null or 'inverse'
-    'brand' => 'HPK',
+    'brand' => 'KhPK',
     'brandUrl' => array('/site/index'),
     'fixed' => 'true',
     'collapse' => true, // requires bootstrap-responsive.css
