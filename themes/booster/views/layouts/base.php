@@ -21,11 +21,8 @@
                 array('label' => Yii::t('base', 'Groups'), 'url' => array('/group/index')),
                 array('label' => Yii::t('base', 'Teachers'), 'url' => array('/teacher/index')),
                 array('label' => Yii::t('base', 'Audiences'), 'url' => array('/audience/index')),
-<<<<<<< HEAD
                 array('label' => Yii::t('base', 'StudyPlan'), 'url' => array('/studyplan/index')),
-=======
             	array('label' => Yii::t('base', 'Students'), 'url' => array('/student/index')),
->>>>>>> 119ac403758af0a5f33b9c3e96ab3735eb412790
             ),
         ),
         array(
