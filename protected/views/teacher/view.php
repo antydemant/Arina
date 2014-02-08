@@ -18,7 +18,6 @@ array('label'=>'Manage Teacher','url'=>array('admin')),
 <?php $this->widget('bootstrap.widgets.TbDetailView',array(
 'data'=>$model,
 'attributes'=>array(
-		'id',
 		'last_name',
 		'first_name',
 		'middle_name',

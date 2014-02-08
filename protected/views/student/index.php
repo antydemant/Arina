@@ -44,16 +44,18 @@ $('.search-form form').submit(function(){
 </p>
 
 <?php echo CHtml::link(Yii::t("base", "Advanced Search"),'#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
+<div class="search-form" style="display:none;" >
 <?php $this->renderPartial('_search',array(
 	'model'=>$model,
 )); ?>
-</div><!-- search-form -->
-
+</div>
 <?php $this->widget(Booster::GRID_VIEW, array(
 	'id'=>'student-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
+    'template' => "{items}",
+    'responsiveTable' => true,
+    'type' => 'striped condensed bordered hover',
 	'columns'=>array(
 		'id',
 		'code',
@@ -69,20 +71,11 @@ $('.search-form form').submit(function(){
 			'htmlOptions' => array('nowrap' => 'nowrap'),
 			'class' => 'bootstrap.widgets.TbButtonColumn',
 			'template' => '{update}{delete}{view}',
-	
+
 			'updateButtonUrl' => 'Yii::app()->controller->createUrl("update", array("id"=>$data->id))',
 			'deleteButtonUrl' => 'Yii::app()->controller->createUrl("delete", array("id"=>$data->id))',
 			'viewButtonUrl' => 'Yii::app()->controller->createUrl("view", array("id"=>$data->id))',
 		),
-		/*
-		'phone_number',
-		'mobile_number',
-		'mother_name',
-		'father_name',
-		'gender',
-		'address',
-		'characteristics',
-		*/
 		array(
 			'class'=>'CButtonColumn',
 		),

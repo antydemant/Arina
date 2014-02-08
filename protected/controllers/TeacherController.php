@@ -23,6 +23,18 @@ class TeacherController extends Controller
         );
     }
 
+    public function actionView($id)
+    {
+        $model = Teacher::model()->loadContent($id);
+
+        $this->render(
+            'view',
+            array(
+                'model' => $model,
+            )
+        );
+    }
+
     public function actionCreate()
     {
         $model = new Teacher();
@@ -47,7 +59,7 @@ class TeacherController extends Controller
             'fullName',
             array(
                 'name' => 'cyclic_commission_id',
-                'value' =>'$data->cyclicCommission->title',
+                'value' => '$data->cyclicCommission->title',
             ),
             array(
                 'header' => Yii::t('base', 'Actions'),
