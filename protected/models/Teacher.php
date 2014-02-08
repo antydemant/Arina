@@ -50,6 +50,7 @@ class Teacher extends ActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
             'group' => array(self::HAS_ONE, 'Group', 'curator_id'),
+            'cyclicCommission' => array(self::BELONGS_TO, 'CyclicCommission', 'cyclic_commission_id'),
 		);
 	}
 

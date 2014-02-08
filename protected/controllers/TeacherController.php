@@ -5,6 +5,8 @@
  */
 class TeacherController extends Controller
 {
+    public $name = "Teachers";
+
     /**
      *
      */
@@ -43,6 +45,10 @@ class TeacherController extends Controller
     {
         return array(
             'fullName',
+            array(
+                'name' => 'cyclic_commission_id',
+                'value' =>'$data->cyclicCommission->title',
+            ),
             array(
                 'header' => Yii::t('base', 'Actions'),
                 'htmlOptions' => array('nowrap' => 'nowrap'),

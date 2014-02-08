@@ -13,7 +13,7 @@
           media="screen, projection"/>
     <![endif]-->
 
-    <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+    <title><?php echo CHtml::encode(Yii::app()->name . " - " . Yii::t('base', $this->name)); ?></title>
     <link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css">
 </head>
 
@@ -23,7 +23,8 @@
 
     <?php echo $content; ?>
 
-</div><!-- container -->
+</div>
+<!-- container -->
 
 </body>
 </html>

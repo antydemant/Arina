@@ -38,6 +38,12 @@ return array(
         'bizRule' => null,
         'data' => null,
     ),
+    //
+/*
+    Має право переглядати:
+    - свою групу
+
+     */
     'prefect' => array(
         'type' => CAuthItem::TYPE_ROLE,
         'description' => 'Prefect',

@@ -1,23 +1,26 @@
 <?php
 /**
+ *
+ * @var GroupController $this
+ * @var \Group $model
  * @var TbActiveForm $form
- * @var \Teacher $model
  */
 ?>
 <?php $form = $this->beginWidget(
     Booster::FORM,
     array(
-        'id' => 'teacher-form',
+        'id' => 'group-form',
         'type' => 'horizontal',
         'htmlOptions' => array('class' => 'well span10'),
         'enableAjaxValidation' => true,
     )
 );
 ?>
-<?php echo $form->textFieldRow($model, 'last_name'); ?>
-<?php echo $form->textFieldRow($model, 'first_name'); ?>
-<?php echo $form->textFieldRow($model, 'middle_name'); ?>
-<?php echo $form->dropDownListRow($model, 'cyclic_commission_id', CyclicCommission::model()->getListAll('title'), array('empty'=>'')); ?>
+<?php echo $form->textFieldRow($model, 'title'); ?>
+
+<?php echo $form->dropDownListRow($model, 'speciality_id', array()); ?>
+<?php echo $form->dropDownListRow($model, 'curator_id', array()); ?>
+<?php echo $form->dropDownListRow($model, 'monitor_id', array()); ?>
     <div class="form-actions">
         <?php $this->widget(
             'bootstrap.widgets.TbButton',

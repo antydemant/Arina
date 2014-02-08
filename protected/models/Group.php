@@ -28,7 +28,8 @@ class Group extends ActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('title, speciality_id, curator_id, monitor_id', 'required'),
+            array('title, speciality_id, curator_id', 'required'),
+            array('monitor_id', 'required', 'on' => 'update'),
             array('speciality_id, curator_id, monitor_id', 'numerical', 'integerOnly' => true),
             array('title', 'length', 'max' => 8),
             // The following rule is used by search().

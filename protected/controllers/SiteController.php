@@ -2,6 +2,7 @@
 
 class SiteController extends Controller
 {
+    public  $name = 'Home';
 	/**
 	 * Declares class-based actions.
 	 */

@@ -17,6 +17,7 @@ $this->breadcrumbs = array(
             array(
                 'buttons' => array(
                     array(
+                        'type' => 'primary',
                         'label' => Yii::t('teacher', 'Add new teacher'),
                         'url' => $this->createUrl('teacher/create'),
                     ),

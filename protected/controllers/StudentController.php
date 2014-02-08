@@ -5,6 +5,7 @@
  */
 class StudentController extends Controller
 {
+    public $name = 'Students';
     public function actionIndex()
     {
         $provider = Student::model()->getProvider();

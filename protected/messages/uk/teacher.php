@@ -12,4 +12,5 @@ return array(
     'Teacher list' => "Список викладачів",
     'Add new teacher' => "Додати нового викладача",
     'Sign up new teacher' => "Реєстрація нового викладача",
+    'Cyclic Commission' => "Циклова комісія",
 );

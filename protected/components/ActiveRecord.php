@@ -47,5 +47,23 @@ class ActiveRecord extends CActiveRecord
             return new CActiveDataProvider($this, $criteria);
         }
     }
-    
+
+    /**
+     * Get list all records to model
+     *
+     * @param string $key key to array
+     * @param string $value value to array
+     * @return array ListData to dropDownListRow
+     */
+    public static function getListAll($key, $value = null)
+    {
+        if (is_null($value)) {
+            $value = $key;
+        }
+        $criteria = new CDbCriteria();
+        $criteria->select = array('id', $value);
+        return CHtml::listData(static::model()->findAll($criteria), $key, $value);
+    }
+
+
 }

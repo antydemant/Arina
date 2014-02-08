@@ -7,12 +7,13 @@
 
 class GroupController extends Controller
 {
+    public $name = 'Groups';
     public function actionIndex()
     {
         $provider = Group::model()->getProvider();
         $columns = array(
-            array('name'=>'title'),
-            array('name'=>'curator','value'=>'$data->curator->fullName'),
+            array('name' => 'title'),
+            array('name' => 'curator', 'value' => '$data->curator->fullName'),
             array(
                 'header' => Yii::t('base', 'Actions'),
                 'htmlOptions' => array('nowrap' => 'nowrap'),
@@ -46,5 +47,19 @@ class GroupController extends Controller
                 'columns' => $columns,
             )
         );
+    }
+
+    public function actionCreate()
+    {
+        $model = new Group();
+
+        if (isset($_POST['Group'])) {
+            $model->attributes = $_POST['Group'];
+            if ($model->save()) {
+                $this->redirect(array('group/index'));
+            }
+        }
+
+        $this->render('create', array('model' => $model));
     }
 }

@@ -3,7 +3,9 @@
  *
  */
 return array(
+    'Groups' => 'Групи',
     'Schedule' => "Розклад",
+    'Teachers' => "Викладачі",
     'Actions' => "Дії",
     'Create' => "Створити",
     'Send' => "Надіслати",
