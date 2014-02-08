@@ -35,7 +35,7 @@ return CMap::mergeArray(
                 // enable cookie-based authentication
                 'class' => 'WebUser',
                 'allowAutoLogin' => true,
-                'loginUrl' => 'user/login',
+                'loginUrl' => '/user/login',
             ),
 
             'authManager' => array(
