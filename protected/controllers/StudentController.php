@@ -63,7 +63,7 @@ class StudentController extends Controller
     {
         $model = new Student;
 
-        $this->performAjaxValidation('student-form', $model);
+        $this->ajaxValidation('student-form', $model);
 
         if (isset($_POST['Student'])) {
             $model->attributes = $_POST['Student'];
@@ -85,7 +85,7 @@ class StudentController extends Controller
     {
         $model = Student::model()->loadContent($id);
 
-        $this->performAjaxValidation('student-form', $model);
+        $this->ajaxValidation('student-form', $model);
 
         if (isset($_POST['Student'])) {
             $model->attributes = $_POST['Student'];
