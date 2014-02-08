@@ -3,19 +3,36 @@
 /* @var $model Student */
 
 $this->breadcrumbs=array(
-	'Students'=>array('index'),
+	Yii::t("student", "Students")=>array('index'),
 	$model->id=>array('view','id'=>$model->id),
-	'Update',
+	Yii::t("base", "Update"),
 );
 
-$this->menu=array(
-	array('label'=>'List Student', 'url'=>array('index')),
-	array('label'=>'Create Student', 'url'=>array('create')),
-	array('label'=>'View Student', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Student', 'url'=>array('admin')),
+$this->widget(
+		Booster::BUTTON_GROUP,
+		array(
+				'buttons' => array(
+						array(
+								'type'=> Booster::TYPE_PRIMARY,
+								'label' => Yii::t('student', 'Students list'),
+								'url' => $this->createUrl('index'),
+						),
+						array(
+								'type'=> Booster::TYPE_PRIMARY,
+								'label' => Yii::t('student', 'Create Student'),
+								'url' => $this->createUrl('create'),
+						),
+						array(
+								'type'=> Booster::TYPE_PRIMARY,
+								'label' => Yii::t('student', 'View Student'),
+								'url' => $this->createUrl('view', array('id'=>$model->id)),
+						),
+				),
+		)
 );
+
 ?>
 
-<h1>Update Student <?php echo $model->id; ?></h1>
+<h1><?php echo Yii::t('student', 'Update Student') . ' ' . $model->id; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

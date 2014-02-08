@@ -10,6 +10,7 @@ return array(
     'Teachers' => "Викладачі",
     'Actions' => "Дії",
     'Create' => "Створити",
+	'Update' => 'Змінити',
     'Send' => "Надіслати",
     'Home' => "Головна",
     'Incorrect username or password' => "Неправильне ім'я користувача або пароль",
