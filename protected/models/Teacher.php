@@ -12,7 +12,7 @@
  */
 class Teacher extends ActiveRecord
 {
-    public static function getDropDownList()
+    public static function getList()
     {
         return CHtml::listData(self::model()->findAll(), 'id', 'fullName');
     }
