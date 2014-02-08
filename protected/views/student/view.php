@@ -3,7 +3,7 @@
 /* @var $model Student */
 
 $this->breadcrumbs=array(
-	'Students'=>array('index'),
+	Yii::t("student", "Students")=>array('index'),
 	$model->id,
 );
 
