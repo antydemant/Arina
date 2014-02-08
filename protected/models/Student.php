@@ -18,7 +18,7 @@
  * @property string $address
  * @property string $characteristics
  */
-class Student extends CActiveRecord
+class Student extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
@@ -28,6 +28,11 @@ class Student extends CActiveRecord
 		return 'student';
 	}
 
+	public function getFullName()
+	{
+		return "$this->last_name $this->first_name $this->middle_name";
+	}
+	
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -59,6 +64,7 @@ class Student extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+				'group'=>array(self::BELONGS_TO, 'Group', 'group_id'),
 		);
 	}
 
@@ -68,19 +74,19 @@ class Student extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'code' => 'Code',
-			'last_name' => 'Last Name',
-			'first_name' => 'First Name',
-			'middle_name' => 'Middle Name',
-			'group_id' => 'Group',
-			'phone_number' => 'Phone Number',
-			'mobile_number' => 'Mobile Number',
-			'mother_name' => 'Mother Name',
-			'father_name' => 'Father Name',
-			'gender' => 'Gender',
-			'address' => 'Address',
-			'characteristics' => 'Characteristics',
+			'id' => Yii::t('student', 'ID'),
+			'code' => Yii::t('student', 'Code'),
+			'last_name' => Yii::t('student', 'Last Name'),
+			'first_name' => Yii::t('student', 'First Name'),
+			'middle_name' => Yii::t('student', 'Middle Name'),
+			'group_id' => Yii::t('student', 'Group'),
+			'phone_number' => Yii::t('student', 'Phone Number'),
+			'mobile_number' => Yii::t('student', 'Mobile Number'),
+			'mother_name' => Yii::t('student', 'Mother Name'),
+			'father_name' => Yii::t('student', 'Father Name'),
+			'gender' => Yii::t('student', 'Gender'),
+			'address' => Yii::t('student', 'Address'),
+			'characteristics' => Yii::t('student', 'Characteristics'),
 		);
 	}
 

@@ -33,11 +33,11 @@ class StudentController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				'actions'=>array('create','update'),
-				'users'=>array('@'),
+				'users'=>array('*'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
+				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -122,9 +122,21 @@ class StudentController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Student');
+		$dataProvider = Student::model()->getProvider(array(
+			'criteria' => array(
+	        	'with'=>array('group')
+			)
+		)
+		);
+		
+		$model=new Student('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Student']))
+			$model->attributes=$_GET['Student'];
+		
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
+			'model'=>$model,
 		));
 	}
 
