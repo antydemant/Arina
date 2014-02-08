@@ -20,4 +20,8 @@ return array(
 	'Address' => 'Адреса',
 	'Characteristics' => 'Характеристика',
 	'Create Student' => 'Додати нового студента',
+	'View Student' => 'Переглянути дані про студента',
+	'Update Student' => 'Змінити дані про студента',
+	'Delete Student' => 'Видалити студента',
+	'Do you want to delete this item?' => 'Ви дійсно хочете видалити цього студента?',
 );

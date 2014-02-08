@@ -3,8 +3,8 @@
 /* @var $model Student */
 
 $this->breadcrumbs=array(
-	'Students'=>array('index'),
-	'Create',
+	Yii::t("student", "Students")=>array('index'),
+	Yii::t("base", "Create"),
 );
 
 $this->widget(
@@ -22,6 +22,6 @@ $this->widget(
 
 ?>
 
-<h1>Create Student</h1>
+<h1><?php echo Yii::t("student", "Create Student")?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
