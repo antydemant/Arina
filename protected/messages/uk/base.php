@@ -4,6 +4,7 @@
  */
 return array(
     'Groups' => 'Групи',
+    'Audiences' => 'Аудиторії',
     'Schedule' => "Розклад",
     'Teachers' => "Викладачі",
     'Actions' => "Дії",

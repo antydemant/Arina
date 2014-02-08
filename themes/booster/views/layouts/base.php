@@ -20,6 +20,7 @@
                 array('label' => Yii::t('base', 'Schedule'), 'url' => array('/schedule/index')),
                 array('label' => Yii::t('base', 'Groups'), 'url' => array('/group/index')),
                 array('label' => Yii::t('base', 'Teachers'), 'url' => array('/teacher/index')),
+                array('label' => Yii::t('base', 'Audiences'), 'url' => array('/audience/index')),
             ),
         ),
         array(
