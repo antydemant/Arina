@@ -2,16 +2,16 @@
 /**
  *
  * @var GroupController $this
- * @var \Group $model
+ * @var Group $model
  */
 
 $this->breadcrumbs = array(
     Yii::t('group', 'Groups') => array('index'),
-    Yii::t('group', 'New group creating'),
+    Yii::t('group', 'Update group') . " {$model->title}",
 );
 ?>
 <header>
-    <h2><?php echo Yii::t('group', 'New group creating'); ?></h2>
+    <h2><?php echo Yii::t('group', 'Update group') . " {$model->title}"; ?></h2>
 </header>
 <?php
 $this->renderPartial('_form', array('model' => $model));

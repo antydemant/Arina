@@ -7,6 +7,8 @@ class Booster {
     const BUTTON_GROUP = "bootstrap.widgets.TbButtonGroup";
     const FORM = "bootstrap.widgets.TbActiveForm";
     const NAVIGATOR = "bootstrap.widgets.TbNavbar";
+    const DETAIL_VIEW = 'bootstrap.widgets.TbDetailView'    ;
+
 
     /**
      * Control's types

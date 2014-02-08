@@ -18,8 +18,8 @@
 ?>
 <?php echo $form->textFieldRow($model, 'title'); ?>
 
-<?php echo $form->dropDownListRow($model, 'speciality_id', array()); ?>
-<?php echo $form->dropDownListRow($model, 'curator_id', array()); ?>
+<?php echo $form->dropDownListRow($model, 'speciality_id', array(), array('empty'=>Yii::t('group', 'Select speciality'))); ?>
+<?php echo $form->dropDownListRow($model, 'curator_id', Teacher::getDropDownList(), array('empty'=>Yii::t('group', 'Select curator'))); ?>
 <?php echo $form->dropDownListRow($model, 'monitor_id', array()); ?>
     <div class="form-actions">
         <?php $this->widget(

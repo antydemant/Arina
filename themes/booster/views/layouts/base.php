@@ -18,7 +18,7 @@
             'items' => array(
                 array('label' => Yii::t('base', 'Home'), 'url' => array('/site/index')),
                 array('label' => Yii::t('base', 'Schedule'), 'url' => array('/schedule/index')),
-                array('label' => Yii::t('base', 'Groups'), 'url' => array('/group/index')),
+                array('label' => Yii::t('base', 'Groups'), 'url' => array('/group')),
                 array('label' => Yii::t('base', 'Teachers'), 'url' => array('/teacher/index')),
                 array('label' => Yii::t('base', 'Audiences'), 'url' => array('/audience/index')),
                 array('label' => Yii::t('base', 'StudyPlan'), 'url' => array('/studyPlan/index')),

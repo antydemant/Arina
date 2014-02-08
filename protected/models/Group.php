@@ -12,6 +12,10 @@
  */
 class Group extends ActiveRecord
 {
+    public function getStudentsDropDownList()
+    {
+
+    }
     /**
      * @return string the associated database table name
      */
@@ -32,6 +36,7 @@ class Group extends ActiveRecord
             array('monitor_id', 'required', 'on' => 'update'),
             array('speciality_id, curator_id, monitor_id', 'numerical', 'integerOnly' => true),
             array('title', 'length', 'max' => 8),
+            array('title', 'unique'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             //array('id, title, speciality_id, curator_id, monitor_id', 'safe', 'on'=>'search'),
