@@ -2,14 +2,6 @@
 /**
  * Permission of standard CWebUser.
  *
- * It is added:
- * - Receiving username of the user from the table in base - getUsername ();
- *
- * @category  common
- * @package   common.components
- * @author Vadim Poplavskiy <im@demetrodon.com>
- * @copyright 2013 WAO Group
- * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class WebUser extends CWebUser
 {
@@ -25,18 +17,6 @@ class WebUser extends CWebUser
         return BaseUser::ROLE_GUEST;
     }
 
-    public function getPriceType()
-    {
-        switch ($this->getRole()) {
-            case BaseUser::ROLE_GUEST:
-            case BaseUser::ROLE_PP:
-                return 0;
-            case BaseUser::ROLE_DEALER:
-                return 1;
-            case BaseUser::ROLE_SPECIALIST:
-                return 2;
-        }
-    }
     /**
      * Receiving username of the current user.
      *
@@ -47,6 +27,11 @@ class WebUser extends CWebUser
         if ($user = $this->getModel()) {
             return $user->username;
         }
+    }
+
+    public function getMainMenu()
+    {
+
     }
 
     /**

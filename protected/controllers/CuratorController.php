@@ -12,7 +12,8 @@ class CuratorController extends Controller
         return array(
             array(
                 'allow',
-                'role' => array('curator')
+                'role' => array('curator'),
+                'expression' => '',
             ),
             array(
                 'deny',
