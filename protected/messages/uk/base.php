@@ -18,4 +18,5 @@ return array(
     'Restore password' => "Відновити пароль",
     'Restoring of password' => "Відновлення пароля",
     'Remember me next time' => "Запам'ятати мене наступного разу",
+    'StudyPlan' => 'Навчальний план',
 );
