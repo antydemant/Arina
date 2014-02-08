@@ -1,7 +1,7 @@
 <?php
 /**
  * Permission of standard CWebUser.
- *
+ *..
  */
 class WebUser extends CWebUser
 {
