@@ -6,9 +6,9 @@
 ?>
 <?php $this->beginContent('//layouts/main'); ?>
 
-<?php $this->widget('bootstrap.widgets.TbNavbar', array(
-    //'type' => 'inverse', // null or 'inverse'
-    'brand' => 'HPK',
+<?php $this->widget(Booster::NAVIGATOR, array(
+    //'type' => 'inverse', // null or 'inverse' //comment
+    'brand' => 'KhPK',
     'brandUrl' => array('/site/index'),
     'fixed' => 'true',
     'collapse' => true, // requires bootstrap-responsive.css
@@ -21,7 +21,11 @@
                 array('label' => Yii::t('base', 'Groups'), 'url' => array('/group/index')),
                 array('label' => Yii::t('base', 'Teachers'), 'url' => array('/teacher/index')),
                 array('label' => Yii::t('base', 'Audiences'), 'url' => array('/audience/index')),
+<<<<<<< HEAD
                 array('label' => Yii::t('base', 'StudyPlan'), 'url' => array('/studyplan/index')),
+=======
+            	array('label' => Yii::t('base', 'Students'), 'url' => array('/student/index')),
+>>>>>>> 119ac403758af0a5f33b9c3e96ab3735eb412790
             ),
         ),
         array(
