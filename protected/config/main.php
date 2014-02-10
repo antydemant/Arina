@@ -38,10 +38,10 @@ return CMap::mergeArray(
                 'loginUrl' => '/user/login',
             ),
 
-            'authManager' => array(
+       /*     'authManager' => array(
                 'class' => 'PhpAuthManager',
                 'defaultRoles' => array('guest'),
-            ),
+            ),*/
 
             'bootstrap' => array(
                 'class' => 'ext.yiibooster.components.Bootstrap',

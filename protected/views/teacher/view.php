@@ -1,7 +1,12 @@
 <?php
+/**
+ *
+ * @var TeacherController $this
+ * @var Teacher $model
+ */
 $this->breadcrumbs=array(
-	'Teachers'=>array('index'),
-	$model->id,
+    Yii::t('teacher', 'Teachers')=>array('index'),
+	$model->getFullName(),
 );
 
 $this->menu=array(

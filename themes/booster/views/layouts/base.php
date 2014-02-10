@@ -50,6 +50,12 @@
             Copyright &copy; <?php echo date('Y'); ?> by three amigos<br/>
             All Rights Reserved.<br/>
             <?php echo Yii::powered(); ?>
+            <?php if (YII_DEBUG): ?>
+                <br/>
+                Час виконання: <?php echo sprintf('%0.5f',Yii::getLogger()->getExecutionTime())?> с.
+                <br/>
+                Використано пам’яті: <?php echo round(memory_get_peak_usage()/(1024*1024),2)."MB"?>
+            <?php endif; ?>
         </footer>
         <!-- footer -->
     </div>

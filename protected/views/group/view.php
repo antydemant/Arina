@@ -20,7 +20,7 @@ $this->breadcrumbs = array(
                         'type' => Booster::TYPE_PRIMARY,
                         'label' => Yii::t('student', 'Students list'),
                         'icon' => 'icon-list',
-                        'url' => 'Yii::app()->createUrl("student/group", array("id"=>$data->id))',
+                        'url' => Yii::app()->createUrl("student/group", array("id"=>$model->id)),
                     ),
                     array(
                         'type' => Booster::TYPE_PRIMARY,

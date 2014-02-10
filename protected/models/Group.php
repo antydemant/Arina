@@ -11,6 +11,7 @@
  * @property integer $monitor_id
  *
  * @property Student[] $students
+ * @property Speciality $speciality
  */
 class Group extends ActiveRecord
 {
@@ -53,6 +54,7 @@ class Group extends ActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'speciality'=>array(self::BELONGS_TO, 'Speciality', 'speciality_id'),
             'curator' => array(self::BELONGS_TO, 'Teacher', 'curator_id'),
         	'students' => array(self::HAS_MANY, 'Student', 'group_id'),
         );

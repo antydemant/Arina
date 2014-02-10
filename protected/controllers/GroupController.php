@@ -7,6 +7,7 @@
 
 class GroupController extends Controller
 {
+    public $name = "Groups";
     /**
      *
      */

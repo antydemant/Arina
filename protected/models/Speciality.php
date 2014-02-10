@@ -1,40 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "user".
+ * This is the model class for table "speciality".
  *
- * The followings are the available columns in table 'user':
+ * The followings are the available columns in table 'speciality':
  * @property integer $id
- * @property string $username
- * @property string $password
- * @property string $email
- * @property integer $role
- * @property integer $identity_id
+ * @property string $title
+ * @property integer $department_id
+ * @property string $number
+ * @property string $accreditation_date
  */
-class User extends ActiveRecord
+class Speciality extends ActiveRecord
 {
-    const ROLE_GUEST = 0;
-    const ROLE_ADMIN = 1;
-    const ROLE_TEACHER = 2;
-    const ROLE_STUDENT = 3;
-    const ROLE_PREFECT = 4;
-    const ROLE_CURATOR = 5;
-    const ROLE_DEPARTMENT_HEAD = 6;
-    const ROLE_ROOT = 7;
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'user';
+		return 'speciality';
 	}
 
-    public static function getRoleList()
-    {
-        return array(
-            self::ROLE_GUEST => Yii::t('user', 'Guest'),
-        );
-    }
 	/**
 	 * @return array validation rules for model attributes.
 	 */
@@ -43,14 +28,13 @@ class User extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email', 'required'),
-			array('role, identity_id', 'numerical', 'integerOnly'=>true),
-			array('username, password, email', 'length', 'max'=>255),
-            array('username, email', 'unique'),
-            array('email', 'email'),
+			array('title, department_id, number, accreditation_date', 'required'),
+			array('department_id', 'numerical', 'integerOnly'=>true),
+			array('title', 'length', 'max'=>40),
+			array('number', 'length', 'max'=>15),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, username, password, email, role, identity_id', 'safe', 'on'=>'search'),
+			array('id, title, department_id, number, accreditation_date', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,11 +56,10 @@ class User extends ActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'username' => 'Username',
-			'password' => 'Password',
-			'email' => 'Email',
-			'role' => 'Role',
-			'identity_id' => 'Identity',
+			'title' => 'Title',
+			'department_id' => 'Department',
+			'number' => 'Number',
+			'accreditation_date' => 'Accreditation Date',
 		);
 	}
 
@@ -99,11 +82,10 @@ class User extends ActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('username',$this->username,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('role',$this->role);
-		$criteria->compare('identity_id',$this->identity_id);
+		$criteria->compare('title',$this->title,true);
+		$criteria->compare('department_id',$this->department_id);
+		$criteria->compare('number',$this->number,true);
+		$criteria->compare('accreditation_date',$this->accreditation_date,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -114,7 +96,7 @@ class User extends ActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return User the static model class
+	 * @return Speciality the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

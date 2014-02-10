@@ -6,7 +6,11 @@ return array_merge(
 	array(
 		'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 		'name'=>'My Console Application',
-
+        'import' => array(
+            'application.models.*',
+            'application.components.*',
+            'application.extensions.*',
+        ),
 		// preloading 'log' component
 		'preload'=>array('log'),
 
@@ -24,4 +28,4 @@ return array_merge(
 		),
 	),
 	require(__DIR__ . '/env/dev.php')
-);?>
+);
