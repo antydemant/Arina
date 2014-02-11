@@ -4,6 +4,7 @@
  * Localization file uk/student
  */
 return array(
+    'Students of group' => 'Студенти групи',
     'Students list' => "Список студентів",
 	'Students' => 'Студенти',
 	'ID' => 'Код студента',

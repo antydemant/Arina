@@ -11,7 +11,7 @@
  * The followings are the available model relations:
  * @property StudyPlanInfo[] $studyPlanInfos
  */
-class StudyPlan extends CActiveRecord
+class StudyPlan extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name

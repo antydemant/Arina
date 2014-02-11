@@ -29,7 +29,6 @@
             'class' => 'bootstrap.widgets.TbMenu',
             'htmlOptions' => array('class' => 'pull-right'),
             'items' => array(
-                array('label' => 'Register', 'url' => array('/site/register'), 'visible' => Yii::app()->user->isGuest),
                 array('label' => Yii::t('base', 'Log in'), 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
             ),
         ),

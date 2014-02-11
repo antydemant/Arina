@@ -26,6 +26,13 @@ class UserController extends Controller
 
         $this->ajaxValidation('login-form', $model);
 
+        if (isset($_POST['ELoginForm'])) {
+            $model->attributes = $_POST['ELoginForm'];
+            if ($model->validate() && $model->login()) {
+
+            }
+        }
+
         $this->render(
             'login',
             array('model' => $model,)

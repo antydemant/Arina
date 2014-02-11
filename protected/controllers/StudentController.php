@@ -26,7 +26,7 @@ class StudentController extends Controller
      */
     public function accessRules()
     {
-        return array(/*		array('allow',  // allow all users to perform 'index' and 'view' actions
+        return array( /*		array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view'),
 				'users'=>array('*'),
 			),
@@ -147,6 +147,15 @@ class StudentController extends Controller
 
     public function actionGroup($id)
     {
-
+        $group = Group::model()->findByPk($id);
+        $groupName = $group->title;
+        $provider = Student::model()->getProvider(array('criteria' => array('condition' => "group_id=$id")));
+        $this->render(
+            'group',
+            array(
+                'provider' => $provider,
+                'groupName' => $groupName,
+            )
+        );
     }
 }
