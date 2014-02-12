@@ -1,26 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.0.4.1
--- http://www.phpmyadmin.net
---
--- Хост: 127.0.0.1
--- Час створення: Січ 18 2014 р., 10:23
--- Версія сервера: 5.5.32
--- Версія PHP: 5.4.19
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- База даних: `xpk`
---
-CREATE DATABASE IF NOT EXISTS `xpk` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `xpk`;
 
 -- --------------------------------------------------------
 
@@ -105,13 +82,6 @@ CREATE TABLE IF NOT EXISTS `department` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
---
--- Дамп даних таблиці `department`
---
-
-INSERT INTO `department` (`id`, `title`, `head_id`) VALUES
-(1, 'Програмування', 0);
-
 -- --------------------------------------------------------
 
 --
@@ -158,12 +128,6 @@ CREATE TABLE IF NOT EXISTS `speciality` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
---
--- Дамп даних таблиці `speciality`
---
-
-INSERT INTO `speciality` (`id`, `title`, `department_id`, `number`, `accreditation_date`) VALUES
-(1, 'Розробка програмного забезпечення', 1, '5.05010301', '2014-01-16');
 
 -- --------------------------------------------------------
 
@@ -273,7 +237,3 @@ CREATE TABLE IF NOT EXISTS `teacher_load` (
   `practs` int(11) NOT NULL COMMENT 'Практичні',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

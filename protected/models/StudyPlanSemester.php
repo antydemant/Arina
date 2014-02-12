@@ -17,7 +17,7 @@
  * @property integer $course_work
  * @property integer $course_project
  */
-class StudyPlanSemester extends CActiveRecord
+class StudyPlanSemester extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name

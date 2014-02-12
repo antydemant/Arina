@@ -2,6 +2,17 @@
 
 class StudyPlanController extends Controller
 {
+    /**
+     * This method include access control logic
+     *
+     * @param CAction $action
+     * @return bool
+     */
+    protected function beforeAction($action)
+    {
+        return parent::beforeAction($action);
+    }
+
     public function actionIndex()
     {
         $provider = StudyPlan::model()->getProvider();
@@ -21,6 +32,35 @@ class StudyPlanController extends Controller
             'create',
             array(
                 'model' => $model,
+            )
+        );
+    }
+
+    public function actionUpdateSemesters()
+    {
+        $model = new StudyPlan();
+
+        $this->render(
+            'updateSemesters',
+            array(
+                'model' => $model,
+            )
+        );
+    }
+
+    public function actionSemesters($id)
+    {
+        $params = array(
+            'criteria' => array(
+                'condition' => "study_plan_id =$id",
+            ),
+        );
+        $dataProvider = StudyPlanInfo::model()->getProvider($params);
+
+        $this->renderPartial(
+            'semesters',
+            array(
+                'dataProvider' => $dataProvider,
             )
         );
     }

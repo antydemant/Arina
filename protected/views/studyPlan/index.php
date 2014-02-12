@@ -7,10 +7,10 @@
  */
 
 $this->breadcrumbs = array(
-    'Study Plan',
+    Yii::t('studyPlan','Study Plan'),
 );
 ?>
-    <h1><?php echo $this->id . '/' . $this->action->id; ?></h1>
+    <h1><?php echo Yii::t('studyPlan','Study Plan'); ?></h1>
 
 <?php
 $columns = array();
