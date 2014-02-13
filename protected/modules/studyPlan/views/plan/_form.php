@@ -1,8 +1,8 @@
 <?php
 /**
- * @var $this StudyPlanController
+ * @var $this PlanController
  * @var $form TbActiveForm
- * @var \StudyPlan $model
+ * @var \Plan $model
  */
 ?>
 

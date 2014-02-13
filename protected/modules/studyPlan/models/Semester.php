@@ -10,7 +10,7 @@
  * @property integer $weeks_count
  *
  * The followings are the available model relations:
- * @property StudyPlan $studyPlan
+ * @property Plan $plan
  */
 class Semester extends ActiveRecord
 {
@@ -46,7 +46,7 @@ class Semester extends ActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'studyPlan' => array(self::BELONGS_TO, 'StudyPlan', 'study_plan_id'),
+			'plan' => array(self::BELONGS_TO, 'plan', 'study_plan_id'),
 		);
 	}
 
@@ -95,7 +95,7 @@ class Semester extends ActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return StudyPlanInfo the static model class
+	 * @return Semester the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * @var PlanController $this
  * @var Plan $model
  */
