@@ -26,7 +26,7 @@ return CMap::mergeArray(
         ),
 
         'modules' => array(
-
+            'studyPlan',
         ),
 
         // application components

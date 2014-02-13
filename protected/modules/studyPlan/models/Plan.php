@@ -1,22 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "study_plan_subject".
+ * This is the model class for table "study_plan".
  *
- * The followings are the available columns in table 'study_plan_subject':
+ * The followings are the available columns in table 'study_plan':
  * @property integer $id
- * @property integer $study_plan_id
- * @property integer $subject_id
- * @property integer $total_hours
+ * @property integer $speciality_id
+ * @property string $study_year
+ *
+ * The followings are the available model relations:
+ * @property Semester[] $semesters
+ * @property Speciality $speciality
  */
-class StudyPlanSubject extends CActiveRecord
+class Plan extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'study_plan_subject';
+		return 'study_plan';
 	}
 
 	/**
@@ -27,11 +30,12 @@ class StudyPlanSubject extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('study_plan_id, subject_id, total_hours', 'required'),
-			array('study_plan_id, subject_id, total_hours', 'numerical', 'integerOnly'=>true),
+			array('speciality_id, study_year', 'required'),
+			array('speciality_id', 'numerical', 'integerOnly'=>true),
+			array('study_year', 'length', 'max'=>9),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, study_plan_id, subject_id, total_hours', 'safe', 'on'=>'search'),
+			array('id, speciality_id, study_year', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -43,6 +47,8 @@ class StudyPlanSubject extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'speciality' => array(self::BELONGS_TO, 'Speciality', 'speciality_id'),
+			'semesters' => array(self::HAS_MANY, 'Semester', 'study_plan_id'),
 		);
 	}
 
@@ -53,9 +59,8 @@ class StudyPlanSubject extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'study_plan_id' => 'Study Plan',
-			'subject_id' => 'Subject',
-			'total_hours' => 'Total Hours',
+			'speciality_id' => 'Спеціальність',
+			'study_year' => 'Навчальний рік',
 		);
 	}
 
@@ -78,9 +83,8 @@ class StudyPlanSubject extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('study_plan_id',$this->study_plan_id);
-		$criteria->compare('subject_id',$this->subject_id);
-		$criteria->compare('total_hours',$this->total_hours);
+		$criteria->compare('speciality_id',$this->speciality_id);
+		$criteria->compare('study_year',$this->study_year,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -91,7 +95,7 @@ class StudyPlanSubject extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return StudyPlanSubject the static model class
+	 * @return Plan the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
