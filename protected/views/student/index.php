@@ -68,10 +68,10 @@ $this->widget(Booster::GRID_VIEW, array(
 		array(
 			'name' => 'group',
 			'value' =>'$data->group->title',
-			'filter' => CHtml::dropDownList('Student[group]',
-					$model->group, 
+			'filter' => CHtml::dropDownList('Student[group_id]',
+					$model->group_id, 
 					CHtml::listData(Group::model()->findAll(),'id','title'),
-					array('empty' => '(select)'))
+					array('empty' => ''))
 
 		),
 		array(
