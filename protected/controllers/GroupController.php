@@ -67,4 +67,10 @@ class GroupController extends Controller
             )
         );
     }
+
+    public function actionDelete($id)
+    {
+        $model = Group::model()->loadContent($id);
+        $model->delete();
+    }
 }
