@@ -49,13 +49,16 @@ $('.search-form form').submit(function(){
 	'model'=>$model,
 )); ?>
 </div>
-<?php $this->widget(Booster::GRID_VIEW, array(
+
+<?php 
+$this->widget(Booster::GRID_VIEW, array(
 	'id'=>'student-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
     'template' => "{items}",
     'responsiveTable' => true,
     'type' => 'striped condensed bordered hover',
+
 	'columns'=>array(
 		'id',
 		'code',
@@ -65,12 +68,23 @@ $('.search-form form').submit(function(){
 		array(
 			'name' => 'group',
 			'value' =>'$data->group->title',
+			'filter' => CHtml::dropDownList('Student[group_id]',
+					$model->group_id, 
+					CHtml::listData(Group::model()->findAll(),'id','title'),
+					array('empty' => ''))
+
 		),
 		array(
 			'header' => Yii::t('base', 'Actions'),
 			'htmlOptions' => array('nowrap' => 'nowrap'),
 			'class' => 'bootstrap.widgets.TbButtonColumn',
 			'template' => '{update}{delete}{view}',
+
+			'updateButtonUrl' => 'Yii::app()->controller->createUrl("update", array("id"=>$data->id))',
+			'deleteButtonUrl' => 'Yii::app()->controller->createUrl("delete", array("id"=>$data->id))',
+			'viewButtonUrl' => 'Yii::app()->controller->createUrl("view", array("id"=>$data->id))',
+
 		),
 	),
-)); ?>
+)); 
+?>

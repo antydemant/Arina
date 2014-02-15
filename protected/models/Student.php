@@ -108,6 +108,8 @@ class Student extends ActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		$criteria->with = 'group';
+		
 		$criteria->compare('id',$this->id);
 		$criteria->compare('code',$this->code,true);
 		$criteria->compare('last_name',$this->last_name,true);
