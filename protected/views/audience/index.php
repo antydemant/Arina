@@ -1,17 +1,35 @@
 <?php
-$this->breadcrumbs=array(
-	'Audiences',
+$this->breadcrumbs = array(
+    Yii::t('base', 'Audiences'),
 );
 
-$this->menu=array(
-array('label'=>'Create Audience','url'=>array('create')),
-array('label'=>'Manage Audience','url'=>array('admin')),
-);
 ?>
+<header>
+    <?php $this->widget(
+        Booster::BUTTON_GROUP,
+        array(
+            'buttons' => array(
+                array(
+                    'type' => Booster::TYPE_PRIMARY,
+                    'label' => Yii::t('audience', 'Add new audience'),
+                    'url' => $this->createUrl('create'),
+                ),
+            ),
+        )
+    )
+    ?>
+</header>
 
-<h1>Audiences</h1>
-
-<?php $this->widget('bootstrap.widgets.TbListView',array(
-'dataProvider'=>$dataProvider,
-'itemView'=>'_view',
-)); ?>
+<?php
+$columns = array(
+    'id',
+    'number',
+    'typeName',
+    array(
+        'class' => 'bootstrap.widgets.TbButtonColumn',
+        'template' => '{delete}{update}',
+        'header' => Yii::t('base', 'Actions'),
+    ),
+);
+$this->renderPartial('//tableList', array('provider' => $dataProvider, 'columns' => $columns,));
+?>

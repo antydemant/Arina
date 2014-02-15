@@ -34,7 +34,7 @@
             'htmlOptions' => array('class' => 'pull-right'),
             'items' => array(
                 array('label' => Yii::t('base', 'Log in'), 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
-                array('label' => Yii::t('base', 'Exit'), 'url' => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest),
+                array('label' => Yii::t('base', 'Logout'), 'url' => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest),
             ),
         ),
     ),

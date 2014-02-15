@@ -14,7 +14,6 @@ $this->widget(
     Booster::GRID_VIEW,
     array(
         'dataProvider' => $provider,
-        'template' => "{items}{pager}",
         'filter'=>$filter,
         'columns' => $columns,
         'responsiveTable' => true,
