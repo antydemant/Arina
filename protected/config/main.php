@@ -26,8 +26,9 @@ return CMap::mergeArray(
         ),
 
         'modules' => array(
-            'studyPlan',
+            'studyPlan'
         ),
+
 
         // application components
         'components' => array(
@@ -38,10 +39,10 @@ return CMap::mergeArray(
                 'loginUrl' => '/user/login',
             ),
 
-       /*     'authManager' => array(
-                'class' => 'PhpAuthManager',
-                'defaultRoles' => array('guest'),
-            ),*/
+            /*     'authManager' => array(
+                     'class' => 'PhpAuthManager',
+                     'defaultRoles' => array('guest'),
+                 ),*/
 
             'bootstrap' => array(
                 'class' => 'ext.yiibooster.components.Bootstrap',
@@ -53,11 +54,12 @@ return CMap::mergeArray(
             'urlManager' => array(
                 'urlFormat' => 'path',
                 'showScriptName' => false,
-                'caseSensitive'=>true,
+                'caseSensitive' => true,
                 'rules' => array(
                     '<controller:\w+>/<id:\d+>' => '<controller>/view',
                     '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                     '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                    '<module:\w+>/<controller:w+>/<action:\w+>/<id:d+>' => '<module:\w+>/<controller>/<action>',
                 ),
             ),
             'errorHandler' => array(

@@ -57,9 +57,9 @@ class Semester extends ActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'study_plan_id' => 'Study Plan',
-			'semester_number' => 'Semester Number',
-			'weeks_count' => 'Weeks Count',
+			'study_plan_id' => 'Навчальний план',
+			'semester_number' => 'Номер семестру',
+			'weeks_count' => 'Кількість тижнів',
 		);
 	}
 

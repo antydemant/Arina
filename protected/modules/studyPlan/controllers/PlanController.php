@@ -8,6 +8,7 @@
  */
 class PlanController extends Controller
 {
+    public $name = 'Навчальний план';
 
     public function actionIndex()
     {

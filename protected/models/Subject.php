@@ -1,22 +1,22 @@
 <?php
 
 /**
- * This is the model class for table "study_plan_subject".
+ * This is the model class for table "subject".
  *
- * The followings are the available columns in table 'study_plan_subject':
+ * The followings are the available columns in table 'subject':
  * @property integer $id
- * @property integer $study_plan_id
- * @property integer $subject_id
- * @property integer $total_hours
+ * @property string $title
+ * @property integer $cycle_id
+ *
  */
-class Subject extends ActiveRecord
+class Subject extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'study_plan_subject';
+		return 'subject';
 	}
 
 	/**
@@ -27,11 +27,12 @@ class Subject extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('study_plan_id, subject_id, total_hours', 'required'),
-			array('study_plan_id, subject_id, total_hours', 'numerical', 'integerOnly'=>true),
+			array('title, cycle_id', 'required'),
+			array('cycle_id', 'numerical', 'integerOnly'=>true),
+			array('title', 'length', 'max'=>50),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, study_plan_id, subject_id, total_hours', 'safe', 'on'=>'search'),
+			array('id, title, cycle_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -43,6 +44,7 @@ class Subject extends ActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			//'studyPlanSubjects' => array(self::HAS_MANY, 'StudyPlanSubject', 'subject_id'),
 		);
 	}
 
@@ -53,9 +55,8 @@ class Subject extends ActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'study_plan_id' => 'Study Plan',
-			'subject_id' => 'Subject',
-			'total_hours' => 'Total Hours',
+			'title' => 'Title',
+			'cycle_id' => 'Cycle',
 		);
 	}
 
@@ -78,9 +79,8 @@ class Subject extends ActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('study_plan_id',$this->study_plan_id);
-		$criteria->compare('subject_id',$this->subject_id);
-		$criteria->compare('total_hours',$this->total_hours);
+		$criteria->compare('title',$this->title,true);
+		$criteria->compare('cycle_id',$this->cycle_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

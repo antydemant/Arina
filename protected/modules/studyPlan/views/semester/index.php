@@ -1,25 +1,28 @@
 <?php
 /**
- * @var StudyPlanController $this
+ * @var SemesterController $this
  * @var \CActiveDataProvider $dataProvider
  */
 $this->breadcrumbs = array(
-    Yii::t('base', 'StudyPlan'),
+    Yii::t('base', 'StudyPlan') => $this->createUrl('plan/index'),
+    'Семестри'
 );
 ?>
-<?php $this->widget(
-    Booster::BUTTON_GROUP,
-    array(
-        'buttons' => array(
+    <header>
+        <?php $this->widget(
+            Booster::BUTTON_GROUP,
             array(
-                'type' => Booster::TYPE_PRIMARY,
-                'label' => 'Додати семестр',
-                'url' => $this->createUrl('studyPlan/semester/create'),
-            ),
-        ),
-    )
-)
-?>
+                'buttons' => array(
+                    array(
+                        'type' => Booster::TYPE_PRIMARY,
+                        'label' => 'Додати семестр',
+                        'url' => $this->createUrl('create'),
+                    ),
+                ),
+            )
+        )
+        ?>
+    </header>
 <?php
 $this->widget(
     Booster::GRID_VIEW,
@@ -33,8 +36,8 @@ $this->widget(
                 'htmlOptions' => array('nowrap' => 'nowrap'),
                 'class' => 'bootstrap.widgets.TbButtonColumn',
                 'viewButtonUrl' => 'Yii::app()->createUrl("studyPlan/semester/view", array("id"=>$data["id"]))',
-                'updateButtonUrl' => 'Yii::app()->createUrl("studyPlan/semester/", array("id"=>$data["id"]))',
-                'deleteButtonUrl' => 'Yii::app()->createUrl("studyPlan/semester/", array("id"=>$data["id"]))',
+                'updateButtonUrl' => 'Yii::app()->createUrl("studyPlan/semester/update", array("id"=>$data["id"]))',
+                'deleteButtonUrl' => 'Yii::app()->createUrl("studyPlan/semester/delete", array("id"=>$data["id"]))',
             ),
         ),
         'responsiveTable' => true,
