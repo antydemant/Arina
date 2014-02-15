@@ -66,17 +66,17 @@ class Hours extends ActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'study_plan_subject_id' => 'Study Plan Subject',
-			'study_plan_info_id' => 'Study Plan Info',
-			'lectures' => 'Lectures',
-			'labs' => 'Labs',
-			'practs' => 'Practs',
-			'selfwork' => 'Selfwork',
-			'hours_per_week' => 'Hours Per Week',
-			'test' => 'Test',
-			'exam' => 'Exam',
-			'course_work' => 'Course Work',
-			'course_project' => 'Course Project',
+			'study_plan_subject_id' => 'Предмет',
+			'study_plan_info_id' => 'Семестр №',
+			'lectures' => 'Лекції',
+			'labs' => 'Лабораторні',
+			'practs' => 'Практичні',
+			'selfwork' => 'Самостійна робота студентів',
+			'hours_per_week' => 'Годин на тиждень',
+			'test' => 'Залік',
+			'exam' => 'Екзамен',
+			'course_work' => 'Курсова робота',
+			'course_project' => 'Курсовий проект',
 		);
 	}
 
