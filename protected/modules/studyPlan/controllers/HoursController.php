@@ -6,6 +6,22 @@
  * Time: 18:40
  */
 
-class HoursController {
+class HoursController extends Controller
+{
+    public function actionIndex()
+    {
+    }
+
+    public function actionView($id)
+    {}
+
+    public function actionCreate()
+    {}
+
+    public function actionUpdate($id)
+    {}
+
+    public function actionDelete($id)
+    {}
 
 } 

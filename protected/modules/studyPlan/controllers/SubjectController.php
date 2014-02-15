@@ -8,26 +8,30 @@
  */
 class SubjectController extends Controller
 {
+    public $name = 'Навчальний план: Предмети';
+
+    public function actionIndex()
+    {
+        $dataProvider = SpSubject::model()->getProvider();
+        $this->render('index', array('dataProvider' => $dataProvider));
+    }
 
     public function actionView($id)
     {
-        /*  $criteria = new CDbCriteria(
-              array(
-                  'condition' => 'study_plan_subject_id = ' . $id,
-                  'order' => 'study_plan_info_id ASC',
-              )
-          );*/
-        //$dataProvider = Semester::model()->getProvider($criteria);
-        $dataProvider = Semester::model()->getProvider();
+        $dataProvider = Hours::model()->getProvider(array(
+            'criteria' => array(
+                'condition' => 'study_plan_subject_id=' . $id,
+            ),
+        ));
         $model = SpSubject::model()->loadContent($id);
         $this->render('view', array('dataProvider' => $dataProvider, 'model' => $model));
     }
 
     public function actionCreate()
     {
-        $model = new Plan('create');
-        if (isset($_POST['Plan'])) {
-            $model->attributes = $_POST['Plan'];
+        $model = new SpSubject('create');
+        if (isset($_POST['SpSubject'])) {
+            $model->attributes = $_POST['SpSubject'];
             if ($model->save()) {
                 $this->redirect('index');
             }
@@ -37,9 +41,9 @@ class SubjectController extends Controller
 
     public function actionUpdate($id)
     {
-        $model = Plan::model()->loadContent($id);
-        if (isset($_POST['Plan'])) {
-            $model->attributes = $_POST['Plan'];
+        $model = SpSubject::model()->loadContent($id);
+        if (isset($_POST['SpSubject'])) {
+            $model->attributes = $_POST['SpSubject'];
             if ($model->save()) {
                 $this->redirect($this->createUrl('index'));
             }
@@ -49,7 +53,7 @@ class SubjectController extends Controller
 
     public function actionDelete($id)
     {
-        $model = Plan::model()->loadContent($id);
+        $model = SpSubject::model()->loadContent($id);
 
         if ($model->delete()) {
             $model->save(false);

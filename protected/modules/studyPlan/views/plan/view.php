@@ -17,6 +17,7 @@ $this->beginWidget('bootstrap.widgets.TbBox', array(
             'class' => 'bootstrap.widgets.TbButtonGroup',
             'type' => 'primary',
             'buttons' => array(
+                array('label' => 'Додати предмет', 'type' => 'inverse', 'url' => Yii::app()->createUrl('studyPlan/subject/create')),
                 array('label' => 'Семестри', 'url' => Yii::app()->createUrl('studyPlan/semester/index', array('id' => $model->id))),
             )
         ),

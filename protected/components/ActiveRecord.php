@@ -39,12 +39,12 @@ class ActiveRecord extends CActiveRecord
      * @param null $criteria CDbCriteria
      * @return CActiveDataProvider
      */
-    public function getProvider($criteria = null)
+    public function getProvider($config = null)
     {
-        if ($criteria === null) {
+        if ($config === null) {
             return new CActiveDataProvider($this);
         } else {
-            return new CActiveDataProvider($this, $criteria);
+            return new CActiveDataProvider($this, $config);
         }
     }
 

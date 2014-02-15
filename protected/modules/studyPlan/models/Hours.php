@@ -16,6 +16,9 @@
  * @property integer $exam
  * @property integer $course_work
  * @property integer $course_project
+ * The followings are the available model relations:
+ * @property SpSubject $spSubject
+ * @property Semester $semester
  */
 class Hours extends ActiveRecord
 {
@@ -51,6 +54,8 @@ class Hours extends ActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'spSubject' => array(self::BELONGS_TO, 'SpSubject', 'study_plan_subject_id'),
+            'semester' => array(self::BELONGS_TO, 'Semester', 'study_plan_info_id'),
 		);
 	}
 
@@ -115,7 +120,7 @@ class Hours extends ActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return StudyPlanSemester the static model class
+	 * @return Hours the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

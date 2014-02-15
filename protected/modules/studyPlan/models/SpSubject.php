@@ -9,7 +9,7 @@
  * @property integer $subject_id
  * @property integer $total_hours
  * The followings are the available model relations:
- * @property Plan[] $plan
+ * @property Plan $plan
  * @property Subject $subject
  */
 class SpSubject extends ActiveRecord
@@ -58,9 +58,9 @@ class SpSubject extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'study_plan_id' => 'Study Plan',
-            'subject_id' => 'Subject',
-            'total_hours' => 'Total Hours',
+            'study_plan_id' => 'Навчальний план',
+            'subject_id' => 'Предмет',
+            'total_hours' => 'Усього годин',
         );
     }
 
