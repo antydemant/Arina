@@ -1,10 +1,12 @@
 <?php
 /**
- * @var Controller $this
+ * @var UserController $this
  * @var TbActiveForm $form
  * @var ELoginForm $model
  * @author Dmytro Karpovych <ZAYEC77@gmail.com>
  */
+
+$this->name = Yii::t('base', 'Log in');
 ?>
 
 <div class="span5 offset3 text-center">
