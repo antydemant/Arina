@@ -22,7 +22,8 @@ return CMap::mergeArray(
             'application.models.*',
             'application.components.*',
             'application.extensions.*',
-            'application.extensions.yiibooster.components.*'
+            'application.extensions.yiibooster.components.*',
+            'application.extensions.yiibooster.helpers.*'
         ),
 
         'modules' => array(
@@ -59,7 +60,11 @@ return CMap::mergeArray(
                     '<controller:\w+>/<id:\d+>' => '<controller>/view',
                     '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                     '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-                    '<module:\w+>/<controller:w+>/<action:\w+>/<id:d+>' => '<module:\w+>/<controller>/<action>',
+                    '<module:\w+>' => '<module>',
+                    '<module:\w+>/<controller:\w+>' => '<module>/<controller>/index',
+                    '<module:\w+>/<controller:\w+>/<id:\d+>' => '<module>/<controller>/view',
+                    '<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',
+                    '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
                 ),
             ),
             'errorHandler' => array(
