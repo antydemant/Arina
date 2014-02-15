@@ -71,13 +71,6 @@ $('.search-form form').submit(function(){
 			'htmlOptions' => array('nowrap' => 'nowrap'),
 			'class' => 'bootstrap.widgets.TbButtonColumn',
 			'template' => '{update}{delete}{view}',
-
-			'updateButtonUrl' => 'Yii::app()->controller->createUrl("update", array("id"=>$data->id))',
-			'deleteButtonUrl' => 'Yii::app()->controller->createUrl("delete", array("id"=>$data->id))',
-			'viewButtonUrl' => 'Yii::app()->controller->createUrl("view", array("id"=>$data->id))',
-		),
-		array(
-			'class'=>'CButtonColumn',
 		),
 	),
 )); ?>

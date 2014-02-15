@@ -66,8 +66,8 @@ class Group extends ActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => 'ID',
-            'title' => Yii::t('group', 'Title'),
+            'id' => Yii::t('base','ID'),
+            'title' => Yii::t('base', 'Title'),
             'speciality_id' => Yii::t('group', 'Speciality'),
             'curator_id' => Yii::t('group', 'Curator'),
             'curator' => Yii::t('group', 'Curator'),

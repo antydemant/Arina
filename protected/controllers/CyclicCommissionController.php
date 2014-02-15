@@ -1,8 +1,8 @@
 <?php
 
-class AudienceController extends Controller
+class CyclicCommissionController extends Controller
 {
-    public $name = 'audience';
+    public $name = "Cyclic Commissions";
 
     /**
      * @return array action filters
@@ -11,7 +11,6 @@ class AudienceController extends Controller
     {
         return array(
             'accessControl', // perform access control for CRUD operations
-            'postOnly + delete', // we only allow deletion via POST request
         );
     }
 
@@ -23,8 +22,17 @@ class AudienceController extends Controller
     public function accessRules()
     {
         return array(
-            array('allow',
+            array('allow', // allow all users to perform 'index' and 'view' actions
+                'actions' => array('index', 'view'),
+                'users' => array('*'),
+            ),
+            array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                'actions' => array('create', 'update'),
                 'users' => array('@'),
+            ),
+            array('allow', // allow admin user to perform 'admin' and 'delete' actions
+                'actions' => array('admin', 'delete'),
+                'users' => array('admin'),
             ),
             array('deny', // deny all users
                 'users' => array('*'),
@@ -50,7 +58,7 @@ class AudienceController extends Controller
      */
     public function loadModel($id)
     {
-        $model = Audience::model()->findByPk($id);
+        $model = CyclicCommission::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
@@ -62,13 +70,13 @@ class AudienceController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Audience;
+        $model = new CyclicCommission;
 
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Audience'])) {
-            $model->attributes = $_POST['Audience'];
+        if (isset($_POST['CyclicCommission'])) {
+            $model->attributes = $_POST['CyclicCommission'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -90,8 +98,8 @@ class AudienceController extends Controller
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Audience'])) {
-            $model->attributes = $_POST['Audience'];
+        if (isset($_POST['CyclicCommission'])) {
+            $model->attributes = $_POST['CyclicCommission'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -124,24 +132,9 @@ class AudienceController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new CActiveDataProvider('Audience');
+        $dataProvider = new CActiveDataProvider('CyclicCommission');
         $this->render('index', array(
             'dataProvider' => $dataProvider,
-        ));
-    }
-
-    /**
-     * Manages all models.
-     */
-    public function actionAdmin()
-    {
-        $model = new Audience('search');
-        $model->unsetAttributes(); // clear any default values
-        if (isset($_GET['Audience']))
-            $model->attributes = $_GET['Audience'];
-
-        $this->render('admin', array(
-            'model' => $model,
         ));
     }
 
@@ -151,7 +144,7 @@ class AudienceController extends Controller
      */
     protected function performAjaxValidation($model)
     {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'audience-form') {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'cyclic-commission-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }

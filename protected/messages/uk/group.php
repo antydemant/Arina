@@ -7,7 +7,6 @@ return array(
     'Group' => 'Група',
     'Groups' => 'Групи',
     'Create new group' => 'Створити нову групу',
-    'Title' => 'Назва',
     'New group creating' => 'Створення нової групи',
     'Speciality' => 'Спеціальність',
     'Curator' => 'Куратор',

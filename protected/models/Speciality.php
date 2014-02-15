@@ -12,6 +12,13 @@
  */
 class Speciality extends ActiveRecord
 {
+    /**
+     * @return array for dropDownList
+     */
+    public static function getList()
+    {
+        return self::getListAll('id', 'title');
+    }
 	/**
 	 * @return string the associated database table name
 	 */
@@ -55,10 +62,11 @@ class Speciality extends ActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'title' => 'Title',
-			'department_id' => 'Department',
-			'number' => 'Number',
+            'id' => Yii::t('base','ID'),
+			'title' => Yii::t('base','Title'),
+			'department_id' => Yii::t('department','Department'),
+			'department' => Yii::t('department','Department'),
+			'number' => Yii::t('speciality','Number'),
 			'accreditation_date' => 'Accreditation Date',
 		);
 	}

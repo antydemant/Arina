@@ -2,6 +2,7 @@
 
 class UserController extends Controller
 {
+    public $name = 'users';
     /**
      * @param $view
      * @return bool
@@ -29,7 +30,7 @@ class UserController extends Controller
         if (isset($_POST['ELoginForm'])) {
             $model->attributes = $_POST['ELoginForm'];
             if ($model->validate() && $model->login()) {
-
+                Yii::app()->request->redirect(Yii::app()->user->returnUrl);
             }
         }
 
@@ -44,7 +45,8 @@ class UserController extends Controller
      */
     public function actionLogout()
     {
-        Yii::app()->getUser()->logout();
+        Yii::app()->user->logout();
+        Yii::app()->request->redirect(Yii::app()->user->returnUrl);
     }
 
     /**
@@ -62,12 +64,6 @@ class UserController extends Controller
             array('model' => $model,)
         );
     }
-
-    /**
-     * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-     * using two-column layout. See 'protected/views/layouts/column2.php'.
-     */
-    public $layout = '//layouts/column2';
 
     /**
      * @return array action filters

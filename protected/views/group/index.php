@@ -38,18 +38,13 @@ $this->breadcrumbs = array(
             array(
                 'type' => 'raw',
                 'name' => 'speciality_id',
-                'value' => 'CHtml::link($data->speciality->title,array())',
+                'value' => 'CHtml::link($data->speciality->title, array("speciality/view", "id"=>$data->speciality_id))',
             ),
             array(
                 'header' => Yii::t('base', 'Actions'),
                 'htmlOptions' => array('nowrap' => 'nowrap'),
                 'class' => 'bootstrap.widgets.TbButtonColumn',
                 'template' => '{update}{delete}{view}{students}',
-
-                'updateButtonUrl' => 'Yii::app()->controller->createUrl("update", array("id"=>$data->id))',
-                'deleteButtonUrl' => 'Yii::app()->controller->createUrl("delete", array("id"=>$data->id))',
-                'viewButtonUrl' => 'Yii::app()->controller->createUrl("view", array("id"=>$data->id))',
-
                 'buttons' => array(
                     'students' => array(
                         'label' => Yii::t('student', 'Students list'),

@@ -1,8 +1,8 @@
 <?php
 
-class AudienceController extends Controller
+class DepartmentController extends Controller
 {
-    public $name = 'audience';
+    public $name = 'Departments';
 
     /**
      * @return array action filters
@@ -50,7 +50,7 @@ class AudienceController extends Controller
      */
     public function loadModel($id)
     {
-        $model = Audience::model()->findByPk($id);
+        $model = Department::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
@@ -62,13 +62,13 @@ class AudienceController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Audience;
+        $model = new Department;
 
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Audience'])) {
-            $model->attributes = $_POST['Audience'];
+        if (isset($_POST['Department'])) {
+            $model->attributes = $_POST['Department'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -90,8 +90,8 @@ class AudienceController extends Controller
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Audience'])) {
-            $model->attributes = $_POST['Audience'];
+        if (isset($_POST['Department'])) {
+            $model->attributes = $_POST['Department'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -124,23 +124,12 @@ class AudienceController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new CActiveDataProvider('Audience');
-        $this->render('index', array(
-            'dataProvider' => $dataProvider,
-        ));
-    }
-
-    /**
-     * Manages all models.
-     */
-    public function actionAdmin()
-    {
-        $model = new Audience('search');
+        $model = new Department('search');
         $model->unsetAttributes(); // clear any default values
-        if (isset($_GET['Audience']))
-            $model->attributes = $_GET['Audience'];
+        if (isset($_GET['Department']))
+            $model->attributes = $_GET['Department'];
 
-        $this->render('admin', array(
+        $this->render('index', array(
             'model' => $model,
         ));
     }
@@ -151,7 +140,7 @@ class AudienceController extends Controller
      */
     protected function performAjaxValidation($model)
     {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'audience-form') {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'department-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
