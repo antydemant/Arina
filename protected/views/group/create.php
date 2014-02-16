@@ -9,10 +9,15 @@ $this->breadcrumbs = array(
     Yii::t('group', 'Groups') => array('index'),
     Yii::t('group', 'New group creating'),
 );
+$this->menu = array(
+    array(
+        'type' => Booster::TYPE_PRIMARY,
+        'label' => Yii::t('group', 'Groups list'),
+        'url' => $this->createUrl('index'),
+    ),
+);
 ?>
-<header>
     <h2><?php echo Yii::t('group', 'New group creating'); ?></h2>
-</header>
 <?php
 $this->renderPartial('_form', array('model' => $model));
 ?>

@@ -28,43 +28,10 @@ class TeacherController extends Controller
                 'sort' => $sort,
             )
         );
-        $columns = $this->getColumns();
         $this->render(
             'index',
             array(
                 'provider' => $provider,
-                'columns' => $columns,
-            )
-        );
-    }
-
-    /**
-     * Get columns for grid view
-     * @return array
-     */
-    protected function getColumns()
-    {
-        return array(
-            'id',
-            array(
-                'name' => 'fullName',
-                'value' => '$data->getFullName()',
-                'htmlOptions' => array(
-                    'width' => '420px',
-                )
-            ),
-            array(
-                'name' => 'cyclic_commission_id',
-                'value' => '$data->cyclicCommission->title',
-                'htmlOptions' => array(
-                    'width' => '420px',
-                )
-            ),
-            array(
-                'header' => Yii::t('base', 'Actions'),
-                'htmlOptions' => array('nowrap' => 'nowrap'),
-                'class' => 'bootstrap.widgets.TbButtonColumn',
-                'template' => '{update}{delete}{view}',
             )
         );
     }

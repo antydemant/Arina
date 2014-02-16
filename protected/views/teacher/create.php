@@ -10,21 +10,7 @@ $this->breadcrumbs = array(
     Yii::t('teacher', 'Sign up new teacher'),
 );
 ?>
-<header>
-    <h2><?php echo Yii::t('teacher', "Sign up new teacher"); ?></h2>
-    <hr>
-    <?php
-    $this->widget(
-        Booster::BUTTON_GROUP,
-        array(
-            'buttons' => array(
-                array(
-                    'label' => Yii::t('teacher', 'Teacher list'),
-                    'url' => $this->createUrl('teacher/index'),
-                ),
-            ),
-        )
-    );
-    ?>
-</header>
+    <header>
+        <h2><?php echo Yii::t('teacher', "Sign up new teacher"); ?></h2>
+    </header>
 <?php $this->renderPartial('_form', array('model' => $model)); ?>

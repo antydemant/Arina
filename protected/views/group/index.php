@@ -9,22 +9,15 @@
 $this->breadcrumbs = array(
     Yii::t('group', 'Groups'),
 );
+$this->menu = array(
+    array(
+        'type' => Booster::TYPE_PRIMARY,
+        'label' => Yii::t('group', 'Create new group'),
+        'url' => $this->createUrl('create'),
+    ),
+);
 ?>
-    <header>
-        <?php $this->widget(
-            Booster::BUTTON_GROUP,
-            array(
-                'buttons' => array(
-                    array(
-                        'type' => Booster::TYPE_PRIMARY,
-                        'label' => Yii::t('group', 'Create new group'),
-                        'url' => $this->createUrl('create'),
-                    ),
-                ),
-            )
-        )
-        ?>
-    </header>
+<h2><?php echo Yii::t('group', 'Groups list'); ?></h2>
 <?php $this->renderPartial('//tableList',
     array(
         'provider' => $provider,

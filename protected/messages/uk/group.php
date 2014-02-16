@@ -4,6 +4,8 @@
  * Localization file uk/group
  */
 return array(
+    'View group' => 'Перегляд інормації про групу',
+    'Groups list' => 'Список груп',
     'Group' => 'Група',
     'Groups' => 'Групи',
     'Create new group' => 'Створити нову групу',

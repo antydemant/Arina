@@ -8,18 +8,14 @@
 class GroupController extends Controller
 {
     public $name = "Groups";
+
     /**
      *
      */
     public function actionIndex()
     {
         $provider = Group::model()->getProvider();
-        $this->render(
-            'index',
-            array(
-                'provider' => $provider,
-            )
-        );
+        $this->render('index', array('provider' => $provider,));
     }
 
     /**
@@ -41,36 +37,36 @@ class GroupController extends Controller
         $this->render('create', array('model' => $model));
     }
 
+    /**
+     * @param $id
+     */
     public function actionUpdate($id)
     {
         $model = Group::model()->loadContent($id);
 
         $this->ajaxValidation('group-form', $model);
 
-        $this->render(
-          'update',
-            array(
-                'model'=>$model,
-            )
-        );
+        $this->render('update', array('model' => $model,));
     }
+
     /**
      * @param $id
      */
     public function actionView($id)
     {
         $model = Group::model()->loadContent($id);
-        $this->render(
-            'view',
-            array(
-                'model' => $model,
-            )
-        );
+        $this->render('view', array('model' => $model,));
     }
 
+    /**
+     * @param $id
+     */
     public function actionDelete($id)
     {
         $model = Group::model()->loadContent($id);
         $model->delete();
+        if (!Yii::app()->getRequest()->isAjaxRequest) {
+            $this->redirect(array('index'));
+        }
     }
 }

@@ -3,6 +3,7 @@
  *
  */
 return array(
+    'Do you want to delete this item?' => 'Ви хочете видалити цей елемент?',
     'Type' => 'Тип',
     'Cyclic Commissions' => 'Циклові комісії',
     'Departments' => 'Відділення',
