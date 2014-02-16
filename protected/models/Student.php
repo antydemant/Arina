@@ -65,6 +65,7 @@ class Student extends ActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 				'group'=>array(self::BELONGS_TO, 'Group', 'group_id'),
+				'marks'=>array(self::HAS_MANY, 'ClassMark', 'student_id'),
 		);
 	}
 

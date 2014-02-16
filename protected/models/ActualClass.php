@@ -45,6 +45,8 @@ class ActualClass extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+				'marks'=>array(self::HAS_MANY, 'ClassMark', 'actual_class_id'),
+				'absences'=>array(self::HAS_MANY, 'ClassAbsence', 'actual_class_id'),
 		);
 	}
 
