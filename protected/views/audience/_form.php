@@ -1,7 +1,15 @@
-<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<?php
+/**
+ * @var $this AudienceController
+ * @var $model Audience
+ * @var $form TbActiveForm
+ */
+
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id' => 'audience-form',
-    'enableAjaxValidation' => false,
-)); ?>
+    'enableAjaxValidation' => true,
+));
+?>
 
 
 <?php echo $form->errorSummary($model); ?>

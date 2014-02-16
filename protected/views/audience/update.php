@@ -6,11 +6,10 @@
 
 $this->breadcrumbs = array(
     Yii::t('base', 'Audiences') => array('index'),
-    $model->id => array('view', 'id' => $model->id),
-    'Update',
+    Yii::t('audience', 'Update audience') . " {$model->number}",
 );
 ?>
 
-    <h1>Update Audience <?php echo $model->id; ?></h1>
+    <h1><?php echo Yii::t('audience', 'Update audience') . " {$model->number}"; ?></h1>
 
 <?php echo $this->renderPartial('_form', array('model' => $model)); ?>

@@ -5,30 +5,6 @@ class AudienceController extends Controller
     public $name = 'Audiences';
 
     /**
-     * Displays a particular model.
-     * @param integer $id the ID of the model to be displayed
-     */
-    public function actionView($id)
-    {
-        $this->render('view', array(
-            'model' => $this->loadModel($id),
-        ));
-    }
-
-    /**
-     * @param $id
-     * @return CActiveRecord
-     * @throws CHttpException
-     */
-    public function loadModel($id)
-    {
-        $model = Audience::model()->findByPk($id);
-        if ($model === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
-        return $model;
-    }
-
-    /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
@@ -36,7 +12,7 @@ class AudienceController extends Controller
     {
         $model = new Audience;
 
-        $this->performAjaxValidation($model);
+        $this->ajaxValidation('audience-form', $model);
 
         if (isset($_POST['Audience'])) {
             $model->attributes = $_POST['Audience'];
@@ -50,27 +26,15 @@ class AudienceController extends Controller
     }
 
     /**
-     * Performs the AJAX validation.
-     * @param CModel the model to be validated
-     */
-    protected function performAjaxValidation($model)
-    {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'audience-form') {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
-    }
-
-    /**
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id)
     {
-        $model = $this->loadModel($id);
+        $model = Audience::model()->loadContent($id);
 
-        $this->performAjaxValidation($model);
+        $this->ajaxValidation('audience-form', $model);
 
         if (isset($_POST['Audience'])) {
             $model->attributes = $_POST['Audience'];
@@ -90,7 +54,7 @@ class AudienceController extends Controller
     public function actionDelete($id)
     {
         if (Yii::app()->request->isPostRequest) {
-            Audience::loadModel($id)->delete();
+            Audience::model()->loadContent($id)->delete();
 
             if (!isset($_GET['ajax']))
                 $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));

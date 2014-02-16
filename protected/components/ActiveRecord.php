@@ -34,9 +34,7 @@ class ActiveRecord extends CActiveRecord
     }
 
     /**
-     * Return DataProvider to model
-     *
-     * @param null $criteria CDbCriteria
+     * @param null $config
      * @return CActiveDataProvider
      */
     public function getProvider($config = null)

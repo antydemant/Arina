@@ -8,4 +8,5 @@ return array(
     'Gum' => 'Спортзал/стадіон',
     'Select audience type' => 'Виберіть тип аудиторії',
     'Number' => 'Номер',
+    'Update audience' => 'Оновлення даних групи',
 );

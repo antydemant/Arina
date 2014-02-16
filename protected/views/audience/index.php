@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var $this AudienceController
+ * @var $dataProvider CActiveDataProvider
+ */
 $this->breadcrumbs = array(
     Yii::t('base', 'Audiences'),
 );

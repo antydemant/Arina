@@ -137,10 +137,8 @@ class UserController extends Controller
     public function actionDelete($id)
     {
         if (Yii::app()->request->isPostRequest) {
-// we only allow deletion via POST request
             $this->loadModel($id)->delete();
 
-// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
             if (!isset($_GET['ajax']))
                 $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
         } else
@@ -184,5 +182,18 @@ class UserController extends Controller
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
+    }
+
+    public function accessRules()
+    {
+        return CMap::mergeArray(
+            array(
+                array('allow',
+                    'actions' => array('login'),
+                    'users' => array('*'),
+                ),
+            ),
+            parent::accessRules()
+        );
     }
 }
