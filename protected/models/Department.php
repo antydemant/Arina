@@ -1,33 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "cyclic_commission".
+ * This is the model class for table "department".
  *
- * The followings are the available columns in table 'cyclic_commission':
+ * The followings are the available columns in table 'department':
  * @property integer $id
  * @property string $title
  * @property integer $head_id
- *
- * The followings are the available model relations:
- * @property Teacher[] $teachers
- * @property Teacher $head
  */
-class CyclicCommission extends ActiveRecord
+class Department extends ActiveRecord
 {
-    /**
-     * @return array for dropDownList
-     */
-    public static function getList()
-    {
-        return CHtml::listData(self::model()->findAll(), 'id', 'title');
-    }
-
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'cyclic_commission';
+		return 'department';
 	}
 
 	/**
@@ -55,8 +43,6 @@ class CyclicCommission extends ActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'teachers' => array(self::HAS_MANY, 'Teacher', 'cyclic_commission_id'),
-			'head' => array(self::BELONGS_TO, 'Teacher', 'head_id'),
 		);
 	}
 
@@ -103,7 +89,7 @@ class CyclicCommission extends ActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return CyclicCommission the static model class
+	 * @return Department the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

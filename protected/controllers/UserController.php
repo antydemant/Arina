@@ -2,6 +2,7 @@
 
 class UserController extends Controller
 {
+    public $name = 'users';
     /**
      * @param $view
      * @return bool
@@ -29,7 +30,7 @@ class UserController extends Controller
         if (isset($_POST['ELoginForm'])) {
             $model->attributes = $_POST['ELoginForm'];
             if ($model->validate() && $model->login()) {
-
+                Yii::app()->request->redirect(Yii::app()->user->returnUrl);
             }
         }
 
@@ -44,7 +45,8 @@ class UserController extends Controller
      */
     public function actionLogout()
     {
-        Yii::app()->getUser()->logout();
+        Yii::app()->user->logout();
+        Yii::app()->request->redirect(Yii::app()->user->returnUrl);
     }
 
     /**
@@ -62,12 +64,6 @@ class UserController extends Controller
             array('model' => $model,)
         );
     }
-
-    /**
-     * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-     * using two-column layout. See 'protected/views/layouts/column2.php'.
-     */
-    public $layout = '//layouts/column2';
 
     /**
      * @return array action filters
@@ -141,10 +137,8 @@ class UserController extends Controller
     public function actionDelete($id)
     {
         if (Yii::app()->request->isPostRequest) {
-// we only allow deletion via POST request
             $this->loadModel($id)->delete();
 
-// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
             if (!isset($_GET['ajax']))
                 $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
         } else
@@ -188,5 +182,18 @@ class UserController extends Controller
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
+    }
+
+    public function accessRules()
+    {
+        return CMap::mergeArray(
+            array(
+                array('allow',
+                    'actions' => array('login'),
+                    'users' => array('*'),
+                ),
+            ),
+            parent::accessRules()
+        );
     }
 }

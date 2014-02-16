@@ -12,21 +12,37 @@
  */
 class Teacher extends ActiveRecord
 {
+    /**
+     * @return array for dropDownList
+     */
     public static function getList()
     {
         return CHtml::listData(self::model()->findAll(), 'id', 'fullName');
     }
+
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return Teacher the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
+
     public function getFullName()
     {
         return "$this->last_name $this->first_name $this->middle_name";
     }
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'teacher';
-	}
+
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'teacher';
+    }
 
     /**
      * @return array validation rules for model attributes.
@@ -37,26 +53,26 @@ class Teacher extends ActiveRecord
         // will receive user inputs.
         return array(
             array('last_name, first_name, middle_name, cyclic_commission_id', 'required'),
-            array('cyclic_commission_id', 'numerical', 'integerOnly'=>true),
-            array('last_name, first_name, middle_name', 'length', 'max'=>25),
+            array('cyclic_commission_id', 'numerical', 'integerOnly' => true),
+            array('last_name, first_name, middle_name', 'length', 'max' => 25),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, last_name, first_name, middle_name, cyclic_commission_id', 'safe', 'on'=>'search'),
+            array('id, last_name, first_name, middle_name, cyclic_commission_id', 'safe', 'on' => 'search'),
         );
     }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
             'group' => array(self::HAS_ONE, 'Group', 'curator_id'),
             'cyclicCommission' => array(self::BELONGS_TO, 'CyclicCommission', 'cyclic_commission_id'),
-		);
-	}
+        );
+    }
 
     /**
      * @return array customized attribute labels (name=>label)
@@ -73,43 +89,32 @@ class Teacher extends ActiveRecord
         );
     }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     *
+     * Typical usecase:
+     * - Initialize the model fields with values from filter form.
+     * - Execute this method to get CActiveDataProvider instance which will filter
+     * models according to data in model fields.
+     * - Pass data provider to CGridView, CListView or any similar widget.
+     *
+     * @return CActiveDataProvider the data provider that can return the models
+     * based on the search/filter conditions.
+     */
     public function search()
     {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
-        $criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('last_name',$this->last_name,true);
-        $criteria->compare('first_name',$this->first_name,true);
-        $criteria->compare('middle_name',$this->middle_name,true);
-        $criteria->compare('cyclic_commission_id',$this->cyclic_commission_id);
+        $criteria->compare('id', $this->id);
+        $criteria->compare('last_name', $this->last_name, true);
+        $criteria->compare('first_name', $this->first_name, true);
+        $criteria->compare('middle_name', $this->middle_name, true);
+        $criteria->compare('cyclic_commission_id', $this->cyclic_commission_id);
 
         return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
+            'criteria' => $criteria,
         ));
     }
-
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Teacher the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
 }

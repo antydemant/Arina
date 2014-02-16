@@ -18,10 +18,13 @@
 ?>
 <?php echo $form->textFieldRow($model, 'title'); ?>
 
-<?php echo $form->dropDownListRow($model, 'speciality_id', array(), array('empty' => Yii::t('group', 'Select speciality'))); ?>
+<?php echo $form->dropDownListRow($model, 'speciality_id', Speciality::getList(), array('empty' => Yii::t('group', 'Select speciality'))); ?>
 <?php echo $form->dropDownListRow($model, 'curator_id', Teacher::getList(), array('empty' => Yii::t('group', 'Select curator'))); ?>
-<?php echo $form->dropDownListRow($model, 'monitor_id', $model->getStudentsList(), array('empty' => Yii::t('group', 'Select prefect'))); ?>
-
+<?php
+if (!$model->isNewRecord) {
+    echo $form->dropDownListRow($model, 'monitor_id', $model->getStudentsList(), array('empty' => Yii::t('group', 'Select prefect')));
+}
+?>
 <?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
 
 <?php $this->endWidget(); ?>

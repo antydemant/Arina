@@ -8,7 +8,8 @@
 
 <?php $this->widget(Booster::NAVIGATOR, array(
     //'type' => 'inverse', // null or 'inverse' //comment
-    'brand' => 'KhPK',
+    //'brand' => 'KhPK',
+    'brand' => '@',
     'brandUrl' => array('/site/index'),
     'fixed' => 'true',
     'collapse' => true, // requires bootstrap-responsive.css
@@ -21,8 +22,11 @@
                 array('label' => Yii::t('base', 'Groups'), 'url' => array('/group')),
                 array('label' => Yii::t('base', 'Teachers'), 'url' => array('/teacher/index')),
                 array('label' => Yii::t('base', 'Audiences'), 'url' => array('/audience/index')),
-                array('label' => Yii::t('base', 'StudyPlan'), 'url' => array('/studyPlan/')),
+                array('label' => Yii::t('base', 'Study Plans'), 'url' => array('/studyPlan/')),
             	array('label' => Yii::t('base', 'Students'), 'url' => array('/student/index')),
+            	array('label' => Yii::t('base', 'Specialities'), 'url' => array('/speciality/index')),
+            	array('label' => Yii::t('base', 'Departments'), 'url' => array('/department/index')),
+            	array('label' => Yii::t('base', 'Cyclic Commissions'), 'url' => array('/cyclicCommission/index')),
             ),
         ),
         array(
@@ -30,6 +34,7 @@
             'htmlOptions' => array('class' => 'pull-right'),
             'items' => array(
                 array('label' => Yii::t('base', 'Log in'), 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest),
+                array('label' => Yii::t('base', 'Logout'), 'url' => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest),
             ),
         ),
     ),

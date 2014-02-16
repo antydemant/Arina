@@ -1,22 +1,23 @@
-<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm',array(
-	'id'=>'audience-form',
-	'enableAjaxValidation'=>false,
-)); ?>
+<?php
+/**
+ * @var $this AudienceController
+ * @var $model Audience
+ * @var $form TbActiveForm
+ */
 
-<p class="help-block">Fields with <span class="required">*</span> are required.</p>
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+    'id' => 'audience-form',
+    'enableAjaxValidation' => true,
+));
+?>
+
 
 <?php echo $form->errorSummary($model); ?>
 
-	<?php echo $form->textFieldRow($model,'number',array('class'=>'span5','maxlength'=>5)); ?>
+<?php echo $form->textFieldRow($model, 'number', array('class' => 'span5', 'maxlength' => 5)); ?>
 
-	<?php echo $form->textFieldRow($model,'type',array('class'=>'span5')); ?>
+<?php echo $form->dropDownListRow($model, 'type', Audience::getTypeList(), array('empty' => Yii::t('audience', 'Select audience type'), 'class' => 'span5')); ?>
 
-<div class="form-actions">
-	<?php $this->widget('bootstrap.widgets.TbButton', array(
-			'buttonType'=>'submit',
-			'type'=>'primary',
-			'label'=>$model->isNewRecord ? 'Create' : 'Save',
-		)); ?>
-</div>
+<?php $this->renderPartial('//formButtons', array('model' => $model,)); ?>
 
 <?php $this->endWidget(); ?>

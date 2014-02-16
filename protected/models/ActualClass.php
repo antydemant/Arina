@@ -1,33 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "cyclic_commission".
+ * This is the model class for table "actual_class".
  *
- * The followings are the available columns in table 'cyclic_commission':
+ * The followings are the available columns in table 'actual_class':
  * @property integer $id
- * @property string $title
- * @property integer $head_id
- *
- * The followings are the available model relations:
- * @property Teacher[] $teachers
- * @property Teacher $head
+ * @property string $date
+ * @property integer $class_number
+ * @property integer $teacher_load_id
+ * @property integer $class_type
+ * @property integer $group_id
  */
-class CyclicCommission extends ActiveRecord
+class ActualClass extends CActiveRecord
 {
-    /**
-     * @return array for dropDownList
-     */
-    public static function getList()
-    {
-        return CHtml::listData(self::model()->findAll(), 'id', 'title');
-    }
-
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'cyclic_commission';
+		return 'actual_class';
 	}
 
 	/**
@@ -38,12 +29,11 @@ class CyclicCommission extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('title, head_id', 'required'),
-			array('head_id', 'numerical', 'integerOnly'=>true),
-			array('title', 'length', 'max'=>40),
+			array('date, class_number, teacher_load_id, class_type, group_id', 'required'),
+			array('class_number, teacher_load_id, class_type, group_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, head_id', 'safe', 'on'=>'search'),
+			array('id, date, class_number, teacher_load_id, class_type, group_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,8 +45,8 @@ class CyclicCommission extends ActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'teachers' => array(self::HAS_MANY, 'Teacher', 'cyclic_commission_id'),
-			'head' => array(self::BELONGS_TO, 'Teacher', 'head_id'),
+				'marks'=>array(self::HAS_MANY, 'ClassMark', 'actual_class_id'),
+				'absences'=>array(self::HAS_MANY, 'ClassAbsence', 'actual_class_id'),
 		);
 	}
 
@@ -67,8 +57,11 @@ class CyclicCommission extends ActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'title' => 'Title',
-			'head_id' => 'Head',
+			'date' => 'Date',
+			'class_number' => 'Class Number',
+			'teacher_load_id' => 'Teacher Load',
+			'class_type' => 'Class Type',
+			'group_id' => 'Group',
 		);
 	}
 
@@ -91,8 +84,11 @@ class CyclicCommission extends ActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('title',$this->title,true);
-		$criteria->compare('head_id',$this->head_id);
+		$criteria->compare('date',$this->date,true);
+		$criteria->compare('class_number',$this->class_number);
+		$criteria->compare('teacher_load_id',$this->teacher_load_id);
+		$criteria->compare('class_type',$this->class_type);
+		$criteria->compare('group_id',$this->group_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -103,7 +99,7 @@ class CyclicCommission extends ActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return CyclicCommission the static model class
+	 * @return ActualClass the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

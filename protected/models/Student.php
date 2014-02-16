@@ -65,6 +65,7 @@ class Student extends ActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 				'group'=>array(self::BELONGS_TO, 'Group', 'group_id'),
+				'marks'=>array(self::HAS_MANY, 'ClassMark', 'student_id'),
 		);
 	}
 
@@ -108,6 +109,8 @@ class Student extends ActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		$criteria->with = 'group';
+		
 		$criteria->compare('id',$this->id);
 		$criteria->compare('code',$this->code,true);
 		$criteria->compare('last_name',$this->last_name,true);
