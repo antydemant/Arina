@@ -10,13 +10,6 @@ class WebUser extends CWebUser
      */
     private $_model = null;
 
-    function getRole() {
-        if($user = $this->getModel()){
-            return $user->role;
-        }
-        return BaseUser::ROLE_GUEST;
-    }
-
     /**
      * Receiving username of the current user.
      *
@@ -29,11 +22,6 @@ class WebUser extends CWebUser
         }
     }
 
-    public function getMainMenu()
-    {
-
-    }
-
     /**
      * Data acquisition from base
      *
@@ -42,8 +30,38 @@ class WebUser extends CWebUser
     private function getModel()
     {
         if (!$this->isGuest && $this->_model === null) {
-            $this->_model = BaseUser::model()->findByPk($this->id, array('select' => 'username, role'));
+            $this->_model = User::model()->findByAttributes(array('username'=>$this->id), array('select' => 'username, role, id'));
         }
         return $this->_model;
+    }
+
+    public function getMainMenu()
+    {
+        $menu = array();
+        switch ($this->getRole()) {
+            case User::ROLE_GUEST:
+                require_once('menu/guest.php');
+                break;
+            case User::ROLE_ADMIN:
+                require_once('menu/admin.php');
+                break;
+            default:
+                break;
+        }
+        return $menu;
+    }
+
+    /**
+     * @return int
+     */
+    function getRole()
+    {
+        /**
+         * @var User $user
+         */
+        if ($user = $this->getModel()) {
+            return $user->role;
+        }
+        return User::ROLE_GUEST;
     }
 }
