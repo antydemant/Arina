@@ -62,7 +62,7 @@ class m140215_155635_insert_departments extends CDbMigration
                 'id'=>'12',
                 'last_name' => 'Данилюк',
                 'first_name' => 'Анатолій',
-                'middle_name' => 'ПавлоМиколайовичвич',
+                'middle_name' => 'Миколайович',
                 'cyclic_commission_id' => '1',
             )
         );

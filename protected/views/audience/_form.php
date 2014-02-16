@@ -5,7 +5,7 @@
  * @var $form TbActiveForm
  */
 
-$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+$form = $this->beginWidget(Booster::FORM, array(
     'id' => 'audience-form',
     'enableAjaxValidation' => true,
 ));

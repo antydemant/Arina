@@ -5,13 +5,20 @@
  */
 class TeacherController extends Controller
 {
-    public $name = "Teachers";
+    public $name = 'Teachers';
 
     /**
      *
      */
     public function actionIndex()
     {
+        $model = new Teacher('search');
+        $model->unsetAttributes(); // clear any default values
+        if (isset($_GET['Teacher'])) {
+            foreach($_GET['Teacher'] as $key => $item) {
+                $model->$key = $item;
+            }
+        }
 
         $sort = new CSort();
         $sort->attributes = array(
@@ -26,16 +33,22 @@ class TeacherController extends Controller
             array(
                 'pagination' => array('pageSize' => 20,),
                 'sort' => $sort,
+                'criteria' => $model->search(),
             )
         );
+
         $this->render(
             'index',
             array(
                 'provider' => $provider,
+                'model' => $model,
             )
         );
     }
 
+    /**
+     * @param $id
+     */
     public function actionView($id)
     {
         $model = Teacher::model()->loadContent($id);
@@ -48,6 +61,9 @@ class TeacherController extends Controller
         );
     }
 
+    /**
+     *
+     */
     public function actionCreate()
     {
         $model = new Teacher();
@@ -60,5 +76,27 @@ class TeacherController extends Controller
         }
 
         $this->render('create', array('model' => $model));
+    }
+
+    /**
+     * @param $id
+     */
+    public function actionUpdate($id)
+    {
+        $model = Teacher::model()->loadContent($id);
+
+        if (isset($_POST['Teacher'])) {
+            $model->attributes = $_POST['Teacher'];
+            if ($model->save()) {
+                $this->redirect("teacher/index");
+            }
+        }
+
+        $this->render(
+            'update',
+            array(
+                'model' => $model,
+            )
+        );
     }
 }

@@ -17,3 +17,10 @@ header {
     background-color: #f5f5f5;
     border-radius: 5px;
 }
+
+a.search-button {
+    margin-bottom: 10px;
+}
+.grid-view .summary {
+    padding-bottom: 10px;
+}

@@ -1,5 +1,7 @@
 <?php
 return array(
+    'Delete audience' => 'Видалити аудиторію',
+    'Audience list' => 'Список аудиторій',
     'Add new audience' => 'Додати нову аудиторію',
     'Adding new audience' => 'Додання нової аудиторії',
     'Workshop' => 'Майстерня',
@@ -8,5 +10,5 @@ return array(
     'Gum' => 'Спортзал/стадіон',
     'Select audience type' => 'Виберіть тип аудиторії',
     'Number' => 'Номер',
-    'Update audience' => 'Оновлення даних групи',
+    'Update audience' => 'Оновлення даних аудиторії',
 );

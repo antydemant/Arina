@@ -70,7 +70,7 @@ $this->widget(Booster::GRID_VIEW, array(
 			'value' =>'$data->group->title',
 			'htmlOptions' => array('width' => '50px'),
 			'filter' => CHtml::dropDownList('Student[group_id]',
-					$model->group_id, 
+					$model->group_id,
 					CHtml::listData(Group::model()->findAll(),'id','title'),
 					array('empty' => ''))
 
@@ -80,12 +80,9 @@ $this->widget(Booster::GRID_VIEW, array(
 			'htmlOptions' => array('nowrap' => 'nowrap'),
 			'class' => 'bootstrap.widgets.TbButtonColumn',
 			'template' => '{update}{delete}{view}',
-
-			'updateButtonUrl' => 'Yii::app()->controller->createUrl("update", array("id"=>$data->id))',
-			'deleteButtonUrl' => 'Yii::app()->controller->createUrl("delete", array("id"=>$data->id))',
-			'viewButtonUrl' => 'Yii::app()->controller->createUrl("view", array("id"=>$data->id))',
-
 		),
 	),
-)); 
+));
 ?>
+
+

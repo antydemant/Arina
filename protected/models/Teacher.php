@@ -20,6 +20,20 @@ class Teacher extends ActiveRecord
         return CHtml::listData(self::model()->findAll(), 'id', 'fullName');
     }
 
+    public function setFullName($value)
+    {
+        $list = explode(' ', $value);
+        if (isset($list[0])) {
+            $this->last_name = $list[0];
+        }
+        if (isset($list[1])) {
+            $this->first_name = $list[1];
+        }
+        if (isset($list[2])) {
+            $this->middle_name = $list[2];
+        }
+    }
+
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -113,8 +127,6 @@ class Teacher extends ActiveRecord
         $criteria->compare('middle_name', $this->middle_name, true);
         $criteria->compare('cyclic_commission_id', $this->cyclic_commission_id);
 
-        return new CActiveDataProvider($this, array(
-            'criteria' => $criteria,
-        ));
+        return $criteria;
     }
 }

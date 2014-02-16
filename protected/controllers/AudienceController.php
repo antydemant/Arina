@@ -53,13 +53,11 @@ class AudienceController extends Controller
      */
     public function actionDelete($id)
     {
-        if (Yii::app()->request->isPostRequest) {
-            Audience::model()->loadContent($id)->delete();
-
-            if (!isset($_GET['ajax']))
-                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-        } else
-            throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
+        $model = Audience::model()->loadContent($id);
+        $model->delete();
+        if (!Yii::app()->getRequest()->isAjaxRequest) {
+            $this->redirect(array('index'));
+        }
     }
 
     /**

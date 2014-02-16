@@ -6,23 +6,14 @@
 $this->breadcrumbs = array(
     Yii::t('base', 'Audiences'),
 );
-
+$this->menu= array(
+    array(
+        'type' => Booster::TYPE_PRIMARY,
+        'label' => Yii::t('audience', 'Add new audience'),
+        'url' => $this->createUrl('create'),
+    ),
+);
 ?>
-<header>
-    <?php $this->widget(
-        Booster::BUTTON_GROUP,
-        array(
-            'buttons' => array(
-                array(
-                    'type' => Booster::TYPE_PRIMARY,
-                    'label' => Yii::t('audience', 'Add new audience'),
-                    'url' => $this->createUrl('create'),
-                ),
-            ),
-        )
-    )
-    ?>
-</header>
 
 <?php
 $columns = array(
