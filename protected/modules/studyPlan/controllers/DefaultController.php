@@ -20,7 +20,7 @@ class DefaultController extends Controller
                             'condition' => 'study_plan_id=' . $model->id,
                         )
                     ));
-                    $this->renderPartial('subject', array('model' => $model, 'dataProvider' => $dataProvider));
+                    $this->renderPartial('subject', array('model' => $model, 'dataProvider' => $dataProvider), false, true);
                 } else {
                     echo 'Study Plan is invalid';
                     Yii::app()->end();
@@ -33,10 +33,12 @@ class DefaultController extends Controller
     public function actionAddSubject($id)
     {
         if (Yii::app()->request->isAjaxRequest) {
-        //    $this->renderPartial('subject_popup', array('planId' => $id));
-            echo 'AJAX request is successful';
+            $this->renderPartial('subject_popup', array('planId' => $id));
+
         } else {
-            throw new CHttpException(400, 'Невірний запит');
+            $this->renderPartial('subject_popup', array('planId' => $id));
+            Yii::app()->end();
+            //throw new CHttpException(400, 'Невірний запит');
         }
     }
 
@@ -45,4 +47,21 @@ class DefaultController extends Controller
         $model = new Plan();
         $this->render('create', array('model' => $model));
     }
+
+    public function actionTextA()
+    {
+        if (!Yii::app()->request->isAjaxRequest)
+            $this->render('subject_popup');
+        else {
+            $this->renderPartial('subject_popup');
+            Yii::app()->end();
+        }
+    }
+
+    public function actionTestPopUp()
+    {
+        $this->render('testPopup');
+    }
+
+
 }

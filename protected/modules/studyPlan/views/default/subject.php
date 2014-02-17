@@ -5,12 +5,15 @@
  * @var $dataProvider CActiveDataProvider
  */
 
-/*
- * 'buttons' => array(
-                array('label' => 'Додати предмет', 'type' => 'inverse', 'url' => Yii::app()->createUrl('studyPlan/subject/create')),
-                array('label' => 'Семестри', 'url' => Yii::app()->createUrl('studyPlan/semester/index', array('id' => $model->id))),
-            )
- */
+$cs = Yii::app()->clientScript;
+$cs->coreScriptPosition = CClientScript::POS_HEAD;
+$cs->scriptMap = array();
+$baseUrl = Yii::app()->getModule('gii')->assetsUrl; //the assets of existing module
+$cs->registerCoreScript('jquery');
+$cs->registerCoreScript('jquery.ui');
+$cs->registerScriptFile($baseUrl . '/js/fancybox/jquery.fancybox-1.3.1.pack.js');
+$cs->registerCssFile($baseUrl . '/js/fancybox/jquery.fancybox-1.3.1.css');
+$cs->registerScriptFile(Yii::app()->request->baseUrl . '/js/popup.js');
 ?>
 <h3>Предмети</h3>
 <?php
@@ -32,10 +35,9 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 ?>
 <div class="form-actions">
     <?php
-    echo TbHtml::ajaxSubmitButton('Додати предмет', $this->createUrl('ajaxPlan'), //$this->createUrl('addSubject', array('id' => $model->id)),
+    echo CHtml::ajaxSubmitButton('Додати предмет', $this->createUrl('addSubject', array('id' => $model->id)),
         array('update' => '#popup'),
-        array('class' => 'btn', 'id' => 'popup-btn-' . uniqid())
+        array('class' => 'btn', 'id' => 'popup-btn')
     ); ?>
 </div>
 <div id="popup"></div>
-
