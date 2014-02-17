@@ -22,18 +22,18 @@ $this->menu = array(
     ),
     array(
         'label' => Yii::t('student', 'Students of group'),
-        'icon'=>'list',
+        'icon' => 'list',
         'url' => Yii::app()->createUrl('student/group', array('id' => $model->id)),
     ),
     array(
         'label' => Yii::t('group', 'Update group'),
-        'icon'=>'pencil',
+        'icon' => 'pencil',
         'url' => $this->createUrl('update', array('id' => $model->id)),
     ),
     array(
         'label' => Yii::t('group', 'Delete group'),
         'url' => $this->createUrl('delete', array('id' => $model->id)),
-        'icon'=>'trash',
+        'icon' => 'trash',
         'htmlOptions' => array(
             'submit' => array(
                 'delete',
@@ -44,7 +44,7 @@ $this->menu = array(
     ),
 );
 ?>
-    <h2><?php echo Yii::t('group', 'View group') . " {$model->title}"; ?></h2>
+<h2><?php echo Yii::t('group', 'View group') . " {$model->title}"; ?></h2>
 
 <?php $this->widget(Booster::DETAIL_VIEW, array(
     'data' => $model,

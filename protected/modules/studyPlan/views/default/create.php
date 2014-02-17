@@ -25,7 +25,7 @@ $this->breadcrumbs = array(
 
 <div class="form-actions">
 
-    <?php echo TbHtml::ajaxSubmitButton('Далі', $this->createUrl('ajaxPlan'),
+    <?php echo CHtml::ajaxSubmitButton('Далі', $this->createUrl('ajaxPlan'),
         array('update' => '#subject-form'), array('class' => 'btn btn-primary','id'=>'first-btn')); ?>
 
 </div>
