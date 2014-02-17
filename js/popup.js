@@ -1,12 +1,12 @@
 $(document).ready(function () {
-    $('.class-link').click(function () {
+    $('#popup-btn').click(function () {
         var title = $(this).attr('rel');
         $.fancybox.showActivity();
         $.ajax({
             type: 'POST',
             cache: false,
             url: $(this).attr('href'),
-            data: $('#your-form-block-id form').serializeArray(),
+            data: $('#popup').serializeArray(),
             success: function (data) {
                 $.fancybox(data, {
                     'title': title,

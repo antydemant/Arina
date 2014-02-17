@@ -33,12 +33,9 @@ class DefaultController extends Controller
     public function actionAddSubject($id)
     {
         if (Yii::app()->request->isAjaxRequest) {
-            $this->renderPartial('subject_popup', array('planId' => $id));
-
+            $this->renderPartial('subject_popup', array('data' => $id));
         } else {
-            $this->renderPartial('subject_popup', array('planId' => $id));
-            Yii::app()->end();
-            //throw new CHttpException(400, 'Невірний запит');
+            throw new CHttpException(400, 'Невірний запит');
         }
     }
 

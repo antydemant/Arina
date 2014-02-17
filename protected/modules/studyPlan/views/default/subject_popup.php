@@ -6,5 +6,5 @@
  * Time: 20:26
  * @var $data integer
  */
+echo "Active Form for adding subject to $data study plan";
 ?>
-<p>'Active Form for adding a subject record'</p>
