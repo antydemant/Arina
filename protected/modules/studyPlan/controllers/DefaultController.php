@@ -32,9 +32,15 @@ class DefaultController extends Controller
 
     public function actionAddSubject($id)
     {
+        $model = new SpSubject();
         if (Yii::app()->request->isAjaxRequest) {
-            $this->renderPartial('subject_popup', array('data' => $id));
+            $model->study_plan_id = $id;
+            $this->renderPartial('subject_popup', array('model' => $model));
         } else {
+            if (isset($_POST['SpSubject'])) {
+                $model->attributes = $_POST['SpSubject'];
+                $model->save();
+            }
             throw new CHttpException(400, 'Невірний запит');
         }
     }
@@ -44,21 +50,5 @@ class DefaultController extends Controller
         $model = new Plan();
         $this->render('create', array('model' => $model));
     }
-
-    public function actionTextA()
-    {
-        if (!Yii::app()->request->isAjaxRequest)
-            $this->render('subject_popup');
-        else {
-            $this->renderPartial('subject_popup');
-            Yii::app()->end();
-        }
-    }
-
-    public function actionTestPopUp()
-    {
-        $this->render('testPopup');
-    }
-
 
 }
