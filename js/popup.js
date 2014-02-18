@@ -30,7 +30,7 @@ $(document).ready(function () {
         return false;
     });
 
-    $(document).on('click', '#fancybox-inner .close-code #subj_close', function () {
+    $(document).on('click', '#fancybox-inner .close-code, #subj_close', function () {
         alert('Form is closing');
         $.fancybox.close();
         return false;

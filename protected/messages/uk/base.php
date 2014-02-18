@@ -3,6 +3,7 @@
  *
  */
 return array(
+    'Subjects'=>'Предмети',
     'Find' => 'Знайти',
     'Do you want to delete this item?' => 'Ви хочете видалити цей елемент?',
     'Type' => 'Тип',
