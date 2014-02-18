@@ -10,6 +10,7 @@
  *
  * The followings are the available model relations:
  * @property Semester[] $semesters
+ * @property subjects[] $subjects
  * @property Speciality $speciality
  */
 class Plan extends ActiveRecord
@@ -50,6 +51,7 @@ class Plan extends ActiveRecord
         return array(
             'speciality' => array(self::BELONGS_TO, 'Speciality', 'speciality_id'),
             'semesters' => array(self::HAS_MANY, 'Semester', 'study_plan_id'),
+            'subjects' => array(self::HAS_MANY, 'SpSubject', 'study_plan_id'),
         );
     }
 

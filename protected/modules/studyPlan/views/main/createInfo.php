@@ -5,7 +5,7 @@
  * @var \Plan $model
  */
 ?>
-<div id="first">
+<div id="reloaded">
     <?php $form = $this->beginWidget(Booster::FORM, array(
             'id' => 'plan-form',
             'type' => 'horizontal',
@@ -20,24 +20,12 @@
         <?php echo CHtml::link(
             $model->isNewRecord ? 'Create' : 'Save',
             $this->createUrl('createInfo'),
-            array('class' => 'btn', 'id' => 'submit_btn'));
+            array('class' => 'btn bind', 'id' => 'yt0'));
         ?>
     </div>
     <?php $this->endWidget(); ?>
 </div>
 <script>
-    function makeHandler () {
-        var button = $('#submit_btn');
-        button.unbind();
-        var link = button.attr('href');
-        button.click(function () {
-            jQuery.ajax({'success': function (html) {
-                jQuery("#first").html(html);
-                makeHandler();
-            }, 'type': 'POST', 'url': link, 'cache': false, 'data': jQuery(this).parents("form").serialize()});
-            return false;
-        });
-    }
     $(makeHandler());
 </script>
 

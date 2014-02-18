@@ -33,15 +33,18 @@ class MainController extends Controller
     public function actionSubjects($id)
     {
         $model = new PlanSubjects();
-        $model->planId = $id;
+        $model->prepare($id);
 
         if (isset($_POST['PlanSubjects'])) {
             $model->attributes = $_POST['PlanSubjects'];
             if ($model->validate()) {
                 $model->makeChanges();
-                $this->renderPartial('subjects',array('model'=>$model));
-                Yii::app()->end();
-            } else {
+                if (Yii::app()->getRequest()->isAjaxRequest) {
+                    $this->renderPartial('subjects',array('model'=>$model));
+                    Yii::app()->end();
+                } else {
+                    $this->render('subjects',array('model'=>$model));
+                }
             }
         }
 
@@ -50,5 +53,20 @@ class MainController extends Controller
         } else {
             $this->render('subjects',array('model'=>$model));
         }
+    }
+
+    /**
+     * @param $id subject in plan
+     */
+    public function actionDeleteSubject($id)
+    {
+        /**
+         * @var $subject SpSubject
+         */
+        $subject = SpSubject::model()->loadContent($id);
+        $planId = $subject->study_plan_id;
+        $subject->delete();
+        $this->redirect(array('subjects','id'=>$planId));
+
     }
 }

@@ -8,6 +8,7 @@
     <link rel="icon" href="<?php echo Yii::app()->request->baseUrl; ?>/favicon.ico" type="image/x-icon"/>
     <!-- blueprint CSS framework -->
     <?php echo Yii::app()->bootstrap->registerBootstrapCss(); ?>
+    <?php Yii::app()->getClientScript()->registerScriptFile(Yii::app()->request->baseUrl.'/js/main.js', CClientScript::POS_HEAD); ?>
     <!--[if lt IE 8]>
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css"
           media="screen, projection"/>

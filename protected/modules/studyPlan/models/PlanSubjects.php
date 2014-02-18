@@ -9,7 +9,16 @@ class PlanSubjects extends CFormModel
     public $addedSubjects = array();
     public $total_hours;
     public $subjectId;
+    /**
+     * @var Plan $plan
+     */
+    protected $plan;
 
+    public function prepare($id)
+    {
+        $this->planId = $id;
+        $this->plan = Plan::model()->findByPk($this->planId);
+    }
     /**
      * Do something cool
      * Add subject to plan
@@ -30,7 +39,15 @@ class PlanSubjects extends CFormModel
      */
     public function getNotAddedSubjects()
     {
-        return Subject::model()->getList();
+        $list = Subject::model()->getList();
+
+        /**
+         * @var SpSubject $item
+         */
+        foreach($this->plan->subjects as $item) {
+            unset($list[$item->subject_id]);
+        }
+        return $list;
     }
 
     public function getAddedSubjectsProvider()
