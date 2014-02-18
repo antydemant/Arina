@@ -6,28 +6,38 @@
  */
 ?>
 <div id="first">
-<?php $form = $this->beginWidget(Booster::FORM, array(
-        'id' => 'plan-form',
-        'type' => 'horizontal',
-        'htmlOptions' => array('class' => 'well span10'),
-        'enableAjaxValidation' => true,
-    )
-); ?>
+    <?php $form = $this->beginWidget(Booster::FORM, array(
+            'id' => 'plan-form',
+            'type' => 'horizontal',
+            'htmlOptions' => array('class' => 'well span10'),
+        )
+    ); ?>
 
-<?php echo $form->dropDownListRow($model, 'speciality_id', Speciality::getList()); ?>
+    <?php echo $form->dropDownListRow($model, 'speciality_id', Speciality::getList()); ?>
 
-<?php echo $form->textFieldRow($model, 'study_year'); ?>
+    <?php echo $form->textFieldRow($model, 'study_year'); ?>
     <div class="form-actions">
-        <?php echo CHtml::ajaxSubmitButton(
+        <?php echo CHtml::link(
             $model->isNewRecord ? 'Create' : 'Save',
             $this->createUrl('createInfo'),
-            array('update'=>'#first')); ?>
-        <?php /*$this->widget(Booster::BUTTON, array(
-                'buttonType' => 'submit',
-                'type' => 'primary',
-                'label' => $model->isNewRecord ? 'Create' : 'Save',)
-        );*/ ?>
+            array('class' => 'btn', 'id' => 'submit_btn'));
+        ?>
     </div>
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 </div>
+<script>
+    function makeHandler () {
+        var button = $('#submit_btn');
+        button.unbind();
+        var link = button.attr('href');
+        button.click(function () {
+            jQuery.ajax({'success': function (html) {
+                jQuery("#first").html(html);
+                makeHandler();
+            }, 'type': 'POST', 'url': link, 'cache': false, 'data': jQuery(this).parents("form").serialize()});
+            return false;
+        });
+    }
+    $(makeHandler());
+</script>
 

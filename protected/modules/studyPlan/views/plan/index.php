@@ -18,6 +18,11 @@ $this->breadcrumbs = array(
                         'label' => Yii::t('studyPlan', 'Create new plan'),
                         'url' => $this->createUrl('create'),
                     ),
+                    array(
+                        'type' => Booster::TYPE_PRIMARY,
+                        'label' => Yii::t('studyPlan', 'Create new plan')." D",
+                        'url' => array('main/createInfo'),
+                    ),
                 ),
             )
         )
