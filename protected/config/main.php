@@ -27,7 +27,8 @@ return CMap::mergeArray(
         ),
 
         'modules' => array(
-            'studyPlan'
+            'studyPlan',
+        	'journal'
         ),
 
 
