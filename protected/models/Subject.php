@@ -9,7 +9,7 @@
  * @property integer $cycle_id
  *
  */
-class Subject extends CActiveRecord
+class Subject extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name

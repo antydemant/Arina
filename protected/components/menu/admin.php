@@ -13,5 +13,6 @@ $menu = array(
     array('label' => Yii::t('base', 'Students'), 'url' => array('/student/index')),
     array('label' => Yii::t('base', 'Specialities'), 'url' => array('/speciality')),
     array('label' => Yii::t('base', 'Departments'), 'url' => array('/department')),
+    array('label' => Yii::t('base', 'Subjects'), 'url' => array('/subject')),
     array('label' => Yii::t('base', 'Cyclic Commissions'), 'url' => array('/cyclicCommission')),
 );

@@ -30,7 +30,9 @@ class Plan extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('speciality_id, study_year', 'required'),
+
+            array('study_year', 'match', 'pattern'=>'/^([0-9]{4}\/[0-9]{4})+$/', 'allowEmpty'=>false),
+			array('speciality_id', 'required'),
 			array('speciality_id', 'numerical', 'integerOnly'=>true),
 			array('study_year', 'length', 'max'=>9),
 			// The following rule is used by search().
