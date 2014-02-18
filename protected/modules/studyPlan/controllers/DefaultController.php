@@ -2,9 +2,19 @@
 
 class DefaultController extends Controller
 {
+    public $name = 'Навчальні плани';
+
     public function actionIndex()
     {
-        $this->render('index');
+        $dataProvider = Plan::model()->getProvider();
+        $this->render('index', array('dataProvider' => $dataProvider));
+    }
+
+    public function actionAddPlan()
+    {
+        if (Yii::app()->requset->isAjaxRequest) {
+
+        }
     }
 
     public function actionAjaxPlan()
@@ -33,21 +43,45 @@ class DefaultController extends Controller
     public function actionAddSubject($id)
     {
         $model = new SpSubject();
-        if (Yii::app()->request->isAjaxRequest) {
-            $model->study_plan_id = $id;
-            $this->renderPartial('subject_popup', array('model' => $model));
-        } else {
-            if (isset($_POST['SpSubject'])) {
-                $model->attributes = $_POST['SpSubject'];
-                $model->save();
+        $model->study_plan_id = $id;
+
+        if (isset($_POST['SpSubject'])) {
+            $model->attributes = $_POST['SpSubject'];
+            if ($model->save()) {
+                $dataProvider = SpSubject::model()->getProvider(array(
+                    'criteria' => array(
+                        'condition' => 'study_plan_id=8',
+                    )
+                ));
+                $this->renderPartial('subject_list', array('model' => $model, 'dataProvider' => $dataProvider), false, true);
             }
-            throw new CHttpException(400, 'Невірний запит');
+            Yii::app()->end();
+
         }
+
+        $this->renderPartial('add_subject', array('model' => $model));
+
     }
 
     public function actionCreate()
     {
         $model = new Plan();
+
+        //  $this->ajaxValidation('studyPlan-form', $model);
+
+        if (isset($_POST['Plan'])) {
+            $model->attributes = $_POST['Plan'];
+            if ($model->validate()) {
+                $dataProvider = SpSubject::model()->getProvider(array(
+                    'criteria' => array(
+                        'condition' => 'study_plan_id=8',
+                    )
+                ));
+                $this->renderPartial('subject_list', array('model' => $model, 'dataProvider' => $dataProvider), false, true);
+            }
+            Yii::app()->end();
+        }
+
         $this->render('create', array('model' => $model));
     }
 
