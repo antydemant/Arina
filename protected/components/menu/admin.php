@@ -9,7 +9,7 @@ $menu = array(
     array('label' => Yii::t('base', 'Groups'), 'url' => array('/group')),
     array('label' => Yii::t('base', 'Audiences'), 'url' => array('/audience')),
     array('label' => Yii::t('base', 'Teachers'), 'url' => array('/teacher')),
-    array('label' => Yii::t('base', 'Study Plans'), 'url' => array('/studyPlan')),
+    array('label' => Yii::t('base', 'Study plans'), 'url' => array('/studyPlan')),
     array('label' => Yii::t('base', 'Students'), 'url' => array('/student/index')),
     array('label' => Yii::t('base', 'Specialities'), 'url' => array('/speciality')),
     array('label' => Yii::t('base', 'Departments'), 'url' => array('/department')),
