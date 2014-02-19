@@ -5,6 +5,8 @@
  */
 class MainController extends Controller
 {
+    public $name='Study plans';
+
     public function actionCreateInfo()
     {
         $model = new Plan();
