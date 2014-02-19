@@ -47,6 +47,7 @@ class ActualClass extends CActiveRecord
 		return array(
 				'marks'=>array(self::HAS_MANY, 'ClassMark', 'actual_class_id'),
 				'absences'=>array(self::HAS_MANY, 'ClassAbsence', 'actual_class_id'),
+				'group'=>array(self::BELONGS_TO, 'Group', 'group_id'),
 		);
 	}
 
