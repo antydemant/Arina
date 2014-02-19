@@ -8,6 +8,8 @@ class MainController extends Controller
 {
     public $defaultAction = 'createInfo';
 
+    public $name='Study plans';
+
     public function actionCreateInfo()
     {
         $model = new Plan();
