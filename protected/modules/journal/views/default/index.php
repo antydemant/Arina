@@ -3,10 +3,10 @@
 /* @var $model Group */
 
 $this->breadcrumbs=array(
-	$this->module->id,
+	Yii::t('base', 'Journal'),
 );
 ?>
-<h1><?php echo $this->uniqueId . '/' . $this->action->id; ?></h1>
+<h1><?php echo Yii::t('base', 'Journal'); ?></h1>
 
 <?php
 echo CHtml::dropDownList('Student[group_id]',
@@ -32,13 +32,6 @@ $this->widget(
 								'htmlOptions' => array('style' => 'width: 60px')
 						),
 						array('name' => 'classes.marks', 'header' => '19.06'),
-						array(
-								'htmlOptions' => array('nowrap' => 'nowrap'),
-								'class' => 'bootstrap.widgets.TbButtonColumn',
-								'viewButtonUrl' => null,
-								'updateButtonUrl' => null,
-								'deleteButtonUrl' => null,
-						)
 				)
 		)
 );
