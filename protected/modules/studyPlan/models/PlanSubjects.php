@@ -1,6 +1,7 @@
 <?php
+
 /**
- *
+ * Class PlanSubjects
  * @author Dmytro Karpovych <ZAYEC77@gmail.com>
  */
 class PlanSubjects extends CFormModel
@@ -14,11 +15,15 @@ class PlanSubjects extends CFormModel
      */
     protected $plan;
 
+    /**
+     * @param $id
+     */
     public function prepare($id)
     {
         $this->planId = $id;
         $this->plan = Plan::model()->findByPk($this->planId);
     }
+
     /**
      * Do something cool
      * Add subject to plan
@@ -44,17 +49,20 @@ class PlanSubjects extends CFormModel
         /**
          * @var SpSubject $item
          */
-        foreach($this->plan->subjects as $item) {
+        foreach ($this->plan->subjects as $item) {
             unset($list[$item->subject_id]);
         }
         return $list;
     }
 
+    /**
+     * @return CActiveDataProvider
+     */
     public function getAddedSubjectsProvider()
     {
         $criteria = new CDbCriteria();
         $criteria->condition = "study_plan_id = $this->planId";
-        $dataProvider = SpSubject::model()->getProvider(array('criteria'=>$criteria));
+        $dataProvider = SpSubject::model()->getProvider(array('criteria' => $criteria));
         return $dataProvider;
     }
 

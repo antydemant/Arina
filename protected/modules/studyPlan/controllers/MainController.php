@@ -5,6 +5,8 @@
  */
 class MainController extends Controller
 {
+    public $defaultAction = 'createInfo';
+
     public $name='Study plans';
 
     public function actionCreateInfo()
@@ -16,7 +18,7 @@ class MainController extends Controller
             if (Yii::app()->getRequest()->isAjaxRequest) {
 
                 if ($model->save()) {
-                    $this->redirect(array('subjects','id'=>$model->id));
+                    $this->redirect(array('subjects', 'id' => $model->id)); // show subject form
 
                 } else {
                     $this->renderPartial('createInfo', array(
@@ -32,6 +34,10 @@ class MainController extends Controller
         ));
     }
 
+    /**
+     * Add subjects to study plan
+     * @param $id
+     */
     public function actionSubjects($id)
     {
         $model = new PlanSubjects();
@@ -58,7 +64,8 @@ class MainController extends Controller
     }
 
     /**
-     * @param $id subject in plan
+     * Delete subject from study plan
+     * @param $id
      */
     public function actionDeleteSubject($id)
     {
