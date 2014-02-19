@@ -23,6 +23,15 @@ class SpSubject extends ActiveRecord
     }
 
     /**
+     * Return array for dropDownList
+     * @return array
+     */
+    public static function getList()
+    {
+        return self::getListAll('id', 'title');
+    }
+
+    /**
      * @return array validation rules for model attributes.
      */
     public function rules()

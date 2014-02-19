@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @author Dmytro Karpovych <ZAYEC77@gmail.com>
@@ -46,18 +47,18 @@ class MainController extends Controller
             if ($model->validate()) {
                 $model->makeChanges();
                 if (Yii::app()->getRequest()->isAjaxRequest) {
-                    $this->renderPartial('subjects',array('model'=>$model));
+                    $this->renderPartial('subjects', array('model' => $model));
                     Yii::app()->end();
                 } else {
-                    $this->render('subjects',array('model'=>$model));
+                    $this->render('subjects', array('model' => $model));
                 }
             }
         }
 
         if (Yii::app()->getRequest()->isAjaxRequest) {
-            $this->renderPartial('subjects',array('model'=>$model));
+            $this->renderPartial('subjects', array('model' => $model));
         } else {
-            $this->render('subjects',array('model'=>$model));
+            $this->render('subjects', array('model' => $model));
         }
     }
 
@@ -73,7 +74,36 @@ class MainController extends Controller
         $subject = SpSubject::model()->loadContent($id);
         $planId = $subject->study_plan_id;
         $subject->delete();
-        $this->redirect(array('subjects','id'=>$planId));
+        $this->redirect(array('subjects', 'id' => $planId));
 
+    }
+
+    /**
+     * @param $id
+     */
+    public function actionSemesters($id)
+    {
+        $model = new PlanSemesters();
+        $model->prepare($id);
+
+        if (isset($_POST['PlanSemesters'])) {
+            $model->attributes = $_POST['PlanSemesters'];
+            if ($model->validate()) {
+                $model->makeChanges();
+                if (Yii::app()->request->isAjaxRequest) {
+                    $this->renderPartial('semesters', array('model' => $model));
+                    Yii::app()->end();
+                } else {
+                    $this->render('semesters', array('model' => $model));
+                }
+            }
+        }
+
+        if (Yii::app()->request->isAjaxRequest) {
+            $this->renderPartial('semesters', array('model' => $model));
+            Yii::app()->end();
+        } else {
+            $this->render('semesters', array('model' => $model));
+        }
     }
 }

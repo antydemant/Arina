@@ -48,6 +48,7 @@
             'responsiveTable' => true,
             'type' => 'striped condensed bordered hover',
         )); ?>
+        <?php echo CHtml::link('Далі', $this->createUrl('semesters',array('id'=>$model->planId)), array('class' => 'btn bind')); ?>
     </div>
 </div>
 <?php $this->endWidget(); ?>
