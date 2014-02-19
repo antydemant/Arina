@@ -10,7 +10,6 @@
     <?php $form = $this->beginWidget(Booster::FORM, array(
         'id' => 'subjects-form',
         'htmlOptions' => array('class' => 'well span11', 'model_id' => $model->planId),
-        //'enableAjaxValidation' => true,
     )); ?>
     <div class="span3">
         <?php echo $form->dropDownListRow($model, 'subjectId', $model->getNotAddedSubjects(), array('size' => 6)); ?>
@@ -26,21 +25,24 @@
         ?>
     </div>
     <div class="span4">
-        <div><span><?php echo Yii::t('plan', 'Subjects in plan'); ?></span></div>
+        <div><span><?php echo 'Предмети у плані'; ?></span></div>
         <?php $this->widget(Booster::GRID_VIEW, array(
             'dataProvider' => $model->getAddedSubjectsProvider(),
             'columns' => array(
                 array(
                     'header' => 'Предмет',
-                    'value' => '$data->subject->title',
+                    'name' => 'subject.title',
                 ),
                 array(
                     'header' => 'К-сть годин',
-                    'value' => '$data->total_hours',
+                    'name' => 'total_hours',
                 ),
                 array(
-                    'type' => 'html',
-                    'value' => 'CHtml::link("<i class=\'icon-trash\'></i>",Yii::app()->controller->createUrl("deleteSubject",array("id"=>$data->id)), array(\'class\' => \'btn bind\'));',
+                    'htmlOptions' => array('nowrap' => 'nowrap'),
+                    'class' => 'bootstrap.widgets.TbButtonColumn',
+                    'template' => "{delete}",
+                    'deleteButtonUrl' => 'Yii::app()->controller->createUrl("deleteSubject", array("id"=>$data->id))',
+                    'deleteButtonOptions' => array('class' => 'btn bind'),
                 ),
             ),
             'responsiveTable' => true,

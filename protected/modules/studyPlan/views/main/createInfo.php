@@ -10,6 +10,7 @@
             'id' => 'plan-form',
             'type' => 'horizontal',
             'htmlOptions' => array('class' => 'well span10'),
+            'enableClientValidation' => true,
         )
     ); ?>
 
@@ -18,7 +19,7 @@
     <?php echo $form->textFieldRow($model, 'study_year'); ?>
     <div class="form-actions">
         <?php echo CHtml::link(
-            $model->isNewRecord ? 'Create' : 'Save',
+            $model->isNewRecord ? 'Створити' : 'Зберегти',
             $this->createUrl('createInfo'),
             array('class' => 'btn bind', 'id' => 'yt0'));
         ?>
