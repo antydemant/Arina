@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Serhiy
- * Date: 15.02.14
- * Time: 10:11
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * @var $this SubjectController
  * @var $model Subject
  */
@@ -14,7 +11,7 @@
         'id' => 'subject-form',
         'type' => 'horizontal',
         'htmlOptions' => array('class' => 'well span10'),
-        'enableAjaxValidation' => true,
+        'enableClientValidation' => true,
     )
 );
 ?>

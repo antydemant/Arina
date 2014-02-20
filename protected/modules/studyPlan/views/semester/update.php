@@ -4,9 +4,9 @@
  * @var $model Semester
  */
 $this->breadcrumbs = array(
-    'Навчальні плани' => '',
-    'Семестри' => $this->createUrl('index'),
-    "# $model->semester_number",
+    Yii::t('base', 'Study plans') => $this->createUrl('plan/index'),
+    $model->study_year => $this->createUrl('plan/view', array('id' => $model->id)),
+    Yii::t('base', 'Semesters')
 );
 ?>
 <?php

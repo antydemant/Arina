@@ -1,21 +1,34 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: Serhiy
- * Date: 13.02.14
- * Time: 18:40
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
+ * Class SemesterController
  */
 class SemesterController extends Controller
 {
-    public $name = 'Навчальний план: Семестри';
+    public $name = 'Semesters';
 
-    public function actionIndex()
+    /**
+     * List all semester for the study plan
+     * @param $id
+     */
+    public function actionIndex($id)
     {
-        $dataProvider = Semester::model()->getProvider();
-        $this->render('index', array('dataProvider' => $dataProvider));
+        $model = Plan::model()->loadContent($id);
+        $dataProvider = Semester::model()->getProvider(array(
+            'criteria' => array(
+                'condition' => "study_plan_id=$id"
+            )
+        ));
+        $this->render('index', array(
+            'model' => $model,
+            'dataProvider' => $dataProvider
+        ));
     }
 
+    /**
+     * Add semester to the study plan
+     */
     public function actionCreate()
     {
         $model = new Semester();
@@ -30,12 +43,20 @@ class SemesterController extends Controller
         $this->render('create', array('model' => $model));
     }
 
+    /**
+     * Detailed view of semester in study plan
+     * @param $id
+     */
     public function actionView($id)
     {
         $model = Semester::model()->loadContent($id);
         $this->render('view', array('model' => $model));
     }
 
+    /**
+     * Update semester in the study plan
+     * @param $id
+     */
     public function actionUpdate($id)
     {
         $model = Semester::model()->loadContent($id);
@@ -50,6 +71,10 @@ class SemesterController extends Controller
         $this->render('update', array('model' => $model));
     }
 
+    /**
+     * Delete semester from the study plan
+     * @param $id
+     */
     public function actionDelete($id)
     {
         $model = Semester::model()->loadContent($id);

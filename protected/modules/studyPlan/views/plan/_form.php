@@ -1,5 +1,6 @@
 <?php
 /**
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * @var $this PlanController
  * @var $form TbActiveForm
  * @var \Plan $model
@@ -12,7 +13,7 @@
         'id' => 'studyPlan-form',
         'type' => 'horizontal',
         'htmlOptions' => array('class' => 'well span10'),
-        'enableAjaxValidation' => true,
+        'enableClientValidation' => true,
     )
 );
 ?>

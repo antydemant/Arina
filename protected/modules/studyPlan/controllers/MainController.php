@@ -1,13 +1,22 @@
 <?php
 
 /**
- *
- * @author Dmytro Karpovych <ZAYEC77@gmail.com>
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
+ * Class MainController
  */
 class MainController extends Controller
 {
     public $name = 'Study plans';
 
+    public function actionIndex()
+    {
+        $dataProvider = Plan::model()->getProvider();
+        $this->render('index', array('dataProvider' => $dataProvider));
+    }
+
+    /**
+     * AJAX form to create study plan
+     */
     public function actionCreateInfo()
     {
         $model = new Plan();
@@ -77,10 +86,15 @@ class MainController extends Controller
      */
     public function actionSemesters($id)
     {
-        $this->doSomething($id);
+        $this->addData($id);
     }
 
-    protected function doSomething($id, $scenario = '')
+    /**
+     * Add semester or hours to study plan
+     * @param $id
+     * @param string $scenario
+     */
+    protected function addData($id, $scenario = '')
     {
         $model = new PlanSemesters($scenario);
         $model->prepare($id);
@@ -99,24 +113,27 @@ class MainController extends Controller
         }
     }
 
-    public function actionIndex()
-    {
-        $dataProvider = Plan::model()->getProvider();
-        $this->render('index', array('dataProvider' => $dataProvider));
-    }
-
+    /**
+     * @param $id
+     */
     public function actionAddSemester($id)
     {
-        $this->doSomething($id, 'addSemester');
+        $this->addData($id, 'addSemester');
     }
 
+    /**
+     * @param $id
+     */
     public function actionAddHours($id)
     {
-        $this->doSomething($id, 'addHours');
+        $this->addData($id, 'addHours');
     }
 
+    /**
+     * @param $id
+     */
     public function actionRemoveSemester($id)
     {
-        $this->doSomething($id, 'removeSemester');
+        $this->addData($id, 'removeSemester');
     }
 }

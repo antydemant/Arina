@@ -1,8 +1,9 @@
 <?php
 /**
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * @var TbActiveForm $form
  * @var MainController $this
- * @var \Plan $model
+ * @var Plan $model
  */
 ?>
 <div id="reloaded">
@@ -17,9 +18,10 @@
     <?php echo $form->dropDownListRow($model, 'speciality_id', Speciality::getList()); ?>
 
     <?php echo $form->textFieldRow($model, 'study_year'); ?>
+
     <div class="form-actions">
         <?php echo CHtml::link(
-            $model->isNewRecord ? 'Створити' : 'Зберегти',
+            $model->isNewRecord ? Yii::t('base', 'Create') : Yii::t('base', 'Save'),
             $this->createUrl('createInfo'),
             array('class' => 'btn bind', 'id' => 'yt0'));
         ?>
@@ -27,6 +29,6 @@
     <?php $this->endWidget(); ?>
 </div>
 <script>
-    $(makeHandler());
+    $(makeHandler()); //Make handler for an ajax link
 </script>
 

@@ -1,6 +1,6 @@
 <?php
 /**
- *
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * @var MainController $this
  * @var \PlanSubjects $model
  * @var TbActiveForm $form
@@ -25,16 +25,16 @@
         ?>
     </div>
     <div class="span4">
-        <div><span><?php echo 'Предмети у плані'; ?></span></div>
+        <div><span><?php echo Yii::t('studyPlan', 'Subjects in the plan'); ?></span></div>
         <?php $this->widget(Booster::GRID_VIEW, array(
             'dataProvider' => $model->getAddedSubjectsProvider(),
             'columns' => array(
                 array(
-                    'header' => 'Предмет',
+                    'header' => Yii::t('terms', 'Subject'),
                     'name' => 'subject.title',
                 ),
                 array(
-                    'header' => 'К-сть годин',
+                    'header' => Yii::t('terms', 'Hours'),
                     'name' => 'total_hours',
                 ),
                 array(
@@ -48,10 +48,10 @@
             'responsiveTable' => true,
             'type' => 'striped condensed bordered hover',
         )); ?>
-        <?php echo CHtml::link('Далі', $this->createUrl('semesters',array('id'=>$model->planId)), array('class' => 'btn bind')); ?>
+        <?php echo CHtml::link(Yii::t('base', 'Next'), $this->createUrl('semesters', array('id' => $model->planId)), array('class' => 'btn bind')); ?>
     </div>
 </div>
 <?php $this->endWidget(); ?>
 <script>
-    $(makeHandler());
+    $(makeHandler()); //Make handler for an ajax link
 </script>
