@@ -1,32 +1,27 @@
 <?php
 /**
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * @var $this PlanController
  * @var $dataProvider CActiveDataProvider
  */
 
 $this->breadcrumbs = array(
-    'Навчальні плани',
+    Yii::t('base', 'Study plans'),
+);
+
+$this->menu = array(
+    array(
+        'type' => Booster::TYPE_PRIMARY,
+        'label' => Yii::t('studyPlan', 'Create new plan'),
+        'url' => $this->createUrl('createInfo'),
+    ),
 );
 ?>
-    <header>
-        <?php $this->widget(
-            Booster::BUTTON_GROUP,
-            array(
-                'buttons' => array(
-                    array(
-                        'type' => Booster::TYPE_PRIMARY,
-                        'label' => Yii::t('studyPlan', 'Create new plan'),
-                        'url' => array('createInfo'),
-                    ),
-                ),
-            )
-        )
-        ?>
-    </header>
+
 <?php
 $columns = array(
-    array('name' => 'speciality.title', 'header' => 'Спеціальність'),
-    array('name' => 'study_year', 'header' => 'Навчальний рік'),
+    array('name' => 'speciality.title', 'header' => Yii::t('terms', 'Speciality')),
+    array('name' => 'study_year', 'header' => Yii::t('terms', 'Study year')),
     array(
         'htmlOptions' => array('nowrap' => 'nowrap'),
         'class' => 'bootstrap.widgets.TbButtonColumn',
@@ -35,5 +30,7 @@ $columns = array(
         'deleteButtonUrl' => 'Yii::app()->controller->createUrl("plan/delete", array("id"=>$data["id"]))',
     ),
 );
+
+$this->renderPartial('//tableList', array('provider' => $dataProvider, 'columns' => $columns));
+
 ?>
-<?php $this->renderPartial('//tableList', array('provider' => $dataProvider, 'columns' => $columns));

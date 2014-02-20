@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @author Serhiy Vinicuk <serhiyvinichuk@gmail.com>
  * This is the model class for table "study_plan".
  *
  * The followings are the available columns in table 'study_plan':

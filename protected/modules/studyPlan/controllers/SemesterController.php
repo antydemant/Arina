@@ -1,41 +1,53 @@
 <?php
 
 /**
- * Created by PhpStorm.
- * User: Serhiy
- * Date: 13.02.14
- * Time: 18:40
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
+ * Class SemesterController
  */
 class SemesterController extends Controller
 {
-    public $name = 'Навчальний план: Семестри';
+    public $name = 'Semesters';
 
-    public function actionIndex()
+    /**
+     * List all semester for the study plan
+     * @param $id
+     */
+    public function actionIndex($id)
     {
-        $dataProvider = Semester::model()->getProvider();
-        $this->render('index', array('dataProvider' => $dataProvider));
+        $model = Plan::model()->loadContent($id);
+        $dataProvider = Semester::model()->getProvider(array(
+            'criteria' => array(
+                'condition' => "study_plan_id=$id"
+            )
+        ));
+        $this->render('index', array(
+            'model' => $model,
+            'dataProvider' => $dataProvider
+        ));
     }
 
-    public function actionCreate()
+    /**
+     * Add semester to the study plan
+     * @param $id
+     */
+    public function actionCreate($id)
     {
         $model = new Semester();
-
+        $model->study_plan_id = $id;
         if (isset($_POST['Semester'])) {
             $model->attributes = $_POST['Semester'];
             if ($model->save()) {
-                $this->redirect($this->createUrl('index'));
+                $this->redirect($this->createUrl('index',array('id'=>$model->study_plan_id)));
             }
         }
 
         $this->render('create', array('model' => $model));
     }
 
-    public function actionView($id)
-    {
-        $model = Semester::model()->loadContent($id);
-        $this->render('view', array('model' => $model));
-    }
-
+    /**
+     * Update semester in the study plan
+     * @param $id
+     */
     public function actionUpdate($id)
     {
         $model = Semester::model()->loadContent($id);
@@ -43,13 +55,17 @@ class SemesterController extends Controller
         if (isset($_POST['Semester'])) {
             $model->attributes = $_POST['Semester'];
             if ($model->save()) {
-                $this->redirect($this->createUrl('index'));
+                $this->redirect($this->createUrl('index',array('id'=>$model->study_plan_id)));
             }
         }
 
         $this->render('update', array('model' => $model));
     }
 
+    /**
+     * Delete semester from the study plan
+     * @param $id
+     */
     public function actionDelete($id)
     {
         $model = Semester::model()->loadContent($id);

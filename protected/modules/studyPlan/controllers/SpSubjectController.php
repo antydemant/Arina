@@ -1,21 +1,16 @@
 <?php
-
 /**
- * Created by PhpStorm.
- * User: Serhiy
- * Date: 13.02.14
- * Time: 18:40
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
+ * Class SpSubjectController
  */
-class SubjectController extends Controller
+class SpSubjectController extends Controller
 {
-    public $name = 'Навчальний план: Предмети';
+    public $name = 'Subjects';
 
-    public function actionIndex()
-    {
-        $dataProvider = SpSubject::model()->getProvider();
-        $this->render('index', array('dataProvider' => $dataProvider));
-    }
-
+    /**
+     * Detailed view of the subject in the study plan
+     * @param $id
+     */
     public function actionView($id)
     {
         $dataProvider = Hours::model()->getProvider(array(
@@ -27,6 +22,9 @@ class SubjectController extends Controller
         $this->render('view', array('dataProvider' => $dataProvider, 'model' => $model));
     }
 
+    /**
+     * Add new subject to the study plan
+     */
     public function actionCreate()
     {
         $model = new SpSubject('create');
@@ -39,6 +37,10 @@ class SubjectController extends Controller
         $this->render('create', array('model' => $model));
     }
 
+    /**
+     * Update subject in the study plan
+     * @param $id
+     */
     public function actionUpdate($id)
     {
         $model = SpSubject::model()->loadContent($id);
@@ -51,6 +53,10 @@ class SubjectController extends Controller
         $this->render('update', array('model' => $model));
     }
 
+    /**
+     * Remove subject from the study plan
+     * @param $id
+     */
     public function actionDelete($id)
     {
         $model = SpSubject::model()->loadContent($id);

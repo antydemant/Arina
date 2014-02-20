@@ -1,27 +1,25 @@
 <?php
 /**
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * @var $this PlanController
  * @var $model Plan
  */
 
 $this->breadcrumbs = array(
-    'Навчальні плани' => $this->createUrl('index'),
+    Yii::t('base', 'Study plans') => $this->createUrl('main/index'),
     $model->study_year,
 );
 
+$this->menu = array(
+    array('label' => Yii::t('studyPlan', 'Add subject'), 'type' => 'primary', 'url' => $this->createUrl('spSubject/create')),
+    array('label' => Yii::t('studyPlan', 'Semesters'), 'type' => 'primary', 'url' => $this->createUrl('semester/index', array('id' => $model->id)))
+);
+?>
+
+<?php
 $this->beginWidget('bootstrap.widgets.TbBox', array(
     'title' => $model->speciality->title . ': ' . $model->study_year,
     'headerIcon' => 'icon-list',
-    'headerButtons' => array(
-        array(
-            'class' => 'bootstrap.widgets.TbButtonGroup',
-            'type' => 'primary',
-            'buttons' => array(
-                array('label' => 'Додати предмет', 'type' => 'inverse', 'url' => Yii::app()->createUrl('studyPlan/subject/create')),
-                array('label' => 'Семестри', 'url' => Yii::app()->createUrl('studyPlan/semester/index', array('id' => $model->id))),
-            )
-        ),
-    ),
 ));
 
 $dataProvider = SpSubject::model()->getProvider(array(
@@ -34,17 +32,16 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'dataProvider' => $dataProvider,
     'template' => "{items}\n{pager}",
     'columns' => array(
-        array('name' => 'subject.title', 'header' => 'Предмет'),
-        array('name' => 'total_hours', 'header' => 'Всього годин'),
+        array('name' => 'subject.title', 'header' => Yii::t('terms', 'Subject')),
+        array('name' => 'total_hours', 'header' => Yii::t('terms', 'Hours')),
         array(
             'htmlOptions' => array('nowrap' => 'nowrap'),
             'class' => 'bootstrap.widgets.TbButtonColumn',
-            'viewButtonUrl' => 'Yii::app()->createUrl("studyPlan/subject/view", array("id"=>$data["id"]))',
-            'updateButtonUrl' => 'Yii::app()->createUrl("studyPlan/subject/update", array("id"=>$data["id"]))',
-            'deleteButtonUrl' => 'Yii::app()->createUrl("studyPlan/subject/delete", array("id"=>$data["id"]))',
+            'viewButtonUrl' => 'Yii::app()->controller->createUrl("spSubject/view", array("id"=>$data["id"]))',
+            'updateButtonUrl' => 'Yii::app()->controller->createUrl("spSubject/update", array("id"=>$data["id"]))',
+            'deleteButtonUrl' => 'Yii::app()->controller->createUrl("spSubject/delete", array("id"=>$data["id"]))',
         ),
     ),
-
 ));
 $this->endWidget();
 

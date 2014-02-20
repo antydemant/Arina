@@ -7,10 +7,11 @@ return array(
     'Study year' => 'Навчальний рік',
     'Study plan' => 'Навчальний план',
     'Subject' => 'Предмет',
-    'Title' => 'Назва',
     'Hours' => 'Години',
     'Test' => 'Залік',
     'Exam' => 'Екзамен',
     'Course work' => 'Курсова робота',
     'Course project' => 'Курсовий проект',
+    'Semester' => 'Семестр',
+    'Title' => 'Назва',
 );

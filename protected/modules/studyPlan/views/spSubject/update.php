@@ -1,15 +1,12 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Serhiy
- * Date: 15.02.14
- * Time: 10:10
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * @var $this SubjectController
  * @var $model SpSubject
  */
 $this->breadcrumbs = array(
-    'Навчальні плани' => $this->createUrl('plan/index'),
-    'Предмети' => $this->createUrl('index'),
+    Yii::t('base', 'Study plans') => $this->createUrl('plan/index'),
+    Yii::t('base', 'Subjects') => $this->createUrl('index'),
     $model->subject->title
 );
 ?>
