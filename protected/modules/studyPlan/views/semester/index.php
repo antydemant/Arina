@@ -1,11 +1,12 @@
 <?php
 /**
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * @var SemesterController $this
  * @var \CActiveDataProvider $dataProvider
  * @var Plan $model
  */
 $this->breadcrumbs = array(
-    Yii::t('base', 'Study plans') => $this->createUrl('plan/index'),
+    Yii::t('base', 'Study plans') => $this->createUrl('main/index'),
     $model->study_year => $this->createUrl('plan/view', array('id' => $model->id)),
     Yii::t('base', 'Semesters')
 );
@@ -14,7 +15,7 @@ $this->menu = array(
     array(
         'type' => Booster::TYPE_PRIMARY,
         'label' => Yii::t('studyPlan', 'Add semester'),
-        'url' => $this->createUrl('create')
+        'url' => $this->createUrl('create', array('id' => $model->id))
     ),
 );
 ?>

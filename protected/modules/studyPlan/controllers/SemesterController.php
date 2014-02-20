@@ -28,29 +28,20 @@ class SemesterController extends Controller
 
     /**
      * Add semester to the study plan
+     * @param $id
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $model = new Semester();
-
+        $model->study_plan_id = $id;
         if (isset($_POST['Semester'])) {
             $model->attributes = $_POST['Semester'];
             if ($model->save()) {
-                $this->redirect($this->createUrl('index'));
+                $this->redirect($this->createUrl('index',array('id'=>$model->study_plan_id)));
             }
         }
 
         $this->render('create', array('model' => $model));
-    }
-
-    /**
-     * Detailed view of semester in study plan
-     * @param $id
-     */
-    public function actionView($id)
-    {
-        $model = Semester::model()->loadContent($id);
-        $this->render('view', array('model' => $model));
     }
 
     /**
@@ -64,7 +55,7 @@ class SemesterController extends Controller
         if (isset($_POST['Semester'])) {
             $model->attributes = $_POST['Semester'];
             if ($model->save()) {
-                $this->redirect($this->createUrl('index'));
+                $this->redirect($this->createUrl('index',array('id'=>$model->study_plan_id)));
             }
         }
 

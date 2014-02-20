@@ -1,5 +1,6 @@
 <?php
 /**
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * @var $this HoursController
  * @var $model Hours
  */
@@ -10,7 +11,7 @@
         'id' => 'hours-form',
         'type' => 'horizontal',
         'htmlOptions' => array('class' => 'well span10'),
-        'enableAjaxValidation' => true,
+        'enableClientValidation' => true,
     )
 );
 ?>
@@ -40,15 +41,3 @@
 <?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
 
 <?php $this->endWidget(); ?>
-<?php
-/*
-* @property integer $lectures
-* @property integer $labs
-* @property integer $practs
-* @property integer $selfwork
-* @property integer $hours_per_week
-* @property integer $test
-* @property integer $exam
-* @property integer $course_work
-* @property integer $course_project
-*/

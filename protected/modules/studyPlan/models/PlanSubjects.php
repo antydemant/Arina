@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Class PlanSubjects
  * @author Dmytro Karpovych <ZAYEC77@gmail.com>
+ * Class PlanSubjects
  */
 class PlanSubjects extends CFormModel
 {

@@ -1,12 +1,14 @@
 <?php
 /**
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * @var $this SemesterController
  * @var $model Semester
  */
 $this->breadcrumbs = array(
-    Yii::t('base', 'Study plans') => $this->createUrl('plan/index'),
-    $model->study_year => $this->createUrl('plan/view', array('id' => $model->id)),
-    Yii::t('base', 'Semesters')
+    Yii::t('base', 'Study plans') => $this->createUrl('main/index'),
+    $model->plan->study_year => $this->createUrl('plan/view', array('id' => $model->study_plan_id)),
+    Yii::t('base','Semesters')=>$this->createUrl('index',array('id'=>$model->study_plan_id)),
+    "# $model->semester_number"
 );
 ?>
 <?php

@@ -13,7 +13,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Yii::t('studyPlan', 'Add semester'), 'type' => Booster::TYPE_PRIMARY, 'url' => $this->createUrl('hours/create')),
+    array('label' => Yii::t('studyPlan', 'Add semester'), 'type' => Booster::TYPE_PRIMARY, 'url' => $this->createUrl('hours/create', array('id' => $model->id))),
 );
 ?>
 
@@ -38,7 +38,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             array(
                 'htmlOptions' => array('nowrap' => 'nowrap'),
                 'class' => 'bootstrap.widgets.TbButtonColumn',
-                'viewButtonUrl' => 'Yii::app()->controller->createUrl("hours/view", array("id"=>$data["id"]))',
+                'template' => "{update}{delete}",
                 'updateButtonUrl' => 'Yii::app()->controller->createUrl("hours/update", array("id"=>$data["id"]))',
                 'deleteButtonUrl' => 'Yii::app()->controller->createUrl("hours/delete", array("id"=>$data["id"]))',
             ),

@@ -6,7 +6,7 @@
  */
 
 $this->breadcrumbs = array(
-    Yii::t('base', 'Study plans') => $this->createUrl('index'),
+    Yii::t('base', 'Study plans') => $this->createUrl('main/index'),
     $model->study_year,
 );
 
