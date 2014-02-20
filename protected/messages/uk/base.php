@@ -44,5 +44,6 @@ return array(
     'Journal' => 'Журнал',
     'Next' => 'Далі',
     'Remove' => 'Видалити',
-    'Semesters'=>'Семестри'
+    'Semesters'=>'Семестри',
+    'Invalid request. Please do not repeat this request again.' => 'Невірний запит. Будь ласка, не повторюйте цей запит знову.',
 );

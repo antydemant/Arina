@@ -51,7 +51,7 @@ class SubjectCycle extends ActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'title' => 'Title',
+            'title' => Yii::t('base', 'Title'),
 		);
 	}
 
