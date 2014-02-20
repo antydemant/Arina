@@ -65,7 +65,7 @@ class CycleController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = SubjectCycle::model()->loadContent($id)->delete();
+        SubjectCycle::model()->loadContent($id)->delete();
 
         if (!isset($_GET['ajax']))
             $this->redirect(array('index'));

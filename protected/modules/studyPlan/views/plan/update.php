@@ -4,7 +4,7 @@
  * @var Plan $model
  */
 $this->breadcrumbs = array(
-    'Навчальні плани'=>$this->createUrl('index'),
+    'Навчальні плани' => $this->createUrl('index'),
     $model->study_year
 );
 ?>

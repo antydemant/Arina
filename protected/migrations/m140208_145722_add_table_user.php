@@ -2,8 +2,8 @@
 
 class m140208_145722_add_table_user extends CDbMigration
 {
-	public function up()
-	{
+    public function up()
+    {
         $this->createTable(
             'user',
             array(
@@ -15,12 +15,12 @@ class m140208_145722_add_table_user extends CDbMigration
                 'identity_id' => 'integer',
             )
         );
-	}
+    }
 
-	public function down()
-	{
+    public function down()
+    {
         $this->dropTable('user');
-		return false;
-	}
+        return false;
+    }
 
 }

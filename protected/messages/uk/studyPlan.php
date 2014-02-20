@@ -10,5 +10,5 @@ return array(
     'Semesters' => 'Семестри',
     'New study plan' => 'Новий навчальний план',
     'Total classes' => 'Усього аудиторних',
-    'New subject'=>'Новий предмет',
+    'New subject' => 'Новий предмет',
 );

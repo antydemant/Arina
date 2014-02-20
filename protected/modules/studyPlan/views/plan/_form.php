@@ -17,7 +17,7 @@
 );
 ?>
 
-<?php echo $form->dropDownListRow($model, 'speciality_id', CHtml::listData(Speciality::model()->findAll(),'id','title')); ?>
+<?php echo $form->dropDownListRow($model, 'speciality_id', CHtml::listData(Speciality::model()->findAll(), 'id', 'title')); ?>
 
 <?php echo $form->textFieldRow($model, 'study_year'); ?>
 

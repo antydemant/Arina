@@ -6,7 +6,7 @@
 $this->breadcrumbs = array(
     Yii::t('base', 'Audiences'),
 );
-$this->menu= array(
+$this->menu = array(
     array(
         'type' => Booster::TYPE_PRIMARY,
         'label' => Yii::t('audience', 'Add new audience'),

@@ -2,37 +2,37 @@
 /* @var $this StudentController */
 /* @var $model Student */
 
-$this->breadcrumbs=array(
-	Yii::t("student", "Students")=>array('index'),
-	$model->id=>array('view','id'=>$model->id),
-	Yii::t("base", "Update"),
+$this->breadcrumbs = array(
+    Yii::t("student", "Students") => array('index'),
+    $model->id => array('view', 'id' => $model->id),
+    Yii::t("base", "Update"),
 );
 
 $this->widget(
-		Booster::BUTTON_GROUP,
-		array(
-				'buttons' => array(
-						array(
-								'type'=> Booster::TYPE_PRIMARY,
-								'label' => Yii::t('student', 'Students list'),
-								'url' => $this->createUrl('index'),
-						),
-						array(
-								'type'=> Booster::TYPE_PRIMARY,
-								'label' => Yii::t('student', 'Create Student'),
-								'url' => $this->createUrl('create'),
-						),
-						array(
-								'type'=> Booster::TYPE_PRIMARY,
-								'label' => Yii::t('student', 'View Student'),
-								'url' => $this->createUrl('view', array('id'=>$model->id)),
-						),
-				),
-		)
+    Booster::BUTTON_GROUP,
+    array(
+        'buttons' => array(
+            array(
+                'type' => Booster::TYPE_PRIMARY,
+                'label' => Yii::t('student', 'Students list'),
+                'url' => $this->createUrl('index'),
+            ),
+            array(
+                'type' => Booster::TYPE_PRIMARY,
+                'label' => Yii::t('student', 'Create Student'),
+                'url' => $this->createUrl('create'),
+            ),
+            array(
+                'type' => Booster::TYPE_PRIMARY,
+                'label' => Yii::t('student', 'View Student'),
+                'url' => $this->createUrl('view', array('id' => $model->id)),
+            ),
+        ),
+    )
 );
 
 ?>
 
-<h1><?php echo Yii::t('student', 'Update Student') . ' ' . $model->id; ?></h1>
+    <h1><?php echo Yii::t('student', 'Update Student') . ' ' . $model->id; ?></h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_form', array('model' => $model)); ?>

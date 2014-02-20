@@ -1,15 +1,15 @@
 <?php
-$this->breadcrumbs=array(
-	'Subjects'=>array('index'),
-	'Create',
+$this->breadcrumbs = array(
+    Yii::t('base', 'Subjects') => array('index'),
+    'Create',
 );
 
-$this->menu=array(
-array('label'=>'List Subject','url'=>array('index')),
-array('label'=>'Manage Subject','url'=>array('admin')),
+$this->menu = array(
+    array('label' => 'List Subject', 'url' => array('index')),
+    array('label' => 'Manage Subject', 'url' => array('admin')),
 );
 ?>
 
-<h1>Create Subject</h1>
+    <h1>Create Subject</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array('model' => $model)); ?>

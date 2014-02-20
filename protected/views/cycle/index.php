@@ -7,11 +7,11 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Yii::t('subject', 'Create cycle'), 'url' => array('create')),
+    array('label' => Yii::t('subject', 'Create cycle'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
 );
 ?>
 
-<h1><?php echo Yii::t('subject', 'Subject cycles') ?></h1>
+<h1><?php echo Yii::t('subject', 'Cycles list') ?></h1>
 
 <?php
 $columns = array(

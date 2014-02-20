@@ -4,5 +4,5 @@
  * Localization file uk/speciality
  */
 return array(
-    'Number'=>'Код',
+    'Number' => 'Код',
 );

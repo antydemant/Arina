@@ -2,17 +2,15 @@
 /* @var $this CycleController */
 /* @var $model SubjectCycle */
 
-$this->breadcrumbs=array(
-	'Subject Cycles'=>array('index'),
-	'Create',
+$this->breadcrumbs = array(
+    Yii::t('base', 'Subject cycles') => array('index'),
+    Yii::t('subject', 'Creating new cycle'),
 );
 
-$this->menu=array(
-	array('label'=>'List SubjectCycle', 'url'=>array('index')),
-	array('label'=>'Manage SubjectCycle', 'url'=>array('admin')),
+$this->menu = array(
+    array('label' => Yii::t('subject', 'Cycles list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
 );
 ?>
+    <h2><?php echo Yii::t('subject', 'Creating new cycle'); ?></h2>
 
-<h1>Create SubjectCycle</h1>
-
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_form', array('model' => $model)); ?>

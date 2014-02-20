@@ -1,19 +1,22 @@
-<?php 
+<?php
 /**
- * 
+ *
  */
 /**
-* Test command
-*/
+ * Test command
+ */
 class TestCommand extends CConsoleCommand
-{	
-	public function actionIndex($limit=5)
+{
+    public function actionIndex($limit = 5)
     {
-        echo "run"; echo $limit;
+        echo "run";
+        echo $limit;
     }
+
     public function actionInit()
     {
         echo "init";
     }
 }
- ?>
+
+?>

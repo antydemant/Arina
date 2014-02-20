@@ -3,10 +3,8 @@
  * Is the customized base ActiveRecord class. Extended from CActiveRecord
  * All model ActiveRecord classes for this application should extend from this class.
  *
- * @category  components
- * @package   common
- * @author Dmytro Karpovych <ZAYEC77@gmail.c
- * @copyright 2013 WAO Group
+ * @author Dmytro Karpovych <ZAYEC77@gmail.com>
+ *
  * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class ActiveRecord extends CActiveRecord

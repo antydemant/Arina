@@ -159,10 +159,10 @@ class PlanSemesters extends CFormModel
 
             $sum = $this->lectures + $this->labs + $this->practs + $this->selfwork;
             $subject = SpSubject::model()->findByPk($this->subjectId);
-            foreach($subject->hours as $item) {
+            foreach ($subject->hours as $item) {
                 $sum += $item->getTotal();
             }
-            if ($sum>$subject->total_hours)
+            if ($sum > $subject->total_hours)
                 return $this->addError('subjectId', 'Перевищена к-сть годин');
         }
     }

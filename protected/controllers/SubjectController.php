@@ -1,20 +1,11 @@
 <?php
+/**
+ * @author Dmytro Karpovych <ZAYEC77@gmail.com>
+ */
 
 class SubjectController extends Controller
 {
     public $name = 'Subjects';
-
-    /**
-     * Displays a particular model.
-     * @param integer $id the ID of the model to be displayed
-     */
-    public function actionView($id)
-    {
-        $model = Subject::model()->loadContent($id);
-        $this->render('view', array(
-            'model' => $model,
-        ));
-    }
 
     /**
      * Creates a new model.
@@ -24,13 +15,12 @@ class SubjectController extends Controller
     {
         $model = new Subject;
 
-// Uncomment the following line if AJAX validation is needed
-// $this->performAjaxValidation($model);
+        $this->ajaxValidation('subject-form', $model);
 
         if (isset($_POST['Subject'])) {
             $model->attributes = $_POST['Subject'];
             if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
+                $this->redirect(array('index'));
         }
 
         $this->render('create', array(
@@ -52,7 +42,7 @@ class SubjectController extends Controller
         if (isset($_POST['Subject'])) {
             $model->attributes = $_POST['Subject'];
             if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id));
+                $this->redirect(array('index'));
         }
 
         $this->render('update', array(
@@ -70,9 +60,9 @@ class SubjectController extends Controller
             Subject::model()->loadContent($id)->delete();
 
             if (!isset($_GET['ajax']))
-                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+                $this->redirect(array('index'));
         } else
-            throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
+            throw new CHttpException(400, Yii::t('base', 'Invalid request. Please do not repeat this request again.'));
     }
 
     /**
@@ -83,21 +73,6 @@ class SubjectController extends Controller
         $dataProvider = new CActiveDataProvider('Subject');
         $this->render('index', array(
             'dataProvider' => $dataProvider,
-        ));
-    }
-
-    /**
-     * Manages all models.
-     */
-    public function actionAdmin()
-    {
-        $model = new Subject('search');
-        $model->unsetAttributes(); // clear any default values
-        if (isset($_GET['Subject']))
-            $model->attributes = $_GET['Subject'];
-
-        $this->render('admin', array(
-            'model' => $model,
         ));
     }
 }

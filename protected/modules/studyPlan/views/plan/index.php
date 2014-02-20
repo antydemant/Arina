@@ -20,7 +20,7 @@ $this->breadcrumbs = array(
                     ),
                     array(
                         'type' => Booster::TYPE_PRIMARY,
-                        'label' => Yii::t('studyPlan', 'Create new plan')." D",
+                        'label' => Yii::t('studyPlan', 'Create new plan') . " D",
                         'url' => array('main/createInfo'),
                     ),
                 ),
@@ -30,8 +30,8 @@ $this->breadcrumbs = array(
     </header>
 <?php
 $columns = array(
-    array('name'=>'speciality.title', 'header'=>'Спеціальність'),
-    array('name'=>'study_year', 'header'=>'Навчальний рік'),
+    array('name' => 'speciality.title', 'header' => 'Спеціальність'),
+    array('name' => 'study_year', 'header' => 'Навчальний рік'),
     array(
         'htmlOptions' => array('nowrap' => 'nowrap'),
         'class' => 'bootstrap.widgets.TbButtonColumn',

@@ -17,7 +17,7 @@ $this->menu = array(
     ),
 );
 ?>
-<h2><?php echo Yii::t('group', 'Groups list'); ?></h2>
+    <h2><?php echo Yii::t('group', 'Groups list'); ?></h2>
 <?php $this->renderPartial('//tableList',
     array(
         'provider' => $provider,

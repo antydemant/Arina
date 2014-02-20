@@ -41,7 +41,7 @@
 
     <?php echo $form->textAreaRow($model, 'characteristics', array('rows' => 6, 'cols' => 50)); ?>
 	-->
-    
+
     <div class="form-actions">
         <?php $this->widget(
             'bootstrap.widgets.TbButton',

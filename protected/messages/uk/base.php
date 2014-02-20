@@ -27,6 +27,7 @@ return array(
     'Actions' => 'Дії',
     'Create' => 'Створити',
     'Update' => 'Змінити',
+    'Updating' => 'Оновлення',
     'Send' => 'Надіслати',
     'Home' => 'Головна',
     'Incorrect username or password' => 'Неправильне ім\'я користувача або пароль',
@@ -44,6 +45,7 @@ return array(
     'Journal' => 'Журнал',
     'Next' => 'Далі',
     'Remove' => 'Видалити',
-    'Semesters'=>'Семестри',
+    'Semesters' => 'Семестри',
+    'Fields with <span class="required">*</span> are required.' => 'Поля, відмічені <span class="required">*</span> обов\'язкові для заповнення.',
     'Invalid request. Please do not repeat this request again.' => 'Невірний запит. Будь ласка, не повторюйте цей запит знову.',
 );
