@@ -95,6 +95,7 @@ class PlanSemesters extends CFormModel
             array('semester_number, weeks_count', 'numerical', 'integerOnly' => true, 'on' => 'addSemester'),
             array('subjectId, semesterId', 'required', 'on' => 'addHours'),
             array('semesterId', 'checkSubject', 'on' => 'addHours'),
+            array('semesterId', 'checkHours', 'on' => 'addHours'),
             array('lectures, labs, practs, selfwork, hours_per_week', 'numerical', 'integerOnly' => true),
             array('test, exam, course_work, course_project', 'boolean'),
         );
@@ -146,6 +147,23 @@ class PlanSemesters extends CFormModel
                 ));
             if (isset($hours))
                 return $this->addError('semesterId', 'Дані про цей семестр уже внесені');
+        }
+    }
+
+    public function checkHours($attribute, $params)
+    {
+        /**
+         * @var SpSubject $subject
+         */
+        if (!$this->hasErrors()) {
+
+            $sum = $this->lectures + $this->labs + $this->practs + $this->selfwork;
+            $subject = SpSubject::model()->findByPk($this->subjectId);
+            foreach($subject->hours as $item) {
+                $sum += $item->getTotal();
+            }
+            if ($sum>$subject->total_hours)
+                return $this->addError('subjectId', 'Перевищена к-сть годин');
         }
     }
 

@@ -46,6 +46,12 @@ class Hours extends ActiveRecord
 		);
 	}
 
+    public function getTotal()
+    {
+        return $this->labs + $this->practs + $this->selfwork + $this->lectures;
+    }
+
+
 	/**
 	 * @return array relational rules.
 	 */
