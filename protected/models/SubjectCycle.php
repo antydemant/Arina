@@ -1,25 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "teacher_load".
+ * This is the model class for table "subject_cycle".
  *
- * The followings are the available columns in table 'teacher_load':
+ * The followings are the available columns in table 'subject_cycle':
  * @property integer $id
- * @property integer $teacher_id
- * @property integer $study_plan_semester_id
- * @property integer $group_id
- * @property integer $lectures
- * @property integer $labs
- * @property integer $practs
+ * @property string $title
  */
-class TeacherLoad extends CActiveRecord
+class SubjectCycle extends ActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'teacher_load';
+		return 'subject_cycle';
 	}
 
 	/**
@@ -30,11 +25,11 @@ class TeacherLoad extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('teacher_id, study_plan_semester_id, group_id, lectures, labs, practs', 'required'),
-			array('teacher_id, study_plan_semester_id, group_id, lectures, labs, practs', 'numerical', 'integerOnly'=>true),
+			array('title', 'required'),
+			array('title', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, teacher_id, study_plan_semester_id, group_id, lectures, labs, practs', 'safe', 'on'=>'search'),
+			array('id, title', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,7 +41,6 @@ class TeacherLoad extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-            //'subject'=>array(self::),
 		);
 	}
 
@@ -57,12 +51,7 @@ class TeacherLoad extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'teacher_id' => 'Teacher',
-			'study_plan_semester_id' => 'Study Plan Semester',
-			'group_id' => 'Group',
-			'lectures' => 'Lectures',
-			'labs' => 'Labs',
-			'practs' => 'Practs',
+			'title' => 'Title',
 		);
 	}
 
@@ -85,12 +74,7 @@ class TeacherLoad extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('teacher_id',$this->teacher_id);
-		$criteria->compare('study_plan_semester_id',$this->study_plan_semester_id);
-		$criteria->compare('group_id',$this->group_id);
-		$criteria->compare('lectures',$this->lectures);
-		$criteria->compare('labs',$this->labs);
-		$criteria->compare('practs',$this->practs);
+		$criteria->compare('title',$this->title,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -101,7 +85,7 @@ class TeacherLoad extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return TeacherLoad the static model class
+	 * @return SubjectCycle the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

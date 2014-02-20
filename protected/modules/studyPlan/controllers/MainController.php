@@ -6,9 +6,7 @@
  */
 class MainController extends Controller
 {
-    public $defaultAction = 'createInfo';
-
-    public $name='Study plans';
+    public $name = 'Study plans';
 
     public function actionCreateInfo()
     {
@@ -48,12 +46,6 @@ class MainController extends Controller
             $model->attributes = $_POST['PlanSubjects'];
             if ($model->validate()) {
                 $model->makeChanges();
-                if (Yii::app()->getRequest()->isAjaxRequest) {
-                    $this->renderPartial('subjects', array('model' => $model));
-                    Yii::app()->end();
-                } else {
-                    $this->render('subjects', array('model' => $model));
-                }
             }
         }
 
@@ -85,27 +77,46 @@ class MainController extends Controller
      */
     public function actionSemesters($id)
     {
-        $model = new PlanSemesters();
+        $this->doSomething($id);
+    }
+
+    protected function doSomething($id, $scenario = '')
+    {
+        $model = new PlanSemesters($scenario);
         $model->prepare($id);
 
         if (isset($_POST['PlanSemesters'])) {
             $model->attributes = $_POST['PlanSemesters'];
             if ($model->validate()) {
                 $model->makeChanges();
-                if (Yii::app()->request->isAjaxRequest) {
-                    $this->renderPartial('semesters', array('model' => $model));
-                    Yii::app()->end();
-                } else {
-                    $this->render('semesters', array('model' => $model));
-                }
             }
         }
 
         if (Yii::app()->request->isAjaxRequest) {
             $this->renderPartial('semesters', array('model' => $model));
-            Yii::app()->end();
         } else {
             $this->render('semesters', array('model' => $model));
         }
+    }
+
+    public function actionIndex()
+    {
+        $dataProvider = Plan::model()->getProvider();
+        $this->render('index', array('dataProvider' => $dataProvider));
+    }
+
+    public function actionAddSemester($id)
+    {
+        $this->doSomething($id, 'addSemester');
+    }
+
+    public function actionAddHours($id)
+    {
+        $this->doSomething($id, 'addHours');
+    }
+
+    public function actionRemoveSemester($id)
+    {
+        $this->doSomething($id, 'removeSemester');
     }
 }

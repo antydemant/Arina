@@ -11,17 +11,10 @@
  * The followings are the available model relations:
  * @property Plan $plan
  * @property Subject $subject
+ * @property Hours[] $hours
  */
 class SpSubject extends ActiveRecord
 {
-    /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'study_plan_subject';
-    }
-
     /**
      * Return array for dropDownList
      * @return array
@@ -29,6 +22,25 @@ class SpSubject extends ActiveRecord
     public static function getList()
     {
         return self::getListAll('id', 'title');
+    }
+
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return SpSubject the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
+
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'study_plan_subject';
     }
 
     /**
@@ -57,6 +69,7 @@ class SpSubject extends ActiveRecord
         return array(
             'subject' => array(self::BELONGS_TO, 'Subject', 'subject_id'),
             'plan' => array(self::BELONGS_TO, 'Plan', 'study_plan_id'),
+            'hours' => array(self::HAS_MANY, 'Hours', 'study_plan_subject_id'),
         );
     }
 
@@ -99,16 +112,5 @@ class SpSubject extends ActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
-    }
-
-    /**
-     * Returns the static model of the specified AR class.
-     * Please note that you should have this exact method in all your CActiveRecord descendants!
-     * @param string $className active record class name.
-     * @return SpSubject the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
     }
 }

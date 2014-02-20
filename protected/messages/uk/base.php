@@ -3,6 +3,9 @@
  *
  */
 return array(
+    'List'=>'Список',
+    'Cycles'=>'Цикли',
+    'Subject cycles'=>'Цикли предметів',
     'Add' => 'Додати',
     'Subjects' => 'Предмети',
     'Find' => 'Знайти',
