@@ -2,32 +2,17 @@
 
 class CyclicCommissionController extends Controller
 {
-    public $name = "Cyclic Commissions";
+    public $name = 'Cyclic Commissions';
 
     /**
-     * Specifies the access control rules.
-     * This method is used by the 'accessControl' filter.
-     * @return array access control rules
+     * Lists all models.
      */
-    public function accessRules()
+    public function actionIndex()
     {
-        return array(
-            array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view'),
-                'users' => array('*'),
-            ),
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update'),
-                'users' => array('@'),
-            ),
-            array('allow', // allow admin user to perform 'admin' and 'delete' actions
-                'actions' => array('admin', 'delete'),
-                'users' => array('admin'),
-            ),
-            array('deny', // deny all users
-                'users' => array('*'),
-            ),
-        );
+        $dataProvider = new CActiveDataProvider('CyclicCommission');
+        $this->render('index', array(
+            'dataProvider' => $dataProvider,
+        ));
     }
 
     /**
@@ -37,21 +22,8 @@ class CyclicCommissionController extends Controller
     public function actionView($id)
     {
         $this->render('view', array(
-            'model' => $this->loadModel($id),
+            'model' => CyclicCommission::model()->loadContent($id),
         ));
-    }
-
-    /**
-     * Returns the data model based on the primary key given in the GET variable.
-     * If the data model is not found, an HTTP exception will be raised.
-     * @param integer the ID of the model to be loaded
-     */
-    public function loadModel($id)
-    {
-        $model = CyclicCommission::model()->findByPk($id);
-        if ($model === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
-        return $model;
     }
 
     /**
@@ -62,8 +34,7 @@ class CyclicCommissionController extends Controller
     {
         $model = new CyclicCommission;
 
-// Uncomment the following line if AJAX validation is needed
-// $this->performAjaxValidation($model);
+        $this->ajaxValidation('cyclic-commission-form', $model);
 
         if (isset($_POST['CyclicCommission'])) {
             $model->attributes = $_POST['CyclicCommission'];
@@ -83,10 +54,9 @@ class CyclicCommissionController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->loadModel($id);
+        $model = CyclicCommission::model()->loadContent($id);
 
-// Uncomment the following line if AJAX validation is needed
-// $this->performAjaxValidation($model);
+        $this->ajaxValidation('cyclic-commission-form', $model);
 
         if (isset($_POST['CyclicCommission'])) {
             $model->attributes = $_POST['CyclicCommission'];
@@ -100,43 +70,17 @@ class CyclicCommissionController extends Controller
     }
 
     /**
-     * Deletes a particular model.
-     * If deletion is successful, the browser will be redirected to the 'admin' page.
-     * @param integer $id the ID of the model to be deleted
+     * @param $id
+     * @throws CHttpException
      */
     public function actionDelete($id)
     {
         if (Yii::app()->request->isPostRequest) {
-// we only allow deletion via POST request
-            $this->loadModel($id)->delete();
+            CyclicCommission::model()->loadContent($id)->delete();
 
-// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
             if (!isset($_GET['ajax']))
-                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+                $this->redirect(array('index'));
         } else
-            throw new CHttpException(400, 'Invalid request. Please do not repeat this request again.');
-    }
-
-    /**
-     * Lists all models.
-     */
-    public function actionIndex()
-    {
-        $dataProvider = new CActiveDataProvider('CyclicCommission');
-        $this->render('index', array(
-            'dataProvider' => $dataProvider,
-        ));
-    }
-
-    /**
-     * Performs the AJAX validation.
-     * @param CModel the model to be validated
-     */
-    protected function performAjaxValidation($model)
-    {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'cyclic-commission-form') {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
+            throw new CHttpException(400, Yii::t('base', 'Invalid request. Please do not repeat this request again.'));
     }
 }
