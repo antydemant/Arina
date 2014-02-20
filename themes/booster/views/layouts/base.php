@@ -7,7 +7,7 @@
 <?php $this->beginContent('//layouts/main'); ?>
 
 <?php $this->widget(Booster::NAVIGATOR, array(
-    //'type' => 'inverse', // null or 'inverse' //comment
+    'type' => 'inverse', // null or 'inverse' //comment
     //'brand' => 'KhPK',
     'brand' => '@',
     'brandUrl' => array('/site/index'),

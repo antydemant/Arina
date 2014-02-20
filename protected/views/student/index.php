@@ -60,7 +60,6 @@ $this->widget(Booster::GRID_VIEW, array(
     'type' => 'striped condensed bordered hover',
 
 	'columns'=>array(
-		'id',
 		'code',
 		'last_name',
 		'first_name',

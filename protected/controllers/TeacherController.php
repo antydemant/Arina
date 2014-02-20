@@ -68,10 +68,12 @@ class TeacherController extends Controller
     {
         $model = new Teacher();
 
+        $this->ajaxValidation('teacher-form', $model);
+
         if (isset($_POST['Teacher'])) {
             $model->attributes = $_POST['Teacher'];
             if ($model->save()) {
-                $this->redirect("teacher/index");
+                $this->redirect(array('index'));
             }
         }
 
@@ -81,14 +83,28 @@ class TeacherController extends Controller
     /**
      * @param $id
      */
+    public function actionDelete($id)
+    {
+        $model = Teacher::model()->loadContent($id);
+        $model->delete();
+        if (!Yii::app()->getRequest()->isAjaxRequest) {
+            $this->redirect(array('index'));
+        }
+    }
+
+    /**
+     * @param $id
+     */
     public function actionUpdate($id)
     {
         $model = Teacher::model()->loadContent($id);
 
+        $this->ajaxValidation('teacher-form', $model);
+
         if (isset($_POST['Teacher'])) {
             $model->attributes = $_POST['Teacher'];
             if ($model->save()) {
-                $this->redirect("teacher/index");
+                $this->redirect(array('index'));
             }
         }
 
