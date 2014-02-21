@@ -4,25 +4,27 @@ class DefaultController extends Controller
 {
     public function actionIndex()
     {
-        $criteria = new CDbCriteria(array(
-            'with' => array(
-            	'marks',
-            	'absences',
-            	'load' => array(
-            			'teacher', 
-            			'group' => array('students'),
-            			'studyPlanSemester' => array('plan' => array('subjects' => 'subject')),
-            	),
-            ),
-        	'where' => array(
-            		
-            ),
-        ));
-        $model = ActualClass::model()->getProvider(array('criteria' => $criteria));
-
+    	$model = new JournalViewer();
+    	$model->setScenario('group');
+    	
+    	if (Yii::app()->getRequest()->isAjaxRequest) {
+    		if (isset($_POST["JournalViewer"])) {
+    			$model->attributes = $_POST["JournalViewer"];
+    			if ($model->validate()) {
+    				$model->isEmpty = false;
+    			}
+    			$this->renderPartial('_form', array(
+            		'model' => $model,
+        		));
+    		}
+    		Yii::app()->end();
+    	}
+    	
+    	
 
         $this->render('index', array(
             'model' => $model,
         ));
     }
+
 }

@@ -11,7 +11,7 @@
  * @property integer $class_type
  * @property integer $group_id
  */
-class ActualClass extends CActiveRecord
+class ActualClass extends ActiveRecord
 {
     /**
      * @return string the associated database table name
