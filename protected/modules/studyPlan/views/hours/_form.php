@@ -16,9 +16,9 @@
 );
 ?>
 
-<?php echo $form->dropDownListRow($model, 'study_plan_subject_id', CHtml::listData(SpSubject::model()->findAll(), 'id', 'subject.title')); ?>
+<?php echo $form->dropDownListRow($model, 'sp_subject_id', CHtml::listData(SpSubject::model()->findAll(), 'id', 'subject.title')); ?>
 
-<?php echo $form->dropDownListRow($model, 'study_plan_info_id', CHtml::listData(Semester::model()->findAll(), 'id', 'semester_number')); ?>
+<?php echo $form->dropDownListRow($model, 'sp_semester_id', CHtml::listData(Semester::model()->findAll(), 'id', 'semester_number')); ?>
 
 <?php echo $form->textFieldRow($model, 'lectures'); ?>
 

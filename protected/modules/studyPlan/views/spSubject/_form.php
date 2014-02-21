@@ -16,7 +16,7 @@
 );
 ?>
 
-<?php echo $form->dropDownListRow($model, 'study_plan_id', CHtml::listData(Plan::model()->findAll(), 'id', 'study_year')); ?>
+<?php echo $form->dropDownListRow($model, 'sp_plan_id', CHtml::listData(Plan::model()->findAll(), 'id', 'study_year')); ?>
 
 <?php echo $form->dropDownListRow($model, 'subject_id', CHtml::listData(Subject::model()->findAll(), 'id', 'title')); ?>
 

@@ -1,12 +1,12 @@
 <?php
 /**
  * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
- * This is the model class for table "study_plan_semester".
+ * This is the model class for table "sp_hours".
  *
- * The followings are the available columns in table 'study_plan_semester':
+ * The followings are the available columns in table 'sp_hours':
  * @property integer $id
- * @property integer $study_plan_subject_id
- * @property integer $study_plan_info_id
+ * @property integer $sp_subject_id
+ * @property integer $sp_semester_id
  * @property integer $lectures
  * @property integer $labs
  * @property integer $practs
@@ -27,7 +27,7 @@ class Hours extends ActiveRecord
      */
     public function tableName()
     {
-        return 'study_plan_semester';
+        return 'sp_hours';
     }
 
     /**
@@ -38,11 +38,11 @@ class Hours extends ActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('study_plan_subject_id, study_plan_info_id, lectures, labs, practs, selfwork, hours_per_week, test, exam, course_work, course_project', 'required'),
-            array('study_plan_subject_id, study_plan_info_id, lectures, labs, practs, selfwork, hours_per_week, test, exam, course_work, course_project', 'numerical', 'integerOnly' => true),
+            array('sp_subject_id, sp_semester_id, lectures, labs, practs, selfwork, hours_per_week, test, exam, course_work, course_project', 'required'),
+            array('sp_subject_id, sp_semester_id, lectures, labs, practs, selfwork, hours_per_week, test, exam, course_work, course_project', 'numerical', 'integerOnly' => true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, study_plan_subject_id, study_plan_info_id, lectures, labs, practs, selfwork, hours_per_week, test, exam, course_work, course_project', 'safe', 'on' => 'search'),
+            array('id, sp_subject_id, sp_semester_id, lectures, labs, practs, selfwork, hours_per_week, test, exam, course_work, course_project', 'safe', 'on' => 'search'),
         );
     }
 
@@ -60,8 +60,8 @@ class Hours extends ActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'spSubject' => array(self::BELONGS_TO, 'SpSubject', 'study_plan_subject_id'),
-            'semester' => array(self::BELONGS_TO, 'Semester', 'study_plan_info_id'),
+            'spSubject' => array(self::BELONGS_TO, 'SpSubject', 'sp_subject_id'),
+            'semester' => array(self::BELONGS_TO, 'Semester', 'sp_semester_id'),
         );
     }
 
@@ -72,8 +72,8 @@ class Hours extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'study_plan_subject_id' => 'Предмет',
-            'study_plan_info_id' => 'Семестр №',
+            'sp_subject_id' => 'Предмет',
+            'sp_semester_id' => 'Семестр №',
             'lectures' => 'Лекції',
             'labs' => 'Лабораторні',
             'practs' => 'Практичні',
@@ -105,8 +105,8 @@ class Hours extends ActiveRecord
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('study_plan_subject_id', $this->study_plan_subject_id);
-        $criteria->compare('study_plan_info_id', $this->study_plan_info_id);
+        $criteria->compare('sp_subject_id', $this->sp_subject_id);
+        $criteria->compare('sp_semestesr_id', $this->sp_semester_id);
         $criteria->compare('lectures', $this->lectures);
         $criteria->compare('labs', $this->labs);
         $criteria->compare('practs', $this->practs);

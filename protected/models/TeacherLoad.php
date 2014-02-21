@@ -1,5 +1,5 @@
 <?php
-
+Yii::import('modules.studyPlan.models.Semester');
 /**
  * This is the model class for table "teacher_load".
  *
@@ -45,7 +45,10 @@ class TeacherLoad extends CActiveRecord
     {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
-        return array(//'subject'=>array(self::),
+        return array(
+        		'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
+        		'teacher' => array(self::BELONGS_TO, 'Teacher', 'teacher_id'),
+        		'studyPlanSemester' => array(self::BELONGS_TO, 'Semester', 'study_plan_semester_id'),
         );
     }
 

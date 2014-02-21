@@ -7,22 +7,15 @@
 $this->breadcrumbs = array(
     'Навчальні плани',
 );
+
+$this->menu = array(
+    array(
+        'type' => Booster::TYPE_PRIMARY,
+        'label' => 'Додати предмет',
+        'url' => $this->createUrl('create'),
+    ),
+);
 ?>
-    <header>
-        <?php $this->widget(
-            Booster::BUTTON_GROUP,
-            array(
-                'buttons' => array(
-                    array(
-                        'type' => Booster::TYPE_PRIMARY,
-                        'label' => 'Додати предмет',
-                        'url' => $this->createUrl('create'),
-                    ),
-                ),
-            )
-        )
-        ?>
-    </header>
 <?php
 $columns = array(
     array('name' => 'plan.study_year', 'header' => 'Навчальний рік'),

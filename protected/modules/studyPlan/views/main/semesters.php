@@ -16,7 +16,7 @@
         <div><strong><?php echo Yii::t('studyPlan', 'Subjects in the plan'); ?></strong></div>
         <?php echo $form->dropDownListRow($model,
             'subjectId',
-            CHtml::listData(SpSubject::model()->findAll("study_plan_id=$model->planId"), 'subject_id', 'subject.title'),
+            CHtml::listData(SpSubject::model()->findAll("sp_plan_id=$model->planId"), 'subject_id', 'subject.title'),
             array('size' => 6)); ?>
     </div>
     <div class="span3">

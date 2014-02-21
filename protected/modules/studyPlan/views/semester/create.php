@@ -6,8 +6,8 @@
  */
 $this->breadcrumbs = array(
     Yii::t('base', 'Study plans') => $this->createUrl('main/index'),
-    $model->plan->study_year => $this->createUrl('plan/view', array('id' => $model->study_plan_id)),
-    Yii::t('base','Semesters')=>$this->createUrl('index',array('id'=>$model->study_plan_id)),
+    $model->plan->study_year => $this->createUrl('plan/view', array('id' => $model->sp_plan_id)),
+    Yii::t('base','Semesters')=>$this->createUrl('index',array('id'=>$model->sp_plan_id)),
     Yii::t('studyPlan', 'New semester')
 );
 ?>

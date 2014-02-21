@@ -13,11 +13,11 @@ class HoursController extends Controller
     public function actionCreate($id)
     {
         $model = new Hours();
-        $model->study_plan_subject_id = $id;
+        $model->sp_subject_id = $id;
         if (isset($_POST['Hours'])) {
             $model->attributes = $_POST['Hours'];
             if ($model->save()) {
-                $this->redirect($this->createUrl('spSubject/view', array('id' => $model->study_plan_subject_id)));
+                $this->redirect($this->createUrl('spSubject/view', array('id' => $model->sp_subject_id)));
             }
         }
         $this->render('create', array('model' => $model));
@@ -33,7 +33,7 @@ class HoursController extends Controller
         if (isset($_POST['Hours'])) {
             $model->attributes = $_POST['Hours'];
             if ($model->save()) {
-                $this->redirect($this->createUrl('spSubject/view', array('id' => $model->study_plan_subject_id)));
+                $this->redirect($this->createUrl('spSubject/view', array('id' => $model->sp_subject_id)));
             }
         }
         $this->render('update', array('model' => $model));

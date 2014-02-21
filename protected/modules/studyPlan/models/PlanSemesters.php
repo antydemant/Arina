@@ -56,7 +56,7 @@ class PlanSemesters extends CFormModel
         switch ($this->scenario) {
             case 'addSemester':
                 $model = new Semester();
-                $model->study_plan_id = $this->planId;
+                $model->sp_plan_id = $this->planId;
                 $model->semester_number = $this->semester_number;
                 $model->weeks_count = $this->weeks_count;
                 $model->save(false);
@@ -68,8 +68,8 @@ class PlanSemesters extends CFormModel
             case 'addHours':
                 //@TODO rewrite this
                 $model = new Hours();
-                $model->study_plan_subject_id = $this->subjectId;
-                $model->study_plan_info_id = $this->semesterId;
+                $model->sp_subject_id = $this->subjectId;
+                $model->sp_semester_id = $this->semesterId;
                 $model->lectures = $this->lectures;
                 $model->labs = $this->labs;
                 $model->practs = $this->practs;
@@ -142,8 +142,8 @@ class PlanSemesters extends CFormModel
          */
         if (!$this->hasErrors()) {
             $hours = Hours::model()->findByAttributes(
-                array('study_plan_subject_id' => $this->subjectId,
-                    'study_plan_info_id' => $this->semesterId
+                array('sp_subject_id' => $this->subjectId,
+                    'sp_semester_id' => $this->semesterId
                 ));
             if (isset($hours))
                 return $this->addError('semesterId', 'Дані про цей семестр уже внесені');

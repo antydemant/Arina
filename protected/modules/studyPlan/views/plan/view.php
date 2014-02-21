@@ -24,7 +24,7 @@ $this->beginWidget('bootstrap.widgets.TbBox', array(
 
 $dataProvider = SpSubject::model()->getProvider(array(
     'criteria' => array(
-        'condition' => 'study_plan_id=' . $model->id,
+        'condition' => 'sp_plan_id=' . $model->id,
     )
 ));
 
