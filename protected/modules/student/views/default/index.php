@@ -8,18 +8,13 @@ $this->breadcrumbs = array(
     Yii::t("student", "Students") => array('index'),
 );
 
-$this->widget(
-    Booster::BUTTON_GROUP,
-    array(
-        'buttons' => array(
+$this->menu = array(
             array(
                 'type' => Booster::TYPE_PRIMARY,
                 'label' => Yii::t('student', 'Create Student'),
                 'url' => $this->createUrl('create'),
             ),
-        ),
-    )
-);
+        );
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -55,7 +50,6 @@ $this->widget(Booster::GRID_VIEW, array(
     'id' => 'student-grid',
     'dataProvider' => $model->search(),
     'filter' => $model,
-    'template' => "{items}",
     'responsiveTable' => true,
     'type' => 'striped condensed bordered hover',
 
