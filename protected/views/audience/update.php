@@ -8,13 +8,13 @@ $this->breadcrumbs = array(
     Yii::t('base', 'Audiences') => array('index'),
     Yii::t('audience', 'Update audience') . " {$model->number}",
 );
-$this->menu =array(
+$this->menu = array(
     array('type' => Booster::TYPE_PRIMARY, 'label' => Yii::t('audience', 'Audience list'), 'url' => array('index')),
 
     array(
         'label' => Yii::t('audience', 'Delete audience'),
         'url' => $this->createUrl('delete', array('id' => $model->id)),
-        'icon'=>'trash',
+        'icon' => 'trash',
         'htmlOptions' => array(
             'submit' => array(
                 'delete',
@@ -25,6 +25,6 @@ $this->menu =array(
     ),
 );
 ?>
-<h2><?php echo Yii::t('audience', 'Update audience') . " {$model->number}"; ?></h2>
+    <h2><?php echo Yii::t('audience', 'Update audience') . " {$model->number}"; ?></h2>
 
 <?php echo $this->renderPartial('_form', array('model' => $model)); ?>

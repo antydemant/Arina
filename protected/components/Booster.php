@@ -1,7 +1,8 @@
 <?php
-
 /**
+ * @author Dmytro Karpovych <ZAYEC77@gmail.com>
  */
+
 class Booster
 {
     const GRID_VIEW = "bootstrap.widgets.TbGridView";

@@ -3,6 +3,7 @@
 class UserController extends Controller
 {
     public $name = 'users';
+
     /**
      * @param $view
      * @return bool

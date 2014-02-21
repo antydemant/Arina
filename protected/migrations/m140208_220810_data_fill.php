@@ -2,12 +2,12 @@
 
 class m140208_220810_data_fill extends CDbMigration
 {
-	public function up()
-	{
+    public function up()
+    {
         /**
          * @var CyclicCommission $commission
          */
-        $commission = CyclicCommission::model()->findByAttributes(array('title'=>"ЦК Розробки Програмного Забезпечення"));
+        $commission = CyclicCommission::model()->findByAttributes(array('title' => "ЦК Розробки Програмного Забезпечення"));
         $commission_id = $commission->id;
         $teacher = new Teacher();
         $teacher->first_name = "Олександр";
@@ -21,7 +21,7 @@ class m140208_220810_data_fill extends CDbMigration
         $student->last_name = "Деренівська";
         $student->middle_name = "Батьківна";
 
-        $speciality = Speciality::model()->findByAttributes(array('number'=>'5.05010301'));
+        $speciality = Speciality::model()->findByAttributes(array('number' => '5.05010301'));
         $group = new Group();
         $group->title = "ПР-101";
         $group->curator_id = $teacher->id;
@@ -32,22 +32,22 @@ class m140208_220810_data_fill extends CDbMigration
         $student->save(false);
         $group->monitor_id = $student->id;
         $group->save(false);
-	}
+    }
 
-	public function down()
-	{
+    public function down()
+    {
 
-		return false;
-	}
+        return false;
+    }
 
-	/*
-	// Use safeUp/safeDown to do migration with transaction
-	public function safeUp()
-	{
-	}
+    /*
+    // Use safeUp/safeDown to do migration with transaction
+    public function safeUp()
+    {
+    }
 
-	public function safeDown()
-	{
-	}
-	*/
+    public function safeDown()
+    {
+    }
+    */
 }

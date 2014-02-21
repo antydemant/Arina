@@ -12,5 +12,6 @@ return array(
     'Exam' => 'Екзамен',
     'Course work' => 'Курсова робота',
     'Course project' => 'Курсовий проект',
-    'Semester' => 'Семестр'
+    'Semester' => 'Семестр',
+    'Title' => 'Назва',
 );

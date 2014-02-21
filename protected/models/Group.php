@@ -19,6 +19,7 @@ class Group extends ActiveRecord
     {
         return CHtml::listData($this->students, 'id', 'fullName');
     }
+
     /**
      * @return string the associated database table name
      */
@@ -54,10 +55,10 @@ class Group extends ActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'speciality'=>array(self::BELONGS_TO, 'Speciality', 'speciality_id'),
+            'speciality' => array(self::BELONGS_TO, 'Speciality', 'speciality_id'),
             'curator' => array(self::BELONGS_TO, 'Teacher', 'curator_id'),
-        	'students' => array(self::HAS_MANY, 'Student', 'group_id'),
-        	'classes' => array(self::HAS_MANY, 'ActualClass', 'group_id'),
+            'students' => array(self::HAS_MANY, 'Student', 'group_id'),
+            'loads' => array(self::HAS_MANY, 'TeacherLoad', 'group_id'),
         );
     }
 
@@ -67,7 +68,7 @@ class Group extends ActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => Yii::t('base','ID'),
+            'id' => Yii::t('base', 'ID'),
             'title' => Yii::t('base', 'Title'),
             'speciality_id' => Yii::t('group', 'Speciality'),
             'curator_id' => Yii::t('group', 'Curator'),

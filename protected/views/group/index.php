@@ -17,7 +17,7 @@ $this->menu = array(
     ),
 );
 ?>
-<h2><?php echo Yii::t('group', 'Groups list'); ?></h2>
+    <h2><?php echo Yii::t('group', 'Groups list'); ?></h2>
 <?php $this->renderPartial('//tableList',
     array(
         'provider' => $provider,
@@ -42,7 +42,7 @@ $this->menu = array(
                     'students' => array(
                         'label' => Yii::t('student', 'Students list'),
                         'icon' => 'icon-list',
-                        'url' => 'Yii::app()->createUrl("student/group", array("id"=>$data->id))',
+                        'url' => 'Yii::app()->createUrl("student/default/group", array("id"=>$data->id))',
                     ),
                 ),
             )

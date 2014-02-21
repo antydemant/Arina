@@ -6,6 +6,7 @@
 class ScheduleController extends Controller
 {
     public $name = "Schedule";
+
     public function actionIndex()
     {
         //TODO implement

@@ -14,7 +14,7 @@ $this->widget(
     Booster::GRID_VIEW,
     array(
         'dataProvider' => $provider,
-        'filter'=>$filter,
+        'filter' => $filter,
         'columns' => $columns,
         'responsiveTable' => true,
         'type' => 'striped condensed bordered hover',

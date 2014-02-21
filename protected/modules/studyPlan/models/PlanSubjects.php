@@ -7,7 +7,7 @@
 class PlanSubjects extends CFormModel
 {
     /**
-     * @var $planId integer 
+     * @var $planId integer
      */
     public $planId;
     public $addedSubjects = array();

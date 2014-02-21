@@ -58,7 +58,7 @@ $columns = array(
         'name' => 'cyclic_commission_id',
         'value' => '$data->cyclicCommission->title',
         'htmlOptions' => array(),
-        'filter'=> CHtml::listData(CyclicCommission::model()->findAll(),'id','title')
+        'filter' => CHtml::listData(CyclicCommission::model()->findAll(), 'id', 'title')
     ),
     array(
         'header' => Yii::t('base', 'Actions'),

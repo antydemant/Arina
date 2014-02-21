@@ -98,7 +98,8 @@ class Schedule extends ActiveRecord
      */
     public function getForGroup($id)
     {
-        $criteria = new CDbCriteria(); $criteria->addCondition("group_id = $id");
+        $criteria = new CDbCriteria();
+        $criteria->addCondition("group_id = $id");
         $provider = $this->getProvider(array('criteria' => $criteria));
         return $provider;
     }

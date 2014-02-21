@@ -1,5 +1,5 @@
 <?php
-
+Yii::import('modules.studyPlan.models.Semester');
 /**
  * This is the model class for table "teacher_load".
  *
@@ -14,97 +14,99 @@
  */
 class TeacherLoad extends CActiveRecord
 {
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'teacher_load';
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'teacher_load';
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('teacher_id, study_plan_semester_id, group_id, lectures, labs, practs', 'required'),
-			array('teacher_id, study_plan_semester_id, group_id, lectures, labs, practs', 'numerical', 'integerOnly'=>true),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id, teacher_id, study_plan_semester_id, group_id, lectures, labs, practs', 'safe', 'on'=>'search'),
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules()
+    {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('teacher_id, study_plan_semester_id, group_id, lectures, labs, practs', 'required'),
+            array('teacher_id, study_plan_semester_id, group_id, lectures, labs, practs', 'numerical', 'integerOnly' => true),
+            // The following rule is used by search().
+            // @todo Please remove those attributes that should not be searched.
+            array('id, teacher_id, study_plan_semester_id, group_id, lectures, labs, practs', 'safe', 'on' => 'search'),
+        );
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-            //'subject'=>array(self::),
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+        		'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
+        		'teacher' => array(self::BELONGS_TO, 'Teacher', 'teacher_id'),
+        		'studyPlanSemester' => array(self::BELONGS_TO, 'Semester', 'study_plan_semester_id'),
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id' => 'ID',
-			'teacher_id' => 'Teacher',
-			'study_plan_semester_id' => 'Study Plan Semester',
-			'group_id' => 'Group',
-			'lectures' => 'Lectures',
-			'labs' => 'Labs',
-			'practs' => 'Practs',
-		);
-	}
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'id' => 'ID',
+            'teacher_id' => 'Teacher',
+            'study_plan_semester_id' => 'Study Plan Semester',
+            'group_id' => 'Group',
+            'lectures' => 'Lectures',
+            'labs' => 'Labs',
+            'practs' => 'Practs',
+        );
+    }
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
-	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     *
+     * Typical usecase:
+     * - Initialize the model fields with values from filter form.
+     * - Execute this method to get CActiveDataProvider instance which will filter
+     * models according to data in model fields.
+     * - Pass data provider to CGridView, CListView or any similar widget.
+     *
+     * @return CActiveDataProvider the data provider that can return the models
+     * based on the search/filter conditions.
+     */
+    public function search()
+    {
+        // @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('teacher_id',$this->teacher_id);
-		$criteria->compare('study_plan_semester_id',$this->study_plan_semester_id);
-		$criteria->compare('group_id',$this->group_id);
-		$criteria->compare('lectures',$this->lectures);
-		$criteria->compare('labs',$this->labs);
-		$criteria->compare('practs',$this->practs);
+        $criteria->compare('id', $this->id);
+        $criteria->compare('teacher_id', $this->teacher_id);
+        $criteria->compare('study_plan_semester_id', $this->study_plan_semester_id);
+        $criteria->compare('group_id', $this->group_id);
+        $criteria->compare('lectures', $this->lectures);
+        $criteria->compare('labs', $this->labs);
+        $criteria->compare('practs', $this->practs);
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
-	}
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return TeacherLoad the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return TeacherLoad the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
 }

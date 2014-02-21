@@ -8,7 +8,7 @@ return array(
     /**
      *
      */
-    'student'=>array(
+    'student' => array(
         'type' => CAuthItem::TYPE_ROLE,
         'description' => 'Student',
         'bizRule' => null,
@@ -18,7 +18,7 @@ return array(
     /**
      *
      */
-    'teacher'=>array(
+    'teacher' => array(
         'type' => CAuthItem::TYPE_ROLE,
         'description' => 'Teacher',
         'bizRule' => null,

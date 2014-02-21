@@ -1,12 +1,11 @@
 <?php
 $this->breadcrumbs = array(
-    'Cyclic Commissions' => array('index'),
-    'Manage',
+    'Cyclic commissions' => array('index'),
 );
 
 $this->menu = array(
-    array('label' => 'List CyclicCommission', 'url' => array('index')),
-    array('label' => 'Create CyclicCommission', 'url' => array('create')),
+    array('label' => Yii::t('teacher', 'List of cyclic commission'), 'url' => array('index')),
+    array('label' => Yii::t('teacher', 'Create new cyclic commission'), 'url' => array('create')),
 );
 ?>
 

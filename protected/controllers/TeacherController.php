@@ -15,7 +15,7 @@ class TeacherController extends Controller
         $model = new Teacher('search');
         $model->unsetAttributes(); // clear any default values
         if (isset($_GET['Teacher'])) {
-            foreach($_GET['Teacher'] as $key => $item) {
+            foreach ($_GET['Teacher'] as $key => $item) {
                 $model->$key = $item;
             }
         }

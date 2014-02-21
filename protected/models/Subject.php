@@ -12,19 +12,30 @@
 class Subject extends ActiveRecord
 {
     /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return 'subject';
-    }
-
-    /**
      * @return array for dropDownList
      */
     public static function getList()
     {
         return self::getListAll('id', 'title');
+    }
+
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return Subject the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
+
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return 'subject';
     }
 
     /**
@@ -51,7 +62,9 @@ class Subject extends ActiveRecord
     {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
-        return array( //'studyPlanSubjects' => array(self::HAS_MANY, 'StudyPlanSubject', 'subject_id'),
+        return array(
+            'studyPlanSubjects' => array(self::HAS_MANY, 'StudyPlanSubject', 'subject_id'),
+            'cycle' => array(self::BELONGS_TO, 'SubjectCycle', 'cycle_id'),
         );
     }
 
@@ -62,8 +75,8 @@ class Subject extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'title' => 'Title',
-            'cycle_id' => 'Cycle',
+            'title' => Yii::t('base', 'Title'),
+            'cycle_id' => Yii::t('base', 'Subject cycles'),
         );
     }
 
@@ -92,16 +105,5 @@ class Subject extends ActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
-    }
-
-    /**
-     * Returns the static model of the specified AR class.
-     * Please note that you should have this exact method in all your CActiveRecord descendants!
-     * @param string $className active record class name.
-     * @return Subject the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
     }
 }

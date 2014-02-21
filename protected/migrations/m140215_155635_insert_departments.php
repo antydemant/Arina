@@ -2,12 +2,12 @@
 
 class m140215_155635_insert_departments extends CDbMigration
 {
-	public function up()
-	{
+    public function up()
+    {
         $this->insert(
             'teacher',
             array(
-                'id'=>'9',
+                'id' => '9',
                 'last_name' => 'Сівко',
                 'first_name' => 'Антон',
                 'middle_name' => 'Павлович',
@@ -25,7 +25,7 @@ class m140215_155635_insert_departments extends CDbMigration
         $this->insert(
             'teacher',
             array(
-                'id'=>'10',
+                'id' => '10',
                 'last_name' => 'Валявіна',
                 'first_name' => 'Ольга',
                 'middle_name' => 'Тимофіївна',
@@ -42,7 +42,7 @@ class m140215_155635_insert_departments extends CDbMigration
         $this->insert(
             'teacher',
             array(
-                'id'=>'11',
+                'id' => '11',
                 'last_name' => 'Докторук',
                 'first_name' => 'Валерій',
                 'middle_name' => 'Павлович',
@@ -59,7 +59,7 @@ class m140215_155635_insert_departments extends CDbMigration
         $this->insert(
             'teacher',
             array(
-                'id'=>'12',
+                'id' => '12',
                 'last_name' => 'Данилюк',
                 'first_name' => 'Анатолій',
                 'middle_name' => 'Миколайович',
@@ -73,69 +73,69 @@ class m140215_155635_insert_departments extends CDbMigration
                 'head_id' => '12',
             )
         );
-	}
+    }
 
-	public function down()
-	{
+    public function down()
+    {
         $this->delete(
             'department',
             array(
-                'head_id'=>'9',
-            )
-        );
-        $this->delete(
-            'department',
-            array(
-                'head_id'=>'10',
+                'head_id' => '9',
             )
         );
         $this->delete(
             'department',
             array(
-                'head_id'=>'11',
+                'head_id' => '10',
             )
         );
         $this->delete(
             'department',
             array(
-                'head_id'=>'12',
+                'head_id' => '11',
+            )
+        );
+        $this->delete(
+            'department',
+            array(
+                'head_id' => '12',
             )
         );
         $this->delete(
             'teacher',
             array(
-                'id'=>'9',
+                'id' => '9',
             )
         );
         $this->delete(
             'teacher',
             array(
-                'id'=>'10',
+                'id' => '10',
             )
         );
         $this->delete(
             'teacher',
             array(
-                'id'=>'11',
+                'id' => '11',
             )
         );
         $this->delete(
             'teacher',
             array(
-                'id'=>'12',
+                'id' => '12',
             )
         );
-		return false;
-	}
+        return false;
+    }
 
-	/*
-	// Use safeUp/safeDown to do migration with transaction
-	public function safeUp()
-	{
-	}
+    /*
+    // Use safeUp/safeDown to do migration with transaction
+    public function safeUp()
+    {
+    }
 
-	public function safeDown()
-	{
-	}
-	*/
+    public function safeDown()
+    {
+    }
+    */
 }
