@@ -48,6 +48,7 @@ class Semester extends ActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'plan' => array(self::BELONGS_TO, 'plan', 'study_plan_id'),
+            'hours'=>array(self::HAS_MANY, 'hours'),
 		);
 	}
 
