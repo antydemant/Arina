@@ -2,9 +2,9 @@
 
 /**
  * @author Serhiy Vinicuk <serhiyvinichuk@gmail.com>
- * This is the model class for table "study_plan".
+ * This is the model class for table "sp_plan".
  *
- * The followings are the available columns in table 'study_plan':
+ * The followings are the available columns in table 'sp_plan':
  * @property integer $id
  * @property integer $speciality_id
  * @property string $study_year
@@ -21,7 +21,7 @@ class Plan extends ActiveRecord
      */
     public function tableName()
     {
-        return 'study_plan';
+        return 'sp_plan';
     }
 
     /**
@@ -51,8 +51,8 @@ class Plan extends ActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'speciality' => array(self::BELONGS_TO, 'Speciality', 'speciality_id'),
-            'semesters' => array(self::HAS_MANY, 'Semester', 'study_plan_id'),
-            'spSubjects' => array(self::HAS_MANY, 'SpSubject', 'study_plan_id'),
+            'semesters' => array(self::HAS_MANY, 'Semester', 'sp_plan_id'),
+            'spSubjects' => array(self::HAS_MANY, 'SpSubject', 'sp_plan_id'),
         );
     }
 

@@ -2,11 +2,11 @@
 
 /**
  * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
- * This is the model class for table "study_plan_info".
+ * This is the model class for table "sp_semester".
  *
- * The followings are the available columns in table 'study_plan_info':
+ * The followings are the available columns in table 'sp_semester':
  * @property integer $id
- * @property integer $study_plan_id
+ * @property integer $sp_plan_id
  * @property integer $semester_number
  * @property integer $weeks_count
  *
@@ -20,7 +20,7 @@ class Semester extends ActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'study_plan_info';
+		return 'sp_semester';
 	}
 
 	/**
@@ -31,11 +31,11 @@ class Semester extends ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('study_plan_id, semester_number, weeks_count', 'required'),
-			array('study_plan_id, semester_number, weeks_count', 'numerical', 'integerOnly'=>true),
+			array('sp_plan_id, semester_number, weeks_count', 'required'),
+			array('sp_plan_id, semester_number, weeks_count', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, study_plan_id, semester_number, weeks_count', 'safe', 'on'=>'search'),
+			array('id, sp_plan_id, semester_number, weeks_count', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,8 +47,8 @@ class Semester extends ActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'plan' => array(self::BELONGS_TO, 'plan', 'study_plan_id'),
-            'hours'=>array(self::HAS_MANY, 'hours'),
+			'plan' => array(self::BELONGS_TO, 'Plan', 'sp_plan_id'),
+            'hours'=>array(self::HAS_MANY, 'Hours', 'sp_semester_id'),
 		);
 	}
 
@@ -59,7 +59,7 @@ class Semester extends ActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'study_plan_id' => 'Навчальний план',
+			'sp_plan_id' => 'Навчальний план',
 			'semester_number' => 'Номер семестру',
 			'weeks_count' => 'Кількість тижнів',
 		);
@@ -84,7 +84,7 @@ class Semester extends ActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('study_plan_id',$this->study_plan_id);
+		$criteria->compare('sp_plan_id',$this->sp_plan_id);
 		$criteria->compare('semester_number',$this->semester_number);
 		$criteria->compare('weeks_count',$this->weeks_count);
 

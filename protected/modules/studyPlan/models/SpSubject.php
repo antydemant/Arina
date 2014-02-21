@@ -6,7 +6,7 @@
  *
  * The followings are the available columns in table 'study_plan_subject':
  * @property integer $id
- * @property integer $study_plan_id
+ * @property integer $sp_plan_id
  * @property integer $subject_id
  * @property integer $total_hours
  * The followings are the available model relations:
@@ -41,7 +41,7 @@ class SpSubject extends ActiveRecord
      */
     public function tableName()
     {
-        return 'study_plan_subject';
+        return 'sp_subject';
     }
 
     /**
@@ -52,11 +52,11 @@ class SpSubject extends ActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('study_plan_id, subject_id, total_hours', 'required'),
-            array('study_plan_id, subject_id, total_hours', 'numerical', 'integerOnly' => true),
+            array('sp_plan_id, subject_id, total_hours', 'required'),
+            array('sp_plan_id, subject_id, total_hours', 'numerical', 'integerOnly' => true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, study_plan_id, subject_id, total_hours', 'safe', 'on' => 'search'),
+            array('id, sp_plan_id, subject_id, total_hours', 'safe', 'on' => 'search'),
         );
     }
 
@@ -69,8 +69,8 @@ class SpSubject extends ActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'subject' => array(self::BELONGS_TO, 'Subject', 'subject_id'),
-            'plan' => array(self::BELONGS_TO, 'Plan', 'study_plan_id'),
-            'hours' => array(self::HAS_MANY, 'Hours', 'study_plan_subject_id'),
+            'plan' => array(self::BELONGS_TO, 'Plan', 'sp_plan_id'),
+            'hours' => array(self::HAS_MANY, 'Hours', 'sp_subject_id'),
         );
     }
 
@@ -81,7 +81,7 @@ class SpSubject extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'study_plan_id' => 'Навчальний план',
+            'sp_plan_id' => 'Навчальний план',
             'subject_id' => 'Предмет',
             'total_hours' => 'Усього годин',
         );
@@ -106,7 +106,7 @@ class SpSubject extends ActiveRecord
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('study_plan_id', $this->study_plan_id);
+        $criteria->compare('sp_plan_id', $this->sp_plan_id);
         $criteria->compare('subject_id', $this->subject_id);
         $criteria->compare('total_hours', $this->total_hours);
 

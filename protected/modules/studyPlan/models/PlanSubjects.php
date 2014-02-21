@@ -36,7 +36,7 @@ class PlanSubjects extends CFormModel
     public function makeChanges()
     {
         $model = new SpSubject();
-        $model->study_plan_id = $this->planId;
+        $model->sp_plan_id = $this->planId;
         $model->subject_id = $this->subjectId;
         $model->total_hours = $this->total_hours;
         $model->save(false);
@@ -64,7 +64,7 @@ class PlanSubjects extends CFormModel
     public function getAddedSubjectsProvider()
     {
         $criteria = new CDbCriteria();
-        $criteria->condition = "study_plan_id = $this->planId";
+        $criteria->condition = "sp_plan_id = $this->planId";
         $dataProvider = SpSubject::model()->getProvider(array('criteria' => $criteria));
         return $dataProvider;
     }

@@ -15,7 +15,7 @@ class SpSubjectController extends Controller
     {
         $dataProvider = Hours::model()->getProvider(array(
             'criteria' => array(
-                'condition' => 'study_plan_subject_id=' . $id,
+                'condition' => 'sp_subject_id=' . $id,
             ),
         ));
         $model = SpSubject::model()->loadContent($id);

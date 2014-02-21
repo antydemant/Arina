@@ -75,7 +75,7 @@ class MainController extends Controller
          * @var $subject SpSubject
          */
         $subject = SpSubject::model()->loadContent($id);
-        $planId = $subject->study_plan_id;
+        $planId = $subject->sp_plan_id;
         $subject->delete();
         $this->redirect(array('subjects', 'id' => $planId));
 

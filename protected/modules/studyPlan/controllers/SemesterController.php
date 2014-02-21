@@ -17,7 +17,7 @@ class SemesterController extends Controller
         $model = Plan::model()->loadContent($id);
         $dataProvider = Semester::model()->getProvider(array(
             'criteria' => array(
-                'condition' => "study_plan_id=$id"
+                'condition' => "sp_plan_id=$id"
             )
         ));
         $this->render('index', array(
@@ -33,11 +33,11 @@ class SemesterController extends Controller
     public function actionCreate($id)
     {
         $model = new Semester();
-        $model->study_plan_id = $id;
+        $model->sp_plan_id = $id;
         if (isset($_POST['Semester'])) {
             $model->attributes = $_POST['Semester'];
             if ($model->save()) {
-                $this->redirect($this->createUrl('index',array('id'=>$model->study_plan_id)));
+                $this->redirect($this->createUrl('index', array('id' => $model->sp_plan_id)));
             }
         }
 
@@ -55,7 +55,7 @@ class SemesterController extends Controller
         if (isset($_POST['Semester'])) {
             $model->attributes = $_POST['Semester'];
             if ($model->save()) {
-                $this->redirect($this->createUrl('index',array('id'=>$model->study_plan_id)));
+                $this->redirect($this->createUrl('index', array('id' => $model->sp_plan_id)));
             }
         }
 
