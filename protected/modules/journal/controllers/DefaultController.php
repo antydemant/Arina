@@ -27,4 +27,18 @@ class DefaultController extends Controller
         ));
     }
 
+    public function actionTest()
+    {
+        $model = new JournalViewer();
+        $model->setScenario('group');
+            $model->groupId= 2;
+        $model->subjectId = 1;
+            if ($model->validate()) {
+                $model->isEmpty = false;
+            }
+        $this->render('index', array(
+            'model' => $model,
+        ));
+    }
+
 }
