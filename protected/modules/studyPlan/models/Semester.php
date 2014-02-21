@@ -16,6 +16,17 @@
 class Semester extends ActiveRecord
 {
     /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return Semester the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
+
+    /**
      * @return string the associated database table name
      */
     public function tableName()
@@ -47,7 +58,7 @@ class Semester extends ActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'plan' => array(self::BELONGS_TO, 'plan', 'study_plan_id'),
+            'plan' => array(self::BELONGS_TO, 'Plan', 'study_plan_id'),
         );
     }
 
@@ -90,16 +101,5 @@ class Semester extends ActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
-    }
-
-    /**
-     * Returns the static model of the specified AR class.
-     * Please note that you should have this exact method in all your CActiveRecord descendants!
-     * @param string $className active record class name.
-     * @return Semester the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
     }
 }

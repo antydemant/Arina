@@ -24,3 +24,6 @@ a.search-button {
 .grid-view .summary {
     padding-bottom: 10px;
 }
+input[type="text"] {
+    width: auto;
+}
