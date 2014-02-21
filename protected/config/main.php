@@ -16,6 +16,7 @@ return CMap::mergeArray(
         //
         'aliases' => array(
             'bootstrap' => 'ext.yiibooster',
+            'modules'=>'application.modules',
         ),
         // autoloading model and component classes
         'import' => array(
