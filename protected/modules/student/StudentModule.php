@@ -9,8 +9,8 @@ class StudentModule extends CWebModule
 
 		// import the module-level models and components
 		$this->setImport(array(
-			'Student.models.*',
-			'Student.components.*',
+			'student.models.*',
+			'student.components.*',
 		));
 	}
 
