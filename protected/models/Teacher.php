@@ -9,29 +9,22 @@
  * @property string $first_name
  * @property string $middle_name
  * @property integer $cyclic_commission_id
+ *
+ *
+ * @property CyclicCommission $cyclicCommission
  */
 class Teacher extends ActiveRecord
 {
+    public function getCyclicCommissionName()
+    {
+        return $this->cyclicCommission->title;
+    }
     /**
      * @return array for dropDownList
      */
     public static function getList()
     {
         return CHtml::listData(self::model()->findAll(), 'id', 'fullName');
-    }
-
-    public function setFullName($value)
-    {
-        $list = explode(' ', $value);
-        if (isset($list[0])) {
-            $this->last_name = $list[0];
-        }
-        if (isset($list[1])) {
-            $this->first_name = $list[1];
-        }
-        if (isset($list[2])) {
-            $this->middle_name = $list[2];
-        }
     }
 
     /**
@@ -47,7 +40,7 @@ class Teacher extends ActiveRecord
 
     public function getFullName()
     {
-        return "$this->last_name $this->first_name $this->middle_name";
+        return trim("$this->last_name $this->first_name $this->middle_name");
     }
 
     /**
@@ -100,6 +93,7 @@ class Teacher extends ActiveRecord
             'middle_name' => Yii::t('teacher', 'Middle Name'),
             'fullName' => Yii::t('teacher', 'Full Name'),
             'cyclic_commission_id' => Yii::t('teacher', 'Cyclic Commission'),
+            'cyclicCommissionName' => Yii::t('teacher', 'Cyclic Commission'),
         );
     }
 

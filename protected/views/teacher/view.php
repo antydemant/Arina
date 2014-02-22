@@ -10,15 +10,28 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'List Teacher', 'url' => array('index')),
-    array('label' => 'Create Teacher', 'url' => array('create')),
-    array('label' => 'Update Teacher', 'url' => array('update', 'id' => $model->id)),
-    array('label' => 'Delete Teacher', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id), 'confirm' => 'Are you sure you want to delete this item?')),
-    array('label' => 'Manage Teacher', 'url' => array('admin')),
+    array('label' => Yii::t('teacher', 'Teacher list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
+    array('label' => Yii::t('teacher', 'Add new teacher'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
+    array(
+        'label' => Yii::t('teacher', 'Update teacher'),
+        'icon' => 'pencil',
+        'url' => $this->createUrl('update', array('id' => $model->id)),
+    ),
+    array(
+        'label' => Yii::t('teacher', 'Delete teacher'),
+        'icon' => 'trash',
+        'htmlOptions' => array(
+            'submit' => array(
+                'delete',
+                'id' => $model->id,
+            ),
+            'confirm' => Yii::t('base', 'Do you want to delete this item?'),
+        ),
+    ),
 );
 ?>
 
-<h1>View Teacher #<?php echo $model->id; ?></h1>
+<h2><?php echo Yii::t('teacher', 'View teacher') . " {$model->getFullName()}" ?></h2>
 
 <?php $this->widget('bootstrap.widgets.TbDetailView', array(
     'data' => $model,
@@ -26,6 +39,11 @@ $this->menu = array(
         'last_name',
         'first_name',
         'middle_name',
-        'cyclic_commission_id',
+        array(
+            'type' => 'raw',
+            'label' => Yii::t('teacher', 'Cyclic Commission'),
+            'value' => CHtml::link($model->getCyclicCommissionName(), array('cyclicCommission/view', 'id' => $model->cyclic_commission_id)),
+        ),
+
     ),
 )); ?>

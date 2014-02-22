@@ -10,8 +10,12 @@
  * @property integer $teacher_load_id
  * @property integer $class_type
  * @property integer $group_id
+ *
+ *
+ * @property TeacherLoad $load
+ *
  */
-class ActualClass extends CActiveRecord
+class ActualClass extends ActiveRecord
 {
     /**
      * @return string the associated database table name

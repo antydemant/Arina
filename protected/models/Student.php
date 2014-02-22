@@ -17,9 +17,14 @@
  * @property string $gender
  * @property string $address
  * @property string $characteristics
+ *
+ *
+ * @property ClassMark[] $marks
+ * @property ClassAbsence[] $absences
  */
 class Student extends ActiveRecord
 {
+    public $classes = array();
     /**
      * @return string the associated database table name
      */
@@ -66,6 +71,7 @@ class Student extends ActiveRecord
         return array(
             'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
             'marks' => array(self::HAS_MANY, 'ClassMark', 'student_id'),
+            'absences' => array(self::HAS_MANY, 'ClassAbsence', 'student_id'),
         );
     }
 

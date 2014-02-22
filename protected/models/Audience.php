@@ -1,12 +1,14 @@
 <?php
-
 /**
+ *
  * This is the model class for table "audience".
  *
  * The followings are the available columns in table 'audience':
  * @property integer $id
  * @property string $number
  * @property integer $type
+ *
+ * @author Dmytro Karpovych <ZAYEC77@gmail.com>
  */
 class Audience extends ActiveRecord
 {

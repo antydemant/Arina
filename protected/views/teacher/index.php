@@ -51,12 +51,21 @@ Yii::app()->clientScript->registerScript('search', "
 <?php
 $columns = array(
     array(
-        'name' => 'fullName',
-        'value' => '$data->getFullName()',
+        'name' => 'last_name',
+        'htmlOptions'=>array('style'=>'width: 160px'),
     ),
     array(
+        'name' => 'first_name',
+        'htmlOptions'=>array('style'=>'width: 160px'),
+    ),
+    array(
+        'name' => 'middle_name',
+        'htmlOptions'=>array('style'=>'width: 160px'),
+    ),
+    array(
+        'type'=>'raw',
         'name' => 'cyclic_commission_id',
-        'value' => '$data->cyclicCommission->title',
+        'value' => 'CHtml::link($data->cyclicCommission->title, array("cyclicCommission/view","id"=>$data->cyclic_commission_id))',
         'htmlOptions' => array(),
         'filter' => CHtml::listData(CyclicCommission::model()->findAll(), 'id', 'title')
     ),
