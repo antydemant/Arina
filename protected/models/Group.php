@@ -58,7 +58,7 @@ class Group extends ActiveRecord
             'speciality' => array(self::BELONGS_TO, 'Speciality', 'speciality_id'),
             'curator' => array(self::BELONGS_TO, 'Teacher', 'curator_id'),
             'students' => array(self::HAS_MANY, 'Student', 'group_id'),
-            'loads' => array(self::HAS_MANY, 'TeacherLoad', 'group_id'),
+            'classes' => array(self::HAS_MANY, 'ActualClass', 'group_id'),
         );
     }
 

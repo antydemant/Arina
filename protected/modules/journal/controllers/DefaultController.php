@@ -6,19 +6,11 @@ class DefaultController extends Controller
     {
         $criteria = new CDbCriteria(array(
             'with' => array(
-            	'marks',
-            	'absences',
-            	'load' => array(
-            			'teacher', 
-            			'group' => array('students'),
-            			'studyPlanSemester' => array('plan' => array('subjects' => 'subject')),
-            	),
-            ),
-        	'where' => array(
-            		
+                'classes' => array('marks', 'absences'),
+                'students',
             ),
         ));
-        $model = ActualClass::model()->getProvider(array('criteria' => $criteria));
+        $model = Group::model()->getProvider(array('criteria' => $criteria));
 
 
         $this->render('index', array(

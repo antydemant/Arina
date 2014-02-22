@@ -1,12 +1,12 @@
 <?php
-Yii::import('modules.studyPlan.models.Semester');
+
 /**
  * This is the model class for table "teacher_load".
  *
  * The followings are the available columns in table 'teacher_load':
  * @property integer $id
  * @property integer $teacher_id
- * @property integer $study_plan_semester_id
+ * @property integer $sp_hours_id
  * @property integer $group_id
  * @property integer $lectures
  * @property integer $labs
@@ -30,11 +30,11 @@ class TeacherLoad extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('teacher_id, study_plan_semester_id, group_id, lectures, labs, practs', 'required'),
-            array('teacher_id, study_plan_semester_id, group_id, lectures, labs, practs', 'numerical', 'integerOnly' => true),
+            array('teacher_id, sp_hours_id, group_id, lectures, labs, practs', 'required'),
+            array('teacher_id, sp_hours_id, group_id, lectures, labs, practs', 'numerical', 'integerOnly' => true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, teacher_id, study_plan_semester_id, group_id, lectures, labs, practs', 'safe', 'on' => 'search'),
+            array('id, teacher_id, sp_hours_id, group_id, lectures, labs, practs', 'safe', 'on' => 'search'),
         );
     }
 
@@ -45,10 +45,8 @@ class TeacherLoad extends CActiveRecord
     {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
-        return array(
-        		'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
-        		'teacher' => array(self::BELONGS_TO, 'Teacher', 'teacher_id'),
-        		'studyPlanSemester' => array(self::BELONGS_TO, 'Semester', 'study_plan_semester_id'),
+        return array(//'subject'=>array(self::),
+            'sp_hours'=>array(self::BELONGS_TO, 'Hours','sp_hours_id'),
         );
     }
 
@@ -60,7 +58,7 @@ class TeacherLoad extends CActiveRecord
         return array(
             'id' => 'ID',
             'teacher_id' => 'Teacher',
-            'study_plan_semester_id' => 'Study Plan Semester',
+            'sp_hours_id' => 'Study Plan Hours',
             'group_id' => 'Group',
             'lectures' => 'Lectures',
             'labs' => 'Labs',
@@ -88,7 +86,7 @@ class TeacherLoad extends CActiveRecord
 
         $criteria->compare('id', $this->id);
         $criteria->compare('teacher_id', $this->teacher_id);
-        $criteria->compare('study_plan_semester_id', $this->study_plan_semester_id);
+        $criteria->compare('sp_hours_id', $this->sp_hours_id);
         $criteria->compare('group_id', $this->group_id);
         $criteria->compare('lectures', $this->lectures);
         $criteria->compare('labs', $this->labs);
