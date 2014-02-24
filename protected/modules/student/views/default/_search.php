@@ -37,11 +37,13 @@
 
     <?php echo $form->textFieldRow($model, 'gender', array('size' => 10, 'maxlength' => 10)); ?>
 
-    <?php echo $form->textFieldRow($model, 'address', array('size' => 60, 'maxlength' => 200)); ?>
+    <?php echo $form->textFieldRow($model, 'official_address', array('size' => 60, 'maxlength' => 200)); ?>
 
     <?php echo $form->textAreaRow($model, 'characteristics', array('rows' => 6, 'cols' => 50)); ?>
 	-->
 
+    
+    
     <div class="form-actions">
         <?php $this->widget(
             'bootstrap.widgets.TbButton',
