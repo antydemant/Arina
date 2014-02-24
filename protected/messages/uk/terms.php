@@ -14,6 +14,7 @@ return array(
     'Course project' => 'Курсовий проект',
     'Semester' => 'Семестр',
     'Title' => 'Назва',
-	'Group' => 'Група',
-	'Student' => 'Студент',
+    'Group' => 'Група',
+    'Student' => 'Студент',
+    'Head' => 'Голова',
 );

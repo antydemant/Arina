@@ -17,7 +17,6 @@ $this->menu = array(
 
 <?php
 $columns = array(
-    'id',
     'number',
     'typeName',
     array(

@@ -7,6 +7,9 @@
  * @property integer $id
  * @property string $title
  * @property integer $head_id
+ *
+ *
+ * @property Teacher $head
  */
 class Department extends ActiveRecord
 {
@@ -42,7 +45,9 @@ class Department extends ActiveRecord
     {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
-        return array();
+        return array(
+            'head'=>array(self::BELONGS_TO, 'Teacher', 'head_id'),
+        );
     }
 
     /**
@@ -52,8 +57,8 @@ class Department extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'title' => 'Title',
-            'head_id' => 'Head',
+            'title' => Yii::t('terms','Title'),
+            'head_id' => Yii::t('terms','Head'),
         );
     }
 

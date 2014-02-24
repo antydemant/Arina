@@ -25,5 +25,5 @@ a.search-button {
     padding-bottom: 10px;
 }
 input[type="text"] {
-    width: auto;
+   /* width: auto;*/
 }

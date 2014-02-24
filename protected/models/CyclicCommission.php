@@ -67,8 +67,8 @@ class CyclicCommission extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'title' => 'Title',
-            'head_id' => 'Head',
+            'title' =>  Yii::t('terms','Title'),
+            'head_id' => Yii::t('terms','Head'),
         );
     }
 

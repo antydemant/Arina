@@ -11,7 +11,7 @@ return array(
     'Find' => 'Знайти',
     'Do you want to delete this item?' => 'Ви хочете видалити цей елемент?',
     'Type' => 'Тип',
-    'Cyclic Commissions' => 'Циклові комісії',
+    'Cyclic commissions' => 'Циклові комісії',
     'Departments' => 'Відділення',
     'Title' => 'Назва',
     'ID' => '#',

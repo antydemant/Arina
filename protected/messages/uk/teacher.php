@@ -16,6 +16,7 @@ return array(
     'View teacher' => 'Перегляд даних викладача',
     'Sign up new teacher' => 'Реєстрація нового викладача',
     'Cyclic Commission' => 'Циклова комісія',
+    'Commissions list' => 'Список циклових комісій',
     'Updating teacher' => 'Обновлення даних викладача',
     'Select cycle commission' => 'Оберіть циклову комісію',
 );

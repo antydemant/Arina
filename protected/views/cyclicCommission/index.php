@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs = array(
-    'Cyclic commissions' => array('index'),
+   Yii::t('base', 'Cyclic commissions'),
 );
 
 $this->menu = array(
