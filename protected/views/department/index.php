@@ -3,25 +3,26 @@
 /* @var $model Department */
 
 $this->breadcrumbs = array(
-    Yii::t('base', 'Departments') => array('index'),
-    'Manage',
+    Yii::t('base', 'Departments'),
 );
 
 $this->menu = array(
-    array('label' => 'List Department', 'url' => array('index')),
-    array('label' => 'Create Department', 'url' => array('create')),
+    array('label' => Yii::t('department', 'Departments list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
+    array('label' => Yii::t('department', 'Create new department'), 'url' => array('create')),
 );
 ?>
 
-<?php $this->widget('bootstrap.widgets.TbGridView', array(
-    'id' => 'department-grid',
-    'dataProvider' => $model->search(),
-    'columns' => array(
-        'id',
-        'title',
-        'head_id',
-        array(
-            'class' => 'bootstrap.widgets.TbButtonColumn',
-        ),
+<?php
+$columns = array(
+    'title',
+    array(
+        'name' => 'head_id',
+        'value' => '$data->head->fullName',
     ),
-)); ?>
+    array(
+        'class' => 'bootstrap.widgets.TbButtonColumn',
+        'header' => Yii::t('base', 'Actions'),
+    ),
+);
+$this->renderPartial('//tableList', array('provider' => $model->search(), 'columns' => $columns));
+?>

@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs = array(
-    'Departments' => array('index'),
+    Yii::t('base', 'Departments') => array('index'),
     $model->title,
 );
 

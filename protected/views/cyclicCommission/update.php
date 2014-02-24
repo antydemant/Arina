@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs = array(
-    'Cyclic Commissions' => array('index'),
+    Yii::t('base', 'Cyclic commissions') => array('index'),
     $model->title => array('view', 'id' => $model->id),
     'Update',
 );

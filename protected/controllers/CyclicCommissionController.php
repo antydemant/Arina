@@ -2,7 +2,7 @@
 
 class CyclicCommissionController extends Controller
 {
-    public $name = 'Cyclic Commissions';
+    public $name = 'Cyclic commissions';
 
     /**
      * Lists all models.

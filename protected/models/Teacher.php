@@ -27,6 +27,22 @@ class Teacher extends ActiveRecord
         return CHtml::listData(self::model()->findAll(), 'id', 'fullName');
     }
 
+    public static function getTreeList()
+    {
+        $list = array();
+        /**
+         * @var CyclicCommission[] $commission
+         */
+        $commission = CyclicCommission::model()->findAll();
+        foreach($commission as $item) {
+            $list[$item->title]=array();
+            foreach($item->teachers as $teacher) {
+                $list[$item->title][$teacher->id]=$teacher->getFullName();
+            }
+        }
+        return $list;
+    }
+
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
