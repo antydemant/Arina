@@ -41,11 +41,16 @@ class DefaultController extends Controller
      */
     public function actionUpdate($id)
     {
+        /**
+         * @var $model Student
+         */
         $model = Student::model()->loadContent($id);
-
         $this->ajaxValidation('student-form', $model);
 
         if (isset($_POST['Student'])) {
+            if(!isset($_POST['Student']['exemptions'])) {
+                $_POST['Student']['exemptions'] = array();
+            }
             $model->attributes = $_POST['Student'];
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));

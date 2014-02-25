@@ -22,7 +22,7 @@ return CMap::mergeArray(
         'import' => array(
             'application.models.*',
             'application.components.*',
-            'application.extensions.*',
+            'application.extensions.CAdvancedArBehavior',
             'application.extensions.yiibooster.components.*',
             'application.extensions.yiibooster.helpers.*'
         ),
