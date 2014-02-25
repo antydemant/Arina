@@ -41,6 +41,7 @@ class Exemption extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+				'students' => array(self::MANY_MANY, 'Student', 'student_has_exemption(exemption_id, student_id')
 		);
 	}
 

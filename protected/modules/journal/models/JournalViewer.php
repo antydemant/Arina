@@ -45,6 +45,7 @@ class JournalViewer extends CFormModel
 
     protected function getGroupData()
     {
+    	/*
         $criteria = new CDbCriteria(array(
             'with' => array(
                 'marks',
@@ -61,6 +62,7 @@ class JournalViewer extends CFormModel
                 ),
             ),
         ));
+        */
         /**
          * @var $group Group
          */

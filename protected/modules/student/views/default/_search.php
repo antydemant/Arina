@@ -26,7 +26,7 @@
 
     <?php echo $form->textFieldRow($model, 'group_id'); ?>
 
-    <!--
+    
     <?php echo $form->textFieldRow($model, 'phone_number', array('size' => 15, 'maxlength' => 15)); ?>
 
     <?php echo $form->textFieldRow($model, 'mobile_number', array('size' => 15, 'maxlength' => 15)); ?>
@@ -40,7 +40,62 @@
     <?php echo $form->textFieldRow($model, 'official_address', array('size' => 60, 'maxlength' => 200)); ?>
 
     <?php echo $form->textAreaRow($model, 'characteristics', array('rows' => 6, 'cols' => 50)); ?>
-	-->
+    
+		<?php echo $form->textFieldRow($model,'factual_address',array('size'=>60,'maxlength'=>100)); ?>
+
+		<?php echo $form->textFieldRow($model,'birth_date'); ?>
+
+		<?php echo $form->textFieldRow($model,'admission_date'); ?>
+
+		<?php echo $form->textFieldRow($model,'tuition_payment',array('size'=>50,'maxlength'=>50)); ?>
+
+		<?php echo $form->textFieldRow($model,'admission_order_number'); ?>
+
+		<?php echo $form->textFieldRow($model,'admission_semester'); ?>
+	
+		<?php echo $form->textFieldRow($model,'entry_exams',array('size'=>60,'maxlength'=>100)); ?>
+
+		<?php echo $form->textFieldRow($model,'education_document',array('size'=>50,'maxlength'=>50)); ?>
+
+		<?php echo $form->textFieldRow($model,'contract',array('size'=>50,'maxlength'=>50)); ?>
+
+		<?php echo $form->textFieldRow($model,'math_mark'); ?>
+
+		<?php echo $form->textFieldRow($model,'ua_language_mark'); ?>
+
+		<?php echo $form->textFieldRow($model,'mother_workplace',array('size'=>50,'maxlength'=>50)); ?>
+
+		<?php echo $form->textFieldRow($model,'mother_position',array('size'=>50,'maxlength'=>50)); ?>
+
+		<?php echo $form->textFieldRow($model,'mother_workphone',array('size'=>20,'maxlength'=>20)); ?>
+
+		<?php echo $form->textFieldRow($model,'mother_boss_workphone',array('size'=>20,'maxlength'=>20)); ?>
+
+		<?php echo $form->textFieldRow($model,'father_workplace',array('size'=>50,'maxlength'=>50)); ?>
+
+		<?php echo $form->textFieldRow($model,'father_position',array('size'=>50,'maxlength'=>50)); ?>
+
+		<?php echo $form->textFieldRow($model,'father_workphone',array('size'=>20,'maxlength'=>20)); ?>
+
+		<?php echo $form->textFieldRow($model,'father_boss_workphone',array('size'=>20,'maxlength'=>20)); ?>
+
+		<?php echo $form->textFieldRow($model,'graduated'); ?>
+
+		<?php echo $form->textFieldRow($model,'graduation_date'); ?>
+
+		<?php echo $form->textFieldRow($model,'graduation_basis',array('size'=>50,'maxlength'=>50)); ?>
+
+		<?php echo $form->textFieldRow($model,'graduation_semester'); ?>
+
+		<?php echo $form->textFieldRow($model,'graduation_order_number'); ?>
+
+		<?php echo $form->textFieldRow($model,'diploma',array('size'=>50,'maxlength'=>50)); ?>
+
+		<?php echo $form->textFieldRow($model,'direction',array('size'=>50,'maxlength'=>50)); ?>
+
+		<?php echo $form->textFieldRow($model,'misc_data',array('size'=>60,'maxlength'=>100)); ?>
+
+		<?php echo $form->textFieldRow($model,'hobby',array('size'=>60,'maxlength'=>100)); ?>
 
     
     
