@@ -13,9 +13,8 @@
 
         <?php $data = $model->getData(); ?>
         <div>
-
             <table class="table table-bordered">
-                <caption>La-la-la</caption>
+                <caption>Журнал</caption>
                 <thead>
                 <tr>
                     <th style="width: 100px">Студенти\Заняття:</th>
