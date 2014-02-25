@@ -96,7 +96,7 @@ class PlanSemesters extends CFormModel
             array('subjectId, semesterId', 'required', 'on' => 'addHours'),
             array('semesterId', 'checkSubject', 'on' => 'addHours'),
             array('semesterId', 'checkHours', 'on' => 'addHours'),
-            array('lectures, labs, practs, selfwork, hours_per_week', 'numerical', 'integerOnly' => true),
+            array('lectures, labs, practs, selfwork, hours_per_week', 'numerical', 'integerOnly' => true, 'on'=>'addHours'),
             array('test, exam, course_work, course_project', 'boolean'),
         );
     }

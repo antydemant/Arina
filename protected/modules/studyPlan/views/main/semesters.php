@@ -16,7 +16,7 @@
         <div><strong><?php echo Yii::t('studyPlan', 'Subjects in the plan'); ?></strong></div>
         <?php echo $form->dropDownListRow($model,
             'subjectId',
-            CHtml::listData(SpSubject::model()->findAll("sp_plan_id=$model->planId"), 'subject_id', 'subject.title'),
+            CHtml::listData(SpSubject::model()->findAll("sp_plan_id=$model->planId"), 'id', 'subject.title'),
             array('size' => 6)); ?>
     </div>
     <div class="span3">
@@ -44,7 +44,19 @@
         <?php echo $form->numberFieldRow($model, 'weeks_count'); ?>
     </div>
     <?php $this->endWidget(); ?>
+    <div class="span10">
+        <?php
+        $dataProvider = Hours::model()->getProvider(array(
+            'criteria'=>array(
+                'with'=>array('spSubject'=>array(
+                    'condition'=>'sp_plan_id='.$model->planId,
+                )),
+            ),
+        ));
+        $this->renderPartial('hours', array('dataProvider'=>$dataProvider)); ?>
+    </div>
 </div>
+
 
 <script>
     $(makeHandler()); //Make handler for an ajax link
