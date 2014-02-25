@@ -48,6 +48,7 @@
  */
 class Student extends ActiveRecord
 {
+	public $classes = array();
 	/**
 	 * @return string the associated database table name
 	 */
