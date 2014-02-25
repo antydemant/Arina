@@ -48,14 +48,16 @@
     <div class="span10">
         <?php
         $dataProvider = Hours::model()->getProvider(array(
-            'criteria'=>array(
-                'with'=>array('spSubject'=>array(
-                    'condition'=>'sp_plan_id='.$model->planId,
+            'criteria' => array(
+                'with' => array('spSubject' => array(
+                    'condition' => 'sp_plan_id=' . $model->planId,
                 )),
             ),
         ));
-        $this->renderPartial('hours', array('dataProvider'=>$dataProvider)); ?>
+        $this->renderPartial('hours', array('dataProvider' => $dataProvider)); ?>
+        <?php echo CHtml::link(Yii::t('base','Finish'), $this->createUrl('index'), array('class' => 'btn')); ?>
     </div>
+
 </div>
 
 

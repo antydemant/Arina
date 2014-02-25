@@ -48,4 +48,5 @@ return array(
     'Semesters' => 'Семестри',
     'Fields with <span class="required">*</span> are required.' => 'Поля, відмічені <span class="required">*</span>, обов\'язкові для заповнення.',
     'Invalid request. Please do not repeat this request again.' => 'Невірний запит. Будь ласка, не повторюйте цей запит знову.',
+    'Finish' => 'Завершити',
 );
