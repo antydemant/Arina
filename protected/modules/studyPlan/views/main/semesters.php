@@ -38,6 +38,7 @@
             'semesterId',
             $model->getSemesters(),
             array('size' => 6)); ?>
+        <div class="clearfix"></div>
         <?php echo CHtml::link(Yii::t('base', 'Add'), $this->createUrl('addSemester', array('id' => $model->planId)), array('class' => 'btn bind')); ?>
         <?php echo CHtml::link(Yii::t('base', 'Remove'), $this->createUrl('removeSemester', array('id' => $model->planId)), array('class' => 'btn bind')); ?>
         <?php echo $form->numberFieldRow($model, 'semester_number'); ?>

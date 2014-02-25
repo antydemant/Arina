@@ -12,7 +12,7 @@ class HoursController extends Controller
      */
     public function actionCreate($id)
     {
-        $model = new Hours();
+        $model = new Hours('create');
         $model->sp_subject_id = $id;
         if (isset($_POST['Hours'])) {
             $model->attributes = $_POST['Hours'];

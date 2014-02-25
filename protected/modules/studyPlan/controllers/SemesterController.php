@@ -32,7 +32,7 @@ class SemesterController extends Controller
      */
     public function actionCreate($id)
     {
-        $model = new Semester();
+        $model = new Semester('create');
         $model->sp_plan_id = $id;
         if (isset($_POST['Semester'])) {
             $model->attributes = $_POST['Semester'];
