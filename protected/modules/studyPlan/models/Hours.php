@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * This is the model class for table "sp_hours".
@@ -40,11 +41,65 @@ class Hours extends ActiveRecord
         return array(
             array('sp_subject_id, sp_semester_id, lectures, labs, practs, selfwork, hours_per_week, test, exam, course_work, course_project', 'required'),
             array('sp_subject_id, sp_semester_id, lectures, labs, practs, selfwork, hours_per_week, test, exam, course_work, course_project', 'numerical', 'integerOnly' => true),
+            array('sp_semester_id', 'checkSubject', 'on' => 'create'),
+            array('lectures', 'checkClasses', 'on' => 'create'),
+            array('sp_semester_id', 'checkHours', 'on' => 'create'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, sp_subject_id, sp_semester_id, lectures, labs, practs, selfwork, hours_per_week, test, exam, course_work, course_project', 'safe', 'on' => 'search'),
         );
     }
+
+    /**
+     * Перевірка на додання годин у семестр повторно
+     * @param $attribute
+     * @param $params
+     */
+    public function checkSubject($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $hours = Hours::model()->findByAttributes(
+                array('sp_subject_id' => $this->sp_subject_id,
+                    'sp_semester_id' => $this->sp_semester_id
+                ));
+            if (isset($hours))
+                $this->addError('sp_semester_id', Yii::t('studyPlan', 'Hours in this semester already exist'));
+        }
+    }
+
+    /**
+     * Перевірка відповідності аудиторних годин до годин на тиждень
+     * @param $attribute
+     * @param $params
+     */
+    public function checkClasses($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $semester = Semester::model()->loadContent($this->sp_semester_id);
+            $total_classes = $this->lectures + $this->practs + $this->labs;
+            if ($semester->weeks_count * $this->hours_per_week < $total_classes)
+                $this->addError('hours_per_week', Yii::t('studyPlan', 'Not enough class hours'));
+        }
+    }
+
+    /**
+     * Перевірка на перевищення кількісті годин  в плані
+     * @param $attribute
+     * @param $params
+     */
+    public function checkHours($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $sum = $this->lectures + $this->labs + $this->practs + $this->selfwork;
+            $subject = SpSubject::model()->findByPk($this->sp_subject_id);
+            foreach ($subject->hours as $item) {
+                $sum += $item->getTotal();
+            }
+            if ($sum > $subject->total_hours)
+                $this->addError('lectures', Yii::t('studyPlan', 'Too many hours'));
+        }
+    }
+
 
     public function getTotal()
     {

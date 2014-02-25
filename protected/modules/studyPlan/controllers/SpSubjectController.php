@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * Class SpSubjectController
@@ -31,7 +32,7 @@ class SpSubjectController extends Controller
         if (isset($_POST['SpSubject'])) {
             $model->attributes = $_POST['SpSubject'];
             if ($model->save()) {
-                $this->redirect('index');
+                $this->createUrl('plan/view', array('id' => $model->sp_plan_id));
             }
         }
         $this->render('create', array('model' => $model));
@@ -47,7 +48,7 @@ class SpSubjectController extends Controller
         if (isset($_POST['SpSubject'])) {
             $model->attributes = $_POST['SpSubject'];
             if ($model->save()) {
-                $this->redirect($this->createUrl('index'));
+                $this->redirect($this->createUrl('plan/view', array('id' => $model->sp_plan_id)));
             }
         }
         $this->render('update', array('model' => $model));

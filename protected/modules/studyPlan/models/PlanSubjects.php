@@ -73,6 +73,7 @@ class PlanSubjects extends CFormModel
     {
         return array(
             array('total_hours, subjectId', 'required'),
+            array('total_hours', 'numerical', 'integerOnly' => true),
         );
     }
 

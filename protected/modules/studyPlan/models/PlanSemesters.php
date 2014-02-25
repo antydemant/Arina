@@ -95,8 +95,9 @@ class PlanSemesters extends CFormModel
             array('semester_number, weeks_count', 'numerical', 'integerOnly' => true, 'on' => 'addSemester'),
             array('subjectId, semesterId', 'required', 'on' => 'addHours'),
             array('semesterId', 'checkSubject', 'on' => 'addHours'),
+            array('lectures', 'checkClasses', 'on' => 'addHours'),
             array('semesterId', 'checkHours', 'on' => 'addHours'),
-            array('lectures, labs, practs, selfwork, hours_per_week', 'numerical', 'integerOnly' => true),
+            array('lectures, labs, practs, selfwork, hours_per_week', 'numerical', 'integerOnly' => true, 'on' => 'addHours'),
             array('test, exam, course_work, course_project', 'boolean'),
         );
     }
@@ -128,7 +129,7 @@ class PlanSemesters extends CFormModel
              */
             foreach ($this->plan->semesters as $item) {
                 if ($item->semester_number == $this->semester_number)
-                    return $this->addError('semester_number', Yii::t('plan', 'Incorrect semester number'));
+                    $this->addError('semester_number', Yii::t('studyPlan', 'Semester already exists'));
             }
         }
 
@@ -146,7 +147,17 @@ class PlanSemesters extends CFormModel
                     'sp_semester_id' => $this->semesterId
                 ));
             if (isset($hours))
-                return $this->addError('semesterId', 'Дані про цей семестр уже внесені');
+                $this->addError('sp_semester_id', Yii::t('studyPlan', 'Hours in this semester already exist'));
+        }
+    }
+
+    public function checkClasses($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $semester = Semester::model()->loadContent($this->semesterId);
+            $total_classes = $this->lectures + $this->practs + $this->labs;
+            if ($semester->weeks_count * $this->hours_per_week < $total_classes)
+                $this->addError('hours_per_week', Yii::t('studyPlan', 'Not enough class hours'));
         }
     }
 
@@ -163,7 +174,7 @@ class PlanSemesters extends CFormModel
                 $sum += $item->getTotal();
             }
             if ($sum > $subject->total_hours)
-                return $this->addError('subjectId', 'Перевищена к-сть годин');
+                $this->addError('lectures', Yii::t('studyPlan', 'Too many hours'));
         }
     }
 
