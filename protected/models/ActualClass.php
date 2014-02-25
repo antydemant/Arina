@@ -9,7 +9,6 @@
  * @property integer $class_number
  * @property integer $teacher_load_id
  * @property integer $class_type
- * @property integer $group_id
  *
  *
  * @property TeacherLoad $load
@@ -33,8 +32,8 @@ class ActualClass extends ActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('date, class_number, teacher_load_id, class_type, group_id', 'required'),
-            array('class_number, teacher_load_id, class_type, group_id', 'numerical', 'integerOnly' => true),
+            array('date, class_number, teacher_load_id, class_type', 'required'),
+            array('class_number, teacher_load_id, class_type', 'numerical', 'integerOnly' => true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, date, class_number, teacher_load_id, class_type, group_id', 'safe', 'on' => 'search'),
@@ -61,12 +60,11 @@ class ActualClass extends ActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => 'ID',
-            'date' => 'Date',
-            'class_number' => 'Class Number',
-            'teacher_load_id' => 'Teacher Load',
-            'class_type' => 'Class Type',
-            'group_id' => 'Group',
+            'id' => Yii::t('actualClass', 'ID'),
+            'date' => Yii::t('actualClass', 'Date'),
+            'class_number' => Yii::t('actualClass', 'Class Number'),
+            'teacher_load_id' => Yii::t('actualClass', 'Teacher Load'),
+            'class_type' => Yii::t('actualClass', 'Class Type'),
         );
     }
 
@@ -93,7 +91,6 @@ class ActualClass extends ActiveRecord
         $criteria->compare('class_number', $this->class_number);
         $criteria->compare('teacher_load_id', $this->teacher_load_id);
         $criteria->compare('class_type', $this->class_type);
-        $criteria->compare('group_id', $this->group_id);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

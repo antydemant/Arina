@@ -7,6 +7,8 @@ class JournalViewer extends CFormModel
     public $subjectId;
     public $studentId;
     public $isEmpty = true;
+    public $dateStart;
+    public $dateEnd;
 
     public function rules()
     {
@@ -67,7 +69,7 @@ class JournalViewer extends CFormModel
          * @var $group Group
          */
         $group = Group::model()->findByPk($this->groupId);
-
+        
         $classes = ActualClass::model()->with(array(
                 'load' => array(
                     'condition' => "load.group_id=" . $this->groupId,
@@ -80,12 +82,12 @@ class JournalViewer extends CFormModel
          */
         foreach ($group->students as $student) {
             foreach($classes as $item) {
-                $tmp = null;
+                $tmp = array();
                 foreach($student->marks as $mark) {
-                    if ($mark->actual_class_id == $item->id) { $tmp = $mark->mark; break; }
+                    if ($mark->actual_class_id == $item->id) { $tmp['mark'] = $mark; break; }
                 }
                 foreach($student->absences as $absence) {
-                    if ($absence->actual_class_id == $item->id) { $tmp .= ' Hб'; break; }
+                    if ($absence->actual_class_id == $item->id) { $tmp['absence'] = $absence; break; }
                 }
                 if (isset($tmp))
                     $student->classes []= $tmp;

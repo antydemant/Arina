@@ -3,18 +3,12 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Class Marks',
+	Yii::t('mark', 'Class Marks'),
 );
 
 $this->menu=array(
-	array('label'=>'Create ClassMark', 'url'=>array('create')),
-	array('label'=>'Manage ClassMark', 'url'=>array('admin')),
+	array('label'=>Yii::t('mark', 'Create ClassMark'), 'url'=>array('create')),
 );
 ?>
 
-<h1>Class Marks</h1>
-
-<?php $this->widget('zii.widgets.CListView', array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
-)); ?>
+<h1><?php echo Yii::t('mark', 'Class Marks'); ?></h1>

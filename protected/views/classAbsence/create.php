@@ -3,16 +3,12 @@
 /* @var $model ClassAbsence */
 
 $this->breadcrumbs=array(
-	'Class Absences'=>array('index'),
-	'Create',
+	Yii::t('absence', 'Class Absences')=>array('index'),
+	Yii::t('base', 'Create'),
 );
 
-$this->menu=array(
-	array('label'=>'List ClassAbsence', 'url'=>array('index')),
-	array('label'=>'Manage ClassAbsence', 'url'=>array('admin')),
-);
 ?>
 
-<h1>Create ClassAbsence</h1>
+<h1><?php echo Yii::t('absence', 'Create ClassAbsence'); ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

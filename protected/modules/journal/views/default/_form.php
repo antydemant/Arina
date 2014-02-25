@@ -1,11 +1,14 @@
 <?php
 /* @var $model JournalViewer */
+/* @var $this DefaultController */
 ?>
 <div id="journal-form">
     <?php
     $form = $this->beginWidget(Booster::FORM);
     echo $form->dropDownListRow($model, 'groupId', Group::getListAll('id', 'title'), array('empty' => 'Select group'));
     echo $form->dropDownListRow($model, 'subjectId', Subject::getListAll('id', 'title'), array('empty' => 'Select subject'));
+    //echo $form->datePickerRow($model, 'dateStart');
+    //echo $form->datePickerRow($model, 'dateEnd');
     echo CHtml::ajaxSubmitButton(Yii::t('base', 'Show'), array('index'), array('replace' => '#journal-form'));
     $this->endWidget();
     ?>
@@ -19,7 +22,7 @@
                 <tr>
                     <th style="width: 100px">Студенти\Заняття:</th>
                     <?php foreach ($data['classes'] as $item): ?>
-                        <th><?php echo $item->date; ?></th>
+                        <th><?php echo CHtml::link($item->date, $this->createUrl('/actualClass/update/', array('id' => $item->id)), array("target"=>"_blank")); ?></th>
                     <?php endforeach; ?>
                 </tr>
                 </thead>
@@ -29,7 +32,25 @@
                     <tr>
                         <td><?php echo $item->getFullName(); ?></td>
                         <?php foreach($item->classes as $class): ?>
-                            <td><?php echo $class; ?></td>
+                            <td><?php 
+                            if (isset($class['mark']))
+                            	//echo $class->mark; 
+                            	echo CHtml::link($class['mark']->mark, $this->createUrl('/classMark/update/', array('id' => $class['mark']->id)), array("target"=>"_blank"));
+                            	/*$this->widget('bootstrap.TbEditableField', array(
+                            			'type' => 'select2',
+                            			'model' => ClassMark::model(),
+                            			'attribute' => 'mark',
+                            			'url' => '',
+                            			'source' => array('2', '3', '4', '5', '.')
+                            	));*/
+                            if (isset($class['absence']))
+                            	if (isset($class['mark']))
+                            		echo CHtml::link(' / Нб', $this->createUrl('/classAbsence/update/', array('id' => $class['absence']->id)), array("target"=>"_blank"));
+                            	else 
+                            		echo CHtml::link('Нб', $this->createUrl('/classAbsence/update/', array('id' => $class['absence']->id)), array("target"=>"_blank"));
+                            
+
+                            ?></td>
                         <?php endforeach; ?>
                     </tr>
                 <?php endforeach; ?>

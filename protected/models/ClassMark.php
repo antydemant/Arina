@@ -56,11 +56,11 @@ class ClassMark extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => 'ID',
-            'actual_class_id' => 'Actual Class',
-            'mark' => 'Mark',
-            'student_id' => 'Student',
-            'type' => 'Type',
+            'id' => Yii::t('mark', 'ID'),
+            'actual_class_id' => Yii::t('mark', 'Actual Class'),
+            'mark' => Yii::t('mark', 'Mark'),
+            'student_id' => Yii::t('mark', 'Student'),
+            'type' => Yii::t('mark', 'Type'),
         );
     }
 
