@@ -15,7 +15,7 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+	<p class="note"><?php echo Yii::t('base', 'Fields with <span class="required">*</span> are required.'); ?></p>
 
 	<?php echo $form->errorSummary($model); ?>
 
@@ -39,12 +39,20 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'type'); ?>
-		<?php echo $form->textField($model,'type',array('size'=>22,'maxlength'=>22)); ?>
+		<?php echo $form->dropDownList($model,'type', array(
+				'simple' => 'Звичайна',
+				'attestation' => 'Атестація',
+				'attestation_second_try' => 'Перездача атестації',
+				'test' => 'Залік',
+				'exam' => 'Екзамен',
+				'exam_second_try' => 'Перездача екзамена',
+				'course_work' => 'Курсова робота',
+				'course_project' => 'Курсовий проект')); ?>
 		<?php echo $form->error($model,'type'); ?>
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('base', 'Create') : Yii::t('base', 'Save')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

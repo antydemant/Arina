@@ -53,9 +53,9 @@ class ClassAbsence extends CActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => 'ID',
-            'actual_class_id' => 'Actual Class',
-            'student_id' => 'Student',
+            'id' => Yii::t('absence', 'ID'),
+            'actual_class_id' => Yii::t('absence', 'Actual Class'),
+            'student_id' => Yii::t('absence', 'Student'),
         );
     }
 

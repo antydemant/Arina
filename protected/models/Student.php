@@ -57,6 +57,11 @@ class Student extends ActiveRecord
 		return 'student';
 	}
 
+	public function getFullName()
+	{
+		return "$this->last_name $this->first_name $this->middle_name";
+	}
+	
 	/**
 	 * @return array validation rules for model attributes.
 	 */
