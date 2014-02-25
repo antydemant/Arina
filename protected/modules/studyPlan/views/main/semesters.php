@@ -55,7 +55,7 @@
             ),
         ));
         $this->renderPartial('hours', array('dataProvider' => $dataProvider)); ?>
-        <?php echo CHtml::link('Завершити', $this->createUrl('index'), array('class' => 'btn')); ?>
+        <?php echo CHtml::link(Yii::t('base','Finish'), $this->createUrl('index'), array('class' => 'btn')); ?>
     </div>
 
 </div>
