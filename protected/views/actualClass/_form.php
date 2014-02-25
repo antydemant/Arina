@@ -6,7 +6,7 @@
 
 <div class="form">
 
-    <?php $form = $this->beginWidget('CActiveForm', array(
+    <?php $form = $this->beginWidget(Booster::FORM, array(
         'id' => 'actual-class-form',
         // Please note: When you enable ajax validation, make sure the corresponding
         // controller action is handling ajax validation correctly.
@@ -15,36 +15,20 @@
         'enableAjaxValidation' => false,
     )); ?>
 
-    <p class="note">Fields with <span class="required">*</span> are required.</p>
+    <p class="note"><?php echo Yii::t('base', 'Fields with <span class="required">*</span> are required.')  ?></p>
 
     <?php echo $form->errorSummary($model); ?>
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'date'); ?>
-        <?php echo $form->textField($model, 'date'); ?>
-        <?php echo $form->error($model, 'date'); ?>
-    </div>
+        <?php echo $form->datePickerRow($model, 'date'); ?>
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'class_number'); ?>
-        <?php echo $form->textField($model, 'class_number'); ?>
-        <?php echo $form->error($model, 'class_number'); ?>
-    </div>
+        <?php echo $form->textFieldRow($model, 'class_number'); ?>
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'teacher_load_id'); ?>
-        <?php echo $form->textField($model, 'teacher_load_id'); ?>
-        <?php echo $form->error($model, 'teacher_load_id'); ?>
-    </div>
+        <?php echo $form->textFieldRow($model, 'teacher_load_id'); ?>
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'class_type'); ?>
-        <?php echo $form->textField($model, 'class_type'); ?>
-        <?php echo $form->error($model, 'class_type'); ?>
-    </div>
+        <?php echo $form->textFieldRow($model, 'class_type'); ?>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('base', 'Create') : Yii::t('base', 'Save')); ?>
     </div>
 
     <?php $this->endWidget(); ?>

@@ -3,18 +3,12 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs = array(
-    'Actual Classes',
+    Yii::t('actualClass', 'Actual Classes'),
 );
 
 $this->menu = array(
-    array('label' => 'Create ActualClass', 'url' => array('create')),
-    array('label' => 'Manage ActualClass', 'url' => array('admin')),
+    array('label' => Yii::t('actualClass', 'Create ActualClass'), 'url' => array('create')),
 );
 ?>
 
-<h1>Actual Classes</h1>
-
-<?php $this->widget('zii.widgets.CListView', array(
-    'dataProvider' => $dataProvider,
-    'itemView' => '_view',
-)); ?>
+<h1><?php echo Yii::t('actualClass', 'Actual Classes'); ?></h1>

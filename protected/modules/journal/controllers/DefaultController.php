@@ -5,6 +5,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
     	$model = new JournalViewer();
+    	
     	$model->setScenario('group');
     	
     	if (Yii::app()->getRequest()->isAjaxRequest) {

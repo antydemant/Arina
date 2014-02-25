@@ -60,6 +60,7 @@ class ClassAbsenceController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
+	/*
 	public function actionCreate()
 	{
 		$model=new ClassAbsence;
@@ -78,7 +79,16 @@ class ClassAbsenceController extends Controller
 			'model'=>$model,
 		));
 	}
-
+	*/
+	
+	public function actionCreate($actualClassId, $studentId) {
+	
+		yii::app()->user->setState('studentId', $studentId);
+		yii::app()->user->setState('actualClassId', $actualClassId);
+	
+		$this->redirect(array('update','id'=>0));
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -86,8 +96,17 @@ class ClassAbsenceController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
-
+		if ($id == 0) {
+			
+			$model = new ClassAbsence();
+			$model->student_id = yii::app()->user->getState('studentId');
+			$model->actual_class_id = yii::app()->user->getState('actualClassId');
+			
+		}
+		else {
+			$model=$this->loadModel($id);
+		}
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 

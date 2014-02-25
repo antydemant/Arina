@@ -6,7 +6,7 @@
 
 <div class="form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php $form=$this->beginWidget(Booster::FORM, array(
 	'id'=>'class-mark-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
 	// controller action is handling ajax validation correctly.
@@ -18,28 +18,14 @@
 	<p class="note"><?php echo Yii::t('base', 'Fields with <span class="required">*</span> are required.'); ?></p>
 
 	<?php echo $form->errorSummary($model); ?>
+	
+		<?php echo $form->textFieldRow($model,'actual_class_id'); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'actual_class_id'); ?>
-		<?php echo $form->textField($model,'actual_class_id'); ?>
-		<?php echo $form->error($model,'actual_class_id'); ?>
-	</div>
+		<?php echo $form->textFieldRow($model,'mark'); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'mark'); ?>
-		<?php echo $form->textField($model,'mark'); ?>
-		<?php echo $form->error($model,'mark'); ?>
-	</div>
+		<?php echo $form->textFieldRow($model,'student_id'); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'student_id'); ?>
-		<?php echo $form->textField($model,'student_id'); ?>
-		<?php echo $form->error($model,'student_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'type'); ?>
-		<?php echo $form->dropDownList($model,'type', array(
+		<?php echo $form->dropDownListRow($model,'type', array(
 				'simple' => 'Звичайна',
 				'attestation' => 'Атестація',
 				'attestation_second_try' => 'Перездача атестації',
@@ -48,8 +34,6 @@
 				'exam_second_try' => 'Перездача екзамена',
 				'course_work' => 'Курсова робота',
 				'course_project' => 'Курсовий проект')); ?>
-		<?php echo $form->error($model,'type'); ?>
-	</div>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('base', 'Create') : Yii::t('base', 'Save')); ?>

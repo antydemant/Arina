@@ -24,6 +24,11 @@ class ActualClass extends ActiveRecord
         return 'actual_class';
     }
 
+    public function getAlias()
+    {
+    	return "$this->date $this->class_number пара";
+    }
+    
     /**
      * @return array validation rules for model attributes.
      */
@@ -36,7 +41,7 @@ class ActualClass extends ActiveRecord
             array('class_number, teacher_load_id, class_type', 'numerical', 'integerOnly' => true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, date, class_number, teacher_load_id, class_type, group_id', 'safe', 'on' => 'search'),
+            array('id, date, class_number, teacher_load_id, class_type', 'safe', 'on' => 'search'),
         );
     }
 
@@ -65,6 +70,7 @@ class ActualClass extends ActiveRecord
             'class_number' => Yii::t('actualClass', 'Class Number'),
             'teacher_load_id' => Yii::t('actualClass', 'Teacher Load'),
             'class_type' => Yii::t('actualClass', 'Class Type'),
+        	'alias' =>  Yii::t('actualClass', 'ActualClass'),
         );
     }
 

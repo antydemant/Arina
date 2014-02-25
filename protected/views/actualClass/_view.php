@@ -25,9 +25,5 @@
     <?php echo CHtml::encode($data->class_type); ?>
     <br/>
 
-    <b><?php echo CHtml::encode($data->getAttributeLabel('group_id')); ?>:</b>
-    <?php echo CHtml::encode($data->group_id); ?>
-    <br/>
-
 
 </div>

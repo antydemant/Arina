@@ -13,7 +13,8 @@ $this->menu=array(
 	array('label'=>Yii::t('mark', 'View ClassMark'), 'url'=>array('view', 'id'=>$model->id)),
 );
 ?>
-
-<h1><?php echo Yii::t('mark', 'Update ClassMark') ?></h1>
+<?php $class = ActualClass::model()->findByPk($model->actual_class_id); ?>
+<h1><?php echo Student::model()->findByPk($model->student_id)->fullName; ?></h1>
+<h3><?php echo 'Оцінка за ' . $class->class_number . ' пару<br>Дата: ' . $class->date; ?></h3>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

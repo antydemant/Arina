@@ -43,11 +43,12 @@
                             			'url' => '',
                             			'source' => array('2', '3', '4', '5', '.')
                             	));*/
+							else 
+							echo CHtml::link('___', $this->createUrl('/classMark/create/', array('studentId' => $item->id, 'actualClassId' => $class['class'])), array("target"=>"_blank"));
                             if (isset($class['absence']))
-                            	if (isset($class['mark']))
                             		echo CHtml::link(' / Нб', $this->createUrl('/classAbsence/update/', array('id' => $class['absence']->id)), array("target"=>"_blank"));
-                            	else 
-                            		echo CHtml::link('Нб', $this->createUrl('/classAbsence/update/', array('id' => $class['absence']->id)), array("target"=>"_blank"));
+                            else
+                            	echo CHtml::link(' / ___', $this->createUrl('/classAbsence/create/', array('studentId' => $item->id, 'actualClassId' => $class['class'])), array("target"=>"_blank"));
                             
 
                             ?></td>

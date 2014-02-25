@@ -14,6 +14,8 @@ $this->menu=array(
 );
 ?>
 
-<h1><?php echo Yii::t('absence', 'Update ClassAbsence'); ?></h1>
+<?php $class = ActualClass::model()->findByPk($model->actual_class_id); ?>
+<h1><?php echo Student::model()->findByPk($model->student_id)->fullName; ?></h1>
+<h3><?php echo 'Пропуск за ' . $class->class_number . ' пару<br>Дата: ' . $class->date; ?></h3>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

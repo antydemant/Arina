@@ -89,6 +89,7 @@ class JournalViewer extends CFormModel
                 foreach($student->absences as $absence) {
                     if ($absence->actual_class_id == $item->id) { $tmp['absence'] = $absence; break; }
                 }
+                $tmp['class'] = $item->id;
                 if (isset($tmp))
                     $student->classes []= $tmp;
                 else

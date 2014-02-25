@@ -60,6 +60,7 @@ class ClassMarkController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
+	/*
 	public function actionCreate()
 	{
 		$model=new ClassMark;
@@ -78,7 +79,16 @@ class ClassMarkController extends Controller
 			'model'=>$model,
 		));
 	}
+	*/
 
+	public function actionCreate($actualClassId, $studentId) {
+		
+		yii::app()->user->setState('studentId', $studentId);
+		yii::app()->user->setState('actualClassId', $actualClassId);
+		
+		$this->redirect(array('update','id'=>0));
+	}
+	
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -86,7 +96,16 @@ class ClassMarkController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+		if ($id == 0) {
+			
+			$model = new ClassMark();
+			$model->student_id = yii::app()->user->getState('studentId');
+			$model->actual_class_id = yii::app()->user->getState('actualClassId');
+			
+		}
+		else {
+			$model=$this->loadModel($id);
+		}
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -94,8 +113,17 @@ class ClassMarkController extends Controller
 		if(isset($_POST['ClassMark']))
 		{
 			$model->attributes=$_POST['ClassMark'];
-			if($model->save())
+			if($model->save()){
+				/*yii::app()->user->setState('groupId', Student::model()->findByPk($model->student_id)->group_id);
+				yii::app()->user->setState('subjectId', 
+					Subject::model()->findByPk(
+						SpSubject::model()->findByPk(
+							Hours::model()->findByPk(
+								TeacherLoad::model()->findByPk(
+									ActualClass::model()->findByPk(
+									$model->actual_class_id)->teacher_load_id)->sp_hours_id)->sp_subject_id)->subject_id));*/
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('update',array(

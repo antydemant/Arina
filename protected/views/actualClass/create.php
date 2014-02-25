@@ -3,16 +3,15 @@
 /* @var $model ActualClass */
 
 $this->breadcrumbs = array(
-    'Actual Classes' => array('index'),
-    'Create',
+    Yii::t('actualClass', 'Actual Classes') => array('index'),
+    Yii::t('base', 'Create'),
 );
 
 $this->menu = array(
-    array('label' => 'List ActualClass', 'url' => array('index')),
-    array('label' => 'Manage ActualClass', 'url' => array('admin')),
+    array('label' => Yii::t('actualClass', 'ActualClass'), 'url' => array('index')),
 );
 ?>
 
-    <h1>Create ActualClass</h1>
+    <h1><?php echo Yii::t('actualClass', 'Create ActualClass'); ?></h1>
 
 <?php $this->renderPartial('_form', array('model' => $model)); ?>
