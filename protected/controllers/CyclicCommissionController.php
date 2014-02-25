@@ -9,9 +9,15 @@ class CyclicCommissionController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new CActiveDataProvider('CyclicCommission');
+        $model = new CyclicCommission('search');
+        $model->unsetAttributes();
+        if (isset($_GET['CyclicCommission']))
+
+            foreach ($_GET['CyclicCommission'] as $key => $value)
+                $model->$key = $value;
         $this->render('index', array(
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $model->search(),
+            'model' => $model,
         ));
     }
 

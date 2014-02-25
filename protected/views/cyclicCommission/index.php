@@ -1,23 +1,29 @@
 <?php
+/**
+ * @var $this CyclicCommissionController
+ * @var $dataProvider CActiveDataProvider
+ * @var $for TbActiveForm
+ */
 $this->breadcrumbs = array(
-   Yii::t('base', 'Cyclic commissions'),
+    Yii::t('base', 'Cyclic commissions'),
 );
 
 $this->menu = array(
-    array('label' => Yii::t('teacher', 'List of cyclic commission'), 'url' => array('index')),
-    array('label' => Yii::t('teacher', 'Create new cyclic commission'), 'url' => array('create')),
+    array('label' => Yii::t('teacher', 'Create new cyclic commission'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
 );
 ?>
 
-<?php $this->widget('bootstrap.widgets.TbGridView', array(
-    'id' => 'cyclic-commission-grid',
-    'dataProvider' => $dataProvider,
-    'columns' => array(
-        'id',
-        'title',
-        'head_id',
-        array(
-            'class' => 'bootstrap.widgets.TbButtonColumn',
-        ),
+<?php
+$columns = array(
+    'title',
+    array(
+        'type' => 'raw',
+        'name' => 'headName',
+        'value' => 'CHtml::link($data->head->getFullName(), array("teacher/view","id"=>$data->head_id))',
     ),
-)); ?>
+    array(
+        'class' => 'bootstrap.widgets.TbButtonColumn',
+    ),
+);
+$this->renderPartial('//tableList', array('provider' => $dataProvider, 'columns' => $columns, 'filter' => $model))
+?>

@@ -14,12 +14,25 @@
  */
 class CyclicCommission extends ActiveRecord
 {
+    public $headName;
+
     /**
      * @return array for dropDownList
      */
     public static function getList()
     {
         return CHtml::listData(self::model()->findAll(), 'id', 'title');
+    }
+
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return CyclicCommission the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
     }
 
     /**
@@ -43,7 +56,7 @@ class CyclicCommission extends ActiveRecord
             array('title', 'length', 'max' => 40),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, title, head_id', 'safe', 'on' => 'search'),
+            array('id, title, head_id, head_search', 'safe', 'on' => 'search'),
         );
     }
 
@@ -67,8 +80,9 @@ class CyclicCommission extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'title' =>  Yii::t('terms','Title'),
-            'head_id' => Yii::t('terms','Head'),
+            'title' => Yii::t('terms', 'Title'),
+            'head_id' => Yii::t('terms', 'Head'),
+            'headName' => Yii::t('terms', 'Head'),
         );
     }
 
@@ -90,23 +104,20 @@ class CyclicCommission extends ActiveRecord
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('id', $this->id);
         $criteria->compare('title', $this->title, true);
-        $criteria->compare('head_id', $this->head_id);
-
+        $criteria->compare("head.first_name", $this->headName, true );
+        $sort = new CSort();
+        $sort->attributes = array(
+            'headName' => array(
+                'asc'=>'head.last_name, head.first_name, head.middle_name ',
+                'desc'=>'head.last_name DESC, head.first_name DESC, head.middle_name DESC',
+            ),
+            'title',
+        );
+        $criteria->with = array('head');
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'sort'=>$sort,
         ));
-    }
-
-    /**
-     * Returns the static model of the specified AR class.
-     * Please note that you should have this exact method in all your CActiveRecord descendants!
-     * @param string $className active record class name.
-     * @return CyclicCommission the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
     }
 }

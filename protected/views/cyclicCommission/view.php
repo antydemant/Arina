@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var $model CyclicCommission
+ * @var $this CyclicCommissionController
+ */
 $this->breadcrumbs = array(
     Yii::t('base', 'Cyclic commissions') => array('index'),
     $model->title,
@@ -13,12 +17,17 @@ $this->menu = array(
 );
 ?>
 
-<h1> <?php echo Yii::t('subject', 'View cycle') . " $model->id"; ?></h1>
+<h1> <?php echo Yii::t('teacher', 'View commission'); ?></h1>
 
 <?php $this->widget('bootstrap.widgets.TbDetailView', array(
     'data' => $model,
     'attributes' => array(
         'title',
-        'head_id',
+        array(
+            'type'=>'raw',
+            'name'=>'head_id',
+            'value'=>CHtml::link($model->head->getFullName(), array('teacher/view','id'=>$model->head_id)),
+        ),
+
     ),
 )); ?>

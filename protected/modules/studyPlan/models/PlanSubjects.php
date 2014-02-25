@@ -52,7 +52,7 @@ class PlanSubjects extends CFormModel
         /**
          * @var SpSubject $item
          */
-        foreach ($this->plan->subjects as $item) {
+        foreach ($this->plan->spSubjects as $item) {
             unset($list[$item->subject_id]);
         }
         return $list;

@@ -14,12 +14,6 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <?php echo $form->dropDownListRow($model, 'head_id', Teacher::getTreeList(), array('class' => 'span4')); ?>
 
-<div class="form-actions">
-    <?php $this->widget('bootstrap.widgets.TbButton', array(
-        'buttonType' => 'submit',
-        'type' => 'primary',
-        'label' => $model->isNewRecord ? 'Create' : 'Save',
-    )); ?>
-</div>
+<?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
 
 <?php $this->endWidget(); ?>

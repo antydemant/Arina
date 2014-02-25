@@ -11,7 +11,7 @@
  *
  * The followings are the available model relations:
  * @property Semester[] $semesters
- * @property spSubjects[] $subjects
+ * @property spSubjects[] $spSubjects
  * @property Speciality $speciality
  */
 class Plan extends ActiveRecord
