@@ -11,6 +11,13 @@ class m140220_063853_table_subject_cycle extends CDbMigration
                 'title' => 'string NOT NULL',
             )
         );
+        $this->insert(
+            'subject_cycle',
+            array(
+                'title' => 'Цикл загальноосвітніх предметів',
+                'id' => '1',
+            )
+        );
     }
 
     public function down()

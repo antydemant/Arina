@@ -1,7 +1,7 @@
 <?php
 /**
  * @var $this \SubjectController
- * @var $dataProvider CActiveDataProvider of
+ * @var $dataProvider CActiveDataProvider
  */
 
 $this->breadcrumbs = array(
