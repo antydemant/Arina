@@ -5,11 +5,9 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'List Subject', 'url' => array('index')),
-    array('label' => 'Manage Subject', 'url' => array('admin')),
+    array('label' => Yii::t('subject', 'Subject list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
 );
 ?>
-
-    <h1>Create Subject</h1>
+<h2><?php echo Yii::t('base','Creating'); ?></h2>
 
 <?php echo $this->renderPartial('_form', array('model' => $model)); ?>

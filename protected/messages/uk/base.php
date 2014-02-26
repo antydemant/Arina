@@ -3,6 +3,7 @@
  *
  */
 return array(
+    'Creating'=>'Створення',
     'List' => 'Список',
     'Cycles' => 'Цикли',
     'Subject cycles' => 'Цикли предметів',

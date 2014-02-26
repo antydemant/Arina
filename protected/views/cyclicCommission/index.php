@@ -22,8 +22,9 @@ $columns = array(
         'value' => 'CHtml::link($data->head->getFullName(), array("teacher/view","id"=>$data->head_id))',
     ),
     array(
+        'header' => Yii::t('base', 'Actions'),
         'class' => 'bootstrap.widgets.TbButtonColumn',
     ),
 );
-$this->renderPartial('//tableList', array('provider' => $dataProvider, 'columns' => $columns, 'filter' => $model))
+$this->renderPartial('//tableList', array('provider' => $dataProvider, 'columns' => $columns,))
 ?>

@@ -18,4 +18,5 @@ return array(
     'Student' => 'Студент',
     'Head' => 'Голова',
     'Full name' => 'Повне ім’я',
+    'Teachers'=>'Викладачі',
 );

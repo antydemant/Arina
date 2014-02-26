@@ -2,14 +2,13 @@
 /**
  * @var $this SubjectController
  * @var $form TbActiveForm
+ * @var $model Subject
  */
 ?>
 <?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id' => 'subject-form',
-    'enableAjaxValidation' => true,
+    'enableClientValidation' => true,
 )); ?>
-
-<p class="help-block">Fields with <span class="required">*</span> are required.</p>
 
 <?php echo $form->errorSummary($model); ?>
 
@@ -17,12 +16,6 @@
 
 <?php echo $form->dropDownListRow($model, 'cycle_id', SubjectCycle::getList(), array('class' => 'span5')); ?>
 
-<div class="form-actions">
-    <?php $this->widget('bootstrap.widgets.TbButton', array(
-        'buttonType' => 'submit',
-        'type' => 'primary',
-        'label' => $model->isNewRecord ? 'Create' : 'Save',
-    )); ?>
-</div>
+<?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
 
 <?php $this->endWidget(); ?>

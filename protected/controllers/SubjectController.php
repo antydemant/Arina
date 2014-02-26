@@ -15,8 +15,6 @@ class SubjectController extends Controller
     {
         $model = new Subject;
 
-        $this->ajaxValidation('subject-form', $model);
-
         if (isset($_POST['Subject'])) {
             $model->attributes = $_POST['Subject'];
             if ($model->save())

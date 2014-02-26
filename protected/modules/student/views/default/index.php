@@ -1,6 +1,5 @@
 <?php
 /* @var $this StudentController */
-/* @var $dataProvider CActiveDataProvider */
 /* @var array $columns */
 /* @var $model Student */
 
@@ -38,7 +37,7 @@ $('.search-form form').submit(function(){
     ?>
 </p>
 
-<?php echo CHtml::link(Yii::t("base", "Advanced Search"), '#', array('class' => 'search-button')); ?>
+<?php echo CHtml::link(Yii::t('base', 'Advanced Search'), '#', array('class' => 'search-button btn btn-info')); ?>
 <div class="search-form" style="display:none;">
     <?php $this->renderPartial('_search', array(
         'model' => $model,

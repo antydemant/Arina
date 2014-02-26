@@ -12,5 +12,6 @@ return array(
     'Delete cycle' => 'Видалити цикл',
     'Subject' => 'Предмет',
     'Subject list' => 'Список предметів',
-    'Create Subject' => 'Створити предмет',
+    'Create subject' => 'Створити предмет',
+    'Delete subject' => 'Видалити предмет',
 );

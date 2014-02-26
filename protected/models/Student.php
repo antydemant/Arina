@@ -110,7 +110,7 @@ class Student extends ActiveRecord
             array('characteristics, birth_date, admission_date, graduation_date, exemptions', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, code, last_name, first_name, middle_name, group_id, phone_number, mobile_number, mother_name, father_name, gender, official_address, characteristics, factual_address, birth_date, admission_date, tuition_payment, admission_order_number, admission_semester, entry_exams, education_document, contract, math_mark, ua_language_mark, mother_workplace, mother_position, mother_workphone, mother_boss_workphone, father_workplace, father_position, father_workphone, father_boss_workphone, graduated, graduation_date, graduation_basis, graduation_semester, graduation_order_number, diploma, direction, misc_data, hobby', 'safe', 'on' => 'search'),
+            array('id, code, last_name, first_name, middle_name, group_id, phone_number, mobile_number, mother_name, father_name, gender, official_address, characteristics, factual_address, birth_date, admission_date, tuition_payment, admission_order_number, admission_semester, entry_exams, education_document, contract, math_mark, ua_language_mark, mother_workplace, mother_position, mother_workphone, mother_boss_workphone, father_workplace, father_position, father_workphone, father_boss_workphone, graduated, graduation_date, graduation_basis, graduation_semester, graduation_order_number, diploma, direction, misc_data, hobby, exemptions', 'safe', 'on' => 'search'),
         );
     }
 
@@ -125,6 +125,7 @@ class Student extends ActiveRecord
             'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
             'marks' => array(self::HAS_MANY, 'ClassMark', 'student_id'),
             'absences' => array(self::HAS_MANY, 'ClassAbsence', 'student_id'),
+            'student_has_exemption' => array(self::HAS_MANY, 'StudentExemption', 'student_id'),
             'exemptions' => array(self::MANY_MANY, 'Exemption', 'student_has_exemption(student_id, exemption_id)'),
         );
     }
@@ -199,7 +200,6 @@ class Student extends ActiveRecord
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('id', $this->id);
         $criteria->compare('code', $this->code, true);
         $criteria->compare('last_name', $this->last_name, true);
         $criteria->compare('first_name', $this->first_name, true);
@@ -231,7 +231,7 @@ class Student extends ActiveRecord
         $criteria->compare('father_position', $this->father_position, true);
         $criteria->compare('father_workphone', $this->father_workphone, true);
         $criteria->compare('father_boss_workphone', $this->father_boss_workphone, true);
-        $criteria->compare('graduated', $this->graduated);
+        $criteria->compare('graduated', false);
         $criteria->compare('graduation_date', $this->graduation_date, true);
         $criteria->compare('graduation_basis', $this->graduation_basis, true);
         $criteria->compare('graduation_semester', $this->graduation_semester);
@@ -240,6 +240,16 @@ class Student extends ActiveRecord
         $criteria->compare('direction', $this->direction, true);
         $criteria->compare('misc_data', $this->misc_data, true);
         $criteria->compare('hobby', $this->hobby, true);
+
+        if (!empty($this->exemptions)) {
+            $ids = implode(', ', $this->exemptions);
+            $criteria->with = array(
+                'student_has_exemption' => array(
+                     'condition' => "exemption_id IN ($ids)",
+                )
+            );
+             $criteria->together = true;
+        }
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

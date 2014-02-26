@@ -15,9 +15,36 @@
  */
 class Group extends ActiveRecord
 {
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return Group the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
+
     public function getStudentsList()
     {
         return CHtml::listData($this->students, 'id', 'fullName');
+    }
+
+    public static function getTreeList()
+    {
+        $list = array();
+        /**
+         * @var $speciality Speciality[]
+         */
+        $speciality = Speciality::model()->findAll();
+        foreach ($speciality as $item) {
+            $list[$item->title] = array();
+            foreach ($item->groups as $group) {
+                $list[$item->title][$group->id] = $group->title;
+            }
+        }
+        return $list;
     }
 
     /**
@@ -75,16 +102,5 @@ class Group extends ActiveRecord
             'curator' => Yii::t('group', 'Curator'),
             'monitor_id' => Yii::t('group', 'Monitor'),
         );
-    }
-
-    /**
-     * Returns the static model of the specified AR class.
-     * Please note that you should have this exact method in all your CActiveRecord descendants!
-     * @param string $className active record class name.
-     * @return Group the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
     }
 }

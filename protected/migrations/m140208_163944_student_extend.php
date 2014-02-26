@@ -8,7 +8,7 @@ class m140208_163944_student_extend extends CDbMigration
         $this->addColumn("student", "mobile_number", "varchar(15)");
         $this->addColumn("student", "mother_name", "varchar(60)");
         $this->addColumn("student", "father_name", "varchar(60)");
-        $this->addColumn("student", "gender", "varchar(10)");
+        $this->addColumn("student", "gender", "boolean");
         $this->addColumn("student", "address", "varchar(200)");
         $this->addColumn("student", "characteristics", "text");
     }

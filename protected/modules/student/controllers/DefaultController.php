@@ -80,30 +80,14 @@ class DefaultController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = Student::model()->getProvider();
 
         $model = new Student('search');
         $model->unsetAttributes(); // clear any default values
-        if (isset($_GET['Student']))
+        if (isset($_GET['Student'])) {
             $model->attributes = $_GET['Student'];
+        }
 
         $this->render('index', array(
-            'dataProvider' => $dataProvider,
-            'model' => $model,
-        ));
-    }
-
-    /**
-     * Manages all models.
-     */
-    public function actionAdmin()
-    {
-        $model = new Student('search');
-        $model->unsetAttributes(); // clear any default values
-        if (isset($_GET['Student']))
-            $model->attributes = $_GET['Student'];
-
-        $this->render('admin', array(
             'model' => $model,
         ));
     }

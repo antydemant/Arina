@@ -9,8 +9,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Yii::t('subject', 'Create Subject'), 'url' => array('create')),
-    array('label' => 'Manage Subject', 'url' => array('admin')),
+    array('label' => Yii::t('subject', 'Create subject'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
 );
 ?>
 
@@ -23,6 +22,11 @@ $columns = array(
         'type' => 'raw',
         'name' => 'cycle_id',
         'value' => 'CHtml::link($data->cycle->title, array("cycle/view","id"=>$data->cycle_id))',
+    ),
+    array(
+        'header' => Yii::t('base', 'Actions'),
+        'class' => 'bootstrap.widgets.TbButtonColumn',
+        'template'=>'{update}{delete}',
     ),
 );
 $this->renderPartial('//tableList', array('columns' => $columns, 'provider' => $dataProvider));

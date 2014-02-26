@@ -119,39 +119,12 @@ class SiteController extends Controller
 
     public function actionTest()
     {
-        /*for ($j = 0; $j < 30; $j++) {
-            $class = new ActualClass();
-            $class->teacher_load_id = 1;
-            $class->date = date("YYYY-MM-DD", time()+$j*200);
-            $class->save(false);
-            echo "ok";
-        }
-        $group = Group::model()->findByPk(2);
-        foreach ($group->students as $item) {
-            for ($k = 11; $k < 71; $k++) {
-                $mark = new ClassMark();
-                $mark->student_id = $item->id;
-                $mark->actual_class_id = $k;
-                $mark->mark = rand(2, 5);
-                $mark->save(false);
-            }
-        }
-        for ($i = 0; $i < 30; $i++) {
-            $student = new Student();
-            $student->first_name = self::generateRandomString(6);
-            $student->middle_name = self::generateRandomString(6);
-            $student->last_name = self::generateRandomString(6);
-            $student->group_id = 2;
-            $student->save(false);
-            for ($k = 0; $k < 10; $k++) {
-                $mark = new ClassMark();
-                $mark->student_id = $student->id;
-                $mark->actual_class_id = $k + 1;
-                $mark->mark = rand(2, 5);
-                $mark->save(false);
-            }
-            echo "ok";
-        }*/
+        $user = Yii::app()->getComponent('user');
+        $user->setFlash(
+            'success',
+            "<strong>Well done!</strong> You make test action."
+        );
+        $this->redirect(array('index'));
     }
 
     protected static function generateRandomString($length = 10)

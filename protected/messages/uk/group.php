@@ -14,6 +14,7 @@ return array(
     'Curator' => 'Куратор',
     'Update group' => 'Редагування даних групи',
     'Select curator' => 'Виберіть куратора',
+    'Select group' => 'Виберіть групу',
     'Select speciality' => 'Виберіть спеціальність',
     'Select prefect' => 'Виберіть старосту',
     'Monitor' => 'Староста',

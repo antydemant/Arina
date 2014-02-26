@@ -9,6 +9,8 @@
  * @property integer $department_id
  * @property string $number
  * @property string $accreditation_date
+ *
+ * @property Group[] $groups
  */
 class Speciality extends ActiveRecord
 {
@@ -18,6 +20,17 @@ class Speciality extends ActiveRecord
     public static function getList()
     {
         return self::getListAll('id', 'title');
+    }
+
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return Speciality the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
     }
 
     /**
@@ -53,7 +66,9 @@ class Speciality extends ActiveRecord
     {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
-        return array();
+        return array(
+            'groups' => array(self::HAS_MANY, 'Group', 'speciality_id'),
+        );
     }
 
     /**
@@ -67,7 +82,7 @@ class Speciality extends ActiveRecord
             'department_id' => Yii::t('department', 'Department'),
             'department' => Yii::t('department', 'Department'),
             'number' => Yii::t('speciality', 'Number'),
-            'accreditation_date' => 'Accreditation Date',
+            'accreditation_date' => Yii::t('speciality', 'Last accreditation date'),
         );
     }
 
@@ -98,16 +113,5 @@ class Speciality extends ActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
-    }
-
-    /**
-     * Returns the static model of the specified AR class.
-     * Please note that you should have this exact method in all your CActiveRecord descendants!
-     * @param string $className active record class name.
-     * @return Speciality the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
     }
 }

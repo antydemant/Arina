@@ -5,6 +5,7 @@
 
 class Booster
 {
+    const ALERT = 'bootstrap.widgets.TbAlert';
     const GRID_VIEW = "bootstrap.widgets.TbGridView";
     const BUTTON = 'bootstrap.widgets.TbButton';
     const BUTTON_GROUP = "bootstrap.widgets.TbButtonGroup";

@@ -4,15 +4,13 @@
 
 $this->breadcrumbs = array(
     Yii::t('base', 'Specialities') => array('index'),
-    'Create',
+    Yii::t('base', 'Creating'),
 );
 
 $this->menu = array(
-    array('label' => 'List Speciality', 'url' => array('index')),
-    array('label' => 'Manage Speciality', 'url' => array('admin')),
+    array('label' => Yii::t('speciality', 'Specialities list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
 );
 ?>
-
-    <h1>Create Speciality</h1>
+<h2><?php echo Yii::t('speciality', 'Creating new speciality');?></h2>
 
 <?php $this->renderPartial('_form', array('model' => $model)); ?>

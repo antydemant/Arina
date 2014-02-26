@@ -31,6 +31,18 @@
 <!-- mainmenu -->
 <div class="container">
 
+    <?php
+        $this->widget(Booster::ALERT, array(
+            'alerts' => array(
+                'success',
+                'info',
+                'warning',
+                'error',
+                'danger',
+            ),
+        ));
+    ?>
+    <!-- alerts -->
     <?php if (isset($this->breadcrumbs)): ?>
         <?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
 			'links' => $this->breadcrumbs,

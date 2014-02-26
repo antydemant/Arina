@@ -7,14 +7,12 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'List Speciality', 'url' => array('index')),
-    array('label' => 'Create Speciality', 'url' => array('create')),
+    array('label' => Yii::t('speciality', 'Create new speciality'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
 );
 ?>
 
 <?php
 $columns = array(
-    'id',
     'number',
     'title',
     array(

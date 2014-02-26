@@ -83,6 +83,7 @@ class CyclicCommission extends ActiveRecord
             'title' => Yii::t('terms', 'Title'),
             'head_id' => Yii::t('terms', 'Head'),
             'headName' => Yii::t('terms', 'Head'),
+            'teachers'=>Yii::t('terms', 'Teachers'),
         );
     }
 
