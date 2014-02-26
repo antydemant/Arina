@@ -34,7 +34,7 @@
 
     <?php echo $form->textFieldRow($model, 'father_name', array('size' => 60, 'maxlength' => 60)); ?>
 
-    <?php echo $form->dropDownListRow($model, 'gender', array(0 => 'Male', 1 => 'Female',), array('empty'=>'Select gender')); ?>
+    <?php echo $form->dropDownListRow($model, 'gender', array(0 => Yii::t('terms', 'Male'), 1 => Yii::t('terms', 'Female'),), array('empty' => 'Select gender')); ?>
 
     <?php echo $form->textFieldRow($model, 'official_address', array('size' => 60, 'maxlength' => 200)); ?>
 

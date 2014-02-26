@@ -27,3 +27,7 @@ a.search-button {
 input[type="text"] {
    /* width: auto;*/
 }
+
+div.btn-group[data-toggle="buttons-checkbox"] {
+    margin-bottom: 10px;
+}

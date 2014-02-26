@@ -3,6 +3,7 @@
  *
  */
 return array(
+    'None' => 'Немає',
     'Creating'=>'Створення',
     'List' => 'Список',
     'Cycles' => 'Цикли',

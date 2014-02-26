@@ -46,6 +46,7 @@
  * @property string $misc_data
  * @property string $hobby
  *
+ * @property string $exemptionNames
  *
  * @property Exemption[] $exemptions
  * @property Group $group
@@ -55,6 +56,7 @@
 class Student extends ActiveRecord
 {
     public $classes = array();
+    public $exemptionNames = 'None';
 
     /**
      * Returns the static model of the specified AR class.
@@ -65,6 +67,11 @@ class Student extends ActiveRecord
     public static function model($className = __CLASS__)
     {
         return parent::model($className);
+    }
+
+    public function getGenderName()
+    {
+        return $this->gender ? Yii::t('terms', 'Female') : Yii::t('terms', 'Male');
     }
 
     public function behaviors()
@@ -83,6 +90,9 @@ class Student extends ActiveRecord
         return 'student';
     }
 
+    /**
+     * @return string
+     */
     public function getFullName()
     {
         return "$this->last_name $this->first_name $this->middle_name";
@@ -96,7 +106,7 @@ class Student extends ActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('code, last_name, first_name, middle_name, group_id', 'required'),
+            array('code, last_name, first_name, middle_name, group_id, gender', 'required'),
             array('group_id, admission_order_number, admission_semester, math_mark, ua_language_mark, graduated, graduation_semester, graduation_order_number', 'numerical', 'integerOnly' => true),
             array('code', 'length', 'max' => 12),
             array('last_name, first_name, middle_name', 'length', 'max' => 40),
@@ -178,26 +188,16 @@ class Student extends ActiveRecord
             'misc_data' => Yii::t('student', 'Misc Data'),
             'hobby' => Yii::t('student', 'Hobby'),
             'exemptions' => Yii::t('student', 'Exemptions'),
+            'exemptionNames' => Yii::t('student', 'Exemptions'),
             'fullName' => Yii::t('terms', 'Full name'),
         );
     }
 
     /**
-     * Retrieves a list of models based on the current search/filter conditions.
-     *
-     * Typical usecase:
-     * - Initialize the model fields with values from filter form.
-     * - Execute this method to get CActiveDataProvider instance which will filter
-     * models according to data in model fields.
-     * - Pass data provider to CGridView, CListView or any similar widget.
-     *
-     * @return CActiveDataProvider the data provider that can return the models
-     * based on the search/filter conditions.
+     * @return CActiveDataProvider
      */
     public function search()
     {
-        // @todo Please modify the following code to remove attributes that should not be searched.
-
         $criteria = new CDbCriteria;
 
         $criteria->compare('code', $this->code, true);
@@ -211,7 +211,6 @@ class Student extends ActiveRecord
         $criteria->compare('father_name', $this->father_name, true);
         $criteria->compare('gender', $this->gender, true);
         $criteria->compare('official_address', $this->official_address, true);
-        $criteria->compare('characteristics', $this->characteristics, true);
         $criteria->compare('factual_address', $this->factual_address, true);
         $criteria->compare('birth_date', $this->birth_date, true);
         $criteria->compare('admission_date', $this->admission_date, true);
@@ -245,10 +244,10 @@ class Student extends ActiveRecord
             $ids = implode(', ', $this->exemptions);
             $criteria->with = array(
                 'student_has_exemption' => array(
-                     'condition' => "exemption_id IN ($ids)",
+                    'condition' => "exemption_id IN ($ids)",
                 )
             );
-             $criteria->together = true;
+            $criteria->together = true;
         }
 
         return new CActiveDataProvider($this, array(
@@ -258,10 +257,15 @@ class Student extends ActiveRecord
 
     protected function afterFind()
     {
+        $names = array();
         $list = array();
         foreach ($this->exemptions as $item) {
             $list[] = $item->id;
+            $names[] = $item->title;
         }
         $this->exemptions = $list;
+        if (!$this->exemptionNames = implode(', ', $names)) {
+            $this->exemptionNames = Yii::t('base', 'None');
+        }
     }
 }

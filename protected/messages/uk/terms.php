@@ -19,4 +19,6 @@ return array(
     'Head' => 'Голова',
     'Full name' => 'Повне ім’я',
     'Teachers'=>'Викладачі',
+    'Male'=>'Чоловіча',
+    'Female'=>'Жіноча',
 );
