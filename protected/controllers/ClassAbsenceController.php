@@ -14,7 +14,7 @@ class ClassAbsenceController extends Controller
 	public function filters()
 	{
 		return array(
-			'accessControl', // perform access control for CRUD operations
+			//'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
@@ -60,7 +60,7 @@ class ClassAbsenceController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	/*
+	
 	public function actionCreate()
 	{
 		$model=new ClassAbsence;
@@ -79,9 +79,9 @@ class ClassAbsenceController extends Controller
 			'model'=>$model,
 		));
 	}
-	*/
 	
-	public function actionCreate($actualClassId, $studentId) {
+	
+	public function actionCreateFromJournal($actualClassId, $studentId) {
 	
 		yii::app()->user->setState('studentId', $studentId);
 		yii::app()->user->setState('actualClassId', $actualClassId);
@@ -133,7 +133,7 @@ class ClassAbsenceController extends Controller
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 	}
 
 	/**

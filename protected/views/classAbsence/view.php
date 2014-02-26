@@ -8,8 +8,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>Yii::t('absence', 'Create ClassAbsence'), 'url'=>array('create')),
-	array('label'=>Yii::t('absence', 'Update ClassAbsence'), 'url'=>array('update', 'id'=>$model->id)),
 	array('label'=>Yii::t('absence', 'Delete ClassAbsence'), 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>Yii::t('absence', 'Are you sure you want to delete this item?'))),
 );
 ?>

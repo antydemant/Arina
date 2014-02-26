@@ -7,8 +7,8 @@
     $form = $this->beginWidget(Booster::FORM);
     echo $form->dropDownListRow($model, 'groupId', Group::getListAll('id', 'title'), array('empty' => 'Select group'));
     echo $form->dropDownListRow($model, 'subjectId', Subject::getListAll('id', 'title'), array('empty' => 'Select subject'));
-    echo $form->datePickerRow($model, 'dateStart');
-    echo $form->datePickerRow($model, 'dateEnd');
+    //echo $form->datePickerRow($model, 'dateStart');
+    //echo $form->datePickerRow($model, 'dateEnd');
     echo CHtml::ajaxSubmitButton(Yii::t('base', 'Show'), array('index'), array('success' => 'myfunc'));
     $this->endWidget();
     ?>
@@ -44,11 +44,11 @@
                             			'source' => array('2', '3', '4', '5', '.')
                             	));*/
 							else 
-							echo CHtml::link('___', $this->createUrl('/classMark/create/', array('studentId' => $item->id, 'actualClassId' => $class['class'])), array("target"=>"_blank"));
+							echo CHtml::link('___', $this->createUrl('/classMark/createFromJournal/', array('studentId' => $item->id, 'actualClassId' => $class['class'])), array("target"=>"_blank"));
                             if (isset($class['absence']))
                             		echo CHtml::link(' / Нб', $this->createUrl('/classAbsence/update/', array('id' => $class['absence']->id)), array("target"=>"_blank"));
                             else
-                            	echo CHtml::link(' / ___', $this->createUrl('/classAbsence/create/', array('studentId' => $item->id, 'actualClassId' => $class['class'])), array("target"=>"_blank"));
+                            	echo CHtml::link(' / ___', $this->createUrl('/classAbsence/createFromJournal/', array('studentId' => $item->id, 'actualClassId' => $class['class'])), array("target"=>"_blank"));
                             
 
                             ?></td>

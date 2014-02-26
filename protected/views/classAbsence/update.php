@@ -9,7 +9,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>Yii::t('absence', 'Create ClassAbsence'), 'url'=>array('create')),
 	array('label'=>Yii::t('absence', 'View ClassAbsence'), 'url'=>array('view', 'id'=>$model->id)),
 );
 ?>

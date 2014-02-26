@@ -9,7 +9,6 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>Yii::t('mark', 'Create ClassMark'), 'url'=>array('create')),
 	array('label'=>Yii::t('mark', 'View ClassMark'), 'url'=>array('view', 'id'=>$model->id)),
 );
 ?>

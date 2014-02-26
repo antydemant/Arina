@@ -19,11 +19,11 @@
 
 	<?php echo $form->errorSummary($model); ?>
 	
-		<?php echo $form->textFieldRow($model,'actual_class_id'); ?>
+		<?php echo $form->textFieldRow($model,'actual_class_id', array('style' => 'display: none', 'labelOptions' => array('label' => false))); ?>
 
 		<?php echo $form->textFieldRow($model,'mark'); ?>
 
-		<?php echo $form->textFieldRow($model,'student_id'); ?>
+		<?php echo $form->textFieldRow($model,'student_id', array('style' => 'display: none', 'labelOptions' => array('label' => false))); ?>
 
 		<?php echo $form->dropDownListRow($model,'type', array(
 				'simple' => 'Звичайна',
