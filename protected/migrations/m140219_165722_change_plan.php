@@ -1,6 +1,6 @@
 <?php
 
-class m140221_165722_change_plan extends CDbMigration
+class m140219_165722_change_plan extends CDbMigration
 {
     public function up()
     {
@@ -13,6 +13,9 @@ class m140221_165722_change_plan extends CDbMigration
         $this->renameColumn('sp_subject', 'study_plan_id', 'sp_plan_id');
         $this->renameColumn('sp_hours', 'study_plan_subject_id', 'sp_subject_id');
         $this->renameColumn('sp_hours', 'study_plan_info_id', 'sp_semester_id');
+
+        $this->addForeignKey('hoursOnSemester', 'sp_hours', 'sp_semester_id', 'sp_semester', 'id', 'CASCADE', 'CASCADE');
+
     }
 
     public function down()
@@ -26,7 +29,12 @@ class m140221_165722_change_plan extends CDbMigration
         $this->renameTable('sp_semester', 'study_plan_info');
         $this->renameTable('sp_hours', 'study_plan_semester');
         $this->renameTable('sp_subject', 'study_plan_subject');
+
+        $this->dropForeignKey('hoursOnSemester', 'sp_hours');
+
         return false;
+
+
     }
 
     /*
