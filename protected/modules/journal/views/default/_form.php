@@ -7,9 +7,9 @@
     $form = $this->beginWidget(Booster::FORM);
     echo $form->dropDownListRow($model, 'groupId', Group::getListAll('id', 'title'), array('empty' => 'Select group'));
     echo $form->dropDownListRow($model, 'subjectId', Subject::getListAll('id', 'title'), array('empty' => 'Select subject'));
-    //echo $form->datePickerRow($model, 'dateStart');
-    //echo $form->datePickerRow($model, 'dateEnd');
-    echo CHtml::ajaxSubmitButton(Yii::t('base', 'Show'), array('index'), array('replace' => '#journal-form'));
+    echo $form->datePickerRow($model, 'dateStart');
+    echo $form->datePickerRow($model, 'dateEnd');
+    echo CHtml::ajaxSubmitButton(Yii::t('base', 'Show'), array('index'), array('success' => 'myfunc'));
     $this->endWidget();
     ?>
     <?php if (!$model->isEmpty): ?>

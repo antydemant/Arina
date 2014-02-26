@@ -97,7 +97,9 @@
 
 		<?php echo $form->textFieldRow($model,'hobby',array('size'=>60,'maxlength'=>100)); ?>
 
-    
+    	<?php echo $form->labelEx($model, 'exemptions'); ?>
+    	<?php echo $form->checkBoxGroupsList($model,'exemptions',CHtml::listData(Exemption::model()->findAll(), 'id', 'title'))?>
+
     
     <div class="form-actions">
         <?php $this->widget(
