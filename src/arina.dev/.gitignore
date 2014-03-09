@@ -1,0 +1,21 @@
+# cache directories
+Thumbs.db
+*.DS_Store
+*.empty
+
+# sass cache files
+*.sass-cache
+
+# mac deployment helpers
+switch
+index
+
+#Composer
+composer.lock
+
+# runtime files 
+/protected/config/env/dev.php
+/protected/runtime/*
+/public/assets/*
+/vendor/*
+
