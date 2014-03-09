@@ -17,6 +17,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+execute "install-make" do
+  command "apt-get install make"
+  command "apt-get install libmysqlclient-dev"
+  ignore_failure true
+end
 
 # Run apt-get update to create the stamp file
 execute "apt-get-update" do
