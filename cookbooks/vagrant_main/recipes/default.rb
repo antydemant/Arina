@@ -15,6 +15,7 @@ include_recipe "apache2::mod_php5"
 include_recipe "composer"
 include_recipe "phing"
 include_recipe "php-box"
+include_recipe "database::mysql"
 
 # Install packages
 %w{ debconf vim screen tmux mc subversion curl make g++ libsqlite3-dev graphviz libxml2-utils lynx links}.each do |a_package|
