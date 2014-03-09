@@ -5,13 +5,13 @@
 
 class Booster
 {
-    const ALERT = 'bootstrap.widgets.TbAlert';
-    const GRID_VIEW = "bootstrap.widgets.TbGridView";
-    const BUTTON = 'bootstrap.widgets.TbButton';
-    const BUTTON_GROUP = "bootstrap.widgets.TbButtonGroup";
-    const FORM = "bootstrap.widgets.TbActiveForm";
-    const NAVIGATOR = "bootstrap.widgets.TbNavbar";
-    const DETAIL_VIEW = 'bootstrap.widgets.TbDetailView';
+    const ALERT = 'booster.widgets.TbAlert';
+    const GRID_VIEW = "booster.widgets.TbGridView";
+    const BUTTON = 'booster.widgets.TbButton';
+    const BUTTON_GROUP = "booster.widgets.TbButtonGroup";
+    const FORM = "booster.widgets.TbActiveForm";
+    const NAVIGATOR = "booster.widgets.TbNavbar";
+    const DETAIL_VIEW = 'booster.widgets.TbDetailView';
 
 
     /**

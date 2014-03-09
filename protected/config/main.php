@@ -15,16 +15,20 @@ return CMap::mergeArray(
         'language' => 'uk',
         //
         'aliases' => array(
-            'bootstrap' => 'ext.yiibooster',
+            'root' => dirname(__FILE__). DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR, 
+            'vendor' => 'root.vendor',
+            'public' => 'root.public',
+            'booster' => 'root.vendor.clevertech.yii-booster.src',
+            'bootstrap' => 'booster',
             'modules'=>'application.modules',
         ),
         // autoloading model and component classes
         'import' => array(
             'application.models.*',
             'application.components.*',
-            'application.extensions.CAdvancedArBehavior',
-            'application.extensions.yiibooster.components.*',
-            'application.extensions.yiibooster.helpers.*'
+            'vendor.yiiext.activerecord-relation-behavior.CAdvancedArBehavior',
+            'booster.components.*',
+            'booster.helpers.*'
         ),
 
         'modules' => array(
@@ -43,17 +47,11 @@ return CMap::mergeArray(
                 'loginUrl' => '/user/login',
             ),
 
-            /*     'authManager' => array(
-                     'class' => 'PhpAuthManager',
-                     'defaultRoles' => array('guest'),
-                 ),*/
-
             'bootstrap' => array(
-                'class' => 'ext.yiibooster.components.Bootstrap',
+                'class' => 'booster.components.Bootstrap',
                 'responsiveCss' => true,
                 'coreCss' => false,
             ),
-            // uncomment the following to enable URLs in path-format
 
             'urlManager' => array(
                 'urlFormat' => 'path',
