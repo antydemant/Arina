@@ -19,7 +19,7 @@
 		"recipe[mysql::server]",  
 		"recipe[vim]",
 		"recipe[cron]", 
-		"recipe[ntp]", 
+		/*"recipe[ntp]", */
 		"recipe[phpmyadmin]",
 		"recipe[app]"
 		]
