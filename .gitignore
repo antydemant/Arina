@@ -28,9 +28,5 @@ index
 composer.lock
 composer.phar
 
-# configuration files created locally by post deployment script or by a developer
-/protected/config/env/dev.php
-/protected/runtime/*
-/public/assets/*
-/vendor/*
+
 

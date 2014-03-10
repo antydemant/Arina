@@ -1,0 +1,25 @@
+{
+	"name": "developer",
+	"default_attributes": { },
+	"override_attributes": { },
+	"json_class": "Chef::Role",
+	"description": "Apache, PHP, MySQL, Composer",
+	"chef_type": "role",
+	"run_list": [
+		"recipe[apt]", 
+		"recipe[apache2]", 
+		"recipe[apache2::mod_php5]", 
+		"recipe[apache2::mod_rewrite]",
+		"recipe[php]", 
+		"recipe[chef-php-extra]", 
+		"recipe[chef-php-extra::xdebug]", 
+		"recipe[openssl]", 
+		"recipe[mysql]",
+		"recipe[mysql::server]",  
+		"recipe[vim]",
+		"recipe[cron]", 
+		"recipe[ntp]", 
+		"recipe[phpmyadmin]",
+		"recipe[app]"
+		]
+}

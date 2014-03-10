@@ -1,8 +1,0 @@
-{
-    "id": "arina",
-    "host": "arina.dev",
-    "aliases": [
-        "www.arina.dev"
-    ],
-    "docroot": "/vagrant/src/arina.dev/public"
-}

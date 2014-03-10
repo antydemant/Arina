@@ -20,10 +20,10 @@
 #
 
 case node['platform_family']
-when "rhel", "fedora"
-  # centos php compiled with curl
-when "debian"
-  package "php5-curl" do
-    action :upgrade
+when 'rhel', 'fedora'
+	# cURL shipped with the core package
+when 'debian'
+  package 'php5-curl' do
+    action :install
   end
 end

@@ -1,27 +1,31 @@
-## v1.1.8:
+# CHANGELOG for php
 
-* [COOK-1998] - Enable override of PHP packages in attributes
+This file is used to list changes made in each version of php.
 
-## v1.1.6:
+## v1.2.0
 
-* [COOK-2324] - adds Oracle linux support
+* Added ZendOptimizer+ opcache support
+* Dropped source support
+* Dropped older distro support
+* Major code refactoring
+* Added Vagrantfile
 
-## v1.1.4:
+## v1.1.1:
 
-* [COOK-2106] - `php_pear` cannot find available packages
+Synced with upstream. More specifically:
 
-## v1.1.2:
-
-* [COOK-1803] - use better regexp to match package name
-* [COOK-1926] - support Amazon linux
+* [COOK-1067] - support for PECL zend extensions
+* [COOK-1348] - rescue Mixlib::ShellOut::ShellCommandFailed (chef 0.10.10)
+* [COOK-1465] - fix pear extension template
 
 ## v1.1.0:
 
-* [COOK-543] - php.ini template should be configurable
-* [COOK-1067] - support for PECL zend extensions
-* [COOK-1193] - update package names for EPEL 6
-* [COOK-1348] - rescue Mixlib::ShellOut::ShellCommandFailed (chef 0.10.10)
-* [COOK-1465] - fix pear extension template
+* Added numerous modules to be installed via recipes
+* Removed Fedora compatibility (don't have the time to test on Fedora)
+* Added the FPM recipe
+* Created the FPM LWRP for dynamic FPM pool creation
+* Added the Apache2 recipe for mod_php installation and configuration
+* Added TMPFS support for uploads and sessions
 
 ## v1.0.2:
 
@@ -29,3 +33,7 @@
 * [COOK-989] - bump version of php to 5.3.10
 * Also download the .tar.gz instead of .tar.bz2 as bzip2 may not be in
   the base OS (e.g., CentOS 6 minimal)
+
+## v1.0.0:
+
+* Initial release of php
