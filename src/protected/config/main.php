@@ -34,13 +34,13 @@ return CMap::mergeArray(
         'modules' => array(
             'studyPlan',
             'journal',
+            'student',
         ),
 
 
         // application components
         'components' => array(
             'user' => array(
-                // enable cookie-based authentication
                 'class' => 'WebUser',
                 'allowAutoLogin' => true,
                 'loginUrl' => '/user/login',
