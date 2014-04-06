@@ -35,6 +35,7 @@ return CMap::mergeArray(
             'studyPlan',
             'journal',
         	'student',
+            'hr',
         ),
 
 
