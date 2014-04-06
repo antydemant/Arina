@@ -2,20 +2,12 @@
 # Cookbook Name:: app
 # Recipe:: default
 #
-# Copyright 2014, YOUR_COMPANY_NAME
+# Copyright 2014, NRE
 #
 # All rights reserved - Do Not Redistribute
 #
 include_recipe "mysql::ruby"
 
-
-# а здесь создаём VirtualHost, используя наши переменные (атрибуты)
-# web_app 'app' do
-#  template 'vhost.erb'
-#  docroot node['app']['docroot']
-#  server_name node['app']['server_name']
-#  server_email node['app']['server_email']
-# end
 
 node['vhosts'].each do |app,vhost|
 
@@ -44,6 +36,8 @@ node['vhosts'].each do |app,vhost|
     if vhost['database']
         mysql_database vhost['database'] do
           connection ({:host => 'localhost', :username => 'root', :password => node['mysql']['server_root_password']})
+          encoding  'utf8'
+          collation 'utf8_general_ci'
           action :create
         end
     end
