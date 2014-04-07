@@ -3,6 +3,11 @@ Thumbs.db
 *.DS_Store
 *.empty
 
+# runtime files 
+/protected/runtime/*
+/public/assets/*
+/vendor/*
+
 #phpstorm project files
 .idea
 
@@ -21,12 +26,6 @@ nbproject
 switch
 index
 
-#Vagrant
-.vagrant
-
 #Composer
 composer.lock
 composer.phar
-
-
-
