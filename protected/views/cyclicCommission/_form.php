@@ -11,7 +11,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 
 <?php echo $form->textFieldRow($model, 'title', array('class' => 'span3')); ?>
 
-<?php echo $form->dropDownListRow($model, 'head_id', Teacher::getList(), array('class' => 'span3')); ?>
+<?php echo $form->dropDownListRow($model, 'head_id', Teacher::getList(), array('class' => 'span3', 'empty'=>'')); ?>
 
 <?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
 

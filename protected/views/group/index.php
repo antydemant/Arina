@@ -37,12 +37,17 @@ $this->menu = array(
                 'header' => Yii::t('base', 'Actions'),
                 'htmlOptions' => array('nowrap' => 'nowrap'),
                 'class' => 'bootstrap.widgets.TbButtonColumn',
-                'template' => '{update}{delete}{view}{students}',
+                'template' => '{update}{delete}{view}{students}{excel}',
                 'buttons' => array(
                     'students' => array(
                         'label' => Yii::t('student', 'Students list'),
                         'icon' => 'icon-list',
                         'url' => 'Yii::app()->createUrl("student/default/group", array("id"=>$data->id))',
+                    ),
+                    'excel' => array(
+                        'label' => Yii::t('student', 'Get excel'),
+                        'icon' => 'icon-file',
+                        'url' => 'Yii::app()->createUrl("/group/makeExcel", array("id"=>$data->id))',
                     ),
                 ),
             )

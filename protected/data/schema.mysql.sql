@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `actual_class` (
 CREATE TABLE IF NOT EXISTS `audience` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Код',
   `number` varchar(5) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Номер аудиторії',
+  `name` varchar(15) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Назва аудиторії',
   `type` int(11) NOT NULL COMMENT 'Тип аудиторії',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

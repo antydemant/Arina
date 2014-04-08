@@ -65,7 +65,9 @@ class AudienceController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new CActiveDataProvider('Audience');
+        $dataProvider = new CActiveDataProvider('Audience', array( 'criteria'=>array(
+            'order'=>'number ASC',
+        )));
         $this->render('index', array(
             'dataProvider' => $dataProvider,
         ));

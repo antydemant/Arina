@@ -1,55 +1,44 @@
 <?php
+
 /**
+ * This is the model class for table "settings".
  *
- * This is the model class for table "audience".
- *
- * The followings are the available columns in table 'audience':
+ * The followings are the available columns in table 'settings':
  * @property integer $id
- * @property string $number
- * @property string $name
- * @property integer $type
- *
- * @author Dmytro Karpovych <ZAYEC77@gmail.com>
+ * @property string $key
+ * @property string $title
+ * @property string $value
  */
-class Audience extends ActiveRecord
+class Settings extends ActiveRecord
 {
-    const TYPE_LECTURE = 1;
-    const TYPE_LABORATORY = 2;
-    const TYPE_WORKSHOP = 3;
-    const TYPE_GUM = 4;
+    protected static $values;
+
+    public static function getValue($key)
+    {
+        if (isset(self::$values[$key])) {
+            return self::$values[$key];
+        } else {
+            /** @var Settings $model */
+            $model = self::model()->findByAttributes(array('key'=>$key));
+            if ($model===null) {
+                throw new CHttpException(404, Yii::t('error', 'No content for this key'));
+            }
+            return self::$values[$model->key] = $model->value;
+        }
+    }
 
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
-     * @return Audience the static model class
+     * @return Settings the static model class
      */
     public static function model($className = __CLASS__)
     {
+        if (!isset(self::$values)) {
+            self::$values = array();
+        }
         return parent::model($className);
-    }
-
-    /**
-     * @return string
-     */
-    public function getTypeName()
-    {
-        $list = self::getTypeList();
-        return $list[$this->type];
-    }
-
-    /**
-     * Array for dropDownList
-     * @return array
-     */
-    public static function getTypeList()
-    {
-        return array(
-            self::TYPE_LECTURE => Yii::t('audience', 'Lecture'),
-            self::TYPE_LABORATORY => Yii::t('audience', 'Laboratory'),
-            self::TYPE_WORKSHOP => Yii::t('audience', 'Workshop'),
-            self::TYPE_GUM => Yii::t('audience', 'Gum'),
-        );
     }
 
     /**
@@ -57,7 +46,7 @@ class Audience extends ActiveRecord
      */
     public function tableName()
     {
-        return 'audience';
+        return 'settings';
     }
 
     /**
@@ -66,11 +55,9 @@ class Audience extends ActiveRecord
     public function rules()
     {
         return array(
-            array('number, type', 'required'),
-            array('type', 'numerical', 'integerOnly' => true),
-            array('number', 'length', 'max' => 5),
-            array('number', 'unique'),
-            array('id, number, type', 'safe', 'on' => 'search'),
+            array('key, title, value', 'length', 'max' => 255),
+            array('key', 'unique'),
+            array('id, key, title, value', 'safe', 'on' => 'search'),
         );
     }
 
@@ -89,9 +76,9 @@ class Audience extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'number' => Yii::t('audience', 'Number'),
-            'type' => Yii::t('base', 'Type'),
-            'typeName' => Yii::t('base', 'Type'),
+            'key' => 'Key',
+            'title' => 'Title',
+            'value' => 'Value',
         );
     }
 
@@ -109,11 +96,14 @@ class Audience extends ActiveRecord
      */
     public function search()
     {
+        // @todo Please modify the following code to remove attributes that should not be searched.
+
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('number', $this->number, true);
-        $criteria->compare('type', $this->type);
+        $criteria->compare('key', $this->key, true);
+        $criteria->compare('title', $this->title, true);
+        $criteria->compare('value', $this->value, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

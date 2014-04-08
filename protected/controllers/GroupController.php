@@ -14,8 +14,17 @@ class GroupController extends Controller
      */
     public function actionIndex()
     {
-        $provider = Group::model()->getProvider();
+        $provider = Group::model()->getProvider(array( 'criteria'=>array(
+            'order'=>'title ASC',)));
         $this->render('index', array('provider' => $provider,));
+    }
+
+    public function actionMakeExcel($id)
+    {
+        /**@var $excel ExcelMaker */
+        $excel  = Yii::app()->getComponent('excel');
+        $group = Group::model()->loadContent($id);
+        $excel->getDocument($group, 'simpleGroupList');
     }
 
     /**
@@ -46,6 +55,13 @@ class GroupController extends Controller
 
         $this->ajaxValidation('group-form', $model);
 
+        if (isset($_POST['Group'])) {
+            $model->attributes = $_POST['Group'];
+            if ($model->save()) {
+                $this->redirect(array('group/index'));
+            }
+        }
+        
         $this->render('update', array('model' => $model,));
     }
 

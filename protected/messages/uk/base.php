@@ -3,6 +3,7 @@
  *
  */
 return array(
+    'Not selected'=>'Не вибрано',
     'None' => 'Немає',
     'Creating'=>'Створення',
     'List' => 'Список',

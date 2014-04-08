@@ -24,6 +24,15 @@ class CyclicCommission extends ActiveRecord
         return CHtml::listData(self::model()->findAll(), 'id', 'title');
     }
 
+    public function getHeadName()
+    {
+        if (isset($this->head)) {
+            return $this->head->getFullName();
+        } else {
+            return Yii::t('base', 'Not selected');
+        }
+    }
+
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -48,14 +57,11 @@ class CyclicCommission extends ActiveRecord
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
-            array('title, head_id', 'required'),
+            array('title', 'required'),
+            array('head_id', 'required', 'on'=>'update'),
             array('head_id', 'numerical', 'integerOnly' => true),
             array('title', 'length', 'max' => 40),
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
             array('id, title, head_id, head_search', 'safe', 'on' => 'search'),
         );
     }
