@@ -66,34 +66,6 @@ class m140219_201227_classes extends CDbMigration
                 'group_id' => '1'
             )
         );
-
-        $this->insert(
-            'sp_plan',
-            array(
-                'speciality_id' => '1',
-                'study_year' => '2013/2014',
-            )
-        );
-        $this->insert(
-            'sp_subject',
-            array(
-                'subject_id' => '1',
-                'sp_plan_id' => '1',
-            )
-        );
-        $this->insert('sp_semester',
-            array(
-                'sp_plan_id' => '1',
-                'semester_number' => '1',
-                'weeks_count' => '17'
-            ));
-        $this->insert(
-            'sp_hours',
-            array(
-                'sp_subject_id' => '1',
-                'sp_semester_id' => '1',
-            )
-        );
     }
 
     public function down()

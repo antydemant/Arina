@@ -1,27 +1,18 @@
 <?php
 /**
- * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
- * @var $this PlanController
- * @var $form TbActiveForm
- * @var \Plan $model
+ * @var PlanController $this
+ * @var StudyPlan $model
+ * @var TbActiveForm $form
  */
 ?>
 
-<?php $form = $this->beginWidget(
-    Booster::FORM,
-    array(
-        'id' => 'studyPlan-form',
-        'type' => 'horizontal',
-        'htmlOptions' => array('class' => 'well span10'),
-        'enableClientValidation' => true,
-    )
-);
-?>
+<?php $form = $this->beginWidget(Booster::FORM, array(
+    'type' => 'horizontal',
+    'htmlOptions' => array(
+        'class' => 'well',
+    ),
+)); ?>
 
-<?php echo $form->dropDownListRow($model, 'speciality_id', CHtml::listData(Speciality::model()->findAll(), 'id', 'title')); ?>
-
-<?php echo $form->textFieldRow($model, 'study_year'); ?>
-
-<?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
-
+<?php echo $form->dropDownListRow($model, 'speciality_id', Speciality::getList(), array('empty' => 'Оберіть спеціальність')); ?>
+<?php echo $form->dropDownListRow($model, 'year_id', StudyYear::getList(), array('empty' => 'Оберіть навчальний рік')); ?>
 <?php $this->endWidget(); ?>

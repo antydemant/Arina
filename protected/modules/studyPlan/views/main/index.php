@@ -1,36 +1,30 @@
 <?php
 /**
- * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
- * @var $this PlanController
- * @var $dataProvider CActiveDataProvider
+ * @var MainController $this
  */
-
 $this->breadcrumbs = array(
     Yii::t('base', 'Study plans'),
 );
 
 $this->menu = array(
     array(
-        'type' => Booster::TYPE_PRIMARY,
-        'label' => Yii::t('studyPlan', 'Create new plan'),
-        'url' => $this->createUrl('createInfo'),
+        'label' => 'Створити навчальний план',
+        'url' => $this->createUrl('plan/create'),
     ),
-);
-?>
-
-<?php
-$columns = array(
-    array('name' => 'speciality.title', 'header' => Yii::t('terms', 'Speciality')),
-    array('name' => 'study_year', 'header' => Yii::t('terms', 'Study year')),
     array(
-        'htmlOptions' => array('nowrap' => 'nowrap'),
-        'class' => 'bootstrap.widgets.TbButtonColumn',
-        'viewButtonUrl' => 'Yii::app()->controller->createUrl("plan/view", array("id"=>$data["id"]))',
-        'updateButtonUrl' => 'Yii::app()->controller->createUrl("plan/update", array("id"=>$data["id"]))',
-        'deleteButtonUrl' => 'Yii::app()->controller->createUrl("plan/delete", array("id"=>$data["id"]))',
+        'label' => 'Переглянути навчальні плани',
+        'url' => $this->createUrl('plan/index'),
     ),
+    array(
+        'label' => 'Створити робочий план',
+        'url' => $this->createUrl('workPlan/create')
+    ),
+    array(
+        'label' => 'Переглянути робочі навчальні плани',
+        'url' => $this->createUrl('workPlan/index'),
+    ),
+
+
 );
-
-$this->renderPartial('//tableList', array('provider' => $dataProvider, 'columns' => $columns));
-
 ?>
+

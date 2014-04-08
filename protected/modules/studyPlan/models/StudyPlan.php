@@ -1,47 +1,25 @@
 <?php
 
 /**
- * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
- * This is the model class for table "study_plan_subject".
+ * This is the model class for table "sp_plan".
  *
- * The followings are the available columns in table 'study_plan_subject':
+ * The followings are the available columns in table 'sp_plan':
  * @property integer $id
- * @property integer $sp_plan_id
- * @property integer $subject_id
- * @property integer $total_hours
+ * @property integer $year_id
+ * @property integer $speciality_id
+ *
  * The followings are the available model relations:
- * @property Plan $plan
- * @property Subject $subject
- * @property Hours[] $hours
+ * @property StudyGraphic[] $graphics
+ * @property StudySubject[] $subjects
  */
-class SpSubject extends ActiveRecord
+class StudyPlan extends ActiveRecord
 {
-    /**
-     * Return array for dropDownList
-     * @return array
-     */
-    public static function getList()
-    {
-        return self::getListAll('id', 'title');
-    }
-
-    /**
-     * Returns the static model of the specified AR class.
-     * Please note that you should have this exact method in all your CActiveRecord descendants!
-     * @param string $className active record class name.
-     * @return SpSubject the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
-    }
-
     /**
      * @return string the associated database table name
      */
     public function tableName()
     {
-        return 'sp_subject';
+        return 'sp_plan';
     }
 
     /**
@@ -52,11 +30,11 @@ class SpSubject extends ActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('sp_plan_id, subject_id, total_hours', 'required'),
-            array('sp_plan_id, subject_id, total_hours', 'numerical', 'integerOnly' => true),
+            array('year_id, speciality_id', 'required'),
+            array('year_id, speciality_id', 'numerical', 'integerOnly' => true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, sp_plan_id, subject_id, total_hours', 'safe', 'on' => 'search'),
+            array('id, year_id, speciality_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -68,9 +46,8 @@ class SpSubject extends ActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'subject' => array(self::BELONGS_TO, 'Subject', 'subject_id'),
-            'plan' => array(self::BELONGS_TO, 'Plan', 'sp_plan_id'),
-            'hours' => array(self::HAS_MANY, 'Hours', 'sp_subject_id'),
+            'graphics' => array(self::HAS_MANY, 'StudyGraphic', 'plan_id'),
+            'subjects' => array(self::HAS_MANY, 'StudySubject', 'plan_id'),
         );
     }
 
@@ -81,9 +58,8 @@ class SpSubject extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'sp_plan_id' => 'Навчальний план',
-            'subject_id' => 'Предмет',
-            'total_hours' => 'Усього годин',
+            'year_id' => Yii::t('terms', 'Study year'),
+            'speciality_id' => Yii::t('terms', 'Speciality'),
         );
     }
 
@@ -106,12 +82,22 @@ class SpSubject extends ActiveRecord
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('sp_plan_id', $this->sp_plan_id);
-        $criteria->compare('subject_id', $this->subject_id);
-        $criteria->compare('total_hours', $this->total_hours);
+        $criteria->compare('year_id', $this->year_id);
+        $criteria->compare('speciality_id', $this->speciality_id);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
+    }
+
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return StudyPlan the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
     }
 }
