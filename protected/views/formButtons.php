@@ -14,5 +14,5 @@
             'label' => $model->isNewRecord ? Yii::t('base', 'Create') : Yii::t('base', 'Save')
         )
     ); ?>
-    <?php $this->widget(Booster::BUTTON, array('buttonType' => 'reset', 'label' => Yii::t('base', 'Reset'))); ?>
+    <?php $this->widget(Booster::BUTTON, array('buttonType' => 'reset', 'label' => Yii::t('base', 'Cancel'))); ?>
 </div>

@@ -30,6 +30,7 @@ return array(
     'Teachers' => 'Викладачі',
     'Actions' => 'Дії',
     'Create' => 'Створити',
+    'Cancel' => 'Скасувати',
     'Update' => 'Змінити',
     'Updating' => 'Оновлення',
     'Send' => 'Надіслати',
