@@ -29,6 +29,9 @@ class PlanController extends Controller
         $model = new StudyGraphic();
         $model->plan_id = $id;
 
+        if (isset($_POST['yt0']))
+            $this->redirect($this->createUrl('subjects', array('id' => $id)));
+
         $this->render('graphic', array('model' => $model));
     }
 
