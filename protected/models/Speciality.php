@@ -1,4 +1,5 @@
 <?php
+Yii::import('application.components.dateField.*');
 
 /**
  * This is the model class for table "speciality".
@@ -13,7 +14,7 @@
  * @property Group[] $groups
  * @property Department $department
  */
-class Speciality extends ActiveRecord
+class Speciality extends ActiveRecord implements IDateContainable
 {
     /**
      * @return array for dropDownList
@@ -62,7 +63,7 @@ class Speciality extends ActiveRecord
     public function relations()
     {
         return array(
-            'groups' => array(self::HAS_MANY, 'Group', 'speciality_id'),
+            'groups' => array(self::HAS_MANY, 'Group', 'speciality_id', 'order' => 'title ASC'),
             'department' => array(self::BELONGS_TO, 'Department', 'department_id'),
         );
     }
@@ -103,9 +104,30 @@ class Speciality extends ActiveRecord
         $criteria->compare('department_id', $this->department_id);
         $criteria->compare('number', $this->number, true);
         $criteria->compare('accreditation_date', $this->accreditation_date, true);
-
+        $criteria->with = array('department');
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder' => 't.number ASC',
+                'attributes' => array(
+                    'department.title' => 'department.title',
+                    '*'
+                ),
+            ),
         ));
+    }
+
+    public function behaviors()
+    {
+        return array(
+            'DateBehavior',
+        );
+    }
+
+    public function getDateFields()
+    {
+        return array(
+            'accreditation_date'
+        );
     }
 }

@@ -11,7 +11,7 @@ $this->menu = array(
     array('label' => Yii::t('speciality', 'Specialities list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
     array('label' => Yii::t('speciality', 'Create new speciality'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
 
-    array('label' => 'View Speciality', 'url' => array('view', 'id' => $model->id)),
+    array('label' => Yii::t('speciality', 'View speciality'), 'url' => array('view', 'id' => $model->id)),
     array(
         'label' => Yii::t('group', 'Delete group'),
         'icon' => 'trash',
@@ -25,6 +25,10 @@ $this->menu = array(
     ),
 );
 ?>
-<h2><?php echo Yii::t('speciality', 'Updating speciality'). " $model->title"; ?></h2>
+
+    <h3><?php echo Yii::t('speciality', 'Updating speciality'); ?></h3>
+    <h2><?php echo "\"$model->title\""; ?></h2>
+
+
 
 <?php $this->renderPartial('_form', array('model' => $model)); ?>

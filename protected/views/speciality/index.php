@@ -16,6 +16,15 @@ $columns = array(
     'number',
     'title',
     array(
+        'header' => Yii::t('department','Department'),
+        'name' => 'department.title',
+        'value' => 'CHtml::link($data->department->title, array(
+                    "/department/view/",
+                    "id" => "$data->department_id")
+            )',
+        'type' => 'raw'
+    ),
+    array(
         'header' => Yii::t('base', 'Actions'),
         'htmlOptions' => array('nowrap' => 'nowrap'),
         'class' => 'bootstrap.widgets.TbButtonColumn',
