@@ -20,7 +20,7 @@ class ExcelMaker extends CComponent
         $methodName = 'make' . ucfirst($name);
         if (method_exists($this, $methodName)) {
             $objPHPExcel = $this->$methodName($data);
-            $docName = "$name ". date("d.m.Y G-i", time());
+            $docName = "$name " . date("d.m.Y G-i", time());
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             header('Content-Disposition: attachment;filename="' . $docName . '.xlsx"');
             header('Cache-Control: max-age=0');
@@ -55,23 +55,41 @@ class ExcelMaker extends CComponent
     }
 
     /**
-     * @param $group
+     * @param Group $group
      * @return mixed
      */
     public function makeSimpleGroupList($group)
     {
         $objPHPExcel = $this->loadTemplate('5.03.xls');
         $sheet = $objPHPExcel->setActiveSheetIndex(0);
-        $i = 40;
+        $sheet->setCellValue('A10', Settings::getValue('name'));
+        $this->setValue($sheet, 'A13', $group->speciality->department->title);
+        $this->setValue($sheet, 'A14', $group->speciality->title);
+        $this->setValue($sheet, 'A15', $group->getCourse());
+        $this->setValue($sheet, 'C15', $group->title);
+        $this->setValue($sheet, 'C17', GlobalHelper::getCurrentYear(1), '@value1');
+        $this->setValue($sheet, 'C17', GlobalHelper::getCurrentYear(2), '@value2');
+        $k = $i = 40;
         foreach ($group->students as $item) {
             /**@var Student $item */
-            $value = $item->getShortFullName();
-            $sheet->setCellValue("B$i", $value);
+            $sheet->setCellValue("A$i", $i - $k + 1);
+            $sheet->setCellValue("B$i", $item->getShortFullName());
             $sheet->insertNewRowBefore($i + 1, 1);
             $i++;
         }
         $sheet->removeRow($i);
         return $objPHPExcel;
+    }
+
+    /**
+     * @param PHPExcel_Worksheet $sheet
+     * @param $cell
+     * @param $value
+     * @param string $alias
+     */
+    public function setValue($sheet, $cell, $value, $alias='@value')
+    {
+        $sheet->setCellValue($cell, str_replace($alias, $value, $sheet->getCell($cell)->getCalculatedValue()));
     }
 
     /**

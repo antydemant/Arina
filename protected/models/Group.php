@@ -26,6 +26,14 @@ class Group extends ActiveRecord
         return parent::model($className);
     }
 
+    public function getCourse()
+    {
+        $year = date('Y', time());
+        $last_year = mb_substr($this->title,3,2,'UTF-8');
+        $value = $year-2000 - $last_year;
+        return $value;
+    }
+
     public function getStudentsList()
     {
         return CHtml::listData($this->students, 'id', 'fullName');
@@ -60,17 +68,12 @@ class Group extends ActiveRecord
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
             array('title, speciality_id, curator_id', 'required'),
             array('monitor_id', 'required', 'on' => 'update'),
             array('speciality_id, curator_id, monitor_id', 'numerical', 'integerOnly' => true),
             array('title', 'length', 'max' => 8),
             array('title', 'unique'),
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
-            //array('id, title, speciality_id, curator_id, monitor_id', 'safe', 'on'=>'search'),
         );
     }
 

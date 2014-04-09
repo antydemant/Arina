@@ -14,17 +14,24 @@ class GroupController extends Controller
      */
     public function actionIndex()
     {
-        $provider = Group::model()->getProvider(array( 'criteria'=>array(
-            'order'=>'title ASC',)));
+        $provider = Group::model()->getProvider(array('criteria' => array(
+            'order' => 'title ASC',)));
         $this->render('index', array('provider' => $provider,));
     }
 
     public function actionMakeExcel($id)
     {
         /**@var $excel ExcelMaker */
-        $excel  = Yii::app()->getComponent('excel');
+        $excel = Yii::app()->getComponent('excel');
         $group = Group::model()->loadContent($id);
         $excel->getDocument($group, 'simpleGroupList');
+    }
+
+    public function actionDoc($id)
+    {
+        $model = new GroupDocForm();
+        $model->group = Group::model()->loadContent($id);
+        $this->render('doc', array('model' => $model));
     }
 
     /**
@@ -61,7 +68,7 @@ class GroupController extends Controller
                 $this->redirect(array('group/index'));
             }
         }
-        
+
         $this->render('update', array('model' => $model,));
     }
 

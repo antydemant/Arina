@@ -32,8 +32,6 @@ class Department extends ActiveRecord
             array('title, head_id', 'required'),
             array('head_id', 'numerical', 'integerOnly' => true),
             array('title', 'length', 'max' => 40),
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
             array('id, title, head_id', 'safe', 'on' => 'search'),
         );
     }
