@@ -137,8 +137,6 @@ class Student extends ActiveRecord
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
             'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
             'marks' => array(self::HAS_MANY, 'ClassMark', 'student_id'),
@@ -275,5 +273,13 @@ class Student extends ActiveRecord
         if (!$this->exemptionNames = implode(', ', $names)) {
             $this->exemptionNames = Yii::t('base', 'None');
         }
+    }
+
+    protected function afterSave()
+    {
+        if (empty($this->exemptions)) {
+            $this->exemptions = array();
+        }
+        return parent::afterSave();
     }
 }
