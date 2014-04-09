@@ -98,7 +98,7 @@ class Group extends ActiveRecord
         return array(
             'id' => Yii::t('base', 'ID'),
             'title' => Yii::t('base', 'Title'),
-            'speciality_id' => Yii::t('group', 'Speciality'),
+            'speciality_id' => Yii::t('base', 'Speciality'),
             'curator_id' => Yii::t('group', 'Curator'),
             'curator' => Yii::t('group', 'Curator'),
             'monitor_id' => Yii::t('group', 'Monitor'),

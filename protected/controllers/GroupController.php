@@ -14,8 +14,17 @@ class GroupController extends Controller
      */
     public function actionIndex()
     {
-        $provider = Group::model()->getProvider(array('criteria' => array(
-            'order' => 'title ASC',)));
+        $provider = Group::model()->getProvider(array(
+            'criteria'=>array(
+                'with'=>array('speciality'),
+            ),
+            'sort' => array(
+                'defaultOrder' => 't.title ASC',
+                'attributes'=>array(
+                    'speciality.title'=>'speciality.title',
+                )
+            )
+        ));
         $this->render('index', array('provider' => $provider,));
     }
 

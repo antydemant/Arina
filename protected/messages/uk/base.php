@@ -3,6 +3,7 @@
  *
  */
 return array(
+    'Speciality' => 'Спеціальність',
     'Not selected'=>'Не вибрано',
     'None' => 'Немає',
     'Creating'=>'Створення',

@@ -71,10 +71,8 @@ class CyclicCommission extends ActiveRecord
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
-            'teachers' => array(self::HAS_MANY, 'Teacher', 'cyclic_commission_id'),
+            'teachers' => array(self::HAS_MANY, 'Teacher', 'cyclic_commission_id', 'order'=>'last_name, first_name, middle_name ASC'),
             'head' => array(self::BELONGS_TO, 'Teacher', 'head_id'),
         );
     }
