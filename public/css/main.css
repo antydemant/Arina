@@ -8,7 +8,11 @@ span.error {
 }
 
 body {
-    background-color: #efefef;
+    background-color: #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 2px 0;
 }
 
 header {
@@ -21,11 +25,13 @@ header {
 a.search-button {
     margin-bottom: 10px;
 }
+
 .grid-view .summary {
     padding-bottom: 10px;
 }
+
 input[type="text"] {
-   /* width: auto;*/
+    /* width: auto;*/
 }
 
 div.btn-group[data-toggle="buttons-checkbox"] {
