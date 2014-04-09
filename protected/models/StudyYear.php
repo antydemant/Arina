@@ -1,26 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "sp_plan".
+ * This is the model class for table "study_year".
  *
- * The followings are the available columns in table 'sp_plan':
+ * The followings are the available columns in table 'study_year':
  * @property integer $id
- * @property integer $year_id
- * @property integer $speciality_id
- *
- * The followings are the available model relations:
- * @property StudyGraphic[] $graphics
- * @property StudySubject[] $subjects
- * @property StudyYear year
+ * @property string $title
  */
-class StudyPlan extends ActiveRecord
+class StudyYear extends ActiveRecord
 {
     /**
      * @return string the associated database table name
      */
     public function tableName()
     {
-        return 'sp_plan';
+        return 'study_year';
     }
 
     /**
@@ -31,11 +25,11 @@ class StudyPlan extends ActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('year_id, speciality_id', 'required'),
-            array('year_id, speciality_id', 'numerical', 'integerOnly' => true),
+            array('title', 'required'),
+            array('title', 'length', 'max' => 10),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, year_id, speciality_id', 'safe', 'on' => 'search'),
+            array('id, title', 'safe', 'on' => 'search'),
         );
     }
 
@@ -46,11 +40,7 @@ class StudyPlan extends ActiveRecord
     {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
-        return array(
-            'graphics' => array(self::HAS_MANY, 'StudyGraphic', 'plan_id'),
-            'subjects' => array(self::HAS_MANY, 'StudySubject', 'plan_id'),
-            'year' => array(self::BELONGS_TO, 'StudyYear', 'year_id'),
-        );
+        return array();
     }
 
     /**
@@ -60,8 +50,7 @@ class StudyPlan extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'year_id' => Yii::t('terms', 'Study year'),
-            'speciality_id' => Yii::t('terms', 'Speciality'),
+            'title' => 'Year',
         );
     }
 
@@ -84,8 +73,7 @@ class StudyPlan extends ActiveRecord
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('year_id', $this->year_id);
-        $criteria->compare('speciality_id', $this->speciality_id);
+        $criteria->compare('title', $this->title, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -96,10 +84,18 @@ class StudyPlan extends ActiveRecord
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
-     * @return StudyPlan the static model class
+     * @return StudyYear the static model class
      */
     public static function model($className = __CLASS__)
     {
         return parent::model($className);
+    }
+
+    /**
+     * @return array
+     */
+    public static function getList()
+    {
+        return CHtml::listData(StudyYear::model()->findAll(), 'id', 'title');
     }
 }

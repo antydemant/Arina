@@ -6,7 +6,7 @@ class m140408_180000_create_study_year_table extends CDbMigration
 	{
         $this->createTable('study_year',array(
             'id' => 'pk',
-            'year' => 'varchar(10) NOT NULL',
+            'title' => 'varchar(10) NOT NULL',
         ));
 	}
 
