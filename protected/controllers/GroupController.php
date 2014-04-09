@@ -31,6 +31,10 @@ class GroupController extends Controller
     {
         $model = new GroupDocForm();
         $model->group = Group::model()->loadContent($id);
+        if (isset($_POST['GroupDocForm'])) {
+            $model->attributes = $_POST['GroupDocForm'];
+            $model->getDoc();
+        }
         $this->render('doc', array('model' => $model));
     }
 
