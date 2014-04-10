@@ -1,10 +1,10 @@
 <?php
+
 /**
  * GroupController
  *
  * @author Dmytro Karpovych <ZAYEC77@gmail.com>
  */
-
 class GroupController extends Controller
 {
     public $name = "Groups";
@@ -15,13 +15,21 @@ class GroupController extends Controller
     public function actionIndex()
     {
         $provider = Group::model()->getProvider(array(
-            'criteria'=>array(
-                'with'=>array('speciality'),
+            'criteria' => array(
+                'with' => array(
+                    'speciality',
+                    'curator',
+                ),
             ),
             'sort' => array(
                 'defaultOrder' => 't.title ASC',
-                'attributes'=>array(
-                    'speciality.title'=>'speciality.title',
+                'attributes' => array(
+                    'speciality.title' => 'speciality.title',
+                    'curator.name' => array(
+                        'asc' => 'curator.last_name, curator.middle_name, curator.first_name',
+                        'desc' => 'curator.last_name DESC, curator.middle_name DESC, curator.first_name DESC',
+                    ),
+                    '*'
                 )
             )
         ));

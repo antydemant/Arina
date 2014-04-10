@@ -25,4 +25,5 @@ return array(
     'Delete cyclic commission' => 'Видалити циклову комісію',
     'Update cyclic commission' => 'Обновити дані комісії',
     'View cyclic commission' => 'Перегляд даних комісії',
+    'Curator' => 'Куратор',
 );

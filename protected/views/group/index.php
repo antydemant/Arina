@@ -24,12 +24,13 @@ $this->menu = array(
         'columns' => array(
             array('name' => 'title'),
             array(
+                'header' => Yii::t('teacher', 'Curator'),
                 'type' => 'raw',
-                'name' => 'curator_id',
+                'name' => 'curator.name',
                 'value' => 'CHtml::link($data->curator->getFullName(), array("teacher/view", "id"=>$data->curator_id))',
             ),
             array(
-                'header'=>Yii::t('base','Speciality'),
+                'header' => Yii::t('base', 'Speciality'),
                 'type' => 'raw',
                 'name' => 'speciality.title',
                 'value' => 'CHtml::link($data->speciality->title, array("speciality/view", "id"=>$data->speciality_id))',
