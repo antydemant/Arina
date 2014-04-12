@@ -1,9 +1,15 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Serhiy
- * Date: 09.04.14
- * Time: 18:04
+ * @var PlanController $this
+ * @var StudySubject $model
+ * @var TbActiveForm $form
  */
+$this->breadcrumbs = array(
+    Yii::t('base', 'Study plans') => $this->createUrl('main/index'),
+    $model->plan->speciality->title => $this->createUrl('plan/view', array('id' => $model->plan->id)),
+);
 ?>
-<h3>Додання предметів</h3>
+<?php $form = $this->beginWidget(Booster::FORM); ?>
+    <h3>Додання предметів</h3>
+<?php echo $form->listBox($model, 'subject_id', Subject::getList(), array('size' => 25)); ?>
+<?php $this->endWidget(); ?>

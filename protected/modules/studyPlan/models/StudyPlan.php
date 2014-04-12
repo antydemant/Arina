@@ -6,6 +6,7 @@
  * The followings are the available columns in table 'sp_plan':
  * @property integer $id
  * @property integer $speciality_id
+ * @property string $semesters
  *
  * The followings are the available model relations:
  * @property StudyGraphic[] $graphics
