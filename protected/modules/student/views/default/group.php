@@ -21,6 +21,12 @@ $columns = array(
     'last_name',
     'first_name',
     'middle_name',
+    array(
+        'header' => Yii::t('base', 'Actions'),
+        'htmlOptions' => array('nowrap' => 'nowrap'),
+        'class' => 'bootstrap.widgets.TbButtonColumn',
+        'template' => '{update}{view}',
+    ),
 );
 ?>
 <?php $this->renderPartial('//tableList', array('provider' => $provider, 'columns' => $columns));

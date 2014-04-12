@@ -10,7 +10,6 @@ return array(
     'Groups' => 'Групи',
     'Create new group' => 'Створити нову групу',
     'New group creating' => 'Створення нової групи',
-    'Speciality' => 'Спеціальність',
     'Curator' => 'Куратор',
     'Update group' => 'Редагування даних групи',
     'Select curator' => 'Виберіть куратора',

@@ -19,7 +19,7 @@ $columns = array(
     array(
         'type' => 'raw',
         'name' => 'headName',
-        'value' => 'CHtml::link($data->head->getFullName(), array("teacher/view","id"=>$data->head_id))',
+        'value' => 'CHtml::link($data->getHeadName(), array("teacher/view","id"=>$data->head_id))',
     ),
     array(
         'header' => Yii::t('base', 'Actions'),

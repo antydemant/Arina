@@ -3,6 +3,8 @@
  *
  */
 return array(
+    'Speciality' => 'Спеціальність',
+    'Not selected'=>'Не вибрано',
     'None' => 'Немає',
     'Creating'=>'Створення',
     'List' => 'Список',
@@ -28,6 +30,7 @@ return array(
     'Teachers' => 'Викладачі',
     'Actions' => 'Дії',
     'Create' => 'Створити',
+    'Cancel' => 'Скасувати',
     'Update' => 'Змінити',
     'Updating' => 'Оновлення',
     'Send' => 'Надіслати',

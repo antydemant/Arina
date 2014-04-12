@@ -15,16 +15,17 @@ return CMap::mergeArray(
         'language' => 'uk',
         //
         'aliases' => array(
-            'root' => dirname(__FILE__). DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR, 
+            'root' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR,
             'vendor' => 'root.vendor',
             'public' => 'root.public',
             'booster' => 'root.vendor.clevertech.yii-booster.src',
             'bootstrap' => 'booster',
-            'modules'=>'application.modules',
+            'modules' => 'application.modules',
         ),
         // autoloading model and component classes
         'import' => array(
             'application.models.*',
+            'application.helpers.*',
             'application.components.*',
             'vendor.yiiext.activerecord-relation-behavior.EActiveRecordRelationBehavior',
             'booster.components.*',
@@ -34,13 +35,18 @@ return CMap::mergeArray(
         'modules' => array(
             'studyPlan',
             'journal',
-        	'student',
+            'student',
             'hr',
+            'dictionaries',
         ),
 
-
-        // application components
         'components' => array(
+            'excel' => array(
+                'class' => 'application.components.ExcelMaker',
+            ),
+            'word' => array(
+                'class' => 'application.components.WordMaker',
+            ),
             'user' => array(
                 'class' => 'WebUser',
                 'allowAutoLogin' => true,
@@ -88,11 +94,7 @@ return CMap::mergeArray(
             ),*/
         ),
 
-        // application-level parameters that can be accessed
-        // using Yii::app()->params['paramName']
-        'params' => array( 
-        ),
+        'params' => array(),
     ),
     require(__DIR__ . '/env/dev.php')
 );
-?>

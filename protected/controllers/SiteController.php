@@ -29,8 +29,6 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        // renders the view file 'protected/views/site/index.php'
-        // using the default layout 'protected/views/layouts/main.php'
         $this->render('index');
     }
 
@@ -45,6 +43,13 @@ class SiteController extends Controller
             else
                 $this->render('error', $error);
         }
+    }
+
+    public function actionTest()
+    {
+        /* @var WordMaker $word */
+        $word = Yii::app()->getComponent('word');
+        $word->getDocument(array(), 'test');
     }
 
     /**
@@ -115,16 +120,6 @@ class SiteController extends Controller
             ),
             parent::accessRules()
         );
-    }
-
-    public function actionTest()
-    {
-        $user = Yii::app()->getComponent('user');
-        $user->setFlash(
-            'success',
-            "<strong>Well done!</strong> You make test action."
-        );
-        $this->redirect(array('index'));
     }
 
     protected static function generateRandomString($length = 10)

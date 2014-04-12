@@ -26,6 +26,14 @@ class Group extends ActiveRecord
         return parent::model($className);
     }
 
+    public function getCourse()
+    {
+        $year = date('Y', time());
+        $last_year = mb_substr($this->title,3,2,'UTF-8');
+        $value = $year-2000 - $last_year;
+        return $value;
+    }
+
     public function getStudentsList()
     {
         return CHtml::listData($this->students, 'id', 'fullName');
@@ -60,17 +68,12 @@ class Group extends ActiveRecord
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
             array('title, speciality_id, curator_id', 'required'),
             array('monitor_id', 'required', 'on' => 'update'),
             array('speciality_id, curator_id, monitor_id', 'numerical', 'integerOnly' => true),
             array('title', 'length', 'max' => 8),
             array('title', 'unique'),
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
-            //array('id, title, speciality_id, curator_id, monitor_id', 'safe', 'on'=>'search'),
         );
     }
 
@@ -79,12 +82,10 @@ class Group extends ActiveRecord
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
             'speciality' => array(self::BELONGS_TO, 'Speciality', 'speciality_id'),
             'curator' => array(self::BELONGS_TO, 'Teacher', 'curator_id'),
-            'students' => array(self::HAS_MANY, 'Student', 'group_id'),
+            'students' => array(self::HAS_MANY, 'Student', 'group_id', 'order'=>'last_name, first_name, middle_name ASC'),
             'loads' => array(self::HAS_MANY, 'TeacherLoad', 'group_id'),
         );
     }
@@ -97,7 +98,7 @@ class Group extends ActiveRecord
         return array(
             'id' => Yii::t('base', 'ID'),
             'title' => Yii::t('base', 'Title'),
-            'speciality_id' => Yii::t('group', 'Speciality'),
+            'speciality_id' => Yii::t('base', 'Speciality'),
             'curator_id' => Yii::t('group', 'Curator'),
             'curator' => Yii::t('group', 'Curator'),
             'monitor_id' => Yii::t('group', 'Monitor'),

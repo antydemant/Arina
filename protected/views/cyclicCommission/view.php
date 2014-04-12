@@ -47,7 +47,7 @@ $attributes = array(
     array(
         'type' => 'raw',
         'name' => 'head_id',
-        'value' => CHtml::link($model->head->getFullName(), array('teacher/view', 'id' => $model->head_id)),
+        'value' => CHtml::link($model->getHeadName(), array('teacher/view', 'id' => $model->head_id)),
     ),
     array(
         'name' => 'teachers',

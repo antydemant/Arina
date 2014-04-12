@@ -1,4 +1,5 @@
 <?php
+Yii::import('application.components.dateField.*');
 
 /**
  * This is the model class for table "speciality".
@@ -11,8 +12,9 @@
  * @property string $accreditation_date
  *
  * @property Group[] $groups
+ * @property Department $department
  */
-class Speciality extends ActiveRecord
+class Speciality extends ActiveRecord implements IDateContainable
 {
     /**
      * @return array for dropDownList
@@ -46,15 +48,11 @@ class Speciality extends ActiveRecord
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
             array('title, department_id, number, accreditation_date', 'required'),
             array('department_id', 'numerical', 'integerOnly' => true),
             array('title', 'length', 'max' => 40),
             array('number', 'length', 'max' => 15),
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
             array('id, title, department_id, number, accreditation_date', 'safe', 'on' => 'search'),
         );
     }
@@ -64,10 +62,9 @@ class Speciality extends ActiveRecord
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
-            'groups' => array(self::HAS_MANY, 'Group', 'speciality_id'),
+            'groups' => array(self::HAS_MANY, 'Group', 'speciality_id', 'order' => 'title ASC'),
+            'department' => array(self::BELONGS_TO, 'Department', 'department_id'),
         );
     }
 
@@ -100,8 +97,6 @@ class Speciality extends ActiveRecord
      */
     public function search()
     {
-        // @todo Please modify the following code to remove attributes that should not be searched.
-
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
@@ -109,9 +104,30 @@ class Speciality extends ActiveRecord
         $criteria->compare('department_id', $this->department_id);
         $criteria->compare('number', $this->number, true);
         $criteria->compare('accreditation_date', $this->accreditation_date, true);
-
+        $criteria->with = array('department');
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'sort' => array(
+                'defaultOrder' => 't.number ASC',
+                'attributes' => array(
+                    'department.title' => 'department.title',
+                    '*'
+                ),
+            ),
         ));
+    }
+
+    public function behaviors()
+    {
+        return array(
+            'DateBehavior',
+        );
+    }
+
+    public function getDateFields()
+    {
+        return array(
+            'accreditation_date'
+        );
     }
 }

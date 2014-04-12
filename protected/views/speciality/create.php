@@ -11,6 +11,6 @@ $this->menu = array(
     array('label' => Yii::t('speciality', 'Specialities list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
 );
 ?>
-<h2><?php echo Yii::t('speciality', 'Creating new speciality');?></h2>
+    <h2><?php echo Yii::t('speciality', 'Create new speciality'); ?></h2>
 
 <?php $this->renderPartial('_form', array('model' => $model)); ?>

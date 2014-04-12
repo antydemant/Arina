@@ -99,12 +99,20 @@ class Student extends ActiveRecord
     }
 
     /**
+     * @return string
+     */
+    public function getShortFullName()
+    {
+        $v = mb_substr($this->first_name,0,1,'UTF-8');
+        $v2 = mb_substr($this->middle_name,0,1,'UTF-8');
+        return "$this->last_name " . $v . '. ' . $v2 . '.';
+    }
+
+    /**
      * @return array validation rules for model attributes.
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
             array('code, last_name, first_name, middle_name, group_id, gender', 'required'),
             array('group_id, admission_order_number, admission_semester, math_mark, ua_language_mark, graduated, graduation_semester, graduation_order_number', 'numerical', 'integerOnly' => true),
@@ -129,8 +137,6 @@ class Student extends ActiveRecord
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
             'group' => array(self::BELONGS_TO, 'Group', 'group_id'),
             'marks' => array(self::HAS_MANY, 'ClassMark', 'student_id'),
@@ -267,5 +273,13 @@ class Student extends ActiveRecord
         if (!$this->exemptionNames = implode(', ', $names)) {
             $this->exemptionNames = Yii::t('base', 'None');
         }
+    }
+
+    protected function afterSave()
+    {
+        if (empty($this->exemptions)) {
+            $this->exemptions = array();
+        }
+        return parent::afterSave();
     }
 }
