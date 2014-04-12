@@ -23,27 +23,17 @@ class PlanController extends Controller
         if (isset($_POST['StudyPlan'])) {
             $model->attributes = $_POST['StudyPlan'];
             if ($model->save()) {
-                $this->redirect($this->createUrl('graphic', array('id' => $model->id)));
+                $this->redirect($this->createUrl('subjects', array('id' => $model->id)));
             }
         }
 
         $this->render('create', array('model' => $model));
     }
 
-    public function actionGraphic($id)
-    {
-        $model = new StudyGraphic();
-        $model->plan_id = $id;
-
-        if (isset($_POST['yt0']))
-            $this->redirect($this->createUrl('subjects', array('id' => $id)));
-
-        $this->render('graphic', array('model' => $model));
-    }
-
     public function actionSubjects($id)
     {
-        $model = StudyPlan::model()->loadContent($id);
+        $model = new StudySubject();
+        $model->plan_id = $id;
 
         $this->render('subjects', array('model' => $model));
     }
