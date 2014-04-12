@@ -14,7 +14,7 @@
 )); ?>
 
 <?php echo $form->dropDownListRow($model, 'speciality_id', Speciality::getList(), array('empty' => 'Оберіть спеціальність')); ?>
-<?php echo $form->dropDownListRow($model, 'year_id', StudyYear::getList(), array('empty' => 'Оберіть навчальний рік')); ?>
+<span>Графік тут</span>
 
     <div class="form-actions">
         <?php echo CHtml::submitButton(Yii::t('base', 'Create'), array('class' => 'primary')); ?>
