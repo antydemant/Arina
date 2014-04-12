@@ -1,5 +1,5 @@
 <?php
-Yii::import('application.components.dateField.*');
+Yii::import('application.behaviors.dateField.*');
 
 /**
  * This is the model class for table "speciality".
