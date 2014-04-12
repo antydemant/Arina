@@ -1,5 +1,6 @@
 <?php
 Yii::import('application.behaviors.jsonField.*');
+
 /**
  * This is the model class for table "sp_plan".
  *
@@ -119,4 +120,5 @@ class StudyPlan extends ActiveRecord implements IJSONContainable
     {
         return parent::model($className);
     }
+
 }

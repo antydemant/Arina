@@ -7,11 +7,7 @@ class PlanController extends Controller
 {
     public function actionIndex()
     {
-        $dataProvider = StudyPlan::model()->getProvider(array(
-            'criteria' => array(
-                'order' => 'year_id DESC',
-            ),
-        ));
+        $dataProvider = StudyPlan::model()->getProvider();
 
         $this->render('index', array('dataProvider' => $dataProvider));
     }
@@ -34,6 +30,14 @@ class PlanController extends Controller
     {
         $model = new StudySubject();
         $model->plan_id = $id;
+
+        if (isset($_POST['StudySubject'])){
+            $model->attributes = $_POST['StudySubject'];
+            if ($model->save()) {
+                $model = new StudySubject();
+                $model->plan_id = $id;
+            }
+        }
 
         $this->render('subjects', array('model' => $model));
     }
