@@ -9,7 +9,7 @@
  * @property integer $subject_id
  *
  * The followings are the available model relations:
- * @property SpPlan $plan
+ * @property StudyPlan $plan
  */
 class StudySubject extends ActiveRecord
 {
@@ -45,7 +45,7 @@ class StudySubject extends ActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'plan' => array(self::BELONGS_TO, 'SpPlan', 'plan_id'),
+			'plan' => array(self::BELONGS_TO, 'StudyPlan', 'plan_id'),
 		);
 	}
 
