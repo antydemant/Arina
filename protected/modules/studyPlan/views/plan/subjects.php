@@ -11,5 +11,26 @@ $this->breadcrumbs = array(
 ?>
 <?php $form = $this->beginWidget(Booster::FORM); ?>
     <h3>Додання предметів</h3>
-<?php echo $form->listBox($model, 'subject_id', Subject::getList(), array('size' => 25)); ?>
+    <div>
+        <?php echo $form->listBox($model, 'subject_id', Subject::getList(), array('size' => 25)); ?>
+    </div>
+    <div>
+        <?php echo $form->numberFieldRow($model, 'total'); ?>
+        <?php echo $form->numberFieldRow($model, 'lectures'); ?>
+        <?php echo $form->numberFieldRow($model, 'labs'); ?>
+        <?php echo $form->numberFieldRow($model, 'practs'); ?>
+    </div>
+    <div>
+        <?php
+        foreach ($model->plan->semesters as $semester => $weeks) {
+            echo CHtml::label($semester+1 . '-й семестр: '.$weeks.' тижнів', '');
+            echo $form->numberField($model, "weeks[$semester]", array('placeholder'=>'годин на тиждень'));
+        }
+        ?>
+    </div>
+<div class="form-actions">
+    <?php echo CHtml::submitButton('Додати', array('class' => 'btn btn-primary')); ?>
+    <?php echo CHtml::link('Далі', '#', array('class'=>'btn btn-info')); ?>
+</div>
+    <div style="clear: both"></div>
 <?php $this->endWidget(); ?>

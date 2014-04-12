@@ -22,6 +22,11 @@ class m140408_180054_create_study_plan_tables extends CDbMigration
             'id' => 'pk',
             'plan_id' => 'int NOT NULL',
             'subject_id' => 'int NOT NULL',
+            'total' => 'int',
+            'lectures' => 'int',
+            'labs' => 'int',
+            'practs' => 'int',
+            'weeks' => 'string',
         ));
 
         $this->addForeignKey('graphicOnPlan', 'sp_graphic', 'plan_id', 'sp_plan', 'id', 'CASCADE', 'CASCADE');

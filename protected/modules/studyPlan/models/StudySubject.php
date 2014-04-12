@@ -7,6 +7,11 @@
  * @property integer $id
  * @property integer $plan_id
  * @property integer $subject_id
+ * @property integer $total
+ * @property integer $lectures
+ * @property integer $labs
+ * @property integer $practs
+ * @property array weeks
  *
  * The followings are the available model relations:
  * @property StudyPlan $plan

@@ -1,19 +1,19 @@
 <?php
-
+Yii::import('application.behaviors.jsonField.*');
 /**
  * This is the model class for table "sp_plan".
  *
  * The followings are the available columns in table 'sp_plan':
  * @property integer $id
  * @property integer $speciality_id
- * @property string $semesters
+ * @property array $semesters
  *
  * The followings are the available model relations:
  * @property StudyGraphic[] $graphics
  * @property StudySubject[] $subjects
  * @property Speciality $speciality
  */
-class StudyPlan extends ActiveRecord
+class StudyPlan extends ActiveRecord implements IJSONContainable
 {
     /**
      * @return string the associated database table name
@@ -54,6 +54,16 @@ class StudyPlan extends ActiveRecord
     }
 
     /**
+     * @return array
+     */
+    public function behaviors()
+    {
+        return array(
+            'JSONBehavior',
+        );
+    }
+
+    /**
      * @return array customized attribute labels (name=>label)
      */
     public function attributeLabels()
@@ -62,6 +72,16 @@ class StudyPlan extends ActiveRecord
             'id' => 'ID',
             'year_id' => Yii::t('terms', 'Study year'),
             'speciality_id' => Yii::t('terms', 'Speciality'),
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getJSONFields()
+    {
+        return array(
+            'semesters',
         );
     }
 
