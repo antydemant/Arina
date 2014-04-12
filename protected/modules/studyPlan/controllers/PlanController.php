@@ -7,7 +7,13 @@ class PlanController extends Controller
 {
     public function actionIndex()
     {
+        $dataProvider = StudyPlan::model()->getProvider(array(
+            'criteria' => array(
+                'order' => 'year_id DESC',
+            ),
+        ));
 
+        $this->render('index', array('dataProvider' => $dataProvider));
     }
 
     public function actionCreate()

@@ -5,13 +5,11 @@
  *
  * The followings are the available columns in table 'sp_plan':
  * @property integer $id
- * @property integer $year_id
  * @property integer $speciality_id
  *
  * The followings are the available model relations:
  * @property StudyGraphic[] $graphics
  * @property StudySubject[] $subjects
- * @property StudyYear year
  */
 class StudyPlan extends ActiveRecord
 {
@@ -31,11 +29,11 @@ class StudyPlan extends ActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('year_id, speciality_id', 'required'),
-            array('year_id, speciality_id', 'numerical', 'integerOnly' => true),
+            array('speciality_id', 'required'),
+            array('speciality_id', 'numerical', 'integerOnly' => true),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, year_id, speciality_id', 'safe', 'on' => 'search'),
+            array('id, speciality_id', 'safe', 'on' => 'search'),
         );
     }
 
@@ -49,7 +47,6 @@ class StudyPlan extends ActiveRecord
         return array(
             'graphics' => array(self::HAS_MANY, 'StudyGraphic', 'plan_id'),
             'subjects' => array(self::HAS_MANY, 'StudySubject', 'plan_id'),
-            'year' => array(self::BELONGS_TO, 'StudyYear', 'year_id'),
         );
     }
 
@@ -79,12 +76,9 @@ class StudyPlan extends ActiveRecord
      */
     public function search()
     {
-        // @todo Please modify the following code to remove attributes that should not be searched.
-
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('year_id', $this->year_id);
         $criteria->compare('speciality_id', $this->speciality_id);
 
         return new CActiveDataProvider($this, array(
