@@ -26,12 +26,40 @@ class PlanController extends Controller
         $this->render('create', array('model' => $model));
     }
 
+    public function actionExecuteGraph()
+    {
+        if (isset($_POST['graph'])) {
+            $semesters = array();
+            $g = $_POST['graph'];
+            foreach ($g as $i => $v) {
+                $findFirst = false;
+                $findSecond = false;
+                $counter = 0;
+                foreach ($v as $j) {
+                    if ($j == 'T') $counter++;
+                    if ($j == ' ') break;
+                    if (($j != 'T') && (!$findFirst)) {
+                        $findFirst = true;
+                        $semesters[$i + 1][1] = $counter;
+                        $counter = 0;
+                    } elseif (($j == 'T') && ($findFirst)) {
+                        $findSecond = true;
+                    } elseif (($j != 'T') && ($findSecond)) {
+                        $semesters[$i + 1][2] = $counter;
+                        break;
+                    }
+                }
+            }
+        }
+        $this->renderPartial('semestersPlan', array('data' => $semesters));
+    }
+
     public function actionSubjects($id)
     {
         $model = new StudySubject();
         $model->plan_id = $id;
 
-        if (isset($_POST['StudySubject'])){
+        if (isset($_POST['StudySubject'])) {
             $model->attributes = $_POST['StudySubject'];
             if ($model->save()) {
                 $model = new StudySubject();

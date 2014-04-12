@@ -6,6 +6,7 @@
  */
 ?>
 
+
 <?php $form = $this->beginWidget(Booster::FORM, array(
     'type' => 'horizontal',
     'htmlOptions' => array(
@@ -14,9 +15,7 @@
 )); ?>
 
 <?php echo $form->dropDownListRow($model, 'speciality_id', Speciality::getList(), array('empty' => 'Оберіть спеціальність')); ?>
-<span>Графік тут</span>
+<?php $this->widget('studyPlan.widgets.Graph', array('model'=>$model, 'field'=>'')); ?>
 
-    <div class="form-actions">
-        <?php echo CHtml::submitButton(Yii::t('base', 'Create'), array('class' => 'primary')); ?>
-    </div>
+<?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
 <?php $this->endWidget(); ?>
