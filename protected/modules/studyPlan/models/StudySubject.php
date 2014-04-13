@@ -14,9 +14,6 @@ Yii::import('application.behaviors.strField.*');
  * @property integer $practs
  * @property array weeks
  *
- * @property integer $classes
- * @property integer $selfwork;
- *
  * The followings are the available model relations:
  * @property StudyPlan $plan
  * @property Subject $subject
@@ -40,8 +37,11 @@ class StudySubject extends ActiveRecord implements IStrContainable
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('plan_id, subject_id, total', 'required'),
+            array('plan_id, subject_id, total', 'required', 'message' => 'Вкажіть {attribute}'),
+            array('weeks', 'check_weeks'),
             array('plan_id, subject_id, total, lectures, labs, practs', 'numerical', 'integerOnly' => true),
+            array('total', 'check_hours'),
+            array('lectures', 'check_classes'),
             array('lectures, labs, practs', 'default', 'value' => 0, 'on' => 'insert'),
             array('plan_id, subject_id, total, lectures, labs, practs, weeks', 'safe'),
             // The following rule is used by search().
@@ -174,5 +174,38 @@ class StudySubject extends ActiveRecord implements IStrContainable
     public function getWeeklyHours($semester)
     {
         return isset($this->weeks[$semester]) ? $this->weeks[$semester] : '';
+    }
+
+    public function check_hours()
+    {
+        if (!$this->hasErrors()) {
+            if ($this->total < ($this->lectures + $this->labs +$this->practs))
+                $this->addError('total', 'Аудиторних годин більше ніж загальна кількість');
+        }
+    }
+
+    public function check_classes()
+    {
+        if (!$this->hasErrors()) {
+            $sum = 0;
+            foreach ($this->weeks as $semester => $weekly)
+                if (!empty($weekly)) {
+                    $sum += $weekly * $this->plan->semesters[$semester];
+                }
+            if ($sum < $this->getClasses())
+                $this->addError('lectures', 'Невистачає годин на тиждень для вичитки');
+        }
+    }
+
+    public function check_weeks()
+    {
+        if (!$this->hasErrors()) {
+            $valid = false;
+            foreach ($this->weeks as $week)
+                if (!empty($week))
+                    $valid = true;
+            if (!$valid)
+                $this->addError('weeks', 'Вкажіть кількість годин на тиждень у відповідних семестрах');
+        }
     }
 }

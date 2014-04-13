@@ -8,6 +8,7 @@ class m140408_180054_create_study_plan_tables extends CDbMigration
             'id' => 'pk',
             'speciality_id' => 'int NOT NULL',
             'semesters' => 'string',
+            'created' => 'date',
         ));
 
         $this->createTable('sp_graphic', array(

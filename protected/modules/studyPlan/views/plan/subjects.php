@@ -15,6 +15,7 @@ $this->breadcrumbs = array(
     )
 )); ?>
     <h3>Додання предметів</h3>
+<?php echo $form->errorSummary($model); ?>
     <div style="float: left; margin-right: 30px">
         <?php echo $form->listBox($model, 'subject_id', Subject::getList(), array('size' => 25)); ?>
     </div>
@@ -63,3 +64,4 @@ for ($i = 0; $i < 8; $i++)
         ),
         $semesterColumns),
 ));
+?>
