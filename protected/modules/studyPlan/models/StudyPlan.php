@@ -1,5 +1,6 @@
 <?php
-Yii::import('application.behaviors.jsonField.*');
+Yii::import('application.behaviors.strField.*');
+Yii::import('application.behaviors.dateField.*');
 
 /**
  * This is the model class for table "sp_plan".
@@ -8,13 +9,14 @@ Yii::import('application.behaviors.jsonField.*');
  * @property integer $id
  * @property integer $speciality_id
  * @property array $semesters
+ * @property datetime $created
  *
  * The followings are the available model relations:
  * @property StudyGraphic[] $graphics
  * @property StudySubject[] $subjects
  * @property Speciality $speciality
  */
-class StudyPlan extends ActiveRecord implements IJSONContainable
+class StudyPlan extends ActiveRecord implements IStrContainable, IDateContainable
 {
     /**
      * @return string the associated database table name
@@ -34,6 +36,7 @@ class StudyPlan extends ActiveRecord implements IJSONContainable
         return array(
             array('speciality_id, semesters', 'required'),
             array('speciality_id', 'numerical', 'integerOnly' => true),
+            array('created', 'default', 'value' => date('Y-m-d', time()), 'on' => 'insert'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, speciality_id', 'safe', 'on' => 'search'),
@@ -60,7 +63,8 @@ class StudyPlan extends ActiveRecord implements IJSONContainable
     public function behaviors()
     {
         return array(
-            'JSONBehavior',
+            'StrBehavior',
+            'DateBehavior',
         );
     }
 
@@ -73,16 +77,24 @@ class StudyPlan extends ActiveRecord implements IJSONContainable
             'id' => 'ID',
             'year_id' => Yii::t('terms', 'Study year'),
             'speciality_id' => Yii::t('terms', 'Speciality'),
+            'created' => 'Створений',
         );
     }
 
     /**
      * @return array
      */
-    public function getJSONFields()
+    public function getStrFields()
     {
         return array(
             'semesters',
+        );
+    }
+
+    public function getDateFields()
+    {
+        return array(
+            'created',
         );
     }
 

@@ -79,9 +79,9 @@ class PlanController extends Controller
         $this->render('subjects', array('model' => $model));
     }
 
-    public function actionView()
+    public function actionView($id)
     {
-
+        echo $id;
     }
 
     public function actionUpdate()
@@ -89,8 +89,10 @@ class PlanController extends Controller
 
     }
 
-    public function actionDelete()
+    public function actionDelete($id)
     {
-
+        StudyPlan::model()->loadContent($id)->delete();
+        if (!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
     }
 } 
