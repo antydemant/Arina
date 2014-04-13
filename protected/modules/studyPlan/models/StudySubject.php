@@ -38,6 +38,7 @@ class StudySubject extends ActiveRecord implements IStrContainable
         // will receive user inputs.
         return array(
             array('plan_id, subject_id, total', 'required', 'message' => 'Вкажіть {attribute}'),
+            array('weeks', 'check_weeks'),
             array('plan_id, subject_id, total, lectures, labs, practs', 'numerical', 'integerOnly' => true),
             array('total', 'check_hours'),
             array('lectures', 'check_classes'),
@@ -193,6 +194,18 @@ class StudySubject extends ActiveRecord implements IStrContainable
                 }
             if ($sum < $this->getClasses())
                 $this->addError('lectures', 'Невистачає годин на тиждень для вичитки');
+        }
+    }
+
+    public function check_weeks()
+    {
+        if (!$this->hasErrors()) {
+            $valid = false;
+            foreach ($this->weeks as $week)
+                if (!empty($week))
+                    $valid = true;
+            if (!$valid)
+                $this->addError('weeks', 'Вкажіть кількість годин на тиждень у відповідних семестрах');
         }
     }
 }
