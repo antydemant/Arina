@@ -128,4 +128,12 @@ class Subject extends ActiveRecord
         }
         return parent::afterSave();
     }
+
+    protected function afterDelete()
+    {
+        foreach($this->relations as $item){
+            $item->delete();
+        }
+        return parent::afterDelete();
+    }
 }
