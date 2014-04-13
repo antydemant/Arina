@@ -18,6 +18,10 @@ class PlanController extends Controller
 
         if (isset($_POST['StudyPlan'])) {
             $model->attributes = $_POST['StudyPlan'];
+            if (isset(Yii::app()->session['weeks'])) {
+                $model->semesters = Yii::app()->session['weeks'];
+                unset(Yii::app()->session['weeks']);
+            }
             if ($model->save()) {
                 $this->redirect($this->createUrl('subjects', array('id' => $model->id)));
             }
@@ -51,6 +55,11 @@ class PlanController extends Controller
                 }
             }
         }
+        $weeks = array();
+        foreach ($semesters as $course)
+            foreach ($course as $week)
+                $weeks[] = $week;
+        Yii::app()->session['weeks'] = $weeks;
         $this->renderPartial('semestersPlan', array('data' => $semesters));
     }
 
