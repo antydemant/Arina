@@ -21,6 +21,7 @@ return array(
     'Title' => 'Назва',
     'ID' => '#',
     'Specialities' => 'Спеціальності',
+    'Speciality' => 'Спеціальність',
     'Error' => 'Помилка',
     'Save' => 'Зберегти',
     'Reset' => 'Скинути',
