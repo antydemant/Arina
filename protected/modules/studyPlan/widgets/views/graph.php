@@ -7,6 +7,10 @@
  */
 ?>
 <style>
+    div.result {
+        margin-top: 15px;
+    }
+
     div.result img.load {
         display: block;
         width: 32px;
@@ -88,7 +92,7 @@
                 $("div.result").empty().append(html).fadeIn();
             }
             var myInputs = $('#graph').find('input').clone();
-            myInputs.each(function( i, val ) {
+            myInputs.each(function (i, val) {
                 var v = $(val);
                 v.attr('type', 'text');
                 v.val(v.attr('data-state'));
