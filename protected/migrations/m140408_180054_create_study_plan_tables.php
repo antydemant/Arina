@@ -4,13 +4,22 @@ class m140408_180054_create_study_plan_tables extends CDbMigration
 {
     public function up()
     {
+        if (Yii::app()->getDb()->schema->getTable('sp_plan') !== null) {
+            $this->dropTable('sp_plan');
+        }
+        if (Yii::app()->getDb()->schema->getTable('sp_graphic') !== null) {
+            $this->dropTable('sp_graphic');
+        }
+        if (Yii::app()->getDb()->schema->getTable('sp_subject') !== null) {
+            $this->dropTable('sp_subject');
+        }
+
         $this->createTable('sp_plan', array(
             'id' => 'pk',
             'speciality_id' => 'int NOT NULL',
             'semesters' => 'string',
             'created' => 'date',
         ));
-
         $this->createTable('sp_graphic', array(
             'id' => 'pk',
             'plan_id' => 'int NOT NULL',
@@ -18,7 +27,6 @@ class m140408_180054_create_study_plan_tables extends CDbMigration
             'week' => 'int NOT NULL',
             'status' => 'int NOT NULL',
         ));
-
         $this->createTable('sp_subject', array(
             'id' => 'pk',
             'plan_id' => 'int NOT NULL',
