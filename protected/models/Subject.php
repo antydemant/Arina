@@ -20,6 +20,24 @@ class Subject extends ActiveRecord
     }
 
     /**
+     * @param $id speciality id
+     * @return array for dropDownList
+     */
+    public static function getListForSpeciality($id)
+    {
+        $list = array();
+        $relations = SubjectRelation::model()->findAllByAttributes(array('speciality_id' => $id));
+        foreach ($relations as $r) {
+            /**@var $r SubjectRelation */
+            if (!isset($list[$r->cycle->title])) {
+                $list[$r->cycle->title] = array();
+            }
+            $list[$r->cycle->title][$r->subject_id] = $r->subject->title;
+        }
+        return $list;
+    }
+
+    /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
@@ -131,7 +149,7 @@ class Subject extends ActiveRecord
 
     protected function afterDelete()
     {
-        foreach($this->relations as $item){
+        foreach ($this->relations as $item) {
             $item->delete();
         }
         return parent::afterDelete();

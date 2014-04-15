@@ -17,7 +17,7 @@ $this->breadcrumbs = array(
     <h3>Додання предметів</h3>
 <?php echo $form->errorSummary($model); ?>
     <div style="float: left; margin-right: 30px">
-        <?php echo $form->listBox($model, 'subject_id', Subject::getList(), array('size' => 25)); ?>
+        <?php echo $form->listBox($model, 'subject_id', Subject::getListForSpeciality($speciality_id), array('size' => 25,'style'=>'width: 300px;')); ?>
     </div>
     <div style="float: left; margin-right: 30px">
         <?php echo $form->numberFieldRow($model, 'total'); ?>
