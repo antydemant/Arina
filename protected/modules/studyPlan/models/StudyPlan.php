@@ -31,14 +31,10 @@ class StudyPlan extends ActiveRecord implements IStrContainable, IDateContainabl
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
             array('speciality_id, semesters', 'required'),
             array('speciality_id', 'numerical', 'integerOnly' => true),
             array('created', 'default', 'value' => date('Y-m-d', time()), 'on' => 'insert'),
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
             array('id, speciality_id', 'safe', 'on' => 'search'),
         );
     }
@@ -48,8 +44,6 @@ class StudyPlan extends ActiveRecord implements IStrContainable, IDateContainabl
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
             'graphics' => array(self::HAS_MANY, 'StudyGraphic', 'plan_id'),
             'subjects' => array(self::HAS_MANY, 'StudySubject', 'plan_id'),
