@@ -16,21 +16,11 @@ class m140208_220810_data_fill extends CDbMigration
         $teacher->cyclic_commission_id = $commission_id;
         $teacher->save(false);
 
-        $student = new Student();
-        $student->first_name = "Анастасія";
-        $student->last_name = "Деренівська";
-        $student->middle_name = "Батьківна";
-
         $speciality = Speciality::model()->findByAttributes(array('number' => '5.05010301'));
         $group = new Group();
         $group->title = "ПР-101";
         $group->curator_id = $teacher->id;
         $group->speciality_id = $speciality->id;
-        $group->save(false);
-
-        $student->group_id = $group->id;
-        $student->save(false);
-        $group->monitor_id = $student->id;
         $group->save(false);
     }
 
