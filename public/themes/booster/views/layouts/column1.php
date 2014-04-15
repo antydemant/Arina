@@ -1,5 +1,5 @@
 <?php $this->beginContent('//layouts/base'); ?>
-<div class="container span11">
+<div class="container span12">
 		<?php echo $content; ?>
 		<div class="clearfix"></div>
 		<!-- content -->

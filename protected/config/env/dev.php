@@ -5,7 +5,7 @@
 return array(
     'components' => array(
         'db' => array(
-            'connectionString' => 'mysql:host=localhost;dbname=app',
+            'connectionString' => 'mysql:host=localhost;dbname=app2',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => 'root',
@@ -14,7 +14,7 @@ return array(
     ),
     'params' => array(
         // this is used in contact page
-        'adminEmail' => 'ZAYEC77@gmail.com',
+        'adminEmail' => 'serhiyvinichuk@gmail.com',
     ),
 
     'modules' => array(
@@ -22,7 +22,7 @@ return array(
 
         'gii' => array(
             'class' => 'system.gii.GiiModule',
-            'password' => '1',
+            'password' => 'root',
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
             'ipFilters' => false,
             'generatorPaths' => array(

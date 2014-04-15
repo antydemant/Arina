@@ -6,8 +6,8 @@
  * The followings are the available columns in table 'subject':
  * @property integer $id
  * @property string $title
- * @property integer $cycle_id
  *
+ * @property SubjectRelation[] $relations
  */
 class Subject extends ActiveRecord
 {
@@ -43,15 +43,10 @@ class Subject extends ActiveRecord
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
-            array('title, cycle_id', 'required'),
-            array('cycle_id', 'numerical', 'integerOnly' => true),
+            array('title', 'required'),
             array('title', 'length', 'max' => 50),
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
-            array('id, title, cycle_id', 'safe', 'on' => 'search'),
+            array('id, title', 'safe', 'on' => 'search'),
         );
     }
 
@@ -60,11 +55,9 @@ class Subject extends ActiveRecord
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
             'studyPlanSubjects' => array(self::HAS_MANY, 'StudyPlanSubject', 'subject_id'),
-            'cycle' => array(self::BELONGS_TO, 'SubjectCycle', 'cycle_id'),
+            'relations' => array(self::HAS_MANY, 'SubjectRelation', 'subject_id'),
         );
     }
 
@@ -94,8 +87,6 @@ class Subject extends ActiveRecord
      */
     public function search()
     {
-        // @todo Please modify the following code to remove attributes that should not be searched.
-
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
@@ -105,5 +96,44 @@ class Subject extends ActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
+    }
+
+    protected function afterSave()
+    {
+        $deleted = isset(Yii::app()->session['subject']['delete']) ? Yii::app()->session['subject']['delete'] : array();
+        $added = isset(Yii::app()->session['subject']['add']) ? Yii::app()->session['subject']['add'] : array();
+        $relations = $this->relations;
+        foreach ($added as $item) {
+            /**@var SubjectRelation $item */
+            $continue = false;
+            foreach ($relations as $i) {
+                /**@var SubjectRelation $i */
+                if ($i->getId() == $item->getId()) {
+                    $continue = true;
+                    break;
+                }
+            }
+            if ($continue) continue;
+            $item->subject_id = $this->id;
+            $item->save(false);
+        }
+        foreach ($relations as $item) {
+            /**@var SubjectRelation $item */
+            foreach ($deleted as $i) {
+                if ($i['id'] == $item->getId()) {
+                    $item->delete();
+                    break;
+                }
+            }
+        }
+        return parent::afterSave();
+    }
+
+    protected function afterDelete()
+    {
+        foreach($this->relations as $item){
+            $item->delete();
+        }
+        return parent::afterDelete();
     }
 }

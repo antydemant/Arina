@@ -19,11 +19,6 @@ $this->menu = array(
 $columns = array(
     'title',
     array(
-        'type' => 'raw',
-        'name' => 'cycle_id',
-        'value' => 'CHtml::link($data->cycle->title, array("cycle/view","id"=>$data->cycle_id))',
-    ),
-    array(
         'header' => Yii::t('base', 'Actions'),
         'class' => 'bootstrap.widgets.TbButtonColumn',
         'template'=>'{update}{delete}',

@@ -8,12 +8,12 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-            array(
-                'type' => Booster::TYPE_PRIMARY,
-                'label' => Yii::t('student', 'Create Student'),
-                'url' => $this->createUrl('create'),
-            ),
-        );
+    array(
+        'type' => Booster::TYPE_PRIMARY,
+        'label' => Yii::t('student', 'Create Student'),
+        'url' => $this->createUrl('create'),
+    ),
+);
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){

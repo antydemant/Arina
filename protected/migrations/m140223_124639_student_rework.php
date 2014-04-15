@@ -4,28 +4,7 @@ class m140223_124639_student_rework extends CDbMigration
 {
 	public function up()
 	{
-		$this->createTable('exemption', array(
-				'id' => 'pk',
-				'title' => 'varchar(50)',
-			)
-		);
-        $this->insert(
-            'exemption',
-            array(
-                'title'=>'Сирота',
-            )
-        );
-        $this->insert(
-            'exemption',
-            array(
-                'title'=>'Інвалід',
-            )
-        );
-        $this->createTable('student_has_exemption', array(
-            'student_id' => 'int NOT NULL',
-            'exemption_id' => 'int NOT NULL',
-            'PRIMARY KEY (`student_id`, `exemption_id`)'
-        ));
+
 		$this->renameColumn('student', 'address', 'official_address');
 		$this->addColumn('student', 'factual_address', 'varchar(100)');
 		$this->addColumn('student', 'birth_date', 'date');
