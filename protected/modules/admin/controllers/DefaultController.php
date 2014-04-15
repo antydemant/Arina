@@ -3,16 +3,9 @@ Yii::import('admin.components.*');
 
 class DefaultController extends Controller
 {
-    public function actionIndex()
-    {
-        ?>
-        <pre>
-        <?php print_r(Yii::app()->session); ?>
-        </pre><?php
-        //$this->render('index');
-    }
+    public $defaultAction = 'run';
 
-    public function actionMigrate()
+    public function actionIndex()
     {
         $this->render('index');
     }
