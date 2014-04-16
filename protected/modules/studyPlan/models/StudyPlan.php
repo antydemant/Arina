@@ -1,7 +1,4 @@
 <?php
-Yii::import('application.behaviors.strField.*');
-Yii::import('application.behaviors.dateField.*');
-
 /**
  * This is the model class for table "sp_plan".
  *
@@ -16,7 +13,7 @@ Yii::import('application.behaviors.dateField.*');
  * @property StudySubject[] $subjects
  * @property Speciality $speciality
  */
-class StudyPlan extends ActiveRecord implements IStrContainable, IDateContainable
+class StudyPlan extends ActiveRecord
 {
     /**
      * @return string the associated database table name
@@ -31,14 +28,11 @@ class StudyPlan extends ActiveRecord implements IStrContainable, IDateContainabl
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
-            array('speciality_id, semesters', 'required'),
+            array('speciality_id', 'required'),
+            array('semesters', 'required', 'message'=>'Натисніть кнопку "Генерувати" та перевірте правильність даних'),
             array('speciality_id', 'numerical', 'integerOnly' => true),
             array('created', 'default', 'value' => date('Y-m-d', time()), 'on' => 'insert'),
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
             array('id, speciality_id', 'safe', 'on' => 'search'),
         );
     }
@@ -48,8 +42,6 @@ class StudyPlan extends ActiveRecord implements IStrContainable, IDateContainabl
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
             'graphics' => array(self::HAS_MANY, 'StudyGraphic', 'plan_id'),
             'subjects' => array(self::HAS_MANY, 'StudySubject', 'plan_id'),
@@ -63,8 +55,18 @@ class StudyPlan extends ActiveRecord implements IStrContainable, IDateContainabl
     public function behaviors()
     {
         return array(
-            'StrBehavior',
-            'DateBehavior',
+            'StrBehavior' => array(
+                'class' => 'application.behaviors.StrBehavior',
+                'fields' => array(
+                    'semesters',
+                ),
+            ),
+            'CTimestampBehavior' => array(
+                'class' => 'zii.behaviors.CTimestampBehavior',
+                'createAttribute' => 'created',
+                'updateAttribute' => 'updated',
+                'setUpdateOnCreate' => true,
+            ),
         );
     }
 
@@ -77,24 +79,8 @@ class StudyPlan extends ActiveRecord implements IStrContainable, IDateContainabl
             'id' => 'ID',
             'year_id' => Yii::t('terms', 'Study year'),
             'speciality_id' => Yii::t('terms', 'Speciality'),
-            'created' => 'Створений',
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function getStrFields()
-    {
-        return array(
-            'semesters',
-        );
-    }
-
-    public function getDateFields()
-    {
-        return array(
-            'created',
+            'created' => Yii::t('terms', 'Date of creation'),
+            'updated' => Yii::t('terms', 'Date of update'),
         );
     }
 
@@ -133,4 +119,15 @@ class StudyPlan extends ActiveRecord implements IStrContainable, IDateContainabl
         return parent::model($className);
     }
 
+    /**
+     * @return CActiveDataProvider
+     */
+    public function getPlanSubjectProvider()
+    {
+        return new CActiveDataProvider(StudySubject::model(), array(
+            'criteria' => array(
+                'condition' => 'plan_id=' . $this->id,
+            )
+        ));
+    }
 }

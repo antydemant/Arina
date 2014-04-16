@@ -1,15 +1,15 @@
 <?php
 /**
- *
  * @author Dmytro Karpovych <ZAYEC77@gmail.com>
  */
 class JSONBehavior extends CActiveRecordBehavior
 {
+    public $fields = array();
+
     public function beforeSave($event)
     {
-        /**@var $model IJSONContainable */
         $model = $this->getOwner();
-        foreach ($model->getJSONFields() as $field) {
+        foreach ($this->fields as $field) {
             if (isset($model->$field)) {
                 $model->$field =  CJSON::encode($model->$field);
             }
@@ -18,18 +18,16 @@ class JSONBehavior extends CActiveRecordBehavior
 
     public function afterFind($event)
     {
-        /**@var $model IJSONContainable */
         $model = $this->getOwner();
-        foreach ($model->getJSONFields() as $field) {
+        foreach ($this->fields as $field) {
             $model->$field = empty($model->$field) ? array() : CJSON::decode($model->$field);
         }
     }
 
     public function afterSave($event)
     {
-        /**@var $model IJSONContainable */
         $model = $this->getOwner();
-        foreach ($model->getJSONFields() as $field) {
+        foreach ($this->fields as $field) {
             $model->$field = empty($model->$field) ? array() : CJSON::decode($model->$field);
         }
     }

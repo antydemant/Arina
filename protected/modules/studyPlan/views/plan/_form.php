@@ -13,7 +13,7 @@
         'class' => 'well',
     ),
 )); ?>
-
+<?php echo $form->errorSummary($model); ?>
 <?php echo $form->dropDownListRow($model, 'speciality_id', Speciality::getList(), array('empty' => 'Оберіть спеціальність')); ?>
 <?php $this->widget('studyPlan.widgets.Graph', array('model'=>$model, 'field'=>'')); ?>
 

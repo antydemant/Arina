@@ -1,5 +1,4 @@
 <?php
-Yii::import('application.behaviors.strField.*');
 
 /**
  * This is the model class for table "sp_subject".
@@ -12,13 +11,14 @@ Yii::import('application.behaviors.strField.*');
  * @property integer $lectures
  * @property integer $labs
  * @property integer $practs
- * @property array weeks
+ * @property array $weeks
+ * @property array $control
  *
  * The followings are the available model relations:
  * @property StudyPlan $plan
  * @property Subject $subject
  */
-class StudySubject extends ActiveRecord implements IStrContainable
+class StudySubject extends ActiveRecord
 {
 
     /**
@@ -34,8 +34,6 @@ class StudySubject extends ActiveRecord implements IStrContainable
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
             array('plan_id, subject_id, total', 'required', 'message' => 'Вкажіть {attribute}'),
             array('weeks', 'check_weeks'),
@@ -44,7 +42,6 @@ class StudySubject extends ActiveRecord implements IStrContainable
             array('lectures', 'check_classes'),
             array('lectures, labs, practs', 'default', 'value' => 0, 'on' => 'insert'),
             array('plan_id, subject_id, total, lectures, labs, practs, weeks', 'safe'),
-            // The following rule is used by search().
             array('id, plan_id, subject_id, total, lectures, labs, practs, subject', 'safe', 'on' => 'search'),
         );
     }
@@ -54,8 +51,6 @@ class StudySubject extends ActiveRecord implements IStrContainable
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
             'plan' => array(self::BELONGS_TO, 'StudyPlan', 'plan_id'),
             'subject' => array(self::BELONGS_TO, 'Subject', 'subject_id'),
@@ -65,14 +60,19 @@ class StudySubject extends ActiveRecord implements IStrContainable
     public function behaviors()
     {
         return array(
-            'StrBehavior',
-        );
-    }
+            'StrBehavior' => array(
+                'class' => 'application.behaviors.StrBehavior',
+                'fields' => array(
+                    'weeks',
 
-    public function getStrFields()
-    {
-        return array(
-            'weeks'
+                ),
+            ),
+            'JSONBehavior' => array(
+                'class' => 'application.behaviors.JSONBehavior',
+                'fields' => array(
+                    'control',
+                ),
+            ),
         );
     }
 
@@ -140,18 +140,6 @@ class StudySubject extends ActiveRecord implements IStrContainable
     }
 
     /**
-     * @return CActiveDataProvider
-     */
-    public function getPlanSubjectProvider()
-    {
-        return new CActiveDataProvider(StudySubject::model(), array(
-            'criteria' => array(
-                'condition' => 'plan_id=' . $this->plan_id,
-            )
-        ));
-    }
-
-    /**
      * @return int
      */
     public function getClasses()
@@ -179,7 +167,7 @@ class StudySubject extends ActiveRecord implements IStrContainable
     public function check_hours()
     {
         if (!$this->hasErrors()) {
-            if ($this->total < ($this->lectures + $this->labs +$this->practs))
+            if ($this->total < ($this->lectures + $this->labs + $this->practs))
                 $this->addError('total', 'Аудиторних годин більше ніж загальна кількість');
         }
     }

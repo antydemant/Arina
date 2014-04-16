@@ -26,12 +26,16 @@ $this->breadcrumbs = array(
         <?php echo $form->numberFieldRow($model, 'practs'); ?>
     </div>
     <div style="float: left">
-        <?php
-        foreach ($model->plan->semesters as $semester => $weeks) {
-            echo CHtml::label($semester + 1 . '-й семестр: ' . $weeks . ' тижнів', 'StudySubject_weeks_' . $semester);
-            echo $form->numberField($model, "weeks[$semester]", array('placeholder' => 'годин на тиждень'));
-        }
-        ?>
+        <?php foreach ($model->plan->semesters as $semester => $weeks): ?>
+            <?php echo CHtml::label($semester + 1 . '-й семестр: ' . $weeks . ' тижнів', 'StudySubject_weeks_' . $semester); ?>
+            <?php echo $form->numberField($model, "weeks[$semester]", array('placeholder' => 'годин на тиждень')); ?>
+            <br/>
+            <?php echo $form->radioButtonList($model, "control[$semester][0]", PlanHelper::getControlTypes()); ?>
+            <?php echo $form->checkBox($model, "control[$semester][1]"); ?>
+            <?php echo CHtml::label(Yii::t('terms', 'Course work'), "StudySubject_control_{$semester}_1"); ?>
+            <?php echo $form->checkBox($model, "control[$semester][2]"); ?>
+            <?php echo CHtml::label(Yii::t('terms', 'Course project'), "StudySubject_control_{$semester}_2"); ?>
+        <?php endforeach; ?>
     </div>
     <div style="clear: both"></div>
     <div class="form-actions" style="width: 300px; margin: 0 auto">
@@ -47,7 +51,7 @@ for ($i = 0; $i < 8; $i++)
 ?>
 
 <?php $this->widget(Booster::GRID_VIEW, array(
-    'dataProvider' => $model->getPlanSubjectProvider(),
+    'dataProvider' => $model->plan->getPlanSubjectProvider(),
     'columns' => array_merge(
         array(
             array(

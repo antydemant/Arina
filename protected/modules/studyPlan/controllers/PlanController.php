@@ -81,11 +81,16 @@ class PlanController extends Controller
 
     public function actionView($id)
     {
-        echo $id;
+        $model = StudyPlan::model()->loadContent($id);
+
+        $this->render('view', array('model'=>$model));
     }
 
-    public function actionUpdate()
+    public function actionUpdate($id)
     {
+        $model = StudyPlan::model()->loadContent($id);
+
+        $this->render('update',array('model'=>$model));
 
     }
 

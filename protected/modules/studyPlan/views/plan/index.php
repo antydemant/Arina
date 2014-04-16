@@ -9,7 +9,7 @@
     'dataProvider' => $dataProvider,
     'columns' => array(
         'speciality.title',
-        'created',
+        'updated',
         array(
             'class'=>'bootstrap.widgets.TbButtonColumn',
             'viewButtonUrl'=> 'Yii::app()->createUrl("studyPlan/plan/view", array("id"=>$data->id))',

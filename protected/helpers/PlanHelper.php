@@ -241,4 +241,20 @@ class PlanHelper
             ),
         );
      }
+
+    /**
+     * Види контролю
+     * @param null $index
+     * @return array
+     */
+    public static function getControlTypes($index = NULL)
+    {
+        $types = array(
+            0 => Yii::t('terms', 'Test'),
+            1 => Yii::t('terms', 'Exam'),
+        );
+        if (isset($index))
+            return $types[$index];
+        else return $types;
+    }
 }
