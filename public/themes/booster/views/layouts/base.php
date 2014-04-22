@@ -60,7 +60,7 @@
     <?php echo $content; ?>
     <hr/>
     <footer id="footer" class="text-center">
-        Copyright &copy; <?php echo date('Y'); ?> by three amigos<br/>
+        Copyright &copy; <?php echo date('Y'); ?> <br/>
         All Rights Reserved.<br/>
         <?php echo Yii::powered(); ?>
         <?php if (YII_DEBUG): ?>
