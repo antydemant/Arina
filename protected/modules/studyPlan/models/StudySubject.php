@@ -1,6 +1,8 @@
 <?php
-
 /**
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
+ * @copyright ХПК 2014
+ *
  * This is the model class for table "sp_subject".
  *
  * The followings are the available columns in table 'sp_subject':
@@ -37,11 +39,12 @@ class StudySubject extends ActiveRecord
         return array(
             array('plan_id, subject_id, total', 'required', 'message' => 'Вкажіть {attribute}'),
             array('weeks', 'check_weeks'),
-            array('plan_id, subject_id, total, lectures, labs, practs', 'numerical', 'integerOnly' => true),
             array('total', 'check_hours'),
             array('lectures', 'check_classes'),
+            array('subject_id', 'check_subject'),
             array('lectures, labs, practs', 'default', 'value' => 0, 'on' => 'insert'),
-            array('plan_id, subject_id, total, lectures, labs, practs, weeks', 'safe'),
+            array('plan_id, subject_id, total, lectures, labs, practs', 'numerical', 'integerOnly' => true),
+            array('plan_id, subject_id, total, lectures, labs, practs, weeks, control', 'safe'),
             array('id, plan_id, subject_id, total, lectures, labs, practs, subject', 'safe', 'on' => 'search'),
         );
     }
@@ -156,6 +159,63 @@ class StudySubject extends ActiveRecord
     }
 
     /**
+     * Повертає список семестрів, в яких проводиться залік
+     * @return string
+     */
+    public function getTestSemesters()
+    {
+        $semesters = array();
+        foreach ($this->control as $semester => $control) {
+            if ($control[0] === '0')
+                $semesters[] = $semester+1;
+        }
+
+        return implode(', ', $semesters);
+    }
+
+    /**
+     * Повертає список семестрів, в яких проводиться екзамен
+     * @return string
+     */
+    public function getExamSemesters()
+    {
+        $semesters = array();
+        foreach ($this->control as $semester => $control) {
+            if ($control[0] === '1')
+                $semesters[] = $semester+1;
+        }
+        return implode(', ', $semesters);
+    }
+
+    /**
+     * Повертає список семестрів, в яких є курсова робота
+     * @return string
+     */
+    public function getWorkSemesters()
+    {
+        $semesters = array();
+        foreach ($this->control as $semester => $control) {
+            if (!empty($control[1]))
+                $semesters[] = $semester+1;
+        }
+        return implode(', ', $semesters);
+    }
+
+    /**
+     * Повертає список семестрів, в яких є курсовий проект
+     * @return string
+     */
+    public function getProjectSemesters()
+    {
+        $semesters = array();
+        foreach ($this->control as $semester => $control) {
+            if (!empty($control[2]))
+                $semesters[] = $semester+1;
+        }
+        return implode(', ', $semesters);
+    }
+
+    /**
      * @param $semester
      * @return string
      */
@@ -194,6 +254,19 @@ class StudySubject extends ActiveRecord
                     $valid = true;
             if (!$valid)
                 $this->addError('weeks', 'Вкажіть кількість годин на тиждень у відповідних семестрах');
+        }
+    }
+
+    public function check_subject()
+    {
+        if (!$this->hasErrors()) {
+            $criteria = new CDbCriteria();
+            $criteria->condition =  'plan_id = :plan';
+            $criteria->params[':plan'] = $this->plan_id;
+            $criteria->addCondition('subject_id = :subject');
+            $criteria->params[':subject'] = $this->subject_id;
+            if (StudySubject::model()->exists($criteria))
+                $this->addError('subject_id', 'Запис про цей предмет уже додано до цього навчального плану');
         }
     }
 }

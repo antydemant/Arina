@@ -33,9 +33,11 @@ $this->breadcrumbs = array(
             float: left;
             width: 125px;
         }
+
         .span5 input[type="number"] {
             width: 170px;
         }
+
         #StudySubject_subject_id {
             width: 100%;
         }
@@ -91,22 +93,54 @@ for ($i = 0; $i < 8; $i++)
     $semesterColumns[] = array('header' => $i + 1, 'value' => '$data->weeks[' . $i . ']');
 ?>
 
-<?php $this->widget(Booster::GRID_VIEW, array(
+<?php $this->widget('bootstrap.widgets.TbExtendedGridView', array(
     'dataProvider' => $model->plan->getPlanSubjectProvider(),
+    'responsiveTable' => true,
+    'type' => 'striped bordered',
+    'bulkActions' => array(
+        'checkBoxColumnConfig' => array(
+            'name' => 'id',
+            'header' => null,
+        ),
+        'actionButtons' => array(
+            array(
+                'id' => 'delete-btn',
+                'buttonType' => 'button',
+                'type' => 'danger',
+                'label' => 'Видалити виділенні записи',
+                'click' => 'js:
+                function(){
+                    var values = $("#yw1").yiiGridView("getChecked", "yw1_c0");
+                    window.location.assign("' . $this->createUrl('delete', array('id' => $model->plan_id)) . '&subjects=["+values+"]");
+                }'
+            )
+        ),
+    ),
     'columns' => array_merge(
         array(
             array(
                 'name' => 'subject_id',
                 'value' => '$data->subject->title',
-                'sortable' => true,
             ),
             array('name' => 'total'),
             array('name' => 'classes'),
             array('name' => 'lectures'),
             array('name' => 'labs'),
             array('name' => 'practs'),
-            array('name' => 'selfwork')
+            array('name' => 'selfwork'),
+            array('name' => 'testSemesters'),
+            array('name' => 'examSemesters'),
+            array('name' => 'workSemesters'),
+            array('name' => 'projectSemesters'),
         ),
-        $semesterColumns),
+        $semesterColumns,
+        array(
+            array(
+                'header' => Yii::t('base', 'Actions'),
+                'template' => '{update}{delete}',
+                'class' => Booster::GRID_BUTTON_COLUMN,
+            )
+        )
+    ),
 ));
 ?>

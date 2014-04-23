@@ -77,21 +77,21 @@ class PlanController extends Controller
         }
         /**@var $plan StudyPlan */
         $plan = StudyPlan::model()->findByPk($id);
-        $this->render('subjects', array('model' => $model,'speciality_id'=>$plan->speciality_id));
+        $this->render('subjects', array('model' => $model, 'speciality_id' => $plan->speciality_id));
     }
 
     public function actionView($id)
     {
         $model = StudyPlan::model()->loadContent($id);
 
-        $this->render('view', array('model'=>$model));
+        $this->render('view', array('model' => $model));
     }
 
     public function actionUpdate($id)
     {
         $model = StudyPlan::model()->loadContent($id);
 
-        $this->render('update',array('model'=>$model));
+        $this->render('update', array('model' => $model));
 
     }
 
@@ -106,8 +106,14 @@ class PlanController extends Controller
 
     public function actionDelete($id)
     {
-        StudyPlan::model()->loadContent($id)->delete();
+        if (isset($_GET['subjects'])) {
+            foreach ($_GET['subjects'] as $subject_id)
+                StudySubject::model()->findByPk($subject_id)->delete();
+        } else {
+            StudyPlan::model()->loadContent($id)->delete();
+        }
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+
     }
 } 
