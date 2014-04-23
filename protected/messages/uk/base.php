@@ -3,6 +3,7 @@
  *
  */
 return array(
+    'Create document'=>'Створити документ',
     'Speciality' => 'Спеціальність',
     'Not selected' => 'Не вибрано',
     'None' => 'Немає',

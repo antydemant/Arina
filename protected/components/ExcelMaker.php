@@ -110,4 +110,30 @@ class ExcelMaker extends CComponent
         }
     }
 
+    /**
+     * @param $plan StudyPlan
+     * @return PHPExcel
+     */
+    protected function makeStudyPlan($plan)
+    {
+
+        $objPHPExcel = $this->loadTemplate('3.01.xls');
+        $sheet = $objPHPExcel->setActiveSheetIndex(0);
+
+        $i = 46;
+        foreach ($plan->subjects as $item) {
+            $sheet->mergeCells("D$i:G$i");
+            $sheet->setCellValue("D$i", $item->subject->title);
+            $sheet->setCellValue("N$i", $item->total);
+            $sheet->setCellValue("P$i", $item->lectures);
+            $sheet->setCellValue("R$i", $item->labs);
+            $sheet->setCellValue("T$i", $item->practs);
+
+            $sheet->insertNewRowBefore($i + 1, 1);
+            $i++;
+        }
+        $sheet->removeRow($i);
+        return $objPHPExcel;
+    }
+
 }

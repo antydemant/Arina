@@ -95,6 +95,15 @@ class PlanController extends Controller
 
     }
 
+
+    public function actionMakeExcel($id)
+    {
+        /**@var $excel ExcelMaker */
+        $excel = Yii::app()->getComponent('excel');
+        $plan = StudyPlan::model()->loadContent($id);
+        $excel->getDocument($plan, 'studyPlan');
+    }
+
     public function actionDelete($id)
     {
         StudyPlan::model()->loadContent($id)->delete();
