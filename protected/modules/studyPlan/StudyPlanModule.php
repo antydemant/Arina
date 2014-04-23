@@ -1,5 +1,5 @@
 <?php
-
+ 
 /**
  * @author Serhiv Vinichuk <serhiyvinichuk@gmail.com>
  * Class StudyPlanModule

@@ -7,7 +7,7 @@
 <?php $this->beginContent('//layouts/main'); ?>
 
 <?php $this->widget(Booster::NAVIGATOR, array(
-    //'type' => 'inverse', // null or 'inverse' //comment
+    'type' => 'inverse', // null or 'inverse' //comment
     //'brand' => 'KhPK',
     'brand' => '@',
     'brandUrl' => array('/site/index'),
@@ -32,21 +32,21 @@
 <div class="container">
 
     <?php
-        $this->widget(Booster::ALERT, array(
-            'alerts' => array(
-                'success',
-                'info',
-                'warning',
-                'error',
-                'danger',
-            ),
-        ));
+    $this->widget(Booster::ALERT, array(
+        'alerts' => array(
+            'success',
+            'info',
+            'warning',
+            'error',
+            'danger',
+        ),
+    ));
     ?>
     <!-- alerts -->
     <?php if (isset($this->breadcrumbs)): ?>
         <?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
-			'links' => $this->breadcrumbs,
-		)); ?><!-- breadcrumbs -->
+            'links' => $this->breadcrumbs,
+        )); ?><!-- breadcrumbs -->
     <?php endif ?>
 
     <?php if (isset($this->menu)): ?>
@@ -60,7 +60,7 @@
     <?php echo $content; ?>
     <hr/>
     <footer id="footer" class="text-center">
-        Copyright &copy; <?php echo date('Y'); ?> <br/>
+        Copyright &copy; <?php echo date('Y'); ?> by three amigos<br/>
         All Rights Reserved.<br/>
         <?php echo Yii::powered(); ?>
         <?php if (YII_DEBUG): ?>

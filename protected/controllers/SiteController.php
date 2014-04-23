@@ -47,9 +47,7 @@ class SiteController extends Controller
 
     public function actionTest()
     {
-        /* @var WordMaker $word */
-        $word = Yii::app()->getComponent('word');
-        $word->getDocument(array(), 'test');
+        $this->render('test');
     }
 
     /**

@@ -38,6 +38,7 @@ return CMap::mergeArray(
             'student',
             'hr',
             'dictionaries',
+            'admin',
         ),
 
         'components' => array(

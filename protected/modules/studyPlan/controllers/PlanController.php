@@ -75,8 +75,9 @@ class PlanController extends Controller
                 $model->plan_id = $id;
             }
         }
-
-        $this->render('subjects', array('model' => $model));
+        /**@var $plan StudyPlan */
+        $plan = StudyPlan::model()->findByPk($id);
+        $this->render('subjects', array('model' => $model,'speciality_id'=>$plan->speciality_id));
     }
 
     public function actionView($id)
