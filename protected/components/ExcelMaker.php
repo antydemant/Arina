@@ -82,17 +82,6 @@ class ExcelMaker extends CComponent
     }
 
     /**
-     * @param PHPExcel_Worksheet $sheet
-     * @param $cell
-     * @param $value
-     * @param string $alias
-     */
-    public function setValue($sheet, $cell, $value, $alias='@value')
-    {
-        $sheet->setCellValue($cell, str_replace($alias, $value, $sheet->getCell($cell)->getCalculatedValue()));
-    }
-
-    /**
      * @param $alias
      * @param string $fileType
      * @return PHPExcel
@@ -111,6 +100,17 @@ class ExcelMaker extends CComponent
     }
 
     /**
+     * @param PHPExcel_Worksheet $sheet
+     * @param $cell
+     * @param $value
+     * @param string $alias
+     */
+    public function setValue($sheet, $cell, $value, $alias = '@value')
+    {
+        $sheet->setCellValue($cell, str_replace($alias, $value, $sheet->getCell($cell)->getCalculatedValue()));
+    }
+
+    /**
      * @param $plan StudyPlan
      * @return PHPExcel
      */
@@ -124,11 +124,19 @@ class ExcelMaker extends CComponent
         foreach ($plan->subjects as $item) {
             $sheet->mergeCells("D$i:G$i");
             $sheet->setCellValue("D$i", $item->subject->title);
-            $sheet->setCellValue("N$i", $item->total);
+            $sheet->setCellValue("N$i", $item->getClasses());
+            $sheet->setCellValue("V$i", $item->getSelfwork());
+            $sheet->setCellValue("H$i", $item->getExams());
+            $sheet->setCellValue("M$i", $item->total);
             $sheet->setCellValue("P$i", $item->lectures);
             $sheet->setCellValue("R$i", $item->labs);
             $sheet->setCellValue("T$i", $item->practs);
-
+            $char = 'W';
+            foreach ($item->weeks as $key => $week) {
+                $sheet->setCellValue($char . $i, $week);
+                $char++;
+                $char++;
+            }
             $sheet->insertNewRowBefore($i + 1, 1);
             $i++;
         }
