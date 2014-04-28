@@ -1,53 +1,47 @@
 <?php
-/* @var $this SiteController */
-/* @var $model LoginForm */
-/* @var $form CActiveForm */
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
-$this->pageTitle = Yii::app()->name . ' - Login';
-$this->breadcrumbs = array(
-    'Login',
-);
+/**
+ * @var yii\web\View $this
+ * @var yii\widgets\ActiveForm $form
+ * @var app\models\LoginForm $model
+ */
+$this->title = 'Login';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="site-login">
+    <h1><?= Html::encode($this->title) ?></h1>
 
-<h1>Login</h1>
+    <p>Please fill out the following fields to login:</p>
 
-<p>Please fill out the following form with your login credentials:</p>
-
-<div class="form">
-    <?php $form = $this->beginWidget('CActiveForm', array(
+    <?php $form = ActiveForm::begin([
         'id' => 'login-form',
-        'enableClientValidation' => true,
-        'clientOptions' => array(
-            'validateOnSubmit' => true,
-        ),
-    )); ?>
+        'options' => ['class' => 'form-horizontal'],
+        'fieldConfig' => [
+            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+            'labelOptions' => ['class' => 'col-lg-1 control-label'],
+        ],
+    ]); ?>
 
-    <p class="note">Fields with <span class="required">*</span> are required.</p>
+    <?= $form->field($model, 'username') ?>
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'username'); ?>
-        <?php echo $form->textField($model, 'username'); ?>
-        <?php echo $form->error($model, 'username'); ?>
+    <?= $form->field($model, 'password')->passwordInput() ?>
+
+    <?= $form->field($model, 'rememberMe', [
+        'template' => "<div class=\"col-lg-offset-1 col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+    ])->checkbox() ?>
+
+    <div class="form-group">
+        <div class="col-lg-offset-1 col-lg-11">
+            <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+        </div>
     </div>
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'password'); ?>
-        <?php echo $form->passwordField($model, 'password'); ?>
-        <?php echo $form->error($model, 'password'); ?>
-        <p class="hint">
-            Hint: You may login with <kbd>demo</kbd>/<kbd>demo</kbd> or <kbd>admin</kbd>/<kbd>admin</kbd>.
-        </p>
-    </div>
+    <?php ActiveForm::end(); ?>
 
-    <div class="row rememberMe">
-        <?php echo $form->checkBox($model, 'rememberMe'); ?>
-        <?php echo $form->label($model, 'rememberMe'); ?>
-        <?php echo $form->error($model, 'rememberMe'); ?>
+    <div class="col-lg-offset-1" style="color:#999;">
+        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
+        To modify the username/password, please check out the code <code>app\models\User::$users</code>.
     </div>
-
-    <div class="row buttons">
-        <?php echo CHtml::submitButton('Login'); ?>
-    </div>
-
-    <?php $this->endWidget(); ?>
-</div><!-- form -->
+</div>
