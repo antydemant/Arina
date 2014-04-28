@@ -5,10 +5,16 @@ $db = require(__DIR__ . '/db.php');
 
 $config = [
     'id' => 'basic',
+    'language'=>'uk_UA',
     'basePath' => dirname(__DIR__),
     'vendorPath' => dirname(__DIR__) . '/../vendor',
     'bootstrap' => ['log'],
     'extensions' => require(__DIR__ . '/../../vendor/yiisoft/extensions.php'),
+    'modules' => [
+        'handbook' => [
+            'class' => 'app\modules\handbook\Module',
+        ],
+    ],
     'components' => [
         'urlManager' => [
             'enablePrettyUrl' => true,
