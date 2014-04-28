@@ -1,25 +1,26 @@
 {
-    "name": "nre/arina",
+    "name": "nre/Arina",
     "description": "some system",
+    "license": "OSL 3.0",
+    "minimum-stability": "dev",
+    "type": "project",
     "require": {
-        "yiisoft/yii": "1.1.14",
-        "yiiext/activerecord-relation-behavior":"dev-master",
-        "clevertech/yii-booster": "dev-master",
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "*",
+        "yiisoft/yii2-bootstrap": "*",
+        "yiisoft/yii2-swiftmailer": "*",
         "phpexcel/phpexcel": "1.7.*",
         "phpword/phpword": "dev-master"
     },
-    "license": "OSL 3.0",
-    "authors": [
-        {
-            "name": "Dmytro Karpovych",
-            "email": "ZAYEC77@gmail.com"
-        }
-    ],
-    "repositories":[
-        {
-            "type":"git",
-            "url":"https://github.com/yiiext/activerecord-relation-behavior"
-        }
-    ],
-    "minimum-stability": "dev"
+    "require-dev": {
+        "yiisoft/yii2-codeception": "*",
+        "yiisoft/yii2-debug": "*",
+        "yiisoft/yii2-gii": "*",
+        "codeception/codeception": "*"
+    },
+    "suggest": {
+        "codeception/codeception": "Codeception, 1.8.*@dev is currently works well with Yii.",
+        "codeception/specify": "BDD style code blocks for PHPUnit and Codeception",
+        "codeception/verify": "BDD Assertions for PHPUnit and Codeception"
+    }
 }
