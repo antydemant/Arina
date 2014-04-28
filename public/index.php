@@ -1,13 +1,12 @@
 <?php
-date_default_timezone_set(date_default_timezone_get());
-// remove the following lines when in production mode
+error_reporting(-1);
 defined('YII_DEBUG') or define('YII_DEBUG', true);
-// specify how many levels of call stack should be shown in each log message
-defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
+defined('YII_ENV') or define('YII_ENV', 'dev');
 
-// change the following paths if necessary
-$yii = dirname(__FILE__) . '/../vendor/yiisoft/yii/framework/yii.php';
-$config = dirname(__FILE__) . '/../protected/config/main.php';
+require(__DIR__ . '/../vendor/autoload.php');
+require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
 
-require_once($yii);
-Yii::createWebApplication($config)->run();
+$config = require(__DIR__ . '/../protected/config/web.php');
+
+(new yii\web\Application($config))->run();
+
