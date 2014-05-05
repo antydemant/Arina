@@ -7,8 +7,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Yii::t('department', 'Departments list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
-    array('label' => Yii::t('department', 'Create new department'), 'url' => array('create')),
+    array('label' => Yii::t('department', 'Create new department'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
 );
 ?>
 

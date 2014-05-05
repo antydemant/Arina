@@ -7,9 +7,9 @@ $this->breadcrumbs = array(
 
 $this->menu = array(
     array('label' => Yii::t('department', 'Departments list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
-    array('label' => Yii::t('department', 'Create department'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
-    array('label' => 'View Department', 'url' => array('view', 'id' => $model->id)),
-    array('label' => 'Manage Department', 'url' => array('admin')),
+    array('label' => Yii::t('department', 'Create new department'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
+    array('label' => Yii::t('department', 'View department'), 'url' => array('view', 'id' => $model->id)),
+    array('label' => Yii::t('department', 'Manage department'), 'url' => array('admin')),
 );
 ?>
 

@@ -10,6 +10,7 @@
  *
  *
  * @property Teacher $head
+ * @property Speciality[] $specialities
  */
 class Department extends ActiveRecord
 {
@@ -41,10 +42,9 @@ class Department extends ActiveRecord
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
             'head'=>array(self::BELONGS_TO, 'Teacher', 'head_id'),
+            'specialities'=>array(self::HAS_MANY, 'Speciality', 'department_id'),
         );
     }
 
