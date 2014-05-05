@@ -18,6 +18,8 @@ $this->menu = array(
 <?php
 $columns = array(
     'title',
+    'code',
+    'short_name',
     array(
         'header' => Yii::t('base', 'Actions'),
         'class' => 'bootstrap.widgets.TbButtonColumn',

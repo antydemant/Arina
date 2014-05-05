@@ -6,6 +6,8 @@
  * The followings are the available columns in table 'subject':
  * @property integer $id
  * @property string $title
+ * @property string $code
+ * @property string $short_name
  *
  * @property SubjectRelation[] $relations
  */
@@ -62,9 +64,9 @@ class Subject extends ActiveRecord
     public function rules()
     {
         return array(
-            array('title', 'required'),
-            array('title', 'length', 'max' => 50),
-            array('id, title', 'safe', 'on' => 'search'),
+            array('title, code, short_name', 'required'),
+            array('title, code, short_name', 'length', 'max' => 50),
+            array('id, title, code, short_name', 'safe', 'on' => 'search'),
         );
     }
 
@@ -88,6 +90,8 @@ class Subject extends ActiveRecord
             'id' => 'ID',
             'title' => Yii::t('base', 'Title'),
             'cycle_id' => Yii::t('base', 'Subject cycles'),
+            'code' => Yii::t('base', 'Code'),
+            'short_name' => Yii::t('base', 'Short name'),
         );
     }
 

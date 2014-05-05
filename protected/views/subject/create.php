@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs = array(
     Yii::t('base', 'Subjects') => array('index'),
-    'Create',
+    Yii::t('base', 'Create'),
 );
 
 $this->menu = array(
