@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `cyclic_commission` (
 
 CREATE TABLE IF NOT EXISTS `department` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Код',
-  `title` varchar(40) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Назва відділення',
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Назва відділення',
   `head_id` int(11) NOT NULL COMMENT 'Зав.відділення',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 
 CREATE TABLE IF NOT EXISTS `speciality` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Код',
-  `title` varchar(40) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Назва спеціальності',
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Назва спеціальності',
   `department_id` int(11) NOT NULL COMMENT 'Код відділення',
   `number` varchar(15) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Номер спеціальності',
   `accreditation_date` date NOT NULL COMMENT 'Дата останньої акредитації',
@@ -324,7 +324,7 @@ CREATE TABLE IF NOT EXISTS `student_has_exemption` (
   `student_id` int(11) NOT NULL,
   `exemption_id` int(11) NOT NULL,
   PRIMARY KEY (`student_id`,`exemption_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=u40tf8;
 
 -- --------------------------------------------------------
 
