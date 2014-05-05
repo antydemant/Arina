@@ -23,7 +23,7 @@ $this->menu = array(
     array(
         'label' => Yii::t('student', 'Students of group'),
         'icon' => 'list',
-        'url' => Yii::app()->createUrl('student/group', array('id' => $model->id)),
+        'url' => Yii::app()->createUrl('student/default/group', array('id' => $model->id)),
     ),
     array(
         'label' => Yii::t('group', 'Update group'),
