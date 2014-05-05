@@ -24,4 +24,18 @@ class DefaultController extends Controller
         Yii::app()->session['console-confirm'] = true;
         $this->actionRun($args);
     }
+
+    /**
+     * Specifies the access control rules.
+     * This method is used by the 'accessControl' filter.
+     * @return array access control rules
+     */
+    public function accessRules()
+    {
+        return array(
+            array('allow',
+                'users' => array('*'),
+            ),
+        );
+    }
 }
