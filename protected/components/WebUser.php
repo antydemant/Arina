@@ -30,7 +30,7 @@ class WebUser extends CWebUser
     private function getModel()
     {
         if (!$this->isGuest && $this->_model === null) {
-            $this->_model = User::model()->findByAttributes(array('username' => $this->id), array('select' => 'username, role, id'));
+            $this->_model = User::model()->findByAttributes(array('id' => $this->id), array('select' => 'username, role, id'));
         }
         return $this->_model;
     }

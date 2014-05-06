@@ -10,6 +10,7 @@
  * @property string $email
  * @property integer $role
  * @property integer $identity_id
+ * @property integer $identity_type
  */
 class User extends ActiveRecord
 {
@@ -21,6 +22,10 @@ class User extends ActiveRecord
     const ROLE_CURATOR = 5;
     const ROLE_DEPARTMENT_HEAD = 6;
     const ROLE_ROOT = 7;
+
+    const TYPE_SUPER = 0;
+    const TYPE_TEACHER = 1;
+    const TYPE_STUDENT = 2;
 
     /**
      * @return string the associated database table name
@@ -121,4 +126,16 @@ class User extends ActiveRecord
     {
         return parent::model($className);
     }
+
+    //IMPORTANT THINGAMAJIG
+
+    public function afterSave() {
+        if (!Yii::app()->authManager->isAssigned(
+            $this->role,$this->id)) {
+            Yii::app()->authManager->assign($this->type,
+                $this->id);
+        }
+        return parent::afterSave();
+    }
+
 }

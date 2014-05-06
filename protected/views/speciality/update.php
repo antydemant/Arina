@@ -7,6 +7,7 @@ $this->breadcrumbs = array(
     $model->title => array('view', 'id' => $model->id),
     Yii::t('base', 'Updating'),
 );
+
 $this->menu = array(
     array('label' => Yii::t('speciality', 'Specialities list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
     array('label' => Yii::t('speciality', 'Create new speciality'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),

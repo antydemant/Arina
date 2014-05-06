@@ -66,6 +66,17 @@ class GroupController extends Controller
 
         if (isset($_POST['Group'])) {
             $model->attributes = $_POST['Group'];
+
+            if(!Yii::app()->user->checkAccess('manageGroup',
+                array(
+                    'id' => $model->speciality->department->head_id,
+                    'type' => User::TYPE_TEACHER,
+                )
+            ))
+            {
+                throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+            }
+
             if ($model->save()) {
                 $this->redirect(array('group/index'));
             }
@@ -80,6 +91,25 @@ class GroupController extends Controller
     public function actionUpdate($id)
     {
         $model = Group::model()->loadContent($id);
+
+        if(
+            !Yii::app()->user->checkAccess('manageGroup',
+                array(
+                    'id' => $model->curator_id,
+                    'type' => User::TYPE_TEACHER,
+                )
+            )
+            &&
+            !Yii::app()->user->checkAccess('manageGroup',
+                array(
+                    'id' => $model->monitor_id,
+                    'type' => User::TYPE_STUDENT,
+                )
+            )
+        )
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
 
         $this->ajaxValidation('group-form', $model);
 
@@ -108,6 +138,15 @@ class GroupController extends Controller
     public function actionDelete($id)
     {
         $model = Group::model()->loadContent($id);
+        if(!Yii::app()->user->checkAccess('manageGroup',
+            array(
+                'id' => $model->speciality->department->head_id,
+                'type' => User::TYPE_TEACHER,
+            )
+        ))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
         $model->delete();
         if (!Yii::app()->getRequest()->isAjaxRequest) {
             $this->redirect(array('index'));

@@ -94,6 +94,10 @@ return CMap::mergeArray(
 
                 ),
             ),*/
+            'authManager'=>array(
+                'class'=>'CDbAuthManager',
+                'connectionID'=>'db',
+            ),
         ),
 
         'params' => array(),

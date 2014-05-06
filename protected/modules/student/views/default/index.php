@@ -57,6 +57,7 @@ $this->widget(Booster::GRID_VIEW, array(
         'last_name',
         'first_name',
         'middle_name',
+
         array(
             'name' => 'group_id',
             'value' => '$data->group->title',
@@ -67,6 +68,7 @@ $this->widget(Booster::GRID_VIEW, array(
                     array('empty' => ''))
 
         ),
+
         array(
             'header' => Yii::t('base', 'Actions'),
             'htmlOptions' => array('nowrap' => 'nowrap'),
