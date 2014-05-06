@@ -42,7 +42,7 @@ class StudySubject extends ActiveRecord
             array('weeks', 'check_weeks'),
             array('total', 'check_hours'),
             array('lectures', 'check_classes'),
-            array('subject_id', 'check_subject'),
+            array('subject_id', 'check_subject', 'on' => 'insert'),
             array('lectures, labs, practs', 'default', 'value' => 0, 'on' => 'insert'),
             array('plan_id, subject_id, total, lectures, labs, practs', 'numerical', 'integerOnly' => true),
             array('plan_id, subject_id, total, lectures, labs, practs, weeks, control', 'safe'),

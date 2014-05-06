@@ -9,7 +9,7 @@
 <?php $this->widget(Booster::NAVIGATOR, array(
     //'type' => 'inverse', // null or 'inverse' //comment
     //'brand' => 'KhPK',
-    'brand' => '@',
+    'brand' => '',
     'brandUrl' => array('/site/index'),
     'fixed' => 'true',
     'collapse' => true, // requires bootstrap-responsive.css
