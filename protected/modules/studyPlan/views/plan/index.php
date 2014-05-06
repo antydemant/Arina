@@ -24,7 +24,6 @@
             'updateButtonUrl' => 'Yii::app()->createUrl("studyPlan/plan/update", array("id"=>$data->id))',
             'deleteButtonUrl' => 'Yii::app()->createUrl("studyPlan/plan/delete", array("id"=>$data->id))',
             'buttons' => array(
-
                 'excel' => array(
                     'label' => Yii::t('base', 'Create document'),
                     'icon' => 'icon-file',

@@ -116,31 +116,71 @@ class ExcelMaker extends CComponent
      */
     protected function makeStudyPlan($plan)
     {
+        $objPHPExcel = $this->loadTemplate('plan.xls');
+        $sheet = $sheet = $objPHPExcel->setActiveSheetIndex(2);
 
-        $objPHPExcel = $this->loadTemplate('3.01.xls');
-        $sheet = $objPHPExcel->setActiveSheetIndex(0);
+        $j = 'N';
+        $i = 8;
+        foreach ($plan->semesters as $item) {
+            $sheet->setCellValue($j . $i, $item);
+            $j++;
+        }
+        $i++;
+        $j = 1;
+        $totals = array();
+        foreach ($plan->getSubjectsByGroups() as $name => $group) {
+            $sheet->setCellValue("B$i", "$j. " . $name);
+            $sheet->insertNewRowBefore($i + 1, 1);
+            $i++;
+            $begin = $i;
+            $jj = 1;
+            foreach ($group as $item) {
+                /**@var $item StudySubject */
+                $sheet->setCellValue("A$i", $item->subject->code);
+                $sheet->setCellValue("B$i", "$j.$jj. " . $item->subject->title);
+                $sheet->setCellValue("C$i", $item->getExamSemesters());
+                $sheet->setCellValue("D$i", $item->getTestSemesters());
+                $sheet->setCellValue("E$i", $item->getWorkSemesters());
+                $sheet->setCellValue("F$i", $item->getProjectSemesters());
+                $sheet->setCellValue("G$i", round($item->total / 54, 2));
+                $sheet->setCellValue("H$i", $item->total);
+                $sheet->setCellValue("I$i", $item->getClasses());
+                $sheet->setCellValue("J$i", $item->lectures);
+                $sheet->setCellValue("K$i", $item->labs);
+                $sheet->setCellValue("L$i", $item->practs);
+                $sheet->setCellValue("M$i", $item->getSelfwork());
+                $char = 'N';
+                foreach ($item->weeks as $key => $week) {
+                    $sheet->setCellValue($char . $i, $week);
+                    $char++;
+                }
+                $sheet->insertNewRowBefore($i + 1, 1);
+                $i++;
+                $jj++;
+            }
+            $end = $i - 1;
+            $sheet->setCellValue("B$i", Yii::t('base', 'Total'));
+            $totals[]=$i;
+            for ($c = 'G'; $c < 'V';$c++){
+                $sheet->setCellValueExplicit("$c$i", "=SUM($c$begin:$c$end)");
+            }
+            $sheet->insertNewRowBefore($i + 1, 1);
+            $i++;
+            $j++;
+        }
+        $sheet->setCellValue("B$i", Yii::t('base', 'Total amount'));
+        for ($c = 'G'; $c < 'V';$c++){
+            $sheet->setCellValueExplicit("$c$i", "=SUM($c".implode("+$c",$totals).')');
+        }
+        /*
 
         $i = 46;
         foreach ($plan->subjects as $item) {
             $sheet->mergeCells("D$i:G$i");
-            $sheet->setCellValue("D$i", $item->subject->title);
-            $sheet->setCellValue("N$i", $item->getClasses());
-            $sheet->setCellValue("V$i", $item->getSelfwork());
-            $sheet->setCellValue("H$i", $item->getExams());
-            $sheet->setCellValue("M$i", $item->total);
-            $sheet->setCellValue("P$i", $item->lectures);
-            $sheet->setCellValue("R$i", $item->labs);
-            $sheet->setCellValue("T$i", $item->practs);
-            $char = 'W';
-            foreach ($item->weeks as $key => $week) {
-                $sheet->setCellValue($char . $i, $week);
-                $char++;
-                $char++;
-            }
             $sheet->insertNewRowBefore($i + 1, 1);
             $i++;
         }
-        $sheet->removeRow($i);
+        $sheet->removeRow($i);*/
         return $objPHPExcel;
     }
 
