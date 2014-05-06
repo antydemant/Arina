@@ -92,10 +92,42 @@ class PlanController extends Controller
     {
         $model = StudyPlan::model()->loadContent($id);
 
+        if (isset($_POST['StudyPlan'])) {
+            $model->attributes = $_POST['StudyPlan'];
+            if (isset(Yii::app()->session['weeks'])) {
+                $model->semesters = Yii::app()->session['weeks'];
+                unset(Yii::app()->session['weeks']);
+            }
+            if ($model->save()) {
+                $this->redirect(array('index'));
+            }
+        }
+
         $this->render('update', array('model' => $model));
 
     }
 
+    public function actionEditSubject($id)
+    {
+        /** @var StudySubject $model */
+        $model = StudySubject::model()->loadContent($id);
+
+        if (isset($_POST['StudySubject'])) {
+            $model->attributes = $_POST['StudySubject'];
+            if ($model->save())
+                $this->redirect($this->createUrl('view', array('id' => $model->plan_id)));
+        }
+
+        $this->render('edit_subject', array('model' => $model));
+    }
+
+    public function actionDeleteSubject($id)
+    {
+        StudySubject::model()->loadContent($id)->delete();
+
+        if (!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+    }
 
     public function actionMakeExcel($id)
     {
@@ -107,14 +139,9 @@ class PlanController extends Controller
 
     public function actionDelete($id)
     {
-        if (isset($_GET['subjects'])) {
-            foreach ($_GET['subjects'] as $subject_id)
-                StudySubject::model()->findByPk($subject_id)->delete();
-        } else {
-            StudyPlan::model()->loadContent($id)->delete();
-        }
+        StudyPlan::model()->loadContent($id)->delete();
+
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
-
     }
 } 

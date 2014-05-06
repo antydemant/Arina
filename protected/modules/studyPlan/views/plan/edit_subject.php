@@ -4,10 +4,6 @@
  * @var StudySubject $model
  * @var TbActiveForm $form
  */
-$this->breadcrumbs = array(
-    Yii::t('base', 'Study plans') => $this->createUrl('main/index'),
-    $model->plan->speciality->title => $this->createUrl('plan/view', array('id' => $model->plan->id)),
-);
 ?>
     <style>
         .input,
@@ -47,13 +43,11 @@ $this->breadcrumbs = array(
         'class' => 'well row',
     )
 )); ?>
-    <h3>Додання предметів</h3>
+    <h3>Редагування предмету у навчальному плані</h3>
 <?php echo $form->errorSummary($model); ?>
     <div class="span3">
-        <?php echo $form->listBox($model, 'subject_id',
-            Subject::getListForSpeciality($speciality_id), array('size' => 25)); ?>
-    </div>
-    <div class="span3">
+        <?php echo $form->dropDownListRow($model, 'subject_id',
+            Subject::getListForSpeciality($model->plan->speciality_id)); ?>
         <?php echo $form->numberFieldRow($model, 'total'); ?>
         <?php echo $form->numberFieldRow($model, 'lectures'); ?>
         <?php echo $form->numberFieldRow($model, 'labs'); ?>
@@ -82,11 +76,7 @@ $this->breadcrumbs = array(
     </div>
     <div style="clear: both"></div>
     <div class="form-actions" style="width: 300px; margin: 0 auto">
-        <?php echo CHtml::submitButton('Додати', array('class' => 'btn btn-primary')); ?>
-        <?php echo CHtml::link('Завершити', $this->createUrl('index'), array('class' => 'btn btn-info')); ?>
+        <?php echo CHtml::submitButton('Зберегти', array('class' => 'btn btn-primary')); ?>
+        <?php echo CHtml::link('Повернутись', $this->createUrl('subjects', array('id' => $model->plan_id)), array('class' => 'btn btn-info')); ?>
     </div>
 <?php $this->endWidget(); ?>
-
-<?php $this->widget('studyPlan.widgets.SubjectTable', array(
-    'subjectDataProvider' => $model->plan->getPlanSubjectProvider()
-));
