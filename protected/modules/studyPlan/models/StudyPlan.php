@@ -6,7 +6,7 @@
  * @property integer $id
  * @property integer $speciality_id
  * @property array $semesters
- * @property datetime $created
+ * @property integer $created
  *
  * The followings are the available model relations:
  * @property StudyGraphic[] $graphics

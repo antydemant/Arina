@@ -31,18 +31,7 @@ class m140120_114716_create_all_tables extends CDbMigration
 
     public function down()
     {
-        $this->execute("DROP TABLE `actual_class`, `audience`, `class_absence`, `class_mark`, `cyclic_commission`, `department`, `exemption`, `group`, `schedule`, `settings`, `speciality`, `sp_graphic`, `sp_hours`, `sp_plan`, `sp_semester`, `sp_subject`, `student`, `student_has_exemption`, `study_year`, `subject`, `subject_cycle`, `subject_has_speciality_and_cycle`, `teacher`, `teacher_load`, `user`");
+        $this->execute("DROP TABLE `actual_class`, `audience`, `class_absence`, `class_mark`, `cyclic_commission`, `department`, `exemption`, `group`, `schedule`, `settings`, `speciality`, `sp_graphic`, `sp_hours`, `sp_plan`, `sp_semester`, `sp_subject`, `student`, `student_has_exemption`, `study_year`, `subject`, `subject_cycle`, `subject_has_speciality_and_cycle`, `teacher`, `teacher_load`, `user`;");
         return true;
     }
-
-    /*
-    // Use safeUp/safeDown to do migration with transaction
-    public function safeUp()
-    {
-    }
-
-    public function safeDown()
-    {
-    }
-    */
 }

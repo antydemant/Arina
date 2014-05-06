@@ -222,7 +222,7 @@ INSERT INTO `speciality` (`id`, `title`, `department_id`, `number`, `accreditati
 (9, 'Обслуговування комп’ютерних систем', 6, '5.05010201', '2014-01-21'),
 (10, 'Обслуговування верстатів', 6, '5.05050202', '2014-01-20'),
 (11, 'Обслуговування та ремонт автомобілів', 6, '5.07010602', '2014-02-18'),
-(12, 'Обслуговування компютерних систем та мер', 3, '5.05010201', '2014-04-28');--
+(12, 'Обслуговування компютерних систем та мереж', 3, '5.05010201', '2014-04-28');--
 
 
 INSERT INTO `student` (`id`, `code`, `last_name`, `first_name`, `middle_name`, `group_id`, `phone_number`, `mobile_number`, `mother_name`, `father_name`, `gender`, `official_address`, `characteristics`, `factual_address`, `birth_date`, `admission_date`, `tuition_payment`, `admission_order_number`, `admission_semester`, `entry_exams`, `education_document`, `contract`, `math_mark`, `ua_language_mark`, `mother_workplace`, `mother_position`, `mother_workphone`, `mother_boss_workphone`, `father_workplace`, `father_position`, `father_workphone`, `father_boss_workphone`, `graduated`, `graduation_date`, `graduation_basis`, `graduation_semester`, `graduation_order_number`, `diploma`, `direction`, `misc_data`, `hobby`) VALUES
