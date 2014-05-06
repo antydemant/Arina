@@ -22,7 +22,7 @@ class Subject extends ActiveRecord
     }
 
     /**
-     * @param $id speciality id
+     * @param integer $id speciality id
      * @return array for dropDownList
      */
     public static function getListForSpeciality($id)

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * @copyright ХПК 2014
@@ -94,6 +95,10 @@ class StudySubject extends ActiveRecord
             'practs' => 'Практичні',
             'classes' => 'Всього аудиторних',
             'selfwork' => 'Самостійна робота',
+            'testSemesters' => 'Залік',
+            'examSemesters' => 'Екзамен',
+            'workSemesters' => 'Курсова робота',
+            'projectSemesters' => 'Курсовий проект',
         );
     }
 
@@ -167,7 +172,7 @@ class StudySubject extends ActiveRecord
         $semesters = array();
         foreach ($this->control as $semester => $control) {
             if ($control[0] === '0')
-                $semesters[] = $semester+1;
+                $semesters[] = $semester + 1;
         }
 
         return implode(', ', $semesters);
@@ -182,7 +187,7 @@ class StudySubject extends ActiveRecord
         $semesters = array();
         foreach ($this->control as $semester => $control) {
             if ($control[0] === '1')
-                $semesters[] = $semester+1;
+                $semesters[] = $semester + 1;
         }
         return implode(', ', $semesters);
     }
@@ -196,7 +201,7 @@ class StudySubject extends ActiveRecord
         $semesters = array();
         foreach ($this->control as $semester => $control) {
             if (!empty($control[1]))
-                $semesters[] = $semester+1;
+                $semesters[] = $semester + 1;
         }
         return implode(', ', $semesters);
     }
@@ -210,7 +215,7 @@ class StudySubject extends ActiveRecord
         $semesters = array();
         foreach ($this->control as $semester => $control) {
             if (!empty($control[2]))
-                $semesters[] = $semester+1;
+                $semesters[] = $semester + 1;
         }
         return implode(', ', $semesters);
     }
@@ -261,7 +266,7 @@ class StudySubject extends ActiveRecord
     {
         if (!$this->hasErrors()) {
             $criteria = new CDbCriteria();
-            $criteria->condition =  'plan_id = :plan';
+            $criteria->condition = 'plan_id = :plan';
             $criteria->params[':plan'] = $this->plan_id;
             $criteria->addCondition('subject_id = :subject');
             $criteria->params[':subject'] = $this->subject_id;
