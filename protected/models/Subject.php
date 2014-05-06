@@ -51,6 +51,17 @@ class Subject extends ActiveRecord
     }
 
     /**
+     * @param $specialityId
+     * @return SubjectCycle
+     */
+    public function getCycle($specialityId)
+    {
+        /**@var $relation SubjectRelation */
+        $relation = SubjectRelation::model()->findByAttributes(array('speciality_id'=>$specialityId,'subject_id'=>$this->id));
+        return $relation->cycle;
+    }
+
+    /**
      * @return string the associated database table name
      */
     public function tableName()

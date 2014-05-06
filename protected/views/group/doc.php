@@ -3,7 +3,7 @@
  *
  * @var GroupController $this
  * @var \GroupDocForm $model
- * @var CActiveForm $form
+ * @var TbActiveForm $form
  */
 ?>
 <?php $form = $this->beginWidget(Booster::FORM,     

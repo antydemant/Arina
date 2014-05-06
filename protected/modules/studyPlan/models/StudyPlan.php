@@ -16,6 +16,17 @@
 class StudyPlan extends ActiveRecord
 {
     /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return StudyPlan the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
+    }
+
+    /**
      * @return string the associated database table name
      */
     public function tableName()
@@ -30,7 +41,7 @@ class StudyPlan extends ActiveRecord
     {
         return array(
             array('speciality_id', 'required'),
-            array('semesters', 'required', 'message'=>'Натисніть кнопку "Генерувати" та перевірте правильність даних'),
+            array('semesters', 'required', 'message' => 'Натисніть кнопку "Генерувати" та перевірте правильність даних'),
             array('speciality_id', 'numerical', 'integerOnly' => true),
             array('created', 'default', 'value' => date('Y-m-d', time()), 'on' => 'insert'),
             array('id, speciality_id', 'safe', 'on' => 'search'),
@@ -47,6 +58,23 @@ class StudyPlan extends ActiveRecord
             'subjects' => array(self::HAS_MANY, 'StudySubject', 'plan_id'),
             'speciality' => array(self::BELONGS_TO, 'Speciality', 'speciality_id'),
         );
+    }
+
+    /**
+     *
+     */
+    public function getSubjectsByGroups()
+    {
+        $list = array();
+        foreach ($this->subjects as $item) {
+            $name = $item->subject->getCycle($this->speciality_id)->title;
+            if (isset($list[$name])) {
+                $list[$name][] = $item;
+            } else {
+                $list[$name] = array($item);
+            }
+        }
+        return $list;
     }
 
     /**
@@ -106,17 +134,6 @@ class StudyPlan extends ActiveRecord
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
-    }
-
-    /**
-     * Returns the static model of the specified AR class.
-     * Please note that you should have this exact method in all your CActiveRecord descendants!
-     * @param string $className active record class name.
-     * @return StudyPlan the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
     }
 
     /**
