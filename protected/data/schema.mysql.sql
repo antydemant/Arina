@@ -324,7 +324,7 @@ CREATE TABLE IF NOT EXISTS `student_has_exemption` (
   `student_id` int(11) NOT NULL,
   `exemption_id` int(11) NOT NULL,
   PRIMARY KEY (`student_id`,`exemption_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=u40tf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
