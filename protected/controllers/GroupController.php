@@ -49,8 +49,9 @@ class GroupController extends Controller
         $model = new GroupDocForm();
         $model->group = Group::model()->loadContent($id);
         if (isset($_POST['GroupDocForm'])) {
-            $model->attributes = $_POST['GroupDocForm'];
+            $model->setAttributes($_POST['GroupDocForm'],false);
             $model->getDoc();
+            Yii::app()->end();
         }
         $this->render('doc', array('model' => $model));
     }
@@ -87,6 +88,7 @@ class GroupController extends Controller
 
     /**
      * @param $id
+     * @throws CHttpException
      */
     public function actionUpdate($id)
     {
@@ -134,6 +136,7 @@ class GroupController extends Controller
 
     /**
      * @param $id
+     * @throws CHttpException
      */
     public function actionDelete($id)
     {

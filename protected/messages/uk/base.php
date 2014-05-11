@@ -3,6 +3,10 @@
  *
  */
 return array(
+    'Date' => 'Дата',
+    'Subject'=>'Предмет',
+    'Teacher' => 'Викладач',
+    'Create file' => 'Створити файл',
     'Total' => 'Всього',
     'Total amount' => 'Загальна кількість',
     'Create document' => 'Створити документ',

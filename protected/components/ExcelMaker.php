@@ -111,6 +111,32 @@ class ExcelMaker extends CComponent
     }
 
     /**
+     * @param $model GroupDocForm
+     * @return PHPExcel
+     */
+    protected function makeExamSheet($model)
+    {
+        $objPHPExcel = $this->loadTemplate('exam.xls');
+        $sheet = $sheet = $objPHPExcel->setActiveSheetIndex(0);
+
+        $sheet->setCellValue('A15', $model->teacher);
+        $sheet->setCellValue('A5', $model->group->speciality->department->head->getFullName());
+        $sheet->setCellValue('A11', $model->subject->title);
+        $sheet->setCellValue('F14', $model->group->title);
+
+        for ($i = 0; $i < count($model->group->students); $i++) {
+            $sheet->setCellValue('A' . (19 + $i), $i + 1);
+            $sheet->setCellValue('B' . (19 + $i), $model->group->students[$i]->fullName);
+            $sheet->insertNewRowBefore($i + 20, 1);
+        }
+        $sheet->removeRow($i+20);
+        $sheet->setCellValue('D'.(20 + $i),'=average(D19:D'.($i+19).')');
+        $sheet->setCellValue('E' . (25 + $i), $model->teacher);
+        $sheet->setCellValue('B' . (27 + $i), 'Дата:'.$model->date);
+        return $objPHPExcel;
+    }
+
+    /**
      * @param $plan StudyPlan
      * @return PHPExcel
      */
@@ -160,8 +186,8 @@ class ExcelMaker extends CComponent
             }
             $end = $i - 1;
             $sheet->setCellValue("B$i", Yii::t('base', 'Total'));
-            $totals[]=$i;
-            for ($c = 'G'; $c < 'V';$c++){
+            $totals[] = $i;
+            for ($c = 'G'; $c < 'V'; $c++) {
                 $sheet->setCellValueExplicit("$c$i", "=SUM($c$begin:$c$end)");
             }
             $sheet->insertNewRowBefore($i + 1, 1);
@@ -169,8 +195,8 @@ class ExcelMaker extends CComponent
             $j++;
         }
         $sheet->setCellValue("B$i", Yii::t('base', 'Total amount'));
-        for ($c = 'G'; $c < 'V';$c++){
-            $sheet->setCellValueExplicit("$c$i", "=SUM($c".implode("+$c",$totals).')');
+        for ($c = 'G'; $c < 'V'; $c++) {
+            $sheet->setCellValueExplicit("$c$i", "=SUM($c" . implode("+$c", $totals) . ')');
         }
         /*
 
