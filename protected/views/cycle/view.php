@@ -8,8 +8,8 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Yii::t('subject', 'Cycles list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
-    array('label' => Yii::t('subject', 'Create cycle'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
+    array('label' => Yii::t('subject', 'Cycles list'), 'url' => array('index'), 'type' => BoosterHelper::TYPE_PRIMARY),
+    array('label' => Yii::t('subject', 'Create cycle'), 'url' => array('create'), 'type' => BoosterHelper::TYPE_PRIMARY),
 
     array('label' => Yii::t('subject', 'Update cycle'), 'url' => array('update', 'id' => $model->id), 'icon' => 'pencil'),
     array(
@@ -43,7 +43,7 @@ foreach ($model->subjects as $item) {
     );
     $attributes[] = $subject;
 }
-$this->widget(Booster::DETAIL_VIEW, array(
+$this->widget(BoosterHelper::DETAIL_VIEW, array(
     'data' => $model,
     'attributes' => $attributes,
 )); ?>

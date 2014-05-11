@@ -5,10 +5,10 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Yii::t('department', 'Departments list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
+    array('label' => Yii::t('department', 'Departments list'), 'url' => array('index'), 'type' => BoosterHelper::TYPE_PRIMARY),
 );
 ?>
 
-    <h1><?php echo Yii::t('department', 'Create new department')?></h1>
+    <h1><?php echo Yii::t('department', 'Create new department') ?></h1>
 
 <?php echo $this->renderPartial('_form', array('model' => $model)); ?>

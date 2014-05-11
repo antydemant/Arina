@@ -11,7 +11,7 @@ if (!isset($filter)) {
     $filter = null;
 }
 $this->widget(
-    Booster::GRID_VIEW,
+    BoosterHelper::GRID_VIEW,
     array(
         'dataProvider' => $provider,
         'filter' => $filter,

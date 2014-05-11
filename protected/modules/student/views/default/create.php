@@ -8,11 +8,11 @@ $this->breadcrumbs = array(
 );
 
 $this->widget(
-    Booster::BUTTON_GROUP,
+    BoosterHelper::BUTTON_GROUP,
     array(
         'buttons' => array(
             array(
-                'type' => Booster::TYPE_PRIMARY,
+                'type' => BoosterHelper::TYPE_PRIMARY,
                 'label' => Yii::t('student', 'Students list'),
                 'url' => $this->createUrl('index'),
             ),

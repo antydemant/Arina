@@ -33,7 +33,7 @@ $this->widget('bootstrap.widgets.TbExtendedGridView', array(
             array(
                 'header' => Yii::t('base', 'Actions'),
                 'template' => '{update}{delete}',
-                'class' => Booster::GRID_BUTTON_COLUMN,
+                'class' => BoosterHelper::GRID_BUTTON_COLUMN,
                 'updateButtonUrl' => 'Yii::app()->createUrl("studyPlan/plan/editSubject", array("id" => $data->id))',
                 'deleteButtonUrl' => 'Yii::app()->createUrl("studyPlan/plan/deleteSubject", array("id" => $data->id))',
             )

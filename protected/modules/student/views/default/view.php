@@ -8,26 +8,26 @@ $this->breadcrumbs = array(
 );
 
 $this->widget(
-    Booster::BUTTON_GROUP,
+    BoosterHelper::BUTTON_GROUP,
     array(
         'buttons' => array(
             array(
-                'type' => Booster::TYPE_PRIMARY,
+                'type' => BoosterHelper::TYPE_PRIMARY,
                 'label' => Yii::t('student', 'Students list'),
                 'url' => $this->createUrl('index'),
             ),
             array(
-                'type' => Booster::TYPE_PRIMARY,
+                'type' => BoosterHelper::TYPE_PRIMARY,
                 'label' => Yii::t('student', 'Create Student'),
                 'url' => $this->createUrl('create'),
             ),
             array(
-                'type' => Booster::TYPE_PRIMARY,
+                'type' => BoosterHelper::TYPE_PRIMARY,
                 'label' => Yii::t('student', 'Update Student'),
                 'url' => $this->createUrl('update', array('id' => $model->id)),
             ),
             array(
-                'type' => Booster::TYPE_PRIMARY,
+                'type' => BoosterHelper::TYPE_PRIMARY,
                 'label' => Yii::t('student', 'Delete Student'),
                 'url' => $this->createUrl('delete'),
                 'icon' => 'icon-remove-sign',

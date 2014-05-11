@@ -3,7 +3,23 @@
  * @var PlanController $this
  * @var StudyPlan $model
  */
+$this->breadcrumbs = array(
+    Yii::t('base', 'Study plans') => $this->createUrl('index'),
+    $model->speciality->title => $this->createUrl('view', array('id' => $model->id)),
+);
 
+$this->menu = array(
+    array(
+        'label' => 'Повернутись',
+        'type' => 'primary',
+        'url' => $this->createUrl('index')
+    ),
+    array(
+        'label' => 'Редагувати предмети',
+        'type' => 'info',
+        'url' => $this->createUrl('subjects', array('id' => $model->id))
+    ),
+);
 ?>
 
     <h3>Редагування</h3>

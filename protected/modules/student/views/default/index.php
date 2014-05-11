@@ -9,7 +9,7 @@ $this->breadcrumbs = array(
 
 $this->menu = array(
     array(
-        'type' => Booster::TYPE_PRIMARY,
+        'type' => BoosterHelper::TYPE_PRIMARY,
         'label' => Yii::t('student', 'Create Student'),
         'url' => $this->createUrl('create'),
     ),
@@ -45,7 +45,7 @@ $('.search-form form').submit(function(){
 </div>
 
 <?php
-$this->widget(Booster::GRID_VIEW, array(
+$this->widget(BoosterHelper::GRID_VIEW, array(
     'id' => 'student-grid',
     'dataProvider' => $model->search(),
     'filter' => $model,

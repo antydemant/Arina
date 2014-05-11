@@ -9,7 +9,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Yii::t('subject', 'Create subject'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
+    array('label' => Yii::t('subject', 'Create subject'), 'url' => array('create'), 'type' => BoosterHelper::TYPE_PRIMARY),
 );
 ?>
 
@@ -23,7 +23,7 @@ $columns = array(
     array(
         'header' => Yii::t('base', 'Actions'),
         'class' => 'bootstrap.widgets.TbButtonColumn',
-        'template'=>'{update}{delete}',
+        'template' => '{update}{delete}',
     ),
 );
 $this->renderPartial('//tableList', array('columns' => $columns, 'provider' => $dataProvider));

@@ -8,7 +8,7 @@ $this->breadcrumbs = array(
 );
 $this->menu = array(
     array(
-        'type' => Booster::TYPE_PRIMARY,
+        'type' => BoosterHelper::TYPE_PRIMARY,
         'label' => Yii::t('audience', 'Add new audience'),
         'url' => $this->createUrl('create'),
     ),

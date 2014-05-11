@@ -8,7 +8,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Yii::t('speciality', 'Specialities list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
+    array('label' => Yii::t('speciality', 'Specialities list'), 'url' => array('index'), 'type' => BoosterHelper::TYPE_PRIMARY),
 );
 ?>
     <h2><?php echo Yii::t('speciality', 'Create new speciality'); ?></h2>

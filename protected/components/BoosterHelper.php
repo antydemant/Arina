@@ -1,9 +1,9 @@
 <?php
+
 /**
  * @author Dmytro Karpovych <ZAYEC77@gmail.com>
  */
-
-class Booster
+class BoosterHelper
 {
     const ALERT = 'booster.widgets.TbAlert';
     const GRID_VIEW = "booster.widgets.TbGridView";

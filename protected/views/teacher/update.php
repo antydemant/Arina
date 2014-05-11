@@ -10,8 +10,8 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Yii::t('teacher', 'Teacher list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
-    array('label' => Yii::t('teacher', 'Add new teacher'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
+    array('label' => Yii::t('teacher', 'Teacher list'), 'url' => array('index'), 'type' => BoosterHelper::TYPE_PRIMARY),
+    array('label' => Yii::t('teacher', 'Add new teacher'), 'url' => array('create'), 'type' => BoosterHelper::TYPE_PRIMARY),
     array(
         'label' => Yii::t('teacher', 'Delete teacher'),
         'icon' => 'trash',

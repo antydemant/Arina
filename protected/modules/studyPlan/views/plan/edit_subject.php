@@ -38,7 +38,7 @@
             width: 100%;
         }
     </style>
-<?php $form = $this->beginWidget(Booster::FORM, array(
+<?php $form = $this->beginWidget(BoosterHelper::FORM, array(
     'htmlOptions' => array(
         'class' => 'well row',
     )

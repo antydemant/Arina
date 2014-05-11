@@ -6,7 +6,7 @@
 ?>
 <?php $this->beginContent('//layouts/main'); ?>
 
-<?php $this->widget(Booster::NAVIGATOR, array(
+<?php $this->widget(BoosterHelper::NAVIGATOR, array(
     'type' => 'inverse', // null or 'inverse' //comment
     //'brand' => 'KhPK',
     'brand' => '@',
@@ -32,7 +32,7 @@
 <div class="container">
 
     <?php
-    $this->widget(Booster::ALERT, array(
+    $this->widget(BoosterHelper::ALERT, array(
         'alerts' => array(
             'success',
             'info',
@@ -51,7 +51,7 @@
 
     <?php if (isset($this->menu)): ?>
         <header>
-            <?php  $this->widget(Booster::BUTTON_GROUP, array(
+            <?php  $this->widget(BoosterHelper::BUTTON_GROUP, array(
                 'buttons' => $this->menu,
             ));?>
         </header><!-- menu -->

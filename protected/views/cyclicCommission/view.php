@@ -17,8 +17,8 @@ $this->menu = array(
 
 );
 $this->menu = array(
-    array('label' => Yii::t('teacher', 'Commissions list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
-    array('label' => Yii::t('teacher', 'Create new cyclic commission'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
+    array('label' => Yii::t('teacher', 'Commissions list'), 'url' => array('index'), 'type' => BoosterHelper::TYPE_PRIMARY),
+    array('label' => Yii::t('teacher', 'Create new cyclic commission'), 'url' => array('create'), 'type' => BoosterHelper::TYPE_PRIMARY),
     array(
         'label' => Yii::t('teacher', 'Update cyclic commission'),
         'icon' => 'pencil',
@@ -57,7 +57,7 @@ $attributes = array(
 foreach ($model->teachers as $item) {
     $attributes[] = array('type' => 'raw', 'value' => CHtml::link($item->getFullName(), array('teacher/view', 'id' => $item->id)));
 }
-$this->widget(Booster::DETAIL_VIEW, array(
+$this->widget(BoosterHelper::DETAIL_VIEW, array(
     'data' => $model,
     'attributes' => $attributes,
 )); ?>

@@ -7,7 +7,7 @@
  */
 ?>
 <?php $form = $this->beginWidget(
-    Booster::FORM,
+    BoosterHelper::FORM,
     array(
         'id' => 'group-form',
         'type' => 'horizontal',
@@ -18,11 +18,11 @@
 ?>
 <?php echo $form->textFieldRow($model, 'title'); ?>
 
-<?php echo $form->dropDownListRow($model, 'speciality_id', Speciality::getList(), array('empty' => Yii::t('group', 'Select speciality'),'class'=>'span6')); ?>
-<?php echo $form->dropDownListRow($model, 'curator_id', Teacher::getList(), array('empty' => Yii::t('group', 'Select curator'),'class'=>'span6')); ?>
+<?php echo $form->dropDownListRow($model, 'speciality_id', Speciality::getList(), array('empty' => Yii::t('group', 'Select speciality'), 'class' => 'span6')); ?>
+<?php echo $form->dropDownListRow($model, 'curator_id', Teacher::getList(), array('empty' => Yii::t('group', 'Select curator'), 'class' => 'span6')); ?>
 <?php
 if (!$model->isNewRecord) {
-    echo $form->dropDownListRow($model, 'monitor_id', $model->getStudentsList(), array('empty' => Yii::t('group', 'Select prefect'),'class'=>'span6'));
+    echo $form->dropDownListRow($model, 'monitor_id', $model->getStudentsList(), array('empty' => Yii::t('group', 'Select prefect'), 'class' => 'span6'));
 }
 ?>
 <?php $this->renderPartial('//formButtons', array('model' => $model)); ?>

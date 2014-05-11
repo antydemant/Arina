@@ -11,7 +11,7 @@ $this->breadcrumbs = array(
 );
 $this->menu = array(
     array(
-        'type' => Booster::TYPE_PRIMARY,
+        'type' => BoosterHelper::TYPE_PRIMARY,
         'label' => Yii::t('group', 'Create new group'),
         'url' => $this->createUrl('create'),
     ),

@@ -7,7 +7,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Yii::t('speciality', 'Create new speciality'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
+    array('label' => Yii::t('speciality', 'Create new speciality'), 'url' => array('create'), 'type' => BoosterHelper::TYPE_PRIMARY),
 );
 ?>
 
@@ -16,7 +16,7 @@ $columns = array(
     'number',
     'title',
     array(
-        'header' => Yii::t('department','Department'),
+        'header' => Yii::t('department', 'Department'),
         'name' => 'department.title',
         'value' => 'CHtml::link($data->department->title, array(
                     "/department/view/",

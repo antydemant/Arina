@@ -11,12 +11,12 @@ $this->breadcrumbs = array(
 );
 $this->menu = array(
     array(
-        'type' => Booster::TYPE_PRIMARY,
+        'type' => BoosterHelper::TYPE_PRIMARY,
         'label' => Yii::t('group', 'Groups list'),
         'url' => $this->createUrl('index'),
     ),
     array(
-        'type' => Booster::TYPE_PRIMARY,
+        'type' => BoosterHelper::TYPE_PRIMARY,
         'label' => Yii::t('group', 'Create new group'),
         'url' => $this->createUrl('create'),
     ),
@@ -46,7 +46,7 @@ $this->menu = array(
 ?>
 <h2><?php echo Yii::t('group', 'View group') . " {$model->title}"; ?></h2>
 
-<?php $this->widget(Booster::DETAIL_VIEW, array(
+<?php $this->widget(BoosterHelper::DETAIL_VIEW, array(
     'data' => $model,
     'attributes' => array(
         'title',

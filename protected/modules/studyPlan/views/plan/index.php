@@ -3,9 +3,12 @@
  * @var PlanController $this
  * @var CActiveDataProvider $dataProvider
  */
+$this->breadcrumbs = array(
+    Yii::t('base', 'Study plans') => $this->createUrl('/studyPlan'),
+);
 ?>
 
-<?php $this->widget(Booster::GRID_VIEW, array(
+<?php $this->widget(BoosterHelper::GRID_VIEW, array(
     'dataProvider' => $dataProvider,
     'columns' => array(
         array(

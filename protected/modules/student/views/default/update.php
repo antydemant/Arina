@@ -9,21 +9,21 @@ $this->breadcrumbs = array(
 );
 
 $this->widget(
-    Booster::BUTTON_GROUP,
+    BoosterHelper::BUTTON_GROUP,
     array(
         'buttons' => array(
             array(
-                'type' => Booster::TYPE_PRIMARY,
+                'type' => BoosterHelper::TYPE_PRIMARY,
                 'label' => Yii::t('student', 'Students list'),
                 'url' => $this->createUrl('index'),
             ),
             array(
-                'type' => Booster::TYPE_PRIMARY,
+                'type' => BoosterHelper::TYPE_PRIMARY,
                 'label' => Yii::t('student', 'Create Student'),
                 'url' => $this->createUrl('create'),
             ),
             array(
-                'type' => Booster::TYPE_PRIMARY,
+                'type' => BoosterHelper::TYPE_PRIMARY,
                 'label' => Yii::t('student', 'View Student'),
                 'url' => $this->createUrl('view', array('id' => $model->id)),
             ),

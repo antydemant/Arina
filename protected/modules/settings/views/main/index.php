@@ -2,13 +2,13 @@
 /* @var $this MainController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs=array(
-	'Settings',
+$this->breadcrumbs = array(
+    'Settings',
 );
 
-$this->menu=array(
-	array('label'=>'Create Settings', 'url'=>array('create')),
-	array('label'=>'Manage Settings', 'url'=>array('admin')),
+$this->menu = array(
+    array('label' => 'Create Settings', 'url' => array('create')),
+    array('label' => 'Manage Settings', 'url' => array('admin')),
 );
 ?>
 
@@ -16,16 +16,16 @@ $this->menu=array(
 
 <?php
 $this->widget(
-    Booster::GRID_VIEW,
+    BoosterHelper::GRID_VIEW,
     array(
         'dataProvider' => $model->search(),
         'filter' => $model,
-        'columns'=>array(
+        'columns' => array(
             'key',
             'title',
             'value',
             array(
-                'class'=>'CButtonColumn',
+                'class' => 'CButtonColumn',
             ),
         ),
         'responsiveTable' => true,
