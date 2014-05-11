@@ -8,11 +8,16 @@ class Graph extends CWidget
     public $model;
     public $field;
     public $yearAmount = 4;
+    public $graph = null;
     protected $list;
 
     public function init()
     {
-        $this->list = GlobalHelper::getWeeksByMonths();
+        if (isset($this->graph)){
+            $this->list = $this->graph;
+        } else {
+            $this->list = GlobalHelper::getWeeksByMonths();
+        }
     }
 
     public function run()

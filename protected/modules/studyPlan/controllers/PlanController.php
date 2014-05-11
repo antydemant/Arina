@@ -61,6 +61,7 @@ class PlanController extends Controller
             foreach ($course as $week)
                 $weeks[] = $week;
         Yii::app()->session['weeks'] = $weeks;
+        Yii::app()->session['graph'] = $_POST['graph'];
         $this->renderPartial('semestersPlan', array('data' => $semesters));
     }
 
