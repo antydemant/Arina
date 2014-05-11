@@ -15,6 +15,14 @@
 )); ?>
 <?php echo $form->errorSummary($model); ?>
 <?php echo $form->dropDownListRow($model, 'speciality_id', Speciality::getList(), array('empty' => 'Оберіть спеціальність')); ?>
+<?php if ($model->isNewRecord): ?>
+    <div class="control-group">
+        <?php echo CHtml::label('План для основи', 'origin', array('class' => 'control-label')); ?>
+        <div class="controls">
+            <?php echo TbHtml::dropDownList('origin', '', CHtml::listData(StudyPlan::model()->findAll(), 'id', 'speciality.title'), array('empty' => '')); ?>
+        </div>
+    </div>
+<?php endif; ?>
 <?php $this->widget('studyPlan.widgets.Graph', array('model' => $model, 'field' => '', 'graph' => $model->graph)); ?>
 <?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
 <?php $this->endWidget(); ?>

@@ -28,12 +28,29 @@ class PlanController extends Controller
                 unset(Yii::app()->session['graph']);
             }
             if ($model->save()) {
+                if (isset($_POST['origin'])) {
+                    $this->copyPlan(StudyPlan::model()->loadContent($_POST['origin']), $model);
+                }
                 $this->redirect($this->createUrl('subjects', array('id' => $model->id)));
             }
         }
 
         $this->render('create', array('model' => $model));
+    }
 
+    /**
+     * Копіює предмети з одного плану в інший
+     * @param StudyPlan $origin
+     * @param StudyPlan $newPlan
+     */
+    public function copyPlan($origin, $newPlan)
+    {
+        foreach ($origin->subjects as $subject) {
+            $model = new StudySubject();
+            $model->attributes = $subject->attributes;
+            $model->plan_id = $newPlan->id;
+            $model->save(false);
+        }
     }
 
     public function actionExecuteGraph()
