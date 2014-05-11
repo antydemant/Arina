@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is the model class for table "sp_plan".
  *
@@ -6,6 +7,7 @@
  * @property integer $id
  * @property integer $speciality_id
  * @property array $semesters
+ * @property array $graph
  * @property integer $created
  *
  * The followings are the available model relations:
@@ -83,6 +85,12 @@ class StudyPlan extends ActiveRecord
     public function behaviors()
     {
         return array(
+            'JSONBehavior' => array(
+                'class' => 'application.behaviors.JsonBehavior',
+                'fields' => array(
+                    'graph'
+                ),
+            ),
             'StrBehavior' => array(
                 'class' => 'application.behaviors.StrBehavior',
                 'fields' => array(

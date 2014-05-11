@@ -15,7 +15,6 @@
 )); ?>
 <?php echo $form->errorSummary($model); ?>
 <?php echo $form->dropDownListRow($model, 'speciality_id', Speciality::getList(), array('empty' => 'Оберіть спеціальність')); ?>
-<?php $this->widget('studyPlan.widgets.Graph', array('model' => $model, 'field' => '')); ?>
-
+<?php $this->widget('studyPlan.widgets.Graph', array('model' => $model, 'field' => '', 'graph' => $model->graph)); ?>
 <?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
 <?php $this->endWidget(); ?>

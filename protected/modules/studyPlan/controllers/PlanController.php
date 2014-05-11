@@ -23,12 +23,17 @@ class PlanController extends Controller
                 $model->semesters = Yii::app()->session['weeks'];
                 unset(Yii::app()->session['weeks']);
             }
+            if (isset(Yii::app()->session['graph'])) {
+                $model->graph = Yii::app()->session['graph'];
+                unset(Yii::app()->session['graph']);
+            }
             if ($model->save()) {
                 $this->redirect($this->createUrl('subjects', array('id' => $model->id)));
             }
         }
 
         $this->render('create', array('model' => $model));
+
     }
 
     public function actionExecuteGraph()
