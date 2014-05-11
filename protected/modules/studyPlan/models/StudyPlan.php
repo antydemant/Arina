@@ -86,7 +86,7 @@ class StudyPlan extends ActiveRecord
     {
         return array(
             'JSONBehavior' => array(
-                'class' => 'application.behaviors.JsonBehavior',
+                'class' => 'application.behaviors.JSONBehavior',
                 'fields' => array(
                     'graph'
                 ),

@@ -5,7 +5,7 @@
  */
 $this->breadcrumbs = array(
     Yii::t('base', 'Study plans') => $this->createUrl('index'),
-    $model->speciality->title => $this->createUrl('view', array('id' => $model->id)),
+    $model->speciality->title => $this->createUrl('view', array('id' => $model->id,'graph'=>$model->graph)),
 );
 
 $this->menu = array(

@@ -134,8 +134,8 @@
                     <input
                         name="<?php echo "graph[$j][$i]"; ?>"
                         type="button" class="btn"
-                        value="<?php echo Yii::t('plan', PlanHelper::getPlanValue($i, $j)); ?>"
-                        data-state="<?php echo PlanHelper::getPlanValue($i, $j); ?>"/>
+                        value="<?php echo Yii::t('plan', $map[$j][$i]); ?>"
+                        data-state="<?php echo $map[$j][$i]; ?>"/>
                 </td>
             <?php endfor; ?>
         </tr>
