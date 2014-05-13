@@ -50,8 +50,10 @@ class GroupController extends Controller
         $model->group = Group::model()->loadContent($id);
         if (isset($_POST['GroupDocForm'])) {
             $model->setAttributes($_POST['GroupDocForm'],false);
-            $model->getDoc();
-            Yii::app()->end();
+            if ($model->validate()) {
+                $model->getDoc();
+                Yii::app()->end();
+            }
         }
         $this->render('doc', array('model' => $model));
     }

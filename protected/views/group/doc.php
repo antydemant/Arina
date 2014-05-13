@@ -19,8 +19,9 @@
 
             <span><?php echo $model->group->title; ?></span></div>
     </div>
+<?php echo $form->numberFieldRow($model,'semester'); ?>
 <?php echo $form->dropDownListRow($model, 'teacher', CHtml::listData(Teacher::model()->findAll(array('order' => 'last_name, middle_name, first_name')), 'fullName', 'fullName'), array('class' => 'span4')); ?>
-<?php echo $form->datePickerRow($model, 'date', array('options' => array('format' => 'mm.dd.yyyy'),)); ?>
+<?php echo $form->datePickerRow($model, 'date', array('options' => array('format' => 'dd.mm.yyyy','language'=>'uk','weekStart'=>'1'),)); ?>
 <?php echo $form->dropDownListRow($model, 'subject', Subject::getListForSpeciality($model->group->speciality_id)); ?>
     <div class="form-actions">
         <?php $this->widget(

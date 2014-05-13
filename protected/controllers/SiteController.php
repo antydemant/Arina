@@ -419,6 +419,7 @@ class SiteController extends Controller
 
         //$bizRule='return Yii::app()->user->name === "admin";';
         //$auth->createRole('admin', 'admin user', $bizRule);
+        echo "OK";
         return;
     }
 }

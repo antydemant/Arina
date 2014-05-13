@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 date_default_timezone_set(date_default_timezone_get());
 // remove the following lines when in production mode
 defined('YII_DEBUG') or define('YII_DEBUG', true);

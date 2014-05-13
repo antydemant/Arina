@@ -3,6 +3,7 @@
  *
  */
 return array(
+    'Semester'=>'Семестер',
     'Date' => 'Дата',
     'Subject'=>'Предмет',
     'Teacher' => 'Викладач',
