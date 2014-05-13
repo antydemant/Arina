@@ -6,7 +6,7 @@
 
 <div class="form">
 
-    <?php $form = $this->beginWidget(Booster::FORM, array(
+    <?php $form = $this->beginWidget(BoosterHelper::FORM, array(
         'id' => 'actual-class-form',
         // Please note: When you enable ajax validation, make sure the corresponding
         // controller action is handling ajax validation correctly.
@@ -15,17 +15,17 @@
         'enableAjaxValidation' => false,
     )); ?>
 
-    <p class="note"><?php echo Yii::t('base', 'Fields with <span class="required">*</span> are required.')  ?></p>
+    <p class="note"><?php echo Yii::t('base', 'Fields with <span class="required">*</span> are required.') ?></p>
 
     <?php echo $form->errorSummary($model); ?>
 
-        <?php echo $form->datePickerRow($model, 'date'); ?>
+    <?php echo $form->datePickerRow($model, 'date'); ?>
 
-        <?php echo $form->textFieldRow($model, 'class_number'); ?>
+    <?php echo $form->textFieldRow($model, 'class_number'); ?>
 
-        <?php echo $form->textFieldRow($model, 'teacher_load_id'); ?>
+    <?php echo $form->textFieldRow($model, 'teacher_load_id'); ?>
 
-        <?php echo $form->textFieldRow($model, 'class_type'); ?>
+    <?php echo $form->textFieldRow($model, 'class_type'); ?>
 
     <div class="row buttons">
         <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('base', 'Create') : Yii::t('base', 'Save')); ?>

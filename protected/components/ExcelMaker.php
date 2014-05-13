@@ -82,17 +82,6 @@ class ExcelMaker extends CComponent
     }
 
     /**
-     * @param PHPExcel_Worksheet $sheet
-     * @param $cell
-     * @param $value
-     * @param string $alias
-     */
-    public function setValue($sheet, $cell, $value, $alias='@value')
-    {
-        $sheet->setCellValue($cell, str_replace($alias, $value, $sheet->getCell($cell)->getCalculatedValue()));
-    }
-
-    /**
      * @param $alias
      * @param string $fileType
      * @return PHPExcel
@@ -108,6 +97,117 @@ class ExcelMaker extends CComponent
         } else {
             throw new CException(Yii::t('error', 'Template "{name}" not found', array('{name}' => $alias)));
         }
+    }
+
+    /**
+     * @param PHPExcel_Worksheet $sheet
+     * @param $cell
+     * @param $value
+     * @param string $alias
+     */
+    public function setValue($sheet, $cell, $value, $alias = '@value')
+    {
+        $sheet->setCellValue($cell, str_replace($alias, $value, $sheet->getCell($cell)->getCalculatedValue()));
+    }
+
+    /**
+     * @param $model GroupDocForm
+     * @return PHPExcel
+     */
+    protected function makeExamSheet($model)
+    {
+        $objPHPExcel = $this->loadTemplate('exam.xls');
+        $sheet = $sheet = $objPHPExcel->setActiveSheetIndex(0);
+
+        $sheet->setCellValue('A15', $model->teacher);
+        $sheet->setCellValue('A5', $model->group->speciality->department->head->getFullName());
+        $sheet->setCellValue('A11', $model->subject->title);
+        $sheet->setCellValue('F14', $model->group->title);
+
+        for ($i = 0; $i < count($model->group->students); $i++) {
+            $sheet->setCellValue('A' . (19 + $i), $i + 1);
+            $sheet->setCellValue('B' . (19 + $i), $model->group->students[$i]->fullName);
+            $sheet->insertNewRowBefore($i + 20, 1);
+        }
+        $sheet->removeRow($i+20);
+        $sheet->setCellValue('D'.(20 + $i),'=average(D19:D'.($i+19).')');
+        $sheet->setCellValue('E' . (25 + $i), $model->teacher);
+        $sheet->setCellValue('B' . (27 + $i), 'Дата:'.$model->date);
+        return $objPHPExcel;
+    }
+
+    /**
+     * @param $plan StudyPlan
+     * @return PHPExcel
+     */
+    protected function makeStudyPlan($plan)
+    {
+        $objPHPExcel = $this->loadTemplate('plan.xls');
+        $sheet = $sheet = $objPHPExcel->setActiveSheetIndex(2);
+
+        $j = 'N';
+        $i = 8;
+        foreach ($plan->semesters as $item) {
+            $sheet->setCellValue($j . $i, $item);
+            $j++;
+        }
+        $i++;
+        $j = 1;
+        $totals = array();
+        foreach ($plan->getSubjectsByGroups() as $name => $group) {
+            $sheet->setCellValue("B$i", "$j. " . $name);
+            $sheet->insertNewRowBefore($i + 1, 1);
+            $i++;
+            $begin = $i;
+            $jj = 1;
+            foreach ($group as $item) {
+                /**@var $item StudySubject */
+                $sheet->setCellValue("A$i", $item->subject->code);
+                $sheet->setCellValue("B$i", "$j.$jj. " . $item->subject->title);
+                $sheet->setCellValue("C$i", $item->getExamSemesters());
+                $sheet->setCellValue("D$i", $item->getTestSemesters());
+                $sheet->setCellValue("E$i", $item->getWorkSemesters());
+                $sheet->setCellValue("F$i", $item->getProjectSemesters());
+                $sheet->setCellValue("G$i", round($item->total / 54, 2));
+                $sheet->setCellValue("H$i", $item->total);
+                $sheet->setCellValue("I$i", $item->getClasses());
+                $sheet->setCellValue("J$i", $item->lectures);
+                $sheet->setCellValue("K$i", $item->labs);
+                $sheet->setCellValue("L$i", $item->practs);
+                $sheet->setCellValue("M$i", $item->getSelfwork());
+                $char = 'N';
+                foreach ($item->weeks as $key => $week) {
+                    $sheet->setCellValue($char . $i, $week);
+                    $char++;
+                }
+                $sheet->insertNewRowBefore($i + 1, 1);
+                $i++;
+                $jj++;
+            }
+            $end = $i - 1;
+            $sheet->setCellValue("B$i", Yii::t('base', 'Total'));
+            $totals[] = $i;
+            for ($c = 'G'; $c < 'V'; $c++) {
+                $sheet->setCellValueExplicit("$c$i", "=SUM($c$begin:$c$end)");
+            }
+            $sheet->insertNewRowBefore($i + 1, 1);
+            $i++;
+            $j++;
+        }
+        $sheet->setCellValue("B$i", Yii::t('base', 'Total amount'));
+        for ($c = 'G'; $c < 'V'; $c++) {
+            $sheet->setCellValueExplicit("$c$i", "=SUM($c" . implode("+$c", $totals) . ')');
+        }
+        /*
+
+        $i = 46;
+        foreach ($plan->subjects as $item) {
+            $sheet->mergeCells("D$i:G$i");
+            $sheet->insertNewRowBefore($i + 1, 1);
+            $i++;
+        }
+        $sheet->removeRow($i);*/
+        return $objPHPExcel;
     }
 
 }

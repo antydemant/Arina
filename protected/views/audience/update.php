@@ -9,7 +9,7 @@ $this->breadcrumbs = array(
     Yii::t('audience', 'Update audience') . " {$model->number}",
 );
 $this->menu = array(
-    array('type' => Booster::TYPE_PRIMARY, 'label' => Yii::t('audience', 'Audience list'), 'url' => array('index')),
+    array('type' => BoosterHelper::TYPE_PRIMARY, 'label' => Yii::t('audience', 'Audience list'), 'url' => array('index')),
 
     array(
         'label' => Yii::t('audience', 'Delete audience'),

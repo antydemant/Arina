@@ -11,19 +11,19 @@ $this->breadcrumbs = array(
 );
 $this->menu = array(
     array(
-        'type' => Booster::TYPE_PRIMARY,
+        'type' => BoosterHelper::TYPE_PRIMARY,
         'label' => Yii::t('group', 'Groups list'),
         'url' => $this->createUrl('index'),
     ),
     array(
-        'type' => Booster::TYPE_PRIMARY,
+        'type' => BoosterHelper::TYPE_PRIMARY,
         'label' => Yii::t('group', 'Create new group'),
         'url' => $this->createUrl('view', array('id' => $model->id)),
     ),
     array(
         'label' => Yii::t('student', 'Students of group'),
         'icon' => 'list',
-        'url' => Yii::app()->createUrl('student/group', array('id' => $model->id)),
+        'url' => Yii::app()->createUrl('student/default/group', array('id' => $model->id)),
     ),
     array(
         'label' => Yii::t('group', 'Delete group'),

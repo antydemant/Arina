@@ -5,12 +5,21 @@
  */
 class GroupDocForm extends CFormModel
 {
+    /**
+     * @var $group Group
+     */
     public $group;
     public $subject;
     public $year;
+    public $date;
     public $teacher1;
     public $teacher2;
+    public $teacher;
 
+    public function init()
+    {
+        $this->date = date('d.m.Y');
+    }
     public function getAttributeLabels()
     {
         return array(
@@ -23,7 +32,17 @@ class GroupDocForm extends CFormModel
     {
         /**@var $excel ExcelMaker */
         $excel = Yii::app()->getComponent('excel');
-        $excel->getDocument($this->group, 'simpleGroupList');
+        $this->subject = Subject::model()->findByPk($this->subject);
+        $excel->getDocument($this, 'examSheet');
+    }
+
+    public function attributeLabels()
+    {
+        return array(
+            'date'=>Yii::t('base','Date'),
+            'teacher'=>Yii::t('base','Teacher'),
+            'subject'=>Yii::t('base','Subject'),
+        );
     }
 
 }

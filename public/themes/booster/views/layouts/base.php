@@ -6,10 +6,10 @@
 ?>
 <?php $this->beginContent('//layouts/main'); ?>
 
-<?php $this->widget(Booster::NAVIGATOR, array(
+<?php $this->widget(BoosterHelper::NAVIGATOR, array(
     //'type' => 'inverse', // null or 'inverse' //comment
     //'brand' => 'KhPK',
-    'brand' => '@',
+    'brand' => '',
     'brandUrl' => array('/site/index'),
     'fixed' => 'true',
     'collapse' => true, // requires bootstrap-responsive.css
@@ -23,7 +23,7 @@
             'htmlOptions' => array('class' => 'pull-right'),
             'items' => array(
                 array('label' => Yii::t('base', 'Log in'), 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest, 'icon' => 'ok'),
-                array('label' => Yii::t('base', 'Logout'), 'url' => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest, 'icon' => 'off'),
+                array('label' => Yii::t('base', 'Logout') . ' (' . Yii::app()->user->getName() . ')', 'url' => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest, 'icon' => 'off'),
             ),
         ),
     ),
@@ -32,26 +32,26 @@
 <div class="container">
 
     <?php
-        $this->widget(Booster::ALERT, array(
-            'alerts' => array(
-                'success',
-                'info',
-                'warning',
-                'error',
-                'danger',
-            ),
-        ));
+    $this->widget(BoosterHelper::ALERT, array(
+        'alerts' => array(
+            'success',
+            'info',
+            'warning',
+            'error',
+            'danger',
+        ),
+    ));
     ?>
     <!-- alerts -->
     <?php if (isset($this->breadcrumbs)): ?>
         <?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
-			'links' => $this->breadcrumbs,
-		)); ?><!-- breadcrumbs -->
+            'links' => $this->breadcrumbs,
+        )); ?><!-- breadcrumbs -->
     <?php endif ?>
 
     <?php if (isset($this->menu)): ?>
         <header>
-            <?php  $this->widget(Booster::BUTTON_GROUP, array(
+            <?php  $this->widget(BoosterHelper::BUTTON_GROUP, array(
                 'buttons' => $this->menu,
             ));?>
         </header><!-- menu -->
@@ -60,7 +60,7 @@
     <?php echo $content; ?>
     <hr/>
     <footer id="footer" class="text-center">
-        Copyright &copy; <?php echo date('Y'); ?> by three amigos<br/>
+        Copyright &copy; <?php echo date('Y'); ?> <br/>
         All Rights Reserved.<br/>
         <?php echo Yii::powered(); ?>
         <?php if (YII_DEBUG): ?>

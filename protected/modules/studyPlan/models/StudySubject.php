@@ -1,7 +1,9 @@
 <?php
-Yii::import('application.behaviors.strField.*');
 
 /**
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
+ * @copyright ХПК 2014
+ *
  * This is the model class for table "sp_subject".
  *
  * The followings are the available columns in table 'sp_subject':
@@ -12,13 +14,14 @@ Yii::import('application.behaviors.strField.*');
  * @property integer $lectures
  * @property integer $labs
  * @property integer $practs
- * @property array weeks
+ * @property array $weeks
+ * @property array $control
  *
  * The followings are the available model relations:
  * @property StudyPlan $plan
  * @property Subject $subject
  */
-class StudySubject extends ActiveRecord implements IStrContainable
+class StudySubject extends ActiveRecord
 {
 
     /**
@@ -34,17 +37,15 @@ class StudySubject extends ActiveRecord implements IStrContainable
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
             array('plan_id, subject_id, total', 'required', 'message' => 'Вкажіть {attribute}'),
             array('weeks', 'check_weeks'),
-            array('plan_id, subject_id, total, lectures, labs, practs', 'numerical', 'integerOnly' => true),
             array('total', 'check_hours'),
             array('lectures', 'check_classes'),
+            array('subject_id', 'check_subject', 'on' => 'insert'),
             array('lectures, labs, practs', 'default', 'value' => 0, 'on' => 'insert'),
-            array('plan_id, subject_id, total, lectures, labs, practs, weeks', 'safe'),
-            // The following rule is used by search().
+            array('plan_id, subject_id, total, lectures, labs, practs', 'numerical', 'integerOnly' => true),
+            array('plan_id, subject_id, total, lectures, labs, practs, weeks, control', 'safe'),
             array('id, plan_id, subject_id, total, lectures, labs, practs, subject', 'safe', 'on' => 'search'),
         );
     }
@@ -54,8 +55,6 @@ class StudySubject extends ActiveRecord implements IStrContainable
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
             'plan' => array(self::BELONGS_TO, 'StudyPlan', 'plan_id'),
             'subject' => array(self::BELONGS_TO, 'Subject', 'subject_id'),
@@ -65,14 +64,19 @@ class StudySubject extends ActiveRecord implements IStrContainable
     public function behaviors()
     {
         return array(
-            'StrBehavior',
-        );
-    }
+            'StrBehavior' => array(
+                'class' => 'application.behaviors.StrBehavior',
+                'fields' => array(
+                    'weeks',
 
-    public function getStrFields()
-    {
-        return array(
-            'weeks'
+                ),
+            ),
+            'JSONBehavior' => array(
+                'class' => 'application.behaviors.JSONBehavior',
+                'fields' => array(
+                    'control',
+                ),
+            ),
         );
     }
 
@@ -91,6 +95,10 @@ class StudySubject extends ActiveRecord implements IStrContainable
             'practs' => 'Практичні',
             'classes' => 'Всього аудиторних',
             'selfwork' => 'Самостійна робота',
+            'testSemesters' => 'Залік',
+            'examSemesters' => 'Екзамен',
+            'workSemesters' => 'Курсова робота',
+            'projectSemesters' => 'Курсовий проект',
         );
     }
 
@@ -140,18 +148,6 @@ class StudySubject extends ActiveRecord implements IStrContainable
     }
 
     /**
-     * @return CActiveDataProvider
-     */
-    public function getPlanSubjectProvider()
-    {
-        return new CActiveDataProvider(StudySubject::model(), array(
-            'criteria' => array(
-                'condition' => 'plan_id=' . $this->plan_id,
-            )
-        ));
-    }
-
-    /**
      * @return int
      */
     public function getClasses()
@@ -168,6 +164,63 @@ class StudySubject extends ActiveRecord implements IStrContainable
     }
 
     /**
+     * Повертає список семестрів, в яких проводиться залік
+     * @return string
+     */
+    public function getTestSemesters()
+    {
+        $semesters = array();
+        foreach ($this->control as $semester => $control) {
+            if ($control[0] === '0')
+                $semesters[] = $semester + 1;
+        }
+
+        return implode(', ', $semesters);
+    }
+
+    /**
+     * Повертає список семестрів, в яких проводиться екзамен
+     * @return string
+     */
+    public function getExamSemesters()
+    {
+        $semesters = array();
+        foreach ($this->control as $semester => $control) {
+            if ($control[0] === '1')
+                $semesters[] = $semester + 1;
+        }
+        return implode(', ', $semesters);
+    }
+
+    /**
+     * Повертає список семестрів, в яких є курсова робота
+     * @return string
+     */
+    public function getWorkSemesters()
+    {
+        $semesters = array();
+        foreach ($this->control as $semester => $control) {
+            if (!empty($control[1]))
+                $semesters[] = $semester + 1;
+        }
+        return implode(', ', $semesters);
+    }
+
+    /**
+     * Повертає список семестрів, в яких є курсовий проект
+     * @return string
+     */
+    public function getProjectSemesters()
+    {
+        $semesters = array();
+        foreach ($this->control as $semester => $control) {
+            if (!empty($control[2]))
+                $semesters[] = $semester + 1;
+        }
+        return implode(', ', $semesters);
+    }
+
+    /**
      * @param $semester
      * @return string
      */
@@ -179,7 +232,7 @@ class StudySubject extends ActiveRecord implements IStrContainable
     public function check_hours()
     {
         if (!$this->hasErrors()) {
-            if ($this->total < ($this->lectures + $this->labs +$this->practs))
+            if ($this->total < ($this->lectures + $this->labs + $this->practs))
                 $this->addError('total', 'Аудиторних годин більше ніж загальна кількість');
         }
     }
@@ -206,6 +259,19 @@ class StudySubject extends ActiveRecord implements IStrContainable
                     $valid = true;
             if (!$valid)
                 $this->addError('weeks', 'Вкажіть кількість годин на тиждень у відповідних семестрах');
+        }
+    }
+
+    public function check_subject()
+    {
+        if (!$this->hasErrors()) {
+            $criteria = new CDbCriteria();
+            $criteria->condition = 'plan_id = :plan';
+            $criteria->params[':plan'] = $this->plan_id;
+            $criteria->addCondition('subject_id = :subject');
+            $criteria->params[':subject'] = $this->subject_id;
+            if (StudySubject::model()->exists($criteria))
+                $this->addError('subject_id', 'Запис про цей предмет уже додано до цього навчального плану');
         }
     }
 }

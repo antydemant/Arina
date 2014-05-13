@@ -3,11 +3,18 @@
  *
  */
 return array(
+    'Date' => 'Дата',
+    'Subject'=>'Предмет',
+    'Teacher' => 'Викладач',
+    'Create file' => 'Створити файл',
+    'Total' => 'Всього',
+    'Total amount' => 'Загальна кількість',
+    'Create document' => 'Створити документ',
     'Speciality' => 'Спеціальність',
     'Not selected' => 'Не вибрано',
     'None' => 'Немає',
     'Creating' => 'Створення',
-    'Generate'=>'Генерувати',
+    'Generate' => 'Генерувати',
     'List' => 'Список',
     'Cycles' => 'Цикли',
     'Subject cycles' => 'Цикли предметів',
@@ -21,7 +28,6 @@ return array(
     'Title' => 'Назва',
     'ID' => '#',
     'Specialities' => 'Спеціальності',
-    'Speciality' => 'Спеціальність',
     'Error' => 'Помилка',
     'Save' => 'Зберегти',
     'Reset' => 'Скинути',
@@ -56,7 +62,8 @@ return array(
     'Fields with <span class="required">*</span> are required.' => 'Поля, відмічені <span class="required">*</span>, обов\'язкові для заповнення.',
     'Invalid request. Please do not repeat this request again.' => 'Невірний запит. Будь ласка, не повторюйте цей запит знову.',
     'Finish' => 'Завершити',
-
+    'Code' => 'Код',
+    'Short name' => 'Коротке ім’я',
 
     'September' => 'Вересень',
     'October' => 'Жовтень',

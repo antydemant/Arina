@@ -39,6 +39,7 @@ return CMap::mergeArray(
             'hr',
             'dictionaries',
             'admin',
+            'settings',
         ),
 
         'components' => array(
@@ -93,6 +94,10 @@ return CMap::mergeArray(
 
                 ),
             ),*/
+            'authManager'=>array(
+                'class'=>'CDbAuthManager',
+                'connectionID'=>'db',
+            ),
         ),
 
         'params' => array(),

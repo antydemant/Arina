@@ -134,6 +134,14 @@ class DepartmentController extends Controller
         ));
     }
 
+    public function actionAdmin($id)
+    {
+        $model = $this->loadModel($id);
+        $this->render('admin', array(
+            'model' => $model,
+        ));
+    }
+
     /**
      * Performs the AJAX validation.
      * @param CModel the model to be validated

@@ -6,7 +6,7 @@
 
 <div class="form">
 
-    <?php $form = $this->beginWidget(Booster::FORM, array(
+    <?php $form = $this->beginWidget(BoosterHelper::FORM, array(
         'id' => 'subject-cycle-form',
         'enableClientValidation' => true,
     )); ?>

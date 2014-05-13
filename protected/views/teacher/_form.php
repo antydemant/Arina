@@ -5,7 +5,7 @@
  */
 ?>
 <?php $form = $this->beginWidget(
-    Booster::FORM,
+    BoosterHelper::FORM,
     array(
         'id' => 'teacher-form',
         'type' => 'horizontal',

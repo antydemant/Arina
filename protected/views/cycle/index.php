@@ -7,7 +7,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Yii::t('subject', 'Create cycle'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
+    array('label' => Yii::t('subject', 'Create cycle'), 'url' => array('create'), 'type' => BoosterHelper::TYPE_PRIMARY),
 );
 ?>
 

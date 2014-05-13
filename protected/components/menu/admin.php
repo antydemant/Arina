@@ -4,7 +4,7 @@
  * @author Dmytro Karpovych <ZAYEC77@gmail.com>
  */
 $menu = array(
-    array('label' => Yii::t('base', 'Home'), 'url' => array('/site/index'),),
+   // array('label' => Yii::t('base', 'Home'), 'url' => array('/site/index'),),
     //  array('label' => Yii::t('base', 'Schedule'), 'url' => array('/schedule/index')),
     array('label' => Yii::t('base', 'Groups'), 'url' => array('/group')),
     array('label' => Yii::t('base', 'Audiences'), 'url' => array('/audience')),

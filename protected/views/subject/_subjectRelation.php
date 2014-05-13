@@ -5,7 +5,7 @@
  * @var null|integer $id
  */
 ?>
-<?php $this->widget(Booster::GRID_VIEW, array(
+<?php $this->widget(BoosterHelper::GRID_VIEW, array(
     'responsiveTable' => true,
     'template' => '{items}',
     'id' => 'subject-relations',

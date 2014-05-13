@@ -5,7 +5,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Yii::t('teacher', 'Commissions list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
+    array('label' => Yii::t('teacher', 'Commissions list'), 'url' => array('index'), 'type' => BoosterHelper::TYPE_PRIMARY),
 );
 ?>
 

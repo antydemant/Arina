@@ -9,8 +9,8 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Yii::t('subject', 'Cycles list'), 'url' => array('index'), 'type' => Booster::TYPE_PRIMARY),
-    array('label' => Yii::t('subject', 'Create cycle'), 'url' => array('create'), 'type' => Booster::TYPE_PRIMARY),
+    array('label' => Yii::t('subject', 'Cycles list'), 'url' => array('index'), 'type' => BoosterHelper::TYPE_PRIMARY),
+    array('label' => Yii::t('subject', 'Create cycle'), 'url' => array('create'), 'type' => BoosterHelper::TYPE_PRIMARY),
     array('label' => Yii::t('subject', 'View cycle'), 'url' => array('create'), 'icon' => 'eye-open'),
     array(
         'label' => Yii::t('subject', 'Delete cycle'),

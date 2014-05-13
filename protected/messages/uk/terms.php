@@ -21,4 +21,6 @@ return array(
     'Teachers'=>'Викладачі',
     'Male'=>'Чоловіча',
     'Female'=>'Жіноча',
+    'Date of creation' => 'Дата створення',
+    'Date of update' => 'Дата оновлення',
 );

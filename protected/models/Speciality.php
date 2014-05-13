@@ -51,7 +51,7 @@ class Speciality extends ActiveRecord implements IDateContainable
         return array(
             array('title, department_id, number, accreditation_date', 'required'),
             array('department_id', 'numerical', 'integerOnly' => true),
-            array('title', 'length', 'max' => 40),
+            array('title', 'length', 'max' => 90),
             array('number', 'length', 'max' => 15),
             array('id, title, department_id, number, accreditation_date', 'safe', 'on' => 'search'),
         );

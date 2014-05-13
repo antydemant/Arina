@@ -6,7 +6,7 @@
 
 <div class="wide form">
 
-    <?php $form = $this->beginWidget(Booster::FORM, array(
+    <?php $form = $this->beginWidget(BoosterHelper::FORM, array(
         'action' => Yii::app()->createUrl($this->route),
         'method' => 'get',
         'type' => 'horizontal',

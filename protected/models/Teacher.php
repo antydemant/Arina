@@ -25,7 +25,7 @@ class Teacher extends ActiveRecord
      */
     public static function getList()
     {
-        return CHtml::listData(self::model()->findAll(), 'id', 'fullName');
+        return CHtml::listData(self::model()->findAll(array('order'=>'last_name, middle_name, first_name')), 'id', 'fullName');
     }
 
     public static function getTreeList()
@@ -73,14 +73,10 @@ class Teacher extends ActiveRecord
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
             array('last_name, first_name, middle_name, cyclic_commission_id', 'required'),
             array('cyclic_commission_id', 'numerical', 'integerOnly' => true),
             array('last_name, first_name, middle_name', 'length', 'max' => 25),
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
             array('id, last_name, first_name, middle_name, cyclic_commission_id', 'safe', 'on' => 'search'),
         );
     }
@@ -90,8 +86,6 @@ class Teacher extends ActiveRecord
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
             'group' => array(self::HAS_ONE, 'Group', 'curator_id'),
             'cyclicCommission' => array(self::BELONGS_TO, 'CyclicCommission', 'cyclic_commission_id'),
@@ -128,8 +122,6 @@ class Teacher extends ActiveRecord
      */
     public function search()
     {
-        // @todo Please modify the following code to remove attributes that should not be searched.
-
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
