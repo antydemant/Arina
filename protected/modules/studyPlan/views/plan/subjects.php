@@ -69,14 +69,16 @@ $this->breadcrumbs = array(
         </div>
         <div class="options">
             <div class="item">
-                <?php echo $form->radioButtonList($model, "control[$semester][0]",
-                    PlanHelper::getControlTypes(), array('template' => '{input}{label}', 'separator' => ' ')); ?>
+                <?php echo $form->checkBox($model, "control[$semester][0]"); ?>
+                <?php echo CHtml::label(Yii::t('terms', 'Test'), "StudySubject_control_{$semester}_0"); ?>
+                <?php echo $form->checkBox($model, "control[$semester][1]"); ?>
+                <?php echo CHtml::label(Yii::t('terms', 'Exam'), "StudySubject_control_{$semester}_1"); ?>
             </div>
             <div class="item">
-                <?php echo $form->checkBox($model, "control[$semester][1]"); ?>
-                <?php echo CHtml::label(Yii::t('terms', 'Course work'), "StudySubject_control_{$semester}_1"); ?>
                 <?php echo $form->checkBox($model, "control[$semester][2]"); ?>
-                <?php echo CHtml::label(Yii::t('terms', 'Course project'), "StudySubject_control_{$semester}_2"); ?>
+                <?php echo CHtml::label(Yii::t('terms', 'Course work'), "StudySubject_control_{$semester}_2"); ?>
+                <?php echo $form->checkBox($model, "control[$semester][3]"); ?>
+                <?php echo CHtml::label(Yii::t('terms', 'Course project'), "StudySubject_control_{$semester}_3"); ?>
             </div>
         </div>
         <div class="clearfix"></div>

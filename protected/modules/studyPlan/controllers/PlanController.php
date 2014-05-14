@@ -28,7 +28,7 @@ class PlanController extends Controller
                 unset(Yii::app()->session['graph']);
             }
             if ($model->save()) {
-                if (isset($_POST['origin'])) {
+                if (!empty($_POST['origin'])) {
                     $this->copyPlan(StudyPlan::model()->loadContent($_POST['origin']), $model);
                 }
                 $this->redirect($this->createUrl('subjects', array('id' => $model->id)));
