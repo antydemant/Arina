@@ -65,13 +65,13 @@ class PlanController extends Controller
                 foreach ($v as $j) {
                     if ($j == 'T') $counter++;
                     if ($j == ' ') break;
-                    if (($j != 'T') && (!$findFirst)) {
+                    if (($j != 'T')&&($j != 'P') && (!$findFirst)) {
                         $findFirst = true;
                         $semesters[$i + 1][1] = $counter;
                         $counter = 0;
                     } elseif (($j == 'T') && ($findFirst)) {
                         $findSecond = true;
-                    } elseif (($j != 'T') && ($findSecond)) {
+                    } elseif (($j != 'T')&&($j != 'P') && ($findSecond)) {
                         $semesters[$i + 1][2] = $counter;
                         break;
                     }
