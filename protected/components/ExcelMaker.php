@@ -123,6 +123,8 @@ class ExcelMaker extends CComponent
         $sheet->setCellValue('A5', $model->group->speciality->department->head->getFullName());
         $sheet->setCellValue('A11', $model->subject->title);
         $sheet->setCellValue('F14', $model->group->title);
+        $sheet->setCellValue('B14', $model->semester);
+        $sheet->setCellValue('D14', $model->getCourse());
 
         for ($i = 0; $i < count($model->group->students); $i++) {
             $sheet->setCellValue('A' . (19 + $i), $i + 1);
