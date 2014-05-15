@@ -171,7 +171,7 @@ class StudySubject extends ActiveRecord
     {
         $semesters = array();
         foreach ($this->control as $semester => $control) {
-            if ($control[0] === '0')
+            if (!empty($control[0]))
                 $semesters[] = $semester + 1;
         }
 
@@ -186,7 +186,7 @@ class StudySubject extends ActiveRecord
     {
         $semesters = array();
         foreach ($this->control as $semester => $control) {
-            if ($control[0] === '1')
+            if (!empty($control[1]))
                 $semesters[] = $semester + 1;
         }
         return implode(', ', $semesters);
@@ -200,7 +200,7 @@ class StudySubject extends ActiveRecord
     {
         $semesters = array();
         foreach ($this->control as $semester => $control) {
-            if (!empty($control[1]))
+            if (!empty($control[2]))
                 $semesters[] = $semester + 1;
         }
         return implode(', ', $semesters);
@@ -214,7 +214,7 @@ class StudySubject extends ActiveRecord
     {
         $semesters = array();
         foreach ($this->control as $semester => $control) {
-            if (!empty($control[2]))
+            if (!empty($control[3]))
                 $semesters[] = $semester + 1;
         }
         return implode(', ', $semesters);
