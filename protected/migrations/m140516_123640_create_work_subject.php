@@ -13,7 +13,7 @@ class m140516_123640_create_work_subject extends CDbMigration
                 'lectures'=>'integer',
                 'labs'=>'integer',
                 'practs'=>'integer',
-                'weeks'=>'string',
+                'weeks'=>'integer',
                 'control'=>'string',
                 'cyclic_commission_id'=>'integer',
                 'atestat_name'=>'string',

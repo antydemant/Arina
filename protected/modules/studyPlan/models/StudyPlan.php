@@ -12,9 +12,9 @@
  * @property array $semesters
  * @property array $graph
  * @property integer $created
+ * @property integer $updated
  *
  * The followings are the available model relations:
- * @property StudyGraphic[] $graphics
  * @property StudySubject[] $subjects
  * @property Speciality $speciality
  */
@@ -59,8 +59,7 @@ class StudyPlan extends ActiveRecord
     public function relations()
     {
         return array(
-            'graphics' => array(self::HAS_MANY, 'StudyGraphic', 'plan_id'),
-            'subjects' => array(self::HAS_MANY, 'StudySubject', 'plan_id'),
+            'subjects' => array(self::HAS_MANY, 'WorkSubject', 'plan_id'),
             'speciality' => array(self::BELONGS_TO, 'Speciality', 'speciality_id'),
         );
     }
