@@ -1,6 +1,9 @@
 <?php
 
 /**
+ * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
+ * @copyright ХПК 2014
+ *
  * This is the model class for table "sp_plan".
  *
  * The followings are the available columns in table 'sp_plan':

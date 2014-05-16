@@ -109,5 +109,15 @@ $this->breadcrumbs = array(
             }
             $("#classes").val(classes);
         })
-    )
+
+
+    );
+    window.addEventListener("beforeunload", function (event) {
+        var confirmationMessage = 'Якщо ви не натиснули "Додати" дані не збережуться';
+
+        (event || window.event).returnValue = confirmationMessage;     //Firefox, IE
+        return confirmationMessage; //Chrome, Opera, Safari
+    });
+
+
 </script>
