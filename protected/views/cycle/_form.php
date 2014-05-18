@@ -15,6 +15,8 @@
 
     <?php echo $form->errorSummary($model); ?>
 
+    <?php echo $form->textFieldRow($model, 'id', array('size' => 60, 'maxlength' => 255)); ?>
+
     <?php echo $form->textFieldRow($model, 'title', array('size' => 60, 'maxlength' => 255)); ?>
 
     <?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
