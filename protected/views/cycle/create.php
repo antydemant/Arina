@@ -12,5 +12,5 @@ $this->menu = array(
 );
 ?>
     <h2><?php echo Yii::t('subject', 'Creating new cycle'); ?></h2>
-
+    
 <?php $this->renderPartial('_form', array('model' => $model)); ?>
