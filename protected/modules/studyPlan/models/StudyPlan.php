@@ -59,7 +59,7 @@ class StudyPlan extends ActiveRecord
     public function relations()
     {
         return array(
-            'subjects' => array(self::HAS_MANY, 'WorkSubject', 'plan_id'),
+            'subjects' => array(self::HAS_MANY, 'StudySubject', 'plan_id'),
             'speciality' => array(self::BELONGS_TO, 'Speciality', 'speciality_id'),
         );
     }
