@@ -15,6 +15,7 @@
  * @property integer $year_id
  *
  * The followings are the available model relations:
+ * @property StudyYear $year
  * @property StudySubject[] $subjects
  * @property Speciality $speciality
  */
@@ -39,6 +40,7 @@ class WorkPlan extends ActiveRecord
         return array(
             'subjects' => array(self::HAS_MANY, 'WorkSubject', 'plan_id'),
             'speciality' => array(self::BELONGS_TO, 'Speciality', 'speciality_id'),
+            'year' => array(self::BELONGS_TO, 'StudyYear', 'year_id'),
         );
     }
 
@@ -79,7 +81,7 @@ class WorkPlan extends ActiveRecord
      */
     public function getTitle()
     {
-        return $this->speciality->title . ' - ' . $this->year;
+        return $this->speciality->title . ' - ' . $this->year->title;
     }
 
     public function check_origin()
@@ -148,6 +150,18 @@ class WorkPlan extends ActiveRecord
     public static function model($className = __CLASS__)
     {
         return parent::model($className);
+    }
+
+    /**
+     * @return CActiveDataProvider
+     */
+    public function getPlanSubjectProvider()
+    {
+        return new CActiveDataProvider(WorkSubject::model(), array(
+            'criteria' => array(
+                'condition' => 'plan_id=' . $this->id,
+            )
+        ));
     }
 
 } 
