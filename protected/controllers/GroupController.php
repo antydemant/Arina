@@ -31,7 +31,8 @@ class GroupController extends Controller
                     ),
                     '*'
                 )
-            )
+            ),
+            'pagination' => array('pageSize' => 20,)
         );
         $speciality_id = 0;
         if (!empty($_GET['Speciality'])) {
