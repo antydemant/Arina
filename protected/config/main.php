@@ -101,5 +101,5 @@ return CMap::mergeArray(
 
         'params' => array(),
     ),
-    require(__DIR__ . '/env/'.defined('YII_DEBUG')?'dev':'prod'.'.php')
+    require(__DIR__ . '/env/'.(defined('YII_DEBUG')?'dev':'prod').'.php')
 );
