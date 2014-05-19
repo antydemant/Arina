@@ -14,4 +14,5 @@ return array(
     'Subject list' => 'Список предметів',
     'Create subject' => 'Створити предмет',
     'Delete subject' => 'Видалити предмет',
+    'Cycle number' => 'Номер циклу',
 );

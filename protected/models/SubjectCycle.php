@@ -45,6 +45,9 @@ class SubjectCycle extends ActiveRecord
         return array(
             array('title', 'required'),
             array('title', 'length', 'max' => 255),
+            array('id', 'required'),
+            array('id', 'numerical', 'integerOnly' => true),
+            array('id', 'unique'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id, title', 'safe', 'on' => 'search'),
@@ -69,7 +72,7 @@ class SubjectCycle extends ActiveRecord
     public function attributeLabels()
     {
         return array(
-            'id' => 'ID',
+            'id' => Yii::t('subject', 'Cycle number'),
             'title' => Yii::t('base', 'Title'),
         );
     }

@@ -87,6 +87,7 @@ $this->breadcrumbs = array(
 <div style="clear: both"></div>
 <div class="form-actions" style="width: 300px; margin: 0 auto">
     <?php echo CHtml::submitButton('Додати', array('class' => 'btn btn-primary')); ?>
+    <?php echo CHtml::button('Очистити', array('type'=>'reset', 'class'=>'btn btn-danger')); ?>
     <?php echo CHtml::link('Завершити', $this->createUrl('index'), array('class' => 'btn btn-info')); ?>
 </div>
 <?php $this->endWidget(); ?>
@@ -109,5 +110,15 @@ $this->breadcrumbs = array(
             }
             $("#classes").val(classes);
         })
-    )
+
+
+    );
+    window.addEventListener("beforeunload", function (event) {
+        var confirmationMessage = 'Якщо ви не натиснули "Додати" дані не збережуться';
+
+        (event || window.event).returnValue = confirmationMessage;     //Firefox, IE
+        return confirmationMessage;                                    //Chrome, Opera, Safari
+    });
+
+
 </script>

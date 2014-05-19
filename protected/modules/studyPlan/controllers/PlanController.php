@@ -5,6 +5,8 @@
  */
 class PlanController extends Controller
 {
+    public $name = 'Навчальний план';
+
     public function actionIndex()
     {
         $dataProvider = StudyPlan::model()->getProvider();
@@ -55,16 +57,20 @@ class PlanController extends Controller
 
     public function actionExecuteGraph()
     {
+        $semesters = array();
         if (isset($_POST['graph'])) {
-            $semesters = array();
             $g = $_POST['graph'];
             foreach ($g as $i => $v) {
                 $findFirst = false;
                 $findSecond = false;
                 $counter = 0;
                 foreach ($v as $j) {
-                    if ($j == 'T') $counter++;
-                    if ($j == ' ') break;
+                    if ($j == 'T') {
+                        $counter++;
+                    }
+                    if ($j == ' ') {
+                        break;
+                    }
                     if (($j != 'T')&&($j != 'P') && (!$findFirst)) {
                         $findFirst = true;
                         $semesters[$i + 1][1] = $counter;
@@ -79,9 +85,11 @@ class PlanController extends Controller
             }
         }
         $weeks = array();
-        foreach ($semesters as $course)
-            foreach ($course as $week)
+        foreach ($semesters as $course) {
+            foreach ($course as $week) {
                 $weeks[] = $week;
+            }
+        }
         Yii::app()->session['weeks'] = $weeks;
         Yii::app()->session['graph'] = $_POST['graph'];
         $this->renderPartial('semestersPlan', array('data' => $semesters));
@@ -137,8 +145,9 @@ class PlanController extends Controller
 
         if (isset($_POST['StudySubject'])) {
             $model->attributes = $_POST['StudySubject'];
-            if ($model->save())
+            if ($model->save()) {
                 $this->redirect($this->createUrl('view', array('id' => $model->plan_id)));
+            }
         }
 
         $this->render('edit_subject', array('model' => $model));
@@ -148,8 +157,9 @@ class PlanController extends Controller
     {
         StudySubject::model()->loadContent($id)->delete();
 
-        if (!isset($_GET['ajax']))
+        if (!isset($_GET['ajax'])) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+        }
     }
 
     public function actionMakeExcel($id)
@@ -164,7 +174,8 @@ class PlanController extends Controller
     {
         StudyPlan::model()->loadContent($id)->delete();
 
-        if (!isset($_GET['ajax']))
+        if (!isset($_GET['ajax'])) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+        }
     }
 } 
