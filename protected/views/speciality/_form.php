@@ -20,7 +20,8 @@
     <?php echo $form->datepickerRow($model, 'accreditation_date', array(
         'options' => array(
             'format' => 'dd.mm.yyyy',
-            'keyboardNavigation' => true
+            'language'=>'uk',
+            'weekStart'=>'1',
         ),)); ?>
     <?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
 

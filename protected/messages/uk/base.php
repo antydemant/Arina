@@ -3,6 +3,7 @@
  *
  */
 return array(
+    'References' => 'Довідники',
     'Curator cabinet' => 'Кабінет куратора',
     'Semester' => 'Семестер',
     'Date' => 'Дата',

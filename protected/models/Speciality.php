@@ -49,6 +49,7 @@ class Speciality extends ActiveRecord implements IDateContainable
     public function rules()
     {
         return array(
+            array('title, number', 'unique'),
             array('title, department_id, number, accreditation_date', 'required'),
             array('department_id', 'numerical', 'integerOnly' => true),
             array('title', 'length', 'max' => 90),
@@ -114,6 +115,7 @@ class Speciality extends ActiveRecord implements IDateContainable
                     '*'
                 ),
             ),
+            'pagination' => array('pageSize' => 20,)
         ));
     }
 
