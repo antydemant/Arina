@@ -17,11 +17,11 @@ $this->menu = array(
     ),
     array(
         'label' => 'Створити робочий план',
-        'url' => $this->createUrl('workPlan/create')
+        'url' => $this->createUrl('work/create')
     ),
     array(
         'label' => 'Переглянути робочі навчальні плани',
-        'url' => $this->createUrl('workPlan/index'),
+        'url' => $this->createUrl('work/index'),
     ),
 
 

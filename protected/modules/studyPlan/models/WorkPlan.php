@@ -50,4 +50,26 @@ class WorkPlan extends ActiveRecord
         );
     }
 
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'id' => 'ID',
+            'year_id' => Yii::t('terms', 'Study year'),
+            'speciality_id' => Yii::t('terms', 'Speciality'),
+            'created' => Yii::t('terms', 'Date of creation'),
+            'updated' => Yii::t('terms', 'Date of update'),
+        );
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->speciality->title . ' - ' . $this->year;
+    }
+
 } 

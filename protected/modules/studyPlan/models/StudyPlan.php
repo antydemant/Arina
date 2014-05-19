@@ -157,4 +157,12 @@ class StudyPlan extends ActiveRecord
             )
         ));
     }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->speciality->title . ' - '. date('H:i d.m.Y', $this->updated);
+    }
 }

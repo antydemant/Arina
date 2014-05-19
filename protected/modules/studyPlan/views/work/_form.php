@@ -1,7 +1,7 @@
 <?php
 /**
- * @var PlanController $this
- * @var StudyPlan $model
+ * @var WorkController $this
+ * @var WorkPlan $model
  * @var TbActiveForm $form
  */
 ?>
@@ -17,9 +17,17 @@
 <?php echo $form->dropDownListRow($model, 'speciality_id', Speciality::getList(), array('empty' => 'Оберіть спеціальність')); ?>
 <?php if ($model->isNewRecord): ?>
     <div class="control-group">
-        <?php echo CHtml::label('План для основи', 'origin', array('class' => 'control-label')); ?>
+        <?php echo CHtml::label('Навчальний план для основи', 'plan_origin', array('class' => 'control-label')); ?>
         <div class="controls">
-            <?php echo TbHtml::dropDownList('origin', '', CHtml::listData(StudyPlan::model()->findAll(), 'id', 'title'), array('empty' => '')); ?>
+            <?php echo TbHtml::dropDownList('plan_origin', '',
+                CHtml::listData(StudyPlan::model()->findAll(), 'id', 'title'), array('empty' => '')); ?>
+        </div>
+    </div>
+    <div class="control-group">
+        <?php echo CHtml::label('Робочий план для основи', 'work_origin', array('class' => 'control-label')); ?>
+        <div class="controls">
+            <?php echo TbHtml::dropDownList('work_origin', '',
+                CHtml::listData(WorkPlan::model()->findAll(), 'id', 'title'), array('empty' => '')); ?>
         </div>
     </div>
 <?php endif; ?>
