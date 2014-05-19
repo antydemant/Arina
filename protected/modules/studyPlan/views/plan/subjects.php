@@ -95,10 +95,9 @@ $this->breadcrumbs = array(
     <?php endforeach; ?>
 </div>
 <div style="clear: both"></div>
-<div class="form-actions" style="width: 300px; margin: 0 auto">
+<div class="form-actions" style="width: 200px; margin: 0 auto">
     <?php echo CHtml::submitButton('Додати', array('class' => 'btn btn-primary')); ?>
     <?php echo CHtml::button('Очистити', array('type' => 'reset', 'class' => 'btn btn-danger')); ?>
-    <?php echo CHtml::link('Завершити', $this->createUrl('index'), array('class' => 'btn btn-info')); ?>
 </div>
 <?php $this->endWidget(); ?>
 
@@ -109,6 +108,8 @@ $this->breadcrumbs = array(
     )
 );
 ?>
+
+<?php echo CHtml::link('Завершити', $this->createUrl('index'), array('class' => 'btn btn-info btn-large')); ?>
 
 <script>
 
