@@ -40,6 +40,7 @@ return CMap::mergeArray(
             'dictionaries',
             'admin',
             'settings',
+            'curator',
         ),
 
         'components' => array(

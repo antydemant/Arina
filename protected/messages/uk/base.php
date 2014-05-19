@@ -3,9 +3,10 @@
  *
  */
 return array(
-    'Semester'=>'Семестер',
+    'Curator cabinet' => 'Кабінет куратора',
+    'Semester' => 'Семестер',
     'Date' => 'Дата',
-    'Subject'=>'Предмет',
+    'Subject' => 'Предмет',
     'Teacher' => 'Викладач',
     'Create file' => 'Створити файл',
     'Total' => 'Всього',
@@ -66,7 +67,7 @@ return array(
     'Finish' => 'Завершити',
     'Code' => 'Код',
     'Short name' => 'Коротке ім’я',
-    'Filter'=>'Фільтр',
+    'Filter' => 'Фільтр',
     'September' => 'Вересень',
     'October' => 'Жовтень',
     'November' => 'Листопад',
