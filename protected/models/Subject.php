@@ -57,7 +57,7 @@ class Subject extends ActiveRecord
     public function getCycle($specialityId)
     {
         /**@var $relation SubjectRelation */
-        $relation = SubjectRelation::model()->findByAttributes(array('speciality_id'=>$specialityId,'subject_id'=>$this->id));
+        $relation = SubjectRelation::model()->findByAttributes(array('speciality_id' => $specialityId, 'subject_id' => $this->id));
         return $relation->cycle;
     }
 
@@ -75,6 +75,7 @@ class Subject extends ActiveRecord
     public function rules()
     {
         return array(
+            array('title', 'unique'),
             array('title, code, short_name', 'required'),
             array('title, code, short_name', 'length', 'max' => 50),
             array('id, title, code, short_name', 'safe', 'on' => 'search'),

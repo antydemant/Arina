@@ -36,9 +36,9 @@ class SubjectController extends Controller
             }
             $subject = Yii::app()->session['subject'];
             $obj = new SubjectRelation();
-            $obj->setAttributes(CMap::mergeArray(array('subject_id' => $id), $_POST['SubjectRelation']),false);
+            $obj->setAttributes(CMap::mergeArray(array('subject_id' => $id), $_POST['SubjectRelation']), false);
             $subject['add'][$obj->getId()] = $obj;
-            for ($i =0; $i <count($subject['delete']);$i++) {
+            for ($i = 0; $i < count($subject['delete']); $i++) {
                 if ($obj->getId() == $subject['delete'][$i]['id']) {
                     unset($subject['delete'][$i]);
                     break;
@@ -104,9 +104,29 @@ class SubjectController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new CActiveDataProvider('Subject');
+        $speciality_id = 0;
+        $cycle_id = 0;
+        $conditions = array();
+        $params = array();
+        if (!empty($_GET['Speciality'])) {
+            $speciality_id = $_GET['Speciality'];
+            $conditions[] = 'relations.speciality_id = :spec';
+            $params[':spec'] = $_GET['Speciality'];
+        }
+        if (!empty($_GET['Cycle'])) {
+            $cycle_id = $_GET['Cycle'];
+            $conditions[] = 'relations.cycle_id = :cycle';
+            $params[':cycle'] = $_GET['Cycle'];
+        }
+        $config = array('pagination' => array('pageSize' => 20,));
+        if (!empty($conditions)) {
+            $config['criteria'] = array('with' => array('relations' => array('together' => true)), 'params' => $params, 'condition' => '(' . implode(') AND (', $conditions) . ')');
+        }
+        $dataProvider = new CActiveDataProvider('Subject', $config);
         $this->render('index', array(
             'dataProvider' => $dataProvider,
+            'cycle_id' => $cycle_id,
+            'speciality_id' => $speciality_id,
         ));
     }
 }

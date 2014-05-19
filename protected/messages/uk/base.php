@@ -18,6 +18,7 @@ return array(
     'Generate' => 'Генерувати',
     'List' => 'Список',
     'Cycles' => 'Цикли',
+    'Cycle' => 'Цикл',
     'Subject cycles' => 'Цикли предметів',
     'Add' => 'Додати',
     'Subjects' => 'Предмети',
@@ -65,7 +66,7 @@ return array(
     'Finish' => 'Завершити',
     'Code' => 'Код',
     'Short name' => 'Коротке ім’я',
-
+    'Filter'=>'Фільтр',
     'September' => 'Вересень',
     'October' => 'Жовтень',
     'November' => 'Листопад',

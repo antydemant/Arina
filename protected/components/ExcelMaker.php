@@ -131,10 +131,10 @@ class ExcelMaker extends CComponent
             $sheet->setCellValue('B' . (19 + $i), $model->group->students[$i]->fullName);
             $sheet->insertNewRowBefore($i + 20, 1);
         }
-        $sheet->removeRow($i+20);
-        $sheet->setCellValue('D'.(20 + $i),'=average(D19:D'.($i+19).')');
+        $sheet->removeRow($i + 20);
+        $sheet->setCellValue('D' . (20 + $i), '=average(D19:D' . ($i + 19) . ')');
         $sheet->setCellValue('E' . (25 + $i), $model->teacher);
-        $sheet->setCellValue('B' . (27 + $i), 'Дата:'.$model->date);
+        $sheet->setCellValue('B' . (27 + $i), 'Дата:' . $model->date);
         return $objPHPExcel;
     }
 
@@ -145,6 +145,9 @@ class ExcelMaker extends CComponent
     protected function makeStudyPlan($plan)
     {
         $objPHPExcel = $this->loadTemplate('plan.xls');
+        $sheet = $sheet = $objPHPExcel->setActiveSheetIndex(1);
+
+        $sheet->setCellValue("F19", $plan->speciality->number . ' ' . $plan->speciality->title);
         $sheet = $sheet = $objPHPExcel->setActiveSheetIndex(2);
 
         $j = 'N';
@@ -200,15 +203,6 @@ class ExcelMaker extends CComponent
         for ($c = 'G'; $c < 'V'; $c++) {
             $sheet->setCellValueExplicit("$c$i", "=SUM($c" . implode("+$c", $totals) . ')');
         }
-        /*
-
-        $i = 46;
-        foreach ($plan->subjects as $item) {
-            $sheet->mergeCells("D$i:G$i");
-            $sheet->insertNewRowBefore($i + 1, 1);
-            $i++;
-        }
-        $sheet->removeRow($i);*/
         return $objPHPExcel;
     }
 
