@@ -163,6 +163,6 @@ class StudyPlan extends ActiveRecord
      */
     public function getTitle()
     {
-        return $this->speciality->title . ' - '. date('H:i d.m.Y', $this->updated);
+        return $this->speciality->title . ' - '. date('H d.m.Y', $this->updated);
     }
 }

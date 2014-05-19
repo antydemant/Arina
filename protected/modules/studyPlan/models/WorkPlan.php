@@ -12,7 +12,7 @@
  * @property array $graph
  * @property integer $created
  * @property integer $updated
- * @property string $year
+ * @property integer $year_id
  *
  * The followings are the available model relations:
  * @property StudySubject[] $subjects
@@ -20,16 +20,8 @@
  */
 class WorkPlan extends ActiveRecord
 {
-    /**
-     * Returns the static model of the specified AR class.
-     * Please note that you should have this exact method in all your CActiveRecord descendants!
-     * @param string $className active record class name.
-     * @return StudyPlan the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
-    }
+    public $plan_origin;
+    public $work_origin;
 
     /**
      * @return string the associated database table name
@@ -61,6 +53,24 @@ class WorkPlan extends ActiveRecord
             'speciality_id' => Yii::t('terms', 'Speciality'),
             'created' => Yii::t('terms', 'Date of creation'),
             'updated' => Yii::t('terms', 'Date of update'),
+            'plan_origin' => 'Навчальний план для основи',
+            'work_origin' => 'Робочий план для основи',
+        );
+    }
+
+    public function rules()
+    {
+        return array(
+            array('speciality_id, year_id', 'required'),
+            array(
+                'semesters',
+                'required',
+                'message' => 'Натисніть кнопку "Генерувати" та перевірте правильність даних'
+            ),
+            array('speciality_id', 'numerical', 'integerOnly' => true),
+            array('created', 'default', 'value' => date('Y-m-d', time()), 'on' => 'insert'),
+            array('id, speciality_id', 'safe', 'on' => 'search'),
+            array('plan_origin, work_origin', 'check_origin'),
         );
     }
 
@@ -70,6 +80,74 @@ class WorkPlan extends ActiveRecord
     public function getTitle()
     {
         return $this->speciality->title . ' - ' . $this->year;
+    }
+
+    public function check_origin()
+    {
+        if (!$this->hasErrors()) {
+            if (empty($this->plan_origin) && (empty($this->work_origin))) {
+                $this->addError('plan_origin, work_origin', 'Вкажіть план основу');
+            }
+        }
+    }
+
+    public function behaviors()
+    {
+        return array(
+            'JSONBehavior' => array(
+                'class' => 'application.behaviors.JSONBehavior',
+                'fields' => array(
+                    'graph'
+                ),
+            ),
+            'StrBehavior' => array(
+                'class' => 'application.behaviors.StrBehavior',
+                'fields' => array(
+                    'semesters',
+                ),
+            ),
+            'CTimestampBehavior' => array(
+                'class' => 'zii.behaviors.CTimestampBehavior',
+                'createAttribute' => 'created',
+                'updateAttribute' => 'updated',
+                'setUpdateOnCreate' => true,
+            ),
+        );
+    }
+
+    protected function beforeSave()
+    {
+        if (!empty($this->work_origin)) {
+            $this->copyPlan(WorkPlan::model()->findByPk($this->work_origin));
+        } elseif (!empty($this->plan_origin)) {
+            $this->copyPlan(StudyPlan::model()->findByPk($this->plan_origin));
+        }
+        return parent::beforeSave();
+    }
+
+    /**
+     * Копіює предмети з плану-основи
+     * @param StudyPlan|WorkPlan $origin
+     */
+    public function copyPlan($origin)
+    {
+        foreach ($origin->subjects as $subject) {
+            $model = new WorkSubject();
+            $model->attributes = $subject->attributes;
+            $model->plan_id = $this->id;
+            $model->save(false);
+        }
+    }
+
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return StudyPlan the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
     }
 
 } 

@@ -19,10 +19,6 @@ class WorkController extends Controller
         $model = new WorkPlan('create');
 
         if (isset($_POST['WorkPlan'])) {
-
-            if (empty($_POST['plan_origin']) || empty($_POST['work_origin']))
-                $model->addError('', 'Оберіть навчальний або робочий план для основи');
-
             $model->attributes = $_POST['WorkPlan'];
             $model->created = date('Y-m-d', time());
             if (isset(Yii::app()->session['weeks'])) {
@@ -34,32 +30,11 @@ class WorkController extends Controller
                 unset(Yii::app()->session['graph']);
             }
             if ($model->save()) {
-                if (!empty($_POST['plan_origin'])) {
-                    $this->copyPlan(StudyPlan::model()->loadContent($_POST['plan_origin']), $model);
-                } elseif (!empty($_POST['work_origin'])) {
-                    $this->copyPlan(WorkPlan::model()->loadContent($_POST['work_origin']), $model);
-                }
-
                 $this->redirect($this->createUrl('subjects', array('id' => $model->id)));
             }
         }
 
         $this->render('create', array('model' => $model));
-    }
-
-    /**
-     * Копіює предмети з одного плану в інший
-     * @param StudyPlan|WorkPlan $origin
-     * @param StudyPlan|WorkPlan $newPlan
-     */
-    public function copyPlan($origin, $newPlan)
-    {
-        foreach ($origin->subjects as $subject) {
-            $model = new WorkSubject();
-            $model->attributes = $subject->attributes;
-            $model->plan_id = $newPlan->id;
-            $model->save(false);
-        }
     }
 
     public function actionExecuteGraph()

@@ -1,12 +1,12 @@
 <?php
 /**
- * @var PlanController $this
- * @var StudySubject $model
+ * @var WorkController $this
+ * @var WorkSubject $model
  * @var TbActiveForm $form
  */
 $this->breadcrumbs = array(
-    Yii::t('base', 'Study plans') => $this->createUrl('main/index'),
-    $model->plan->speciality->title => $this->createUrl('plan/view', array('id' => $model->plan->id)),
+    'Робочі плани' => $this->createUrl('index'),
+    $model->plan->speciality->title => $this->createUrl('view', array('id' => $model->plan->id)),
 );
 ?>
 <style>
@@ -42,73 +42,101 @@ $this->breadcrumbs = array(
         width: 100%;
     }
 </style>
-<?php $form = $this->beginWidget(
+<h3>Додання предметів</h3>
+<?php $this->widget('bootstrap.widgets.TbTabs', array(
+        'type' => 'tabs',
+        'tabs' => array(
+            array(
+                'label' => 'I курс',
+                'active' => true,
+                'content' => $this->renderPartial('_course', array(), true),
+            ),
+            array(
+                'label' => 'II курс',
+                'content' => 'II курс',
+            ),
+            array(
+                'label' => 'III курс',
+                'content' => 'III курс',
+            ),
+            array(
+                'label' => 'IV курс',
+                'content' => 'IV курс',
+            ),
+        )
+    )); ?>
+
+
+
+
+
+<?php /*$form = $this->beginWidget(
     BoosterHelper::FORM,
     array(
         'htmlOptions' => array(
             'class' => 'well row',
         )
     )
-); ?>
-<h3>Додання предметів</h3>
-<?php echo $form->errorSummary($model); ?>
+); */?><!--
+
+<?php /*echo $form->errorSummary($model); */?>
 <div class="span3">
-    <?php echo $form->listBox(
+    <?php /*echo $form->listBox(
         $model,
         'subject_id',
         Subject::getListForSpeciality($model->plan->speciality_id),
         array('size' => 25)
-    ); ?>
+    ); */?>
 </div>
 <div class="span3">
-    <?php echo $form->numberFieldRow($model, 'total'); ?>
-    <?php echo CHtml::label('Аудиторні', 'classes'); ?>
-    <?php echo CHtml::numberField('classes', '', array('placeholder' => 'Аудиторні', 'readonly' => true)); ?>
-    <?php echo $form->numberFieldRow($model, 'lectures'); ?>
-    <?php echo $form->numberFieldRow($model, 'labs'); ?>
-    <?php echo $form->numberFieldRow($model, 'practs'); ?>
+    <?php /*echo $form->numberFieldRow($model, 'total'); */?>
+    <?php /*echo CHtml::label('Аудиторні', 'classes'); */?>
+    <?php /*echo CHtml::numberField('classes', '', array('placeholder' => 'Аудиторні', 'readonly' => true)); */?>
+    <?php /*echo $form->numberFieldRow($model, 'lectures'); */?>
+    <?php /*echo $form->numberFieldRow($model, 'labs'); */?>
+    <?php /*echo $form->numberFieldRow($model, 'practs'); */?>
 </div>
 <div class="span5">
-    <?php foreach ($model->plan->semesters as $semester => $weeks): ?>
+    <?php /*foreach ($model->plan->semesters as $semester => $weeks): */?>
         <div class="input">
-            <?php echo CHtml::label(
+            <?php /*echo CHtml::label(
                 $semester + 1 . '-й семестр: ' . $weeks . ' тижнів',
                 'StudySubject_weeks_' . $semester
-            ); ?>
-            <?php echo $form->numberField($model, "weeks[$semester]", array('placeholder' => 'годин на тиждень')); ?>
+            ); */?>
+            <?php /*echo $form->numberField($model, "weeks[$semester]", array('placeholder' => 'годин на тиждень')); */?>
         </div>
         <div class="options">
             <div class="item">
-                <?php echo $form->checkBox($model, "control[$semester][0]"); ?>
-                <?php echo CHtml::label(Yii::t('terms', 'Test'), "StudySubject_control_{$semester}_0"); ?>
-                <?php echo $form->checkBox($model, "control[$semester][1]"); ?>
-                <?php echo CHtml::label(Yii::t('terms', 'Exam'), "StudySubject_control_{$semester}_1"); ?>
+                <?php /*echo $form->checkBox($model, "control[$semester][0]"); */?>
+                <?php /*echo CHtml::label(Yii::t('terms', 'Test'), "StudySubject_control_{$semester}_0"); */?>
+                <?php /*echo $form->checkBox($model, "control[$semester][1]"); */?>
+                <?php /*echo CHtml::label(Yii::t('terms', 'Exam'), "StudySubject_control_{$semester}_1"); */?>
             </div>
             <div class="item">
-                <?php echo $form->checkBox($model, "control[$semester][2]"); ?>
-                <?php echo CHtml::label(Yii::t('terms', 'Course work'), "StudySubject_control_{$semester}_2"); ?>
-                <?php echo $form->checkBox($model, "control[$semester][3]"); ?>
-                <?php echo CHtml::label(Yii::t('terms', 'Course project'), "StudySubject_control_{$semester}_3"); ?>
+                <?php /*echo $form->checkBox($model, "control[$semester][2]"); */?>
+                <?php /*echo CHtml::label(Yii::t('terms', 'Course work'), "StudySubject_control_{$semester}_2"); */?>
+                <?php /*echo $form->checkBox($model, "control[$semester][3]"); */?>
+                <?php /*echo CHtml::label(Yii::t('terms', 'Course project'), "StudySubject_control_{$semester}_3"); */?>
             </div>
         </div>
         <div class="clearfix"></div>
-    <?php endforeach; ?>
+    <?php /*endforeach; */?>
 </div>
 <div style="clear: both"></div>
 <div class="form-actions" style="width: 300px; margin: 0 auto">
-    <?php echo CHtml::submitButton('Додати', array('class' => 'btn btn-primary')); ?>
-    <?php echo CHtml::button('Очистити', array('type' => 'reset', 'class' => 'btn btn-danger')); ?>
-    <?php echo CHtml::link('Завершити', $this->createUrl('index'), array('class' => 'btn btn-info')); ?>
+    <?php /*echo CHtml::submitButton('Додати', array('class' => 'btn btn-primary')); */?>
+    <?php /*echo CHtml::button('Очистити', array('type' => 'reset', 'class' => 'btn btn-danger')); */?>
+    <?php /*echo CHtml::link('Завершити', $this->createUrl('index'), array('class' => 'btn btn-info')); */?>
 </div>
-<?php $this->endWidget(); ?>
+<?php /*$this->endWidget(); */?>
 
-<?php $this->widget(
+<?php /*$this->widget(
     'studyPlan.widgets.SubjectTable',
     array(
         'subjectDataProvider' => $model->plan->getPlanSubjectProvider()
     )
 );
-?>
+*/?>
 
 <script>
 
@@ -117,7 +145,7 @@ $this->breadcrumbs = array(
     $(function () {
         $("input[id^='StudySubject_weeks_']").change(function () {
             var weeks = [
-                <?php echo implode(', ', $model->plan->semesters); ?>
+                <?php /*echo implode(', ', $model->plan->semesters); */?>
             ];
             var classes = 0;
             for (i = 0; i < 8; i++) {
@@ -140,4 +168,4 @@ $this->breadcrumbs = array(
             }
         });
     });
-</script>
+</script>-->
