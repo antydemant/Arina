@@ -145,9 +145,20 @@ class ExcelMaker extends CComponent
     protected function makeStudyPlan($plan)
     {
         $objPHPExcel = $this->loadTemplate('plan.xls');
-        $sheet = $sheet = $objPHPExcel->setActiveSheetIndex(1);
 
+        //SHEET #1
+        $sheet = $sheet = $objPHPExcel->setActiveSheetIndex(0);
         $sheet->setCellValue("F19", $plan->speciality->number . ' ' . $plan->speciality->title);
+
+        for ($i = 0; $i < count($plan->graph); $i++) {
+            $char = 'B';
+            for ($j = 0; $j < count($plan->graph[$i]); $j++) {
+                $sheet->setCellValue($char . ($i + 32), Yii::t('plan', $plan->graph[$i][$j]));
+                $char++;
+            }
+        }
+
+        //SHEET #2
         $sheet = $sheet = $objPHPExcel->setActiveSheetIndex(2);
 
         $j = 'N';
@@ -193,7 +204,7 @@ class ExcelMaker extends CComponent
             $sheet->setCellValue("B$i", Yii::t('base', 'Total'));
             $totals[] = $i;
             for ($c = 'G'; $c < 'V'; $c++) {
-                $sheet->setCellValueExplicit("$c$i", "=SUM($c$begin:$c$end)");
+                $sheet->setCellValue("$c$i", "=SUM($c$begin:$c$end)");
             }
             $sheet->insertNewRowBefore($i + 1, 1);
             $i++;
@@ -201,7 +212,7 @@ class ExcelMaker extends CComponent
         }
         $sheet->setCellValue("B$i", Yii::t('base', 'Total amount'));
         for ($c = 'G'; $c < 'V'; $c++) {
-            $sheet->setCellValueExplicit("$c$i", "=SUM($c" . implode("+$c", $totals) . ')');
+            $sheet->setCellValue("$c$i", "=SUM($c" . implode("+$c", $totals) . ')');
         }
         return $objPHPExcel;
     }
