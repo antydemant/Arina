@@ -42,21 +42,28 @@ $this->breadcrumbs = array(
         width: 100%;
     }
 </style>
-<?php $form = $this->beginWidget(BoosterHelper::FORM, array(
-    'htmlOptions' => array(
-        'class' => 'well row',
+<?php $form = $this->beginWidget(
+    BoosterHelper::FORM,
+    array(
+        'htmlOptions' => array(
+            'class' => 'well row',
+        )
     )
-)); ?>
+); ?>
 <h3>Додання предметів</h3>
 <?php echo $form->errorSummary($model); ?>
 <div class="span3">
-    <?php echo $form->listBox($model, 'subject_id',
-        Subject::getListForSpeciality($speciality_id), array('size' => 25)); ?>
+    <?php echo $form->listBox(
+        $model,
+        'subject_id',
+        Subject::getListForSpeciality($model->plan->speciality_id),
+        array('size' => 25)
+    ); ?>
 </div>
 <div class="span3">
     <?php echo $form->numberFieldRow($model, 'total'); ?>
     <?php echo CHtml::label('Аудиторні', 'classes'); ?>
-    <?php echo CHtml::numberField('classes', '', array('placeholder' => 'Аудиторні', 'disabled' => true)); ?>
+    <?php echo CHtml::numberField('classes', '', array('placeholder' => 'Аудиторні', 'readonly' => true)); ?>
     <?php echo $form->numberFieldRow($model, 'lectures'); ?>
     <?php echo $form->numberFieldRow($model, 'labs'); ?>
     <?php echo $form->numberFieldRow($model, 'practs'); ?>
@@ -64,7 +71,10 @@ $this->breadcrumbs = array(
 <div class="span5">
     <?php foreach ($model->plan->semesters as $semester => $weeks): ?>
         <div class="input">
-            <?php echo CHtml::label($semester + 1 . '-й семестр: ' . $weeks . ' тижнів', 'StudySubject_weeks_' . $semester); ?>
+            <?php echo CHtml::label(
+                $semester + 1 . '-й семестр: ' . $weeks . ' тижнів',
+                'StudySubject_weeks_' . $semester
+            ); ?>
             <?php echo $form->numberField($model, "weeks[$semester]", array('placeholder' => 'годин на тиждень')); ?>
         </div>
         <div class="options">
@@ -87,18 +97,24 @@ $this->breadcrumbs = array(
 <div style="clear: both"></div>
 <div class="form-actions" style="width: 300px; margin: 0 auto">
     <?php echo CHtml::submitButton('Додати', array('class' => 'btn btn-primary')); ?>
-    <?php echo CHtml::button('Очистити', array('type'=>'reset', 'class'=>'btn btn-danger')); ?>
+    <?php echo CHtml::button('Очистити', array('type' => 'reset', 'class' => 'btn btn-danger')); ?>
     <?php echo CHtml::link('Завершити', $this->createUrl('index'), array('class' => 'btn btn-info')); ?>
 </div>
 <?php $this->endWidget(); ?>
 
-<?php $this->widget('studyPlan.widgets.SubjectTable', array(
-    'subjectDataProvider' => $model->plan->getPlanSubjectProvider()
-));
+<?php $this->widget(
+    'studyPlan.widgets.SubjectTable',
+    array(
+        'subjectDataProvider' => $model->plan->getPlanSubjectProvider()
+    )
+);
 ?>
 
 <script>
-    $(
+
+    var flag = false;
+
+    $(function () {
         $("input[id^='StudySubject_weeks_']").change(function () {
             var weeks = [
                 <?php echo implode(', ', $model->plan->semesters); ?>
@@ -109,16 +125,19 @@ $this->breadcrumbs = array(
                     classes += weeks[i] * parseInt($("#StudySubject_weeks_" + i).val());
             }
             $("#classes").val(classes);
-        })
+        });
 
 
-    );
-    window.addEventListener("beforeunload", function (event) {
-        var confirmationMessage = 'Якщо ви не натиснули "Додати" дані не збережуться';
+        $("input[type='submit']").click(function () {
+            flag = true;
+        });
 
-        (event || window.event).returnValue = confirmationMessage;     //Firefox, IE
-        return confirmationMessage;                                    //Chrome, Opera, Safari
+        window.addEventListener("beforeunload", function (event) {
+            var confirmationMessage = 'Якщо ви не натиснули "Додати" дані не збережуться';
+            if (!flag) {
+                (event || window.event).returnValue = confirmationMessage;     //Firefox, IE
+                return confirmationMessage;                                    //Chrome, Opera, Safari
+            }
+        });
     });
-
-
 </script>
