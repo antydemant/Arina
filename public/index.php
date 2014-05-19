@@ -2,10 +2,12 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 date_default_timezone_set(date_default_timezone_get());
-// remove the following lines when in production mode
-defined('YII_DEBUG') or define('YII_DEBUG', true);
-// specify how many levels of call stack should be shown in each log message
-defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
+
+$env = (isset($_SERVER['APP_ENV'])) ? $_SERVER['APP_ENV'] : 'prod';
+
+defined('YII_DEBUG') or define('YII_DEBUG', ($env == 'dev'));
+defined('YII_ENV') or define('YII_ENV', $env);
+
 
 // change the following paths if necessary
 $yii = dirname(__FILE__) . '/../vendor/yiisoft/yii/framework/yii.php';
