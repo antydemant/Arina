@@ -36,5 +36,5 @@ return array_merge(
             ),
         ),
     ),
-    require(__DIR__ . '/env/'.$env.'.php')
+    require(__DIR__ . '/env/'.((YII_DEBUG)?'dev':'prod').'.php')
 );
