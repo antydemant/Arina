@@ -11,7 +11,7 @@ class m140516_123635_create_work_plan extends CDbMigration
                 'created'=>'integer',
                 'updated'=>'integer',
                 'graph'=>'text',
-                'year'=>'string',
+                'year_id'=>'integer',
         ));
 	}
 
