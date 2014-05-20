@@ -9,6 +9,7 @@ return array(
     'First Name' => 'Ім’я',
     'Middle Name' => 'По батькові',
     'Full Name' => 'П.І.Б.',
+    'Short name' => 'Ім\'я скорочено',
     'Teacher list' => 'Список викладачів',
     'Add new teacher' => 'Додати нового викладача',
     'Delete teacher' => 'Видалити викладача',

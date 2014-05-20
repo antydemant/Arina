@@ -40,6 +40,7 @@ return CMap::mergeArray(
             'dictionaries',
             'admin',
             'settings',
+            'import',
         ),
 
         'components' => array(
@@ -94,9 +95,9 @@ return CMap::mergeArray(
 
                 ),
             ),*/
-            'authManager'=>array(
-                'class'=>'CDbAuthManager',
-                'connectionID'=>'db',
+            'authManager' => array(
+                'class' => 'CDbAuthManager',
+                'connectionID' => 'db',
             ),
         ),
 

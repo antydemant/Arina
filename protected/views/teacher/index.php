@@ -22,7 +22,7 @@ $this->menu = array(
     <h2><?php echo Yii::t('teacher', 'Teacher list') ?></h2>
 
     <p>
-        <?php  echo Yii::t('base', 'You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b> or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.');?>
+        <?php echo Yii::t('base', 'You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b> or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.'); ?>
     </p>
 
 <?php
@@ -37,6 +37,10 @@ $columns = array(
     ),
     array(
         'name' => 'middle_name',
+        'htmlOptions' => array('style' => 'width: 160px'),
+    ),
+    array(
+        'name' => 'short_name',
         'htmlOptions' => array('style' => 'width: 160px'),
     ),
     array(
