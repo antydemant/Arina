@@ -23,4 +23,5 @@ return array(
     'Female'=>'Жіноча',
     'Date of creation' => 'Дата створення',
     'Date of update' => 'Дата оновлення',
+    'DPA' => 'ДПА',
 );
