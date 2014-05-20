@@ -8,6 +8,7 @@
  * @property string $title
  * @property string $code
  * @property string $short_name
+ * @property bool $practice
  *
  * @property SubjectRelation[] $relations
  */
@@ -104,6 +105,7 @@ class Subject extends ActiveRecord
             'cycle_id' => Yii::t('base', 'Subject cycles'),
             'code' => Yii::t('base', 'Code'),
             'short_name' => Yii::t('base', 'Short name'),
+            'practice'=>Yii::t('base', 'Practice'),
         );
     }
 
@@ -125,7 +127,6 @@ class Subject extends ActiveRecord
 
         $criteria->compare('id', $this->id);
         $criteria->compare('title', $this->title, true);
-        $criteria->compare('cycle_id', $this->cycle_id);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

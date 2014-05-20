@@ -14,7 +14,7 @@ $this->menu = array(
     array('label' => Yii::t('subject', 'Create subject'), 'url' => array('create'), 'type' => BoosterHelper::TYPE_PRIMARY),
 );
 ?>
-<?php echo TbHtml::beginFormTb(TbHtml::FORM_LAYOUT_VERTICAL,$this->createUrl(''),'GET'); ?>
+<?php echo TbHtml::beginFormTb(TbHtml::FORM_LAYOUT_VERTICAL,$this->createUrl(''),'GET',array('id'=>'filter-form')); ?>
 <?php echo TbHtml::dropDownListControlGroup('Speciality', $speciality_id,
     CHtml::listData(Speciality::model()->findAll(), 'id', 'title'),
     array('class'=>'span6','label'=>Yii::t('base','Speciality'),'empty'=>'')); ?>
