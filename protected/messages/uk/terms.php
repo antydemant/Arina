@@ -24,4 +24,5 @@ return array(
     'Date of creation' => 'Дата створення',
     'Date of update' => 'Дата оновлення',
     'DPA' => 'ДПА',
+    'Select gender' => 'Оберіть стать',
 );
