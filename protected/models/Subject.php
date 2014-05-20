@@ -79,7 +79,7 @@ class Subject extends ActiveRecord
             array('title', 'unique'),
             array('title, code, short_name', 'required'),
             array('title, code, short_name', 'length', 'max' => 50),
-            array('id, title, code, short_name', 'safe', 'on' => 'search'),
+            array('id, title, code, short_name, practice', 'safe', 'on' => 'search'),
         );
     }
 

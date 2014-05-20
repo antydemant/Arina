@@ -242,7 +242,7 @@ class StudySubject extends ActiveRecord
                     $sum += $weekly * $this->plan->semesters[$semester];
                 }
             }
-            if ($sum < $this->getClasses()) {
+            if (!$this->subject->practice && ($sum < $this->getClasses())) {
                 $this->addError('lectures', 'Невистачає годин на тиждень для вичитки');
             }
         }
@@ -257,7 +257,7 @@ class StudySubject extends ActiveRecord
                     $valid = true;
                 }
             }
-            if (!$valid && !$this->practice) {
+            if (!$valid && !$this->subject->practice) {
                 $this->addError('weeks', 'Вкажіть кількість годин на тиждень у відповідних семестрах');
             }
         }
