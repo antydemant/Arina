@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var $model Subject
+ */
+
 $this->breadcrumbs = array(
     Yii::t('base', 'Subjects') => array('index'),
     Yii::t('base', 'Create'),

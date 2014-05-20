@@ -19,7 +19,7 @@
     <div class="control-group">
         <?php echo CHtml::label('План для основи', 'origin', array('class' => 'control-label')); ?>
         <div class="controls">
-            <?php echo TbHtml::dropDownList('origin', '', CHtml::listData(StudyPlan::model()->findAll(), 'id', 'speciality.title'), array('empty' => '')); ?>
+            <?php echo TbHtml::dropDownList('origin', '', CHtml::listData(StudyPlan::model()->findAll(), 'id', 'title'), array('empty' => '')); ?>
         </div>
     </div>
 <?php endif; ?>

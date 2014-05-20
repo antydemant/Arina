@@ -35,6 +35,7 @@ class DefaultController extends Controller
         return array(
             array('allow',
                 'users' => array('*'),
+                'actions'=>array('index','confirm','run'),
             ),
         );
     }

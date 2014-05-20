@@ -4,30 +4,6 @@ class SpecialityController extends Controller
 {
     public $name = "Specialities";
 
-/*
-    public function filters()
-    {
-        return array(
-            'accessControl',
-        );
-    }
-
-    public function accessRules()
-    {
-        return array(
-            array('allow',
-                'actions'=>array('create', 'delete', 'update'),
-                'roles'=>array('dephead'),
-            ),
-
-            //array('deny',
-            //    'actions'=>array('update', 'create', 'delete'),
-            //    'users'=>array('*'),
-            //),
-        );
-    }
-*/
-
     /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
@@ -63,9 +39,8 @@ class SpecialityController extends Controller
     }
 
     /**
-     * Updates a particular model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id the ID of the model to be updated
+     * @param $id
+     * @throws CHttpException
      */
     public function actionUpdate($id)
     {
@@ -93,9 +68,8 @@ class SpecialityController extends Controller
     }
 
     /**
-     * Deletes a particular model.
-     * If deletion is successful, the browser will be redirected to the 'admin' page.
-     * @param integer $id the ID of the model to be deleted
+     * @param $id
+     * @throws CHttpException
      */
     public function actionDelete($id)
     {

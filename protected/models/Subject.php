@@ -8,6 +8,7 @@
  * @property string $title
  * @property string $code
  * @property string $short_name
+ * @property bool $practice
  *
  * @property SubjectRelation[] $relations
  */
@@ -57,7 +58,7 @@ class Subject extends ActiveRecord
     public function getCycle($specialityId)
     {
         /**@var $relation SubjectRelation */
-        $relation = SubjectRelation::model()->findByAttributes(array('speciality_id'=>$specialityId,'subject_id'=>$this->id));
+        $relation = SubjectRelation::model()->findByAttributes(array('speciality_id' => $specialityId, 'subject_id' => $this->id));
         return $relation->cycle;
     }
 
@@ -75,9 +76,10 @@ class Subject extends ActiveRecord
     public function rules()
     {
         return array(
+            array('title', 'unique'),
             array('title, code, short_name', 'required'),
             array('title, code, short_name', 'length', 'max' => 50),
-            array('id, title, code, short_name', 'safe', 'on' => 'search'),
+            array('id, title, code, short_name, practice', 'safe', 'on' => 'search'),
         );
     }
 
@@ -103,6 +105,7 @@ class Subject extends ActiveRecord
             'cycle_id' => Yii::t('base', 'Subject cycles'),
             'code' => Yii::t('base', 'Code'),
             'short_name' => Yii::t('base', 'Short name'),
+            'practice'=>Yii::t('base', 'Practice'),
         );
     }
 
@@ -124,7 +127,6 @@ class Subject extends ActiveRecord
 
         $criteria->compare('id', $this->id);
         $criteria->compare('title', $this->title, true);
-        $criteria->compare('cycle_id', $this->cycle_id);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

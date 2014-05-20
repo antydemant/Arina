@@ -14,7 +14,7 @@ class GroupController extends Controller
      */
     public function actionIndex()
     {
-        $provider = Group::model()->getProvider(array(
+        $config = array(
             'criteria' => array(
                 'with' => array(
                     'speciality',
@@ -31,9 +31,17 @@ class GroupController extends Controller
                     ),
                     '*'
                 )
-            )
-        ));
-        $this->render('index', array('provider' => $provider,));
+            ),
+            'pagination' => array('pageSize' => 20,)
+        );
+        $speciality_id = 0;
+        if (!empty($_GET['Speciality'])) {
+            $config['criteria']['condition'] = 't.speciality_id = :spec_id';
+            $config['criteria']['params']['spec_id'] = $_GET['Speciality'];
+            $speciality_id = $_GET['Speciality'];
+        }
+        $provider = Group::model()->getProvider($config);
+        $this->render('index', array('provider' => $provider, 'speciality_id' => $speciality_id));
     }
 
     public function actionMakeExcel($id)
@@ -49,9 +57,11 @@ class GroupController extends Controller
         $model = new GroupDocForm();
         $model->group = Group::model()->loadContent($id);
         if (isset($_POST['GroupDocForm'])) {
-            $model->setAttributes($_POST['GroupDocForm'],false);
-            $model->getDoc();
-            Yii::app()->end();
+            $model->setAttributes($_POST['GroupDocForm'], false);
+            if ($model->validate()) {
+                $model->getDoc();
+                Yii::app()->end();
+            }
         }
         $this->render('doc', array('model' => $model));
     }
@@ -68,14 +78,14 @@ class GroupController extends Controller
         if (isset($_POST['Group'])) {
             $model->attributes = $_POST['Group'];
 
-            if(!Yii::app()->user->checkAccess('manageGroup',
+            if (!Yii::app()->user->checkAccess('manageGroup',
                 array(
                     'id' => $model->speciality->department->head_id,
                     'type' => User::TYPE_TEACHER,
                 )
-            ))
-            {
-                throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+            )
+            ) {
+                throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
             }
 
             if ($model->save()) {
@@ -94,7 +104,7 @@ class GroupController extends Controller
     {
         $model = Group::model()->loadContent($id);
 
-        if(
+        if (
             !Yii::app()->user->checkAccess('manageGroup',
                 array(
                     'id' => $model->curator_id,
@@ -108,9 +118,8 @@ class GroupController extends Controller
                     'type' => User::TYPE_STUDENT,
                 )
             )
-        )
-        {
-            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        ) {
+            throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
         }
 
         $this->ajaxValidation('group-form', $model);
@@ -141,14 +150,14 @@ class GroupController extends Controller
     public function actionDelete($id)
     {
         $model = Group::model()->loadContent($id);
-        if(!Yii::app()->user->checkAccess('manageGroup',
+        if (!Yii::app()->user->checkAccess('manageGroup',
             array(
                 'id' => $model->speciality->department->head_id,
                 'type' => User::TYPE_TEACHER,
             )
-        ))
-        {
-            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        )
+        ) {
+            throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
         }
         $model->delete();
         if (!Yii::app()->getRequest()->isAjaxRequest) {

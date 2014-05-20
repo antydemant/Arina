@@ -21,6 +21,7 @@ $subModel->subject_id = $model->id;
 <?php echo $form->textFieldRow($model, 'title', array('class' => 'span5', 'maxlength' => 50)); ?>
 <?php echo $form->textFieldRow($model, 'code', array('class' => 'span5', 'maxlength' => 50)); ?>
 <?php echo $form->textFieldRow($model, 'short_name', array('class' => 'span5', 'maxlength' => 50)); ?>
+<?php echo $form->toggleButtonRow($model, 'practice', array('enabledLabel'=>Yii::t('base','Yes'),'disabledLabel'=>Yii::t('base','No'),)); ?>
 
 <?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
 

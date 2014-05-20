@@ -14,6 +14,7 @@
  * @property integer $lectures
  * @property integer $labs
  * @property integer $practs
+ * @property integer $practice_weeks
  * @property array $weeks
  * @property array $control
  *
@@ -41,6 +42,7 @@ class StudySubject extends ActiveRecord
             array('plan_id, subject_id, total', 'required', 'message' => 'Вкажіть {attribute}'),
             array('weeks', 'check_weeks'),
             array('total', 'check_hours'),
+            array('practice_weeks', 'check_practice'),
             array('lectures', 'check_classes'),
             array('subject_id', 'check_subject', 'on' => 'insert'),
             array('lectures, labs, practs', 'default', 'value' => 0, 'on' => 'insert'),
@@ -99,6 +101,9 @@ class StudySubject extends ActiveRecord
             'examSemesters' => 'Екзамен',
             'workSemesters' => 'Курсова робота',
             'projectSemesters' => 'Курсовий проект',
+            'practice_weeks' => 'Кількість тижнів для практики',
+            'diploma_name' => 'Назва в дипломі',
+            'certificate_name' => 'Назва в атестаті',
         );
     }
 
@@ -137,14 +142,11 @@ class StudySubject extends ActiveRecord
     }
 
     /**
-     * Returns the static model of the specified AR class.
-     * Please note that you should have this exact method in all your CActiveRecord descendants!
-     * @param string $className active record class name.
-     * @return StudySubject the static model class
+     * @return int
      */
-    public static function model($className = __CLASS__)
+    public function getSelfwork()
     {
-        return parent::model($className);
+        return $this->total - $this->getClasses();
     }
 
     /**
@@ -156,14 +158,6 @@ class StudySubject extends ActiveRecord
     }
 
     /**
-     * @return int
-     */
-    public function getSelfwork()
-    {
-        return $this->total - $this->getClasses();
-    }
-
-    /**
      * Повертає список семестрів, в яких проводиться залік
      * @return string
      */
@@ -171,8 +165,9 @@ class StudySubject extends ActiveRecord
     {
         $semesters = array();
         foreach ($this->control as $semester => $control) {
-            if ($control[0] === '0')
+            if (!empty($control[0])) {
                 $semesters[] = $semester + 1;
+            }
         }
 
         return implode(', ', $semesters);
@@ -186,8 +181,15 @@ class StudySubject extends ActiveRecord
     {
         $semesters = array();
         foreach ($this->control as $semester => $control) {
-            if ($control[0] === '1')
+            if (!empty($control[1])) {
                 $semesters[] = $semester + 1;
+            }
+            if (!empty($control[2])) {
+                $semesters[] = ($semester + 1) . ' ДПА';
+            }
+            if (!empty($control[3])) {
+                $semesters[] = ($semester + 1) . ' ДА';
+            }
         }
         return implode(', ', $semesters);
     }
@@ -200,8 +202,9 @@ class StudySubject extends ActiveRecord
     {
         $semesters = array();
         foreach ($this->control as $semester => $control) {
-            if (!empty($control[1]))
+            if (!empty($control[4])) {
                 $semesters[] = $semester + 1;
+            }
         }
         return implode(', ', $semesters);
     }
@@ -214,8 +217,9 @@ class StudySubject extends ActiveRecord
     {
         $semesters = array();
         foreach ($this->control as $semester => $control) {
-            if (!empty($control[2]))
+            if (!empty($control[5])) {
                 $semesters[] = $semester + 1;
+            }
         }
         return implode(', ', $semesters);
     }
@@ -232,8 +236,30 @@ class StudySubject extends ActiveRecord
     public function check_hours()
     {
         if (!$this->hasErrors()) {
-            if ($this->total < ($this->lectures + $this->labs + $this->practs))
+            if ($this->total < ($this->lectures + $this->labs + $this->practs)) {
                 $this->addError('total', 'Аудиторних годин більше ніж загальна кількість');
+            }
+        }
+    }
+
+    public function check_practice()
+    {
+        if (!$this->hasErrors()) {
+            if ($this->subject->practice) {
+                if (empty($this->practice_weeks)) {
+                    $this->addError('practice_weeks', 'Вкажіть кількість тижнів');
+                }
+                $valid = false;
+                foreach ($this->control as $item) {
+                    if (!empty($item[0])) {
+                        $valid = true;
+                        break;
+                    }
+                }
+                if (!$valid) {
+                    $this->addError('weeks', 'Вкажіть семестер практики');
+                }
+            }
         }
     }
 
@@ -241,12 +267,14 @@ class StudySubject extends ActiveRecord
     {
         if (!$this->hasErrors()) {
             $sum = 0;
-            foreach ($this->weeks as $semester => $weekly)
+            foreach ($this->weeks as $semester => $weekly) {
                 if (!empty($weekly)) {
                     $sum += $weekly * $this->plan->semesters[$semester];
                 }
-            if ($sum < $this->getClasses())
+            }
+            if (!$this->subject->practice && ($sum < $this->getClasses())) {
                 $this->addError('lectures', 'Невистачає годин на тиждень для вичитки');
+            }
         }
     }
 
@@ -254,11 +282,14 @@ class StudySubject extends ActiveRecord
     {
         if (!$this->hasErrors()) {
             $valid = false;
-            foreach ($this->weeks as $week)
-                if (!empty($week))
+            foreach ($this->weeks as $week) {
+                if (!empty($week)) {
                     $valid = true;
-            if (!$valid)
+                }
+            }
+            if (!$valid && !$this->subject->practice) {
                 $this->addError('weeks', 'Вкажіть кількість годин на тиждень у відповідних семестрах');
+            }
         }
     }
 
@@ -270,8 +301,20 @@ class StudySubject extends ActiveRecord
             $criteria->params[':plan'] = $this->plan_id;
             $criteria->addCondition('subject_id = :subject');
             $criteria->params[':subject'] = $this->subject_id;
-            if (StudySubject::model()->exists($criteria))
+            if (StudySubject::model()->exists($criteria)) {
                 $this->addError('subject_id', 'Запис про цей предмет уже додано до цього навчального плану');
+            }
         }
+    }
+
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return StudySubject the static model class
+     */
+    public static function model($className = __CLASS__)
+    {
+        return parent::model($className);
     }
 }

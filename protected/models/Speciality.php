@@ -10,6 +10,11 @@ Yii::import('application.behaviors.dateField.*');
  * @property integer $department_id
  * @property string $number
  * @property string $accreditation_date
+ * @property string $qualification
+ * @property string $apprenticeship
+ * @property string $discipline
+ * @property string $direction
+ * @property string $education_form
  *
  * @property Group[] $groups
  * @property Department $department
@@ -49,7 +54,8 @@ class Speciality extends ActiveRecord implements IDateContainable
     public function rules()
     {
         return array(
-            array('title, department_id, number, accreditation_date', 'required'),
+            array('title, number', 'unique'),
+            array('title, department_id, number, accreditation_date, qualification, apprenticeship, discipline, direction, education_form', 'required'),
             array('department_id', 'numerical', 'integerOnly' => true),
             array('title', 'length', 'max' => 90),
             array('number', 'length', 'max' => 15),
@@ -80,6 +86,11 @@ class Speciality extends ActiveRecord implements IDateContainable
             'department' => Yii::t('department', 'Department'),
             'number' => Yii::t('speciality', 'Number'),
             'accreditation_date' => Yii::t('speciality', 'Last accreditation date'),
+            'qualification'=>Yii::t('speciality', 'Qualification'),
+            'apprenticeship'=>Yii::t('speciality', 'Apprenticeship'),
+            'discipline'=>Yii::t('speciality', 'Discipline'),
+            'direction'=>Yii::t('speciality', 'Direction'),
+            'education_form'=>Yii::t('speciality', 'Education Time'),
         );
     }
 
@@ -114,6 +125,7 @@ class Speciality extends ActiveRecord implements IDateContainable
                     '*'
                 ),
             ),
+            'pagination' => array('pageSize' => 20,)
         ));
     }
 

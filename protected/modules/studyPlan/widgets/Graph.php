@@ -5,6 +5,7 @@
  */
 class Graph extends CWidget
 {
+    public $readOnly = false;
     public $model;
     public $field;
     public $yearAmount = 4;
@@ -24,6 +25,6 @@ class Graph extends CWidget
 
     public function run()
     {
-        $this->render('graph', array('map'=>$this->map, 'list' => $this->list, 'yearAmount' => $this->yearAmount));
+        $this->render('graph', array('map'=>$this->map, 'list' => $this->list, 'yearAmount' => $this->yearAmount,'readOnly'=>$this->readOnly));
     }
 }

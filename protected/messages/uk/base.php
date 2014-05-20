@@ -3,8 +3,12 @@
  *
  */
 return array(
+    'Practice' => 'Практика',
+    'References' => 'Довідники',
+    'Curator cabinet' => 'Кабінет куратора',
+    'Semester' => 'Семестер',
     'Date' => 'Дата',
-    'Subject'=>'Предмет',
+    'Subject' => 'Предмет',
     'Teacher' => 'Викладач',
     'Create file' => 'Створити файл',
     'Total' => 'Всього',
@@ -17,6 +21,7 @@ return array(
     'Generate' => 'Генерувати',
     'List' => 'Список',
     'Cycles' => 'Цикли',
+    'Cycle' => 'Цикл',
     'Subject cycles' => 'Цикли предметів',
     'Add' => 'Додати',
     'Subjects' => 'Предмети',
@@ -64,7 +69,7 @@ return array(
     'Finish' => 'Завершити',
     'Code' => 'Код',
     'Short name' => 'Коротке ім’я',
-
+    'Filter' => 'Фільтр',
     'September' => 'Вересень',
     'October' => 'Жовтень',
     'November' => 'Листопад',
@@ -77,4 +82,6 @@ return array(
     'June' => 'Червень',
     'July' => 'Липень',
     'August' => 'Серпень',
+    'Yes'=>'Так',
+    'No'=>'Ні',
 );

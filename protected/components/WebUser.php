@@ -25,7 +25,7 @@ class WebUser extends CWebUser
     /**
      * Data acquisition from base
      *
-     * @return CActiveRecord|null
+     * @return User|CActiveRecord|null
      */
     private function getModel()
     {
@@ -54,7 +54,7 @@ class WebUser extends CWebUser
     /**
      * @return int
      */
-    function getRole()
+    public function getRole()
     {
         /**
          * @var User $user
@@ -63,5 +63,19 @@ class WebUser extends CWebUser
             return $user->role;
         }
         return User::ROLE_GUEST;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIdentityId()
+    {
+        /**
+         * @var User $user
+         */
+        if ($user = $this->getModel()) {
+            return $user->identity_id;
+        }
+        return 0;
     }
 }
