@@ -1,14 +1,57 @@
 <?php
 /**
- * @var PlanController $this
- * @var StudySubject $model
+ * @var WorkController $this
+ * @var WorkSubject $model
  * @var TbActiveForm $form
  */
 $this->breadcrumbs = array(
-    Yii::t('base', 'Study plans') => $this->createUrl('main/index'),
-    $model->plan->speciality->title => $this->createUrl('plan/view', array('id' => $model->plan->id)),
+    'Робочі плани' => $this->createUrl('index'),
+    $model->plan->speciality->title => $this->createUrl('view', array('id' => $model->plan->id)),
 );
 ?>
+<h3>Додання предметів</h3>
+<?php $this->widget(
+    'bootstrap.widgets.TbTabs',
+    array(
+        'type' => 'tabs',
+        'tabs' => array(
+            array(
+                'label' => '1-й семестр',
+                'active' => true,
+                'content' => $this->renderPartial('_semester', array('model' => $model, 'semester' => 1), true),
+            ),
+            array(
+                'label' => '2-й семестр',
+                'content' => $this->renderPartial('_semester', array('model' => $model, 'semester' => 2), true),
+            ),
+            array(
+                'label' => '3-й семестр',
+                'content' => $this->renderPartial('_semester', array('model' => $model, 'semester' => 3), true),
+            ),
+            array(
+                'label' => '4-й семестр',
+                'content' => $this->renderPartial('_semester', array('model' => $model, 'semester' => 4), true),
+            ),
+            array(
+                'label' => '5-й семестр',
+                'content' => $this->renderPartial('_semester', array('model' => $model, 'semester' => 5), true),
+            ),
+            array(
+                'label' => '6-й семестр',
+                'content' => $this->renderPartial('_semester', array('model' => $model, 'semester' => 6), true),
+            ),
+            array(
+                'label' => '7-й семестр',
+                'content' => $this->renderPartial('_semester', array('model' => $model, 'semester' => 7), true),
+            ),
+            array(
+                'label' => '8-й семестр',
+                'content' => $this->renderPartial('_semester', array('model' => $model, 'semester' => 8), true),
+            ),
+        )
+    )
+); ?>
+
 <style>
     .input,
     .options {
@@ -42,102 +85,3 @@ $this->breadcrumbs = array(
         width: 100%;
     }
 </style>
-<?php $form = $this->beginWidget(
-    BoosterHelper::FORM,
-    array(
-        'htmlOptions' => array(
-            'class' => 'well row',
-        )
-    )
-); ?>
-<h3>Додання предметів</h3>
-<?php echo $form->errorSummary($model); ?>
-<div class="span3">
-    <?php echo $form->listBox(
-        $model,
-        'subject_id',
-        Subject::getListForSpeciality($model->plan->speciality_id),
-        array('size' => 25)
-    ); ?>
-</div>
-<div class="span3">
-    <?php echo $form->numberFieldRow($model, 'total'); ?>
-    <?php echo CHtml::label('Аудиторні', 'classes'); ?>
-    <?php echo CHtml::numberField('classes', '', array('placeholder' => 'Аудиторні', 'readonly' => true)); ?>
-    <?php echo $form->numberFieldRow($model, 'lectures'); ?>
-    <?php echo $form->numberFieldRow($model, 'labs'); ?>
-    <?php echo $form->numberFieldRow($model, 'practs'); ?>
-</div>
-<div class="span5">
-    <?php foreach ($model->plan->semesters as $semester => $weeks): ?>
-        <div class="input">
-            <?php echo CHtml::label(
-                $semester + 1 . '-й семестр: ' . $weeks . ' тижнів',
-                'StudySubject_weeks_' . $semester
-            ); ?>
-            <?php echo $form->numberField($model, "weeks[$semester]", array('placeholder' => 'годин на тиждень')); ?>
-        </div>
-        <div class="options">
-            <div class="item">
-                <?php echo $form->checkBox($model, "control[$semester][0]"); ?>
-                <?php echo CHtml::label(Yii::t('terms', 'Test'), "StudySubject_control_{$semester}_0"); ?>
-                <?php echo $form->checkBox($model, "control[$semester][1]"); ?>
-                <?php echo CHtml::label(Yii::t('terms', 'Exam'), "StudySubject_control_{$semester}_1"); ?>
-            </div>
-            <div class="item">
-                <?php echo $form->checkBox($model, "control[$semester][2]"); ?>
-                <?php echo CHtml::label(Yii::t('terms', 'Course work'), "StudySubject_control_{$semester}_2"); ?>
-                <?php echo $form->checkBox($model, "control[$semester][3]"); ?>
-                <?php echo CHtml::label(Yii::t('terms', 'Course project'), "StudySubject_control_{$semester}_3"); ?>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-    <?php endforeach; ?>
-</div>
-<div style="clear: both"></div>
-<div class="form-actions" style="width: 300px; margin: 0 auto">
-    <?php echo CHtml::submitButton('Додати', array('class' => 'btn btn-primary')); ?>
-    <?php echo CHtml::button('Очистити', array('type' => 'reset', 'class' => 'btn btn-danger')); ?>
-    <?php echo CHtml::link('Завершити', $this->createUrl('index'), array('class' => 'btn btn-info')); ?>
-</div>
-<?php $this->endWidget(); ?>
-
-<?php $this->widget(
-    'studyPlan.widgets.SubjectTable',
-    array(
-        'subjectDataProvider' => $model->plan->getPlanSubjectProvider()
-    )
-);
-?>
-
-<script>
-
-    var flag = false;
-
-    $(function () {
-        $("input[id^='StudySubject_weeks_']").change(function () {
-            var weeks = [
-                <?php echo implode(', ', $model->plan->semesters); ?>
-            ];
-            var classes = 0;
-            for (i = 0; i < 8; i++) {
-                if ($("#StudySubject_weeks_" + i).val())
-                    classes += weeks[i] * parseInt($("#StudySubject_weeks_" + i).val());
-            }
-            $("#classes").val(classes);
-        });
-
-
-        $("input[type='submit']").click(function () {
-            flag = true;
-        });
-
-        window.addEventListener("beforeunload", function (event) {
-            var confirmationMessage = 'Якщо ви не натиснули "Додати" дані не збережуться';
-            if (!flag) {
-                (event || window.event).returnValue = confirmationMessage;     //Firefox, IE
-                return confirmationMessage;                                    //Chrome, Opera, Safari
-            }
-        });
-    });
-</script>

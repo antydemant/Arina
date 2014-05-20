@@ -23,6 +23,7 @@ class SubjectController extends Controller
 
         if (!Yii::app()->request->isAjaxRequest)
             unset(Yii::app()->session['subject']);
+
         $this->render('create', array(
             'model' => $model,
         ));

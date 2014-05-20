@@ -55,4 +55,25 @@ class WorkSubject  extends ActiveRecord
             'subject' => array(self::BELONGS_TO, 'Subject', 'subject_id'),
         );
     }
+
+
+    public function attributeLabels()
+    {
+        return array(
+            'id' => 'ID',
+            'plan_id' => 'Plan',
+            'subject_id' => Yii::t('terms', 'Subject'),
+            'total' => 'Загальна кількість',
+            'lectures' => 'Лекції',
+            'labs' => 'Лабораторні',
+            'practs' => 'Практичні',
+            'classes' => 'Всього аудиторних',
+            'selfwork' => 'Самостійна робота',
+            'testSemesters' => 'Залік',
+            'examSemesters' => 'Екзамен',
+            'workSemesters' => 'Курсова робота',
+            'projectSemesters' => 'Курсовий проект',
+            'weeks' => 'Годин на тиждень',
+        );
+    }
 } 

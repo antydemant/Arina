@@ -50,7 +50,7 @@ class StudyYear extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'title' => 'Year',
+            'title' => 'Навчальний рік',
         );
     }
 

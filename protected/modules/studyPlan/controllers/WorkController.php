@@ -9,7 +9,7 @@ class WorkController extends Controller
 
     public function actionIndex()
     {
-        $dataProvider = StudyPlan::model()->getProvider();
+        $dataProvider = WorkPlan::model()->getProvider();
 
         $this->render('index', array('dataProvider' => $dataProvider));
     }
@@ -19,10 +19,6 @@ class WorkController extends Controller
         $model = new WorkPlan('create');
 
         if (isset($_POST['WorkPlan'])) {
-
-            if (empty($_POST['plan_origin']) || empty($_POST['work_origin']))
-                $model->addError('', 'Оберіть навчальний або робочий план для основи');
-
             $model->attributes = $_POST['WorkPlan'];
             $model->created = date('Y-m-d', time());
             if (isset(Yii::app()->session['weeks'])) {
@@ -34,32 +30,11 @@ class WorkController extends Controller
                 unset(Yii::app()->session['graph']);
             }
             if ($model->save()) {
-                if (!empty($_POST['plan_origin'])) {
-                    $this->copyPlan(StudyPlan::model()->loadContent($_POST['plan_origin']), $model);
-                } elseif (!empty($_POST['work_origin'])) {
-                    $this->copyPlan(WorkPlan::model()->loadContent($_POST['work_origin']), $model);
-                }
-
                 $this->redirect($this->createUrl('subjects', array('id' => $model->id)));
             }
         }
 
         $this->render('create', array('model' => $model));
-    }
-
-    /**
-     * Копіює предмети з одного плану в інший
-     * @param StudyPlan|WorkPlan $origin
-     * @param StudyPlan|WorkPlan $newPlan
-     */
-    public function copyPlan($origin, $newPlan)
-    {
-        foreach ($origin->subjects as $subject) {
-            $model = new WorkSubject();
-            $model->attributes = $subject->attributes;
-            $model->plan_id = $newPlan->id;
-            $model->save(false);
-        }
     }
 
     public function actionExecuteGraph()
@@ -104,13 +79,13 @@ class WorkController extends Controller
 
     public function actionSubjects($id)
     {
-        $model = new StudySubject();
+        $model = new WorkSubject();
         $model->plan_id = $id;
 
-        if (isset($_POST['StudySubject'])) {
-            $model->attributes = $_POST['StudySubject'];
+        if (isset($_POST['WorkSubject'])) {
+            $model->attributes = $_POST['WorkSubject'];
             if ($model->save()) {
-                $model = new StudySubject();
+                $model = new WorkSubject();
                 $model->plan_id = $id;
             }
         }
@@ -119,20 +94,24 @@ class WorkController extends Controller
 
     public function actionView($id)
     {
-        $model = StudyPlan::model()->loadContent($id);
+        $model = WorkPlan::model()->loadContent($id);
 
         $this->render('view', array('model' => $model));
     }
 
     public function actionUpdate($id)
     {
-        $model = StudyPlan::model()->loadContent($id);
+        $model = WorkPlan::model()->loadContent($id);
 
-        if (isset($_POST['StudyPlan'])) {
-            $model->attributes = $_POST['StudyPlan'];
+        if (isset($_POST['WorkPlan'])) {
+            $model->attributes = $_POST['WorkPlan'];
             if (isset(Yii::app()->session['weeks'])) {
                 $model->semesters = Yii::app()->session['weeks'];
                 unset(Yii::app()->session['weeks']);
+            }
+            if (isset(Yii::app()->session['graph'])) {
+                $model->graph = Yii::app()->session['graph'];
+                unset(Yii::app()->session['graph']);
             }
             if ($model->save()) {
                 $this->redirect(array('index'));
@@ -145,11 +124,11 @@ class WorkController extends Controller
 
     public function actionEditSubject($id)
     {
-        /** @var StudySubject $model */
-        $model = StudySubject::model()->loadContent($id);
+        /** @var WorkSubject $model */
+        $model = WorkSubject::model()->loadContent($id);
 
-        if (isset($_POST['StudySubject'])) {
-            $model->attributes = $_POST['StudySubject'];
+        if (isset($_POST['WorkSubject'])) {
+            $model->attributes = $_POST['WorkSubject'];
             if ($model->save()) {
                 $this->redirect($this->createUrl('view', array('id' => $model->plan_id)));
             }
@@ -160,7 +139,7 @@ class WorkController extends Controller
 
     public function actionDeleteSubject($id)
     {
-        StudySubject::model()->loadContent($id)->delete();
+        WorkSubject::model()->loadContent($id)->delete();
 
         if (!isset($_GET['ajax'])) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
@@ -171,13 +150,13 @@ class WorkController extends Controller
     {
         /**@var $excel ExcelMaker */
         $excel = Yii::app()->getComponent('excel');
-        $plan = StudyPlan::model()->loadContent($id);
-        $excel->getDocument($plan, 'studyPlan');
+        $plan = WorkPlan::model()->loadContent($id);
+        $excel->getDocument($plan, 'workPlan');
     }
 
     public function actionDelete($id)
     {
-        StudyPlan::model()->loadContent($id)->delete();
+        WorkPlan::model()->loadContent($id)->delete();
 
         if (!isset($_GET['ajax'])) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));

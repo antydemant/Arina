@@ -3,6 +3,7 @@
  *
  */
 return array(
+    'Practice' => 'Практика',
     'References' => 'Довідники',
     'Curator cabinet' => 'Кабінет куратора',
     'Semester' => 'Семестер',
@@ -81,4 +82,6 @@ return array(
     'June' => 'Червень',
     'July' => 'Липень',
     'August' => 'Серпень',
+    'Yes'=>'Так',
+    'No'=>'Ні',
 );
