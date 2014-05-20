@@ -83,12 +83,14 @@ $this->breadcrumbs = array(
                 <?php echo CHtml::label(Yii::t('terms', 'Test'), "StudySubject_control_{$semester}_0"); ?>
                 <?php echo $form->checkBox($model, "control[$semester][1]"); ?>
                 <?php echo CHtml::label(Yii::t('terms', 'Exam'), "StudySubject_control_{$semester}_1"); ?>
+                <?php echo $form->checkBox($model, "control[$semester][2]"); ?>
+                <?php echo CHtml::label(Yii::t('terms', 'DPA'), "StudySubject_control_{$semester}_2"); ?>
             </div>
             <div class="item">
-                <?php echo $form->checkBox($model, "control[$semester][2]"); ?>
-                <?php echo CHtml::label(Yii::t('terms', 'Course work'), "StudySubject_control_{$semester}_2"); ?>
                 <?php echo $form->checkBox($model, "control[$semester][3]"); ?>
-                <?php echo CHtml::label(Yii::t('terms', 'Course project'), "StudySubject_control_{$semester}_3"); ?>
+                <?php echo CHtml::label(Yii::t('terms', 'Course work'), "StudySubject_control_{$semester}_3"); ?>
+                <?php echo $form->checkBox($model, "control[$semester][4]"); ?>
+                <?php echo CHtml::label(Yii::t('terms', 'Course project'), "StudySubject_control_{$semester}_4"); ?>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -112,20 +114,26 @@ $this->breadcrumbs = array(
 <?php echo CHtml::link('Завершити', $this->createUrl('index'), array('class' => 'btn btn-info btn-large')); ?>
 
 <script>
+    var weeks = [
+        <?php echo implode(', ', $model->plan->semesters); ?>
+    ];
+
+    function calcClasses() {
+        var classes = 0;
+        for (i = 0; i < 8; i++) {
+            if ($("#StudySubject_weeks_" + i).val())
+                classes += weeks[i] * parseInt($("#StudySubject_weeks_" + i).val());
+        }
+        $("#classes").val(classes);
+    }
 
     var flag = false;
 
     $(function () {
+        calcClasses();
+
         $("input[id^='StudySubject_weeks_']").change(function () {
-            var weeks = [
-                <?php echo implode(', ', $model->plan->semesters); ?>
-            ];
-            var classes = 0;
-            for (i = 0; i < 8; i++) {
-                if ($("#StudySubject_weeks_" + i).val())
-                    classes += weeks[i] * parseInt($("#StudySubject_weeks_" + i).val());
-            }
-            $("#classes").val(classes);
+            calcClasses();
         });
 
 
