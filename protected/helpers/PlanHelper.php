@@ -17,7 +17,8 @@ class PlanHelper
      * - P - practice;
      * - H - vacation (holidays);
      * - E - passing the state exam;
-     * - D - protection degree project (work);
+     * - DP - diploma design;
+     * - DA - state certification;
      * @return array
      */
     public static function getDefaultPlan()
@@ -223,12 +224,12 @@ class PlanHelper
                 'P', //35
                 'P', //36
                 'P', //37
-                ' ', //38
-                ' ', //39
-                ' ', //40
-                ' ', //41
-                ' ', //42
-                'E/D', //43
+                'DP', //38
+                'DP', //39
+                'DP', //40
+                'DP', //41
+                'DP', //42
+                'DA', //43
                 ' ', //44
                 ' ', //45
                 ' ', //46

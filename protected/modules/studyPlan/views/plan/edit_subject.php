@@ -27,7 +27,13 @@
 
         .options .item {
             float: left;
-            width: 125px;
+            width: 75px;
+        }
+
+        .options .item.last {
+            float: left;
+            width: 130px;
+            margin-right: -20px;
         }
 
         .span5 input[type="number"] {
@@ -67,14 +73,18 @@
                     <?php echo CHtml::label(Yii::t('terms', 'Test'), "StudySubject_control_{$semester}_0"); ?>
                     <?php echo $form->checkBox($model, "control[$semester][1]"); ?>
                     <?php echo CHtml::label(Yii::t('terms', 'Exam'), "StudySubject_control_{$semester}_1"); ?>
-                    <?php echo $form->checkBox($model, "control[$semester][2]"); ?>
-                    <?php echo CHtml::label(Yii::t('terms', 'DPA'), "StudySubject_control_{$semester}_2"); ?>
                 </div>
                 <div class="item">
+                    <?php echo $form->checkBox($model, "control[$semester][2]"); ?>
+                    <?php echo CHtml::label(Yii::t('terms', 'DPA'), "StudySubject_control_{$semester}_2"); ?>
                     <?php echo $form->checkBox($model, "control[$semester][3]"); ?>
-                    <?php echo CHtml::label(Yii::t('terms', 'Course work'), "StudySubject_control_{$semester}_3"); ?>
+                    <?php echo CHtml::label(Yii::t('plan', 'DA'), "StudySubject_control_{$semester}_3"); ?>
+                </div>
+                <div class="item last">
                     <?php echo $form->checkBox($model, "control[$semester][4]"); ?>
-                    <?php echo CHtml::label(Yii::t('terms', 'Course project'), "StudySubject_control_{$semester}_4"); ?>
+                    <?php echo CHtml::label(Yii::t('terms', 'Course work'), "StudySubject_control_{$semester}_4"); ?>
+                    <?php echo $form->checkBox($model, "control[$semester][5]"); ?>
+                    <?php echo CHtml::label(Yii::t('terms', 'Course project'), "StudySubject_control_{$semester}_5"); ?>
                 </div>
             </div>
             <div class="clearfix"></div>

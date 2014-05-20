@@ -31,7 +31,7 @@ class UserController extends Controller
         if (isset($_POST['ELoginForm'])) {
             $model->attributes = $_POST['ELoginForm'];
             if ($model->validate() && $model->login()) {
-                Yii::app()->request->redirect(Yii::app()->user->returnUrl);
+                Yii::app()->request->redirect(Yii::app()->homeUrl);
             }
         }
 
@@ -47,7 +47,7 @@ class UserController extends Controller
     public function actionLogout()
     {
         Yii::app()->user->logout();
-        Yii::app()->request->redirect(Yii::app()->user->returnUrl);
+        Yii::app()->request->redirect(Yii::app()->homeUrl);
     }
 
     /**

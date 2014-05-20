@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @author Dmytro Karpovych <ZAYEC77@gmail.com>
@@ -149,13 +150,112 @@ class ExcelMaker extends CComponent
         //SHEET #1
         $sheet = $sheet = $objPHPExcel->setActiveSheetIndex(0);
         $sheet->setCellValue("F19", $plan->speciality->number . ' ' . $plan->speciality->title);
+        $sheet->setCellValue("W13", $plan->speciality->discipline);
+        $sheet->setCellValue("E16", $plan->speciality->direction);
+        $sheet->setCellValue("AS11", $plan->speciality->qualification);
+        $sheet->setCellValue("AT13", $plan->speciality->apprenticeship);
+        $sheet->setCellValue("F25", $plan->speciality->education_form);
 
+        // table #1
         for ($i = 0; $i < count($plan->graph); $i++) {
             $char = 'B';
             for ($j = 0; $j < count($plan->graph[$i]); $j++) {
                 $sheet->setCellValue($char . ($i + 32), Yii::t('plan', $plan->graph[$i][$j]));
                 $char++;
             }
+        }
+
+        // table #2
+        $styleArray = array(
+            'borders' => array(
+                'allborders' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THIN,
+                    'color' => array('argb' => '00000000'),
+                ),
+            ),
+        );
+        $i = 46;
+        $totals = array(
+            'T' => 0,
+            'P' => 0,
+            'DA' => 0,
+            'DP' => 0,
+            'H' => 0,
+            'S' => 0,
+            ' ' => 0,
+        );
+        foreach ($plan->graph as $item) {
+            $result = array_count_values($item);
+            foreach ($result as $key => $value) {
+                $totals[$key] += $value;
+            }
+
+            $sheet->setCellValue('A' . $i, $i - 45);
+            if (isset($result['S'])) {
+                $sheet->setCellValue('E' . $i, $result['S']);
+            }
+            if (isset($result['P'])) {
+                $sheet->setCellValue('G' . $i, $result['P']);
+            }
+            if (isset($result['DA'])) {
+                $sheet->setCellValue('I' . $i, $result['DA']);
+            }
+            if (isset($result['DP'])) {
+                $sheet->setCellValue('K' . $i, $result['DP']);
+            }
+            if (isset($result['T'])) {
+                $sheet->setCellValue('C' . $i, $result['T']);
+            }
+            if (isset($result['H'])) {
+                $sheet->setCellValue('M' . $i, $result['H']);
+            }
+            if (isset($result[' '])) {
+                $sheet->setCellValue('P' . $i, 52 - $result[' ']);
+            } else {
+                $sheet->setCellValue('P' . $i, 52);
+            }
+            $sheet->getStyle("A$i:R$i")->applyFromArray($styleArray);
+            $i++;
+        }
+        $sheet->setCellValue('A' . $i, 'Разом');
+        $sheet->setCellValue('E' . $i, $totals['S']);
+        $sheet->setCellValue('G' . $i, $totals['P']);
+        $sheet->setCellValue('I' . $i, $totals['DA']);
+        $sheet->setCellValue('K' . $i, $totals['DP']);
+        $sheet->setCellValue('C' . $i, $totals['T']);
+        $sheet->setCellValue('M' . $i, $totals['H']);
+        $sheet->setCellValue('P' . $i, 52 * count($plan->graph) - $totals[' ']);
+        $sheet->getStyle("A$i:R$i")->applyFromArray($styleArray);
+
+        // table #3 / table #4
+        $i = 46;
+        $z = 46;
+        foreach ($plan->subjects as $item) {
+            if ($item->subject->practice) {
+                $sheet->setCellValue('T' . $i, $item->subject->title);
+                $sheet->setCellValue('AG' . $i, $item->practice_weeks);
+                for ($j = 0; $j < count($item->control); $j++) {
+                    if ($item->control[$j][0]) {
+                        $sheet->setCellValue("AF$i", $j+1);
+                    }
+                }
+                $sheet->getStyle("T$i:AH$i")->applyFromArray($styleArray);
+                $i++;
+            }
+            for ($k = 0; $k < count($item->control); $k++) {
+                $semester = $item->control[$k];
+                $list = array(2 => 'ДПА', 3 => 'ДА');
+                foreach ($list as $key => $name) {
+                    if ($semester[$key]) {
+                        $sheet->setCellValue("AJ$z", $item->subject->title);
+                        $sheet->setCellValue("AT$z", $name);
+                        $sheet->setCellValue("BC$z", $k + 1);
+                        $sheet->getStyle("AJ$z:BC$z")->applyFromArray($styleArray);
+                        $z++;
+                    }
+                }
+            }
+
         }
 
         //SHEET #2

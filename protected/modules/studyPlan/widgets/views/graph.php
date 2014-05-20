@@ -88,7 +88,8 @@
         var s = "<?php echo Yii::t('plan','S'); ?>";
         var p = "<?php echo Yii::t('plan','P'); ?>";
         var h = "<?php echo Yii::t('plan','H'); ?>";
-        var de = "<?php echo Yii::t('plan','E/D'); ?>";
+        var dp = "<?php echo Yii::t('plan','DP'); ?>";
+        var da = "<?php echo Yii::t('plan','DA'); ?>";
         var empty = " ";
         $(function () {
             var loader = $('img.load').hide();
@@ -108,10 +109,14 @@
                         obj.attr('data-state', 'H');
                         break;
                     case 'H':
-                        obj.val(de);
-                        obj.attr('data-state', 'DE');
+                        obj.val(dp);
+                        obj.attr('data-state', 'DP');
                         break;
-                    case 'DE':
+                    case 'DP':
+                        obj.val(da);
+                        obj.attr('data-state', 'DA');
+                        break;
+                    case 'DA':
                         obj.val(empty);
                         obj.attr('data-state', ' ');
                         break;
@@ -121,8 +126,7 @@
                         break;
                 }
             });
-            $('#generate').click(function () {
-                event.preventDefault();
+            $('#generate').click(function (e) {
                 $("div.result").fadeOut();
                 loader.show();
                 var done = function (html) {
@@ -139,6 +143,7 @@
                 var url = "<?php echo $this->controller->createUrl('/studyPlan/plan/executeGraph');?>";
 
                 var posting = $.post(url, data).done(done);
+                e.preventDefault(e);
             });
         });
     </script>
@@ -150,8 +155,8 @@
         <li><?php echo Yii::t('plan', 'S - examination session'); ?></li>
         <li><?php echo Yii::t('plan', 'P - practice'); ?></li>
         <li><?php echo Yii::t('plan', 'H - vacation (holidays)'); ?></li>
-        <li><?php echo Yii::t('plan', 'E - passing the state exam'); ?></li>
-        <li><?php echo Yii::t('plan', 'D - protection degree project (work)'); ?></li>
+        <li><?php echo Yii::t('plan', 'DP - diploma design'); ?></li>
+        <li><?php echo Yii::t('plan', 'DA - state certification'); ?></li>
     </ul>
     <button class="btn btn-info" id="generate"><?php echo Yii::t('base', 'Generate'); ?></button>
     <img class="load" src="/img/loadbar.gif" alt="load"/>

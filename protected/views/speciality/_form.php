@@ -23,6 +23,12 @@
             'language'=>'uk',
             'weekStart'=>'1',
         ),)); ?>
+    <?php echo $form->textFieldRow($model, 'qualification', array('size' => 200, 'maxlength' => 200, 'class' => 'span6')); ?>
+    <?php echo $form->textFieldRow($model, 'apprenticeship', array('size' => 200, 'maxlength' => 200, 'class' => 'span6')); ?>
+    <?php echo $form->textFieldRow($model, 'discipline', array('size' => 200, 'maxlength' => 200, 'class' => 'span6')); ?>
+    <?php echo $form->textFieldRow($model, 'direction', array('size' => 200, 'maxlength' => 200, 'class' => 'span6')); ?>
+    <?php echo $form->textFieldRow($model, 'education_form', array('size' => 200, 'maxlength' => 200, 'class' => 'span6')); ?>
+
     <?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
 
     <?php $this->endWidget(); ?>

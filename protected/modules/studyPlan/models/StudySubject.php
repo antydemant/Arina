@@ -14,6 +14,7 @@
  * @property integer $lectures
  * @property integer $labs
  * @property integer $practs
+ * @property integer $practice_weeks
  * @property array $weeks
  * @property array $control
  *
@@ -41,6 +42,7 @@ class StudySubject extends ActiveRecord
             array('plan_id, subject_id, total', 'required', 'message' => 'Вкажіть {attribute}'),
             array('weeks', 'check_weeks'),
             array('total', 'check_hours'),
+            array('practice_weeks', 'check_practice'),
             array('lectures', 'check_classes'),
             array('subject_id', 'check_subject', 'on' => 'insert'),
             array('lectures, labs, practs', 'default', 'value' => 0, 'on' => 'insert'),
@@ -99,6 +101,9 @@ class StudySubject extends ActiveRecord
             'examSemesters' => 'Екзамен',
             'workSemesters' => 'Курсова робота',
             'projectSemesters' => 'Курсовий проект',
+            'practice_weeks' => 'Кількість тижнів для практики',
+            'diploma_name' => 'Назва в дипломі',
+            'certificate_name' => 'Назва в атестаті',
         );
     }
 
@@ -178,8 +183,12 @@ class StudySubject extends ActiveRecord
         foreach ($this->control as $semester => $control) {
             if (!empty($control[1])) {
                 $semesters[] = $semester + 1;
-            } elseif (!empty($control[2])) {
+            }
+            if (!empty($control[2])) {
                 $semesters[] = ($semester + 1) . ' ДПА';
+            }
+            if (!empty($control[3])) {
+                $semesters[] = ($semester + 1) . ' ДА';
             }
         }
         return implode(', ', $semesters);
@@ -193,7 +202,7 @@ class StudySubject extends ActiveRecord
     {
         $semesters = array();
         foreach ($this->control as $semester => $control) {
-            if (!empty($control[3])) {
+            if (!empty($control[4])) {
                 $semesters[] = $semester + 1;
             }
         }
@@ -208,7 +217,7 @@ class StudySubject extends ActiveRecord
     {
         $semesters = array();
         foreach ($this->control as $semester => $control) {
-            if (!empty($control[4])) {
+            if (!empty($control[5])) {
                 $semesters[] = $semester + 1;
             }
         }
@@ -229,6 +238,27 @@ class StudySubject extends ActiveRecord
         if (!$this->hasErrors()) {
             if ($this->total < ($this->lectures + $this->labs + $this->practs)) {
                 $this->addError('total', 'Аудиторних годин більше ніж загальна кількість');
+            }
+        }
+    }
+
+    public function check_practice()
+    {
+        if (!$this->hasErrors()) {
+            if ($this->subject->practice) {
+                if (empty($this->practice_weeks)) {
+                    $this->addError('practice_weeks', 'Вкажіть кількість тижнів');
+                }
+                $valid = false;
+                foreach ($this->control as $item) {
+                    if (!empty($item[0])) {
+                        $valid = true;
+                        break;
+                    }
+                }
+                if (!$valid) {
+                    $this->addError('weeks', 'Вкажіть семестер практики');
+                }
             }
         }
     }

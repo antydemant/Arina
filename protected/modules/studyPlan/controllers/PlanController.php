@@ -71,13 +71,13 @@ class PlanController extends Controller
                     if ($j == ' ') {
                         break;
                     }
-                    if (($j != 'T')&&($j != 'P') && (!$findFirst)) {
+                    if (($j != 'T') && ($j != 'P') && (!$findFirst)) {
                         $findFirst = true;
                         $semesters[$i + 1][1] = $counter;
                         $counter = 0;
                     } elseif (($j == 'T') && ($findFirst)) {
                         $findSecond = true;
-                    } elseif (($j != 'T')&&($j != 'P') && ($findSecond)) {
+                    } elseif (($j != 'T') && ($j != 'P') && ($findSecond)) {
                         $semesters[$i + 1][2] = $counter;
                         break;
                     }
