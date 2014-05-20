@@ -41,6 +41,7 @@ return CMap::mergeArray(
             'admin',
             'settings',
             'curator',
+            'import'
         ),
 
         'components' => array(
