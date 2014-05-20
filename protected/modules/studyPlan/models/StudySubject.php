@@ -257,7 +257,7 @@ class StudySubject extends ActiveRecord
                     $valid = true;
                 }
             }
-            if (!$valid) {
+            if (!$valid && !$this->practice) {
                 $this->addError('weeks', 'Вкажіть кількість годин на тиждень у відповідних семестрах');
             }
         }
