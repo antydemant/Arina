@@ -39,6 +39,7 @@ $this->menu = array(
         'last_name',
         'first_name',
         'middle_name',
+        'short_name',
         array(
             'type' => 'raw',
             'label' => Yii::t('teacher', 'Cyclic Commission'),

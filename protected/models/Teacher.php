@@ -21,12 +21,13 @@ class Teacher extends ActiveRecord
         return $this->cyclicCommission->title;
 
     }
+
     /**
      * @return array for dropDownList
      */
     public static function getList()
     {
-        return CHtml::listData(self::model()->findAll(array('order'=>'last_name, middle_name, first_name')), 'id', 'fullName');
+        return CHtml::listData(self::model()->findAll(array('order' => 'last_name, middle_name, first_name')), 'id', 'fullName');
     }
 
     public static function getTreeList()
@@ -36,10 +37,10 @@ class Teacher extends ActiveRecord
          * @var CyclicCommission[] $commission
          */
         $commission = CyclicCommission::model()->findAll();
-        foreach($commission as $item) {
-            $list[$item->title]=array();
-            foreach($item->teachers as $teacher) {
-                $list[$item->title][$teacher->id]=$teacher->getFullName();
+        foreach ($commission as $item) {
+            $list[$item->title] = array();
+            foreach ($item->teachers as $teacher) {
+                $list[$item->title][$teacher->id] = $teacher->getFullName();
             }
         }
         return $list;
@@ -59,6 +60,13 @@ class Teacher extends ActiveRecord
     public function getFullName()
     {
         return trim("$this->last_name $this->first_name $this->middle_name");
+    }
+
+    public function getNameWithInitials()
+    {
+        $firstNameInitial = mb_substr($this->first_name, 0, 1, 'UTF-8');
+        $middleNameInitial = mb_substr($this->last_name, 0, 1, 'UTF-8');
+        return trim("$this->last_name {$firstNameInitial}. {$middleNameInitial}.");
     }
 
     /**

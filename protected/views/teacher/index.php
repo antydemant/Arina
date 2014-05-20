@@ -40,10 +40,6 @@ $columns = array(
         'htmlOptions' => array('style' => 'width: 160px'),
     ),
     array(
-        'name' => 'short_name',
-        'htmlOptions' => array('style' => 'width: 160px'),
-    ),
-    array(
         'type' => 'raw',
         'name' => 'cyclic_commission_id',
         'value' => 'CHtml::link($data->cyclicCommission->title, array("cyclicCommission/view","id"=>$data->cyclic_commission_id))',

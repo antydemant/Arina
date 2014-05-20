@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @author Dmytro Karpovych <ZAYEC77@gmail.com>
@@ -72,6 +73,7 @@ class TeacherController extends Controller
 
         if (isset($_POST['Teacher'])) {
             $model->attributes = $_POST['Teacher'];
+            $model->short_name = $model->getNameWithInitials();
             if ($model->save()) {
                 $this->redirect(array('index'));
             }
