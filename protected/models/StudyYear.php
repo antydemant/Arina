@@ -17,9 +17,6 @@ class StudyYear extends ActiveRecord
         return 'study_year';
     }
 
-    /**
-     * @return array validation rules for model attributes.
-     */
 
     public function equal($mEnd, $diff)
     {
@@ -32,8 +29,7 @@ class StudyYear extends ActiveRecord
 
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
+
         return array(
             array('begin', 'required'),
             array('end', 'required'),
@@ -41,9 +37,8 @@ class StudyYear extends ActiveRecord
             array('end', 'length', 'max' => 4),
             array('begin', 'numerical', 'integerOnly' => true),
             array('end', 'numerical', 'integerOnly' => true),
+            array('begin', 'unique'),
             array('end', 'equal', 'diff' => 1),
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
 
         );
     }
