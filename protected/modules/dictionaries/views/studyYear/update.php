@@ -3,7 +3,7 @@
 /* @var $model StudyYear */
 
 $this->breadcrumbs=array(
-    Yii::t('base','Study Years') => array('index'),
+    Yii::t('base', 'Study Years') => array('index'),
     Yii::t('studyYears', 'Update study year') . " {$model -> title}",
 );
 

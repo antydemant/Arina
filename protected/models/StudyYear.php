@@ -20,6 +20,16 @@ class StudyYear extends ActiveRecord
     /**
      * @return array validation rules for model attributes.
      */
+
+    public function equal($mEnd, $diff)
+    {
+        $l = $this -> begin;
+        $r = $this -> end;
+
+        if ($l != ($r-1))
+            $this -> addError($mEnd, Yii::t('studyYears', 'Years are not correct!'));
+    }
+
     public function rules()
     {
         // NOTE: you should only define rules for those attributes that
@@ -29,9 +39,12 @@ class StudyYear extends ActiveRecord
             array('end', 'required'),
             array('begin', 'length', 'max' => 4),
             array('end', 'length', 'max' => 4),
+            array('begin', 'numerical', 'integerOnly' => true),
+            array('end', 'numerical', 'integerOnly' => true),
+            array('end', 'equal', 'diff' => 1),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, begin, end', 'safe', 'on' => 'search'),
+
         );
     }
 
@@ -52,8 +65,8 @@ class StudyYear extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'begin' => 'Початок н.р.',
-            'end' => 'Кінець н.р.',
+            'begin' => Yii::t('studyYears', 'Start of the study year'),
+            'end' => Yii::t('studyYears', 'End of the study year'),
         );
     }
 

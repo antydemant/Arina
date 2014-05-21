@@ -13,7 +13,9 @@ $this->menu=array(
 	    'url' => $this -> createUrl('create'),
     ),
 );
+?>
 
+<?php
 $columns = array(
     'id',
     'begin',
