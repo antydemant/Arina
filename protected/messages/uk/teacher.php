@@ -21,7 +21,7 @@ return array(
     'Creating new cyclic commission' => 'Створення нової циклової комісії',
     'View commission' => 'Перегляд циклової комісії',
     'Commissions list' => 'Список циклових комісій',
-    'Updating teacher' => 'Обновлення даних викладача',
+    'Updating teacher' => 'Оновлення даних викладача',
     'Select cycle commission' => 'Оберіть циклову комісію',
     'Delete cyclic commission' => 'Видалити циклову комісію',
     'Update cyclic commission' => 'Обновити дані комісії',

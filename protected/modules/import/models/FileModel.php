@@ -15,7 +15,7 @@ class FileModel extends CFormModel
     public function attributeLabels()
     {
         return array(
-            'file' => Yii::t('import', 'File'),
+            'file' => Yii::t('import', 'Оберіть електронну таблицю для імпорту даних'),
         );
     }
 

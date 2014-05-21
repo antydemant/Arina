@@ -57,7 +57,6 @@ $this->widget(BoosterHelper::GRID_VIEW, array(
         'last_name',
         'first_name',
         'middle_name',
-
         array(
             'name' => 'group_id',
             'value' => '$data->group->title',

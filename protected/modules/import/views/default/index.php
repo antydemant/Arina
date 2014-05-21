@@ -2,7 +2,8 @@
 /* @var $this DefaultController */
 /* @var $model FileModel */
 $this->breadcrumbs = array(
-    $this->module->id,
+    'Імпорт'
+    //$this->module->id,
 );
 ?>
 
@@ -17,7 +18,9 @@ $this->breadcrumbs = array(
 echo $form->labelEx($model, 'file');
 echo $form->fileField($model, 'file');
 echo $form->error($model, 'file');
-
+?>
+    <br/>
+<?php
 echo CHtml::submitButton('Імпортувати!');
 $this->endWidget();
 
