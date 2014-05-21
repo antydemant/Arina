@@ -25,11 +25,13 @@ class StudyYear extends ActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('title', 'required'),
-            array('title', 'length', 'max' => 10),
+            array('begin', 'required'),
+            array('end', 'required'),
+            array('begin', 'length', 'max' => 4),
+            array('end', 'length', 'max' => 4),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, title', 'safe', 'on' => 'search'),
+            array('id, begin, end', 'safe', 'on' => 'search'),
         );
     }
 
@@ -50,7 +52,8 @@ class StudyYear extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'title' => 'Навчальний рік',
+            'begin' => 'Початок н.р.',
+            'end' => 'Кінець н.р.',
         );
     }
 
@@ -73,7 +76,8 @@ class StudyYear extends ActiveRecord
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('title', $this->title, true);
+        $criteria->compare('begin', $this->begin, true);
+        $criteria->compare('end', $this->end, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -94,8 +98,20 @@ class StudyYear extends ActiveRecord
     /**
      * @return array
      */
+
+    public function getTitle()
+    {
+        return "$this->begin/$this->end";
+    }
+
+    public function setTitle($title)
+    {
+        $this->begin = substr($title,0,3);
+        $this->end = substr($title,5);
+    }
+
     public static function getList()
     {
-        return CHtml::listData(StudyYear::model()->findAll(), 'id', 'title');
+        return CHtml::listData(StudyYear::model()->findAll(), 'id', 'begin', 'end');
     }
 }

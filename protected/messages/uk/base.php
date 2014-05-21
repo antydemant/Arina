@@ -5,6 +5,7 @@
 return array(
     'Practice' => 'Практика',
     'References' => 'Довідники',
+    'Study Years' => 'Навчальні роки',
     'Curator cabinet' => 'Кабінет куратора',
     'Semester' => 'Семестер',
     'Date' => 'Дата',
