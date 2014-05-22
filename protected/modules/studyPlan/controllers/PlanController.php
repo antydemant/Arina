@@ -146,7 +146,7 @@ class PlanController extends Controller
         $model = StudySubject::model()->loadContent($id);
 
         if (isset($_POST['StudySubject'])) {
-            $model->attributes = $_POST['StudySubject'];
+            $model->setAttributes($_POST['StudySubject'], false);
             if ($model->save()) {
                 $this->redirect($this->createUrl('view', array('id' => $model->plan_id)));
             }

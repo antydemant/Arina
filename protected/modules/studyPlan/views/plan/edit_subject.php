@@ -60,6 +60,8 @@
         <?php echo $form->numberFieldRow($model, 'lectures'); ?>
         <?php echo $form->numberFieldRow($model, 'labs'); ?>
         <?php echo $form->numberFieldRow($model, 'practs'); ?>
+        <?php echo $form->numberFieldRow($model, 'practice_weeks'); ?>
+        <?php echo $form->toggleButtonRow($model, 'dual', array('enabledLabel'=>Yii::t('base','Yes'),'disabledLabel'=>Yii::t('base','No'),)); ?>
     </div>
     <div class="span5">
         <?php foreach ($model->plan->semesters as $semester => $weeks): ?>

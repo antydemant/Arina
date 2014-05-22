@@ -279,7 +279,7 @@ class ExcelMaker extends CComponent
             foreach ($group as $item) {
                 /**@var $item StudySubject */
                 $sheet->setCellValue("A$i", $item->subject->code);
-                $sheet->setCellValue("B$i", "$j.$jj. " . $item->subject->title);
+                $sheet->setCellValue("B$i", "$j.$jj. " . $item->getTitle());
                 $sheet->setCellValue("C$i", $item->getExamSemesters());
                 $sheet->setCellValue("D$i", $item->getTestSemesters());
                 $sheet->setCellValue("E$i", $item->getWorkSemesters());

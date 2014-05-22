@@ -17,6 +17,7 @@
  * @property integer $practice_weeks
  * @property array $weeks
  * @property array $control
+ * @property bool $dual
  *
  * The followings are the available model relations:
  * @property StudyPlan $plan
@@ -50,6 +51,11 @@ class StudySubject extends ActiveRecord
             array('plan_id, subject_id, total, lectures, labs, practs, weeks, control', 'safe'),
             array('id, plan_id, subject_id, total, lectures, labs, practs, subject', 'safe', 'on' => 'search'),
         );
+    }
+
+    public function getTitle()
+    {
+        return $this->subject->title . ($this->dual ? ' *' : '');
     }
 
     /**
@@ -104,6 +110,7 @@ class StudySubject extends ActiveRecord
             'practice_weeks' => 'Кількість тижнів для практики',
             'diploma_name' => 'Назва в дипломі',
             'certificate_name' => 'Назва в атестаті',
+            'dual' => 'Роздвоєння',
         );
     }
 
