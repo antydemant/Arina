@@ -9,22 +9,22 @@
  * @property integer $id
  * @property integer $plan_id
  * @property integer $subject_id
- * @property integer $semester
- * @property integer $total
- * @property integer $lectures
- * @property integer $labs
- * @property integer $practs
- * @property integer $weeks
+ * @property array $total
+ * @property array $lectures
+ * @property array $labs
+ * @property array $practs
+ * @property array $weeks
  * @property array $control
  * @property integer $cyclic_commission_id
  * @property string $atestat_name
  * @property string $diploma_name
+ * @property array $control_hours
  *
  * The followings are the available model relations:
  * @property WorkPlan $plan
  * @property Subject $subject
  */
-class WorkSubject  extends ActiveRecord
+class WorkSubject extends ActiveRecord
 {
     /**
      * Returns the static model of the specified AR class.
@@ -56,7 +56,6 @@ class WorkSubject  extends ActiveRecord
         );
     }
 
-
     public function attributeLabels()
     {
         return array(
@@ -74,6 +73,35 @@ class WorkSubject  extends ActiveRecord
             'workSemesters' => 'Курсова робота',
             'projectSemesters' => 'Курсовий проект',
             'weeks' => 'Годин на тиждень',
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function behaviors()
+    {
+        return CMap::mergeArray(
+            parent::behaviors(),
+            array(
+                'StrBehavior' => array(
+                    'class' => 'application.behaviors.StrBehavior',
+                    'fields' => array(
+                        'total',
+                        'lectures',
+                        'labs',
+                        'practs',
+                        'weeks',
+                    )
+                ),
+                'JSONBehavior' => array(
+                    'class' => 'application.behaviors.JSONBehavior',
+                    'fields' => array(
+                        'control',
+                        'control_hours',
+                    )
+                ),
+            )
         );
     }
 } 

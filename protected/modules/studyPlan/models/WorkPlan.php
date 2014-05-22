@@ -117,21 +117,36 @@ class WorkPlan extends ActiveRecord
         );
     }
 
-    protected function beforeSave()
+    /**
+     * @param null $course
+     * @return CActiveDataProvider
+     */
+    public function getPlanSubjectProvider($course = null)
+    {
+        $dataProvider = new CActiveDataProvider(WorkSubject::model(), array(
+            'criteria' => array(
+                'condition' => 'plan_id=' . $this->id,
+            )
+        ));
+        $data = $dataProvider->getData();
+
+        return new CArrayDataProvider($data);
+    }
+
+    protected function afterSave()
     {
         if (!empty($this->work_origin)) {
-            $this->copyPlan(WorkPlan::model()->findByPk($this->work_origin));
+            $this->copyWorkPlan(WorkPlan::model()->findByPk($this->work_origin));
         } elseif (!empty($this->plan_origin)) {
-            $this->copyPlan(StudyPlan::model()->findByPk($this->plan_origin));
+            $this->copyFromStudyPlan(StudyPlan::model()->findByPk($this->plan_origin));
         }
-        return parent::beforeSave();
     }
 
     /**
      * Копіює предмети з плану-основи
-     * @param StudyPlan|WorkPlan $origin
+     * @param WorkPlan $origin
      */
-    public function copyPlan($origin)
+    protected function copyWorkPlan($origin)
     {
         foreach ($origin->subjects as $subject) {
             $model = new WorkSubject();
@@ -153,15 +168,24 @@ class WorkPlan extends ActiveRecord
     }
 
     /**
-     * @return CActiveDataProvider
+     * @param StudyPlan $origin
      */
-    public function getPlanSubjectProvider()
+    protected function copyFromStudyPlan(StudyPlan $origin)
     {
-        return new CActiveDataProvider(WorkSubject::model(), array(
-            'criteria' => array(
-                'condition' => 'plan_id=' . $this->id,
-            )
-        ));
+        foreach ($origin->subjects as $subject) {
+            $model = new WorkSubject();
+            $model->plan_id = $this->id;
+            $model->subject_id = $subject->subject_id;
+            $control_hours = array();
+            $control_hours['total'] = $subject->total;
+            $control_hours['lectures'] = $subject->lectures;
+            $control_hours['labs'] = $subject->labs;
+            $control_hours['practs'] = $subject->practs;
+            $model->control_hours = $control_hours;
+            $model->weeks = $subject->weeks;
+            $model->control = $subject->control;
+            $model->save(false);
+        }
     }
 
 } 

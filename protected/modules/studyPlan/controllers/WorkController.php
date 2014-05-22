@@ -53,13 +53,13 @@ class WorkController extends Controller
                     if ($j == ' ') {
                         break;
                     }
-                    if (($j != 'T')&&($j != 'P') && (!$findFirst)) {
+                    if (($j != 'T') && ($j != 'P') && (!$findFirst)) {
                         $findFirst = true;
                         $semesters[$i + 1][1] = $counter;
                         $counter = 0;
                     } elseif (($j == 'T') && ($findFirst)) {
                         $findSecond = true;
-                    } elseif (($j != 'T')&&($j != 'P') && ($findSecond)) {
+                    } elseif (($j != 'T') && ($j != 'P') && ($findSecond)) {
                         $semesters[$i + 1][2] = $counter;
                         break;
                     }
@@ -79,16 +79,7 @@ class WorkController extends Controller
 
     public function actionSubjects($id)
     {
-        $model = new WorkSubject();
-        $model->plan_id = $id;
-
-        if (isset($_POST['WorkSubject'])) {
-            $model->attributes = $_POST['WorkSubject'];
-            if ($model->save()) {
-                $model = new WorkSubject();
-                $model->plan_id = $id;
-            }
-        }
+        $model = WorkPlan::model()->loadContent($id);
         $this->render('subjects', array('model' => $model));
     }
 
