@@ -37,7 +37,7 @@ $this->breadcrumbs = array(
     .options .item.last {
         float: left;
         width: 130px;
-        margin-right: -20px;
+        margin-right: -50px;
     }
 
     .span5 input[type="number"] {
@@ -67,16 +67,17 @@ $this->breadcrumbs = array(
     <?php echo CHtml::numberField('classes', '', array('placeholder' => 'Аудиторні', 'readonly' => true)); ?>
     <?php echo $form->numberFieldRow($model, 'lectures'); ?>
     <?php echo $form->numberFieldRow($model, 'labs'); ?>
+    <?php echo $form->checkBoxRow($model,'dual_labs'); ?>
     <?php echo $form->numberFieldRow($model, 'practs'); ?>
+    <?php echo $form->checkBoxRow($model,'dual_practice'); ?>
     <?php echo $form->numberFieldRow($model, 'practice_weeks'); ?>
-    <?php echo $form->toggleButtonRow($model, 'dual', array('enabledLabel'=>Yii::t('base','Yes'),'disabledLabel'=>Yii::t('base','No'),)); ?>
 </div>
 <div class="span5">
     <?php foreach ($model->plan->semesters as $semester => $weeks): ?>
         <div class="input">
             <?php echo CHtml::label(
                 $semester + 1 . '-й семестр: ' . $weeks . ' тижнів',
-                'StudySubject_weeks_' . $semester
+                'StudySubject_weeks_' . $semester, array('style'=>'font-weight: bold')
             ); ?>
             <?php echo $form->numberField($model, "weeks[$semester]", array('placeholder' => 'годин на тиждень')); ?>
         </div>

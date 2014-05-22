@@ -33,7 +33,7 @@
         .options .item.last {
             float: left;
             width: 130px;
-            margin-right: -20px;
+            margin-right: -50px;
         }
 
         .span5 input[type="number"] {
@@ -58,12 +58,14 @@
         <?php echo CHtml::label('Аудиторні', 'classes'); ?>
         <?php echo CHtml::numberField('classes', '', array('placeholder' => 'Аудиторні', 'readonly' => true)); ?>
         <?php echo $form->numberFieldRow($model, 'lectures'); ?>
+
         <?php echo $form->numberFieldRow($model, 'labs'); ?>
+        <?php echo $form->checkBoxRow($model,'dual_labs'); ?>
         <?php echo $form->numberFieldRow($model, 'practs'); ?>
+        <?php echo $form->checkBoxRow($model,'dual_practice'); ?>
         <?php echo $form->numberFieldRow($model, 'practice_weeks'); ?>
         <?php echo $form->telFieldRow($model, 'diploma_name'); ?>
         <?php echo $form->telFieldRow($model, 'certificate_name'); ?>
-        <?php echo $form->toggleButtonRow($model, 'dual', array('enabledLabel'=>Yii::t('base','Yes'),'disabledLabel'=>Yii::t('base','No'),)); ?>
     </div>
     <div class="span5">
         <?php foreach ($model->plan->semesters as $semester => $weeks): ?>

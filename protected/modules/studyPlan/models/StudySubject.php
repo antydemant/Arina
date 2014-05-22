@@ -17,7 +17,8 @@
  * @property integer $practice_weeks
  * @property array $weeks
  * @property array $control
- * @property bool $dual
+ * @property bool $dual_labs
+ * @property bool $dual_practice
  *
  * The followings are the available model relations:
  * @property StudyPlan $plan
@@ -100,7 +101,7 @@ class StudySubject extends ActiveRecord
             'total' => 'Загальна кількість',
             'lectures' => 'Лекції',
             'labs' => 'Лабораторні',
-            'practs' => 'Практичні',
+            'practs' => 'Практичні, семінарські',
             'classes' => 'Всього аудиторних',
             'selfwork' => 'Самостійна робота',
             'testSemesters' => 'Залік',
@@ -110,7 +111,8 @@ class StudySubject extends ActiveRecord
             'practice_weeks' => 'Кількість тижнів для практики',
             'diploma_name' => 'Назва в дипломі',
             'certificate_name' => 'Назва в атестаті',
-            'dual' => 'Роздвоєння',
+            'dual_labs' => 'Роздвоєння лабораторних',
+            'dual_practice' => 'Роздвоєння практичних',
         );
     }
 
