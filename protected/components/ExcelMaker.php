@@ -1,13 +1,27 @@
 <?php
 
 /**
- *
+ * Class for generation excel documents
+ * To add a new document template you need to create a method
+ * with name witch begin from makeAliasOfDocument
+ * and can use it:
+ * <pre>
+ * $excel = Yii::app()->getComponent('excel');
+ * $object = new SomeObjectForDocument
+ * $excel->getDocument($object, 'aliasOfDocument');
+ * </pre>
  * @author Dmytro Karpovych <ZAYEC77@gmail.com>
  */
 class ExcelMaker extends CComponent
 {
+    /**
+     * @var string alias of path to directory with templates
+     */
     public $templatesPath = 'public.files.templates';
 
+    /**
+     * Load PHPExcel
+     */
     public function init()
     {
         $phpExcelPath = Yii::getPathOfAlias('vendor.phpexcel.phpexcel.Classes');
@@ -16,6 +30,12 @@ class ExcelMaker extends CComponent
         spl_autoload_register(array('YiiBase', 'autoload'));
     }
 
+    /**
+     * Call method for generation current document
+     * @param mixed $data source for document
+     * @param $name
+     * @throws CException
+     */
     public function getDocument($data, $name)
     {
         $methodName = 'make' . ucfirst($name);
@@ -33,6 +53,7 @@ class ExcelMaker extends CComponent
     }
 
     /**
+     * Example of document creator
      * @param $data
      * @return PHPExcel
      */
@@ -83,8 +104,9 @@ class ExcelMaker extends CComponent
     }
 
     /**
+     * Load template document
      * @param $alias
-     * @param string $fileType
+     * @param string $fileType version of template
      * @return PHPExcel
      * @throws CException
      */
@@ -101,6 +123,7 @@ class ExcelMaker extends CComponent
     }
 
     /**
+     * Find alias in cell and replace it into current value
      * @param PHPExcel_Worksheet $sheet
      * @param $cell
      * @param $value
@@ -140,6 +163,7 @@ class ExcelMaker extends CComponent
     }
 
     /**
+     * Generate study plan document
      * @param $plan StudyPlan
      * @return PHPExcel
      */
