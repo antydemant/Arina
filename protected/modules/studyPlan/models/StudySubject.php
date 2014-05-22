@@ -56,7 +56,7 @@ class StudySubject extends ActiveRecord
 
     public function getTitle()
     {
-        return $this->subject->title . ($this->dual ? ' *' : '');
+        return $this->subject->title . (($this->dual_labs || $this->dual_practice) ? ' *' : '');
     }
 
     /**
