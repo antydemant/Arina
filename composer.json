@@ -4,7 +4,7 @@
     "require": {
         "yiisoft/yii": "1.1.14",
         "yiiext/activerecord-relation-behavior":"dev-master",
-        "clevertech/yii-booster": "v3.0.1",
+        "clevertech/yii-booster": "3.0.*",
         "phpexcel/phpexcel": "1.7.*",
         "phpword/phpword": "dev-master"
     },
