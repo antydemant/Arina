@@ -23,9 +23,9 @@ class ExcelMaker extends CComponent
             $objPHPExcel = $this->$methodName($data);
             $docName = "$name " . date("d.m.Y G-i", time());
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment;filename="' . $docName . '.xlsx"');
+            header('Content-Disposition: attachment;filename="' . $docName . '.xls"');
             header('Cache-Control: max-age=0');
-            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+            $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);
             $objWriter->save('php://output');
         } else {
             throw new CException(Yii::t('error', 'Method "{method}" not found', array('{method}' => $methodName)));
@@ -236,7 +236,7 @@ class ExcelMaker extends CComponent
                 $sheet->setCellValue('AG' . $i, $item->practice_weeks);
                 for ($j = 0; $j < count($item->control); $j++) {
                     if ($item->control[$j][0]) {
-                        $sheet->setCellValue("AF$i", $j+1);
+                        $sheet->setCellValue("AF$i", $j + 1);
                     }
                 }
                 $sheet->getStyle("T$i:AH$i")->applyFromArray($styleArray);
