@@ -16,15 +16,4 @@ class m140522_101355_dual_flags extends CDbMigration
         $this->dropColumn('sp_subject','dual_labs');
 		return true;
 	}
-
-	/*
-	// Use safeUp/safeDown to do migration with transaction
-	public function safeUp()
-	{
-	}
-
-	public function safeDown()
-	{
-	}
-	*/
 }

@@ -19,8 +19,9 @@
  * @property array $control
  * @property bool $dual_labs
  * @property bool $dual_practice
+ * @property string $diploma_name
+ * @property string $certificate_name
  *
- * The followings are the available model relations:
  * @property StudyPlan $plan
  * @property Subject $subject
  */
@@ -49,14 +50,14 @@ class StudySubject extends ActiveRecord
             array('subject_id', 'check_subject', 'on' => 'insert'),
             array('lectures, labs, practs', 'default', 'value' => 0, 'on' => 'insert'),
             array('plan_id, subject_id, total, lectures, labs, practs', 'numerical', 'integerOnly' => true),
-            array('plan_id, subject_id, total, lectures, labs, practs, weeks, control', 'safe'),
+            array('plan_id, subject_id, total, lectures, labs, practs, weeks, control, practice_weeks, dual_labs, dual_practice, diploma_name, certificate_name', 'safe'),
             array('id, plan_id, subject_id, total, lectures, labs, practs, subject', 'safe', 'on' => 'search'),
         );
     }
 
     public function getTitle()
     {
-        return $this->subject->title . (($this->dual_labs || $this->dual_practice) ? ' *' : '');
+        return (!(empty($this->diploma_name) && empty($this->certificate_name)) ? '* ' : '') . $this->subject->title . (($this->dual_labs || $this->dual_practice) ? ' *' : '');
     }
 
     /**

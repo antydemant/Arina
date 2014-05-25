@@ -15,15 +15,4 @@ class m140520_194927_study_years extends CDbMigration
         $this->dropColumn('study_year','begin');
         $this->dropColumn('study_year','end');
 	}
-
-	/*
-	// Use safeUp/safeDown to do migration with transaction
-	public function safeUp()
-	{
-	}
-
-	public function safeDown()
-	{
-	}
-	*/
 }
