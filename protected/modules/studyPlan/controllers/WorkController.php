@@ -142,7 +142,7 @@ class WorkController extends Controller
                 $this->redirect($this->createUrl('subjects', array('id' => $id)));
         }
 
-        $this->render('add_subject', array('model' => $model));
+        $this->render('add_subject', array('model' => $model,'plan'=>WorkPlan::model()->findByPk($id)));
     }
 
     public function actionEditSubject($id)

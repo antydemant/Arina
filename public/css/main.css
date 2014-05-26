@@ -37,3 +37,24 @@ input[type="text"] {
 div.btn-group[data-toggle="buttons-checkbox"] {
     margin-bottom: 10px;
 }
+
+.clear:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+
+.clear {
+    display: inline-block;
+}
+
+html[xmlns] .clear {
+    display: block;
+}
+
+* html .clear {
+    height: 1%;
+}

@@ -1,8 +1,8 @@
 <?php
+
 /**
  * @author Dmytro Karpovych <ZAYEC77@gmail.com>
  */
-
 class SubjectController extends Controller
 {
     public $name = 'Subjects';
@@ -129,5 +129,31 @@ class SubjectController extends Controller
             'cycle_id' => $cycle_id,
             'speciality_id' => $speciality_id,
         ));
+    }
+
+    public function actionListByCycle($id)
+    {
+        $condition = "cycle_id = :cycle_id";
+        $params = array(':cycle_id' => $id);
+        if (isset($_GET['speciality_id'])) {
+
+            $condition = "($condition) AND (speciality_id = :speciality_id)";
+            $params[':speciality_id'] = $_GET['speciality_id'];
+        }
+        $relations = SubjectRelation::model()->findAll($condition, $params);
+        echo CHtml::dropDownList('', '', CHtml::listData($relations, 'subject_id', 'subject.title'));
+    }
+
+    public function actionListBySpeciality($id)
+    {
+        $condition = "speciality_id = :speciality_id";
+        $params = array(':speciality_id' => $id);
+        if (isset($_GET['cycle_id'])) {
+
+            $condition = "($condition) AND (cycle_id = :cycle_id)";
+            $params[':cycle_id'] = $_GET['cycle_id'];
+        }
+        $relations = SubjectRelation::model()->findAll($condition, $params);
+        echo CHtml::dropDownList('', '', CHtml::listData($relations, 'subject_id', 'subject.title'));
     }
 }
