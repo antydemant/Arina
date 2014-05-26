@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * @copyright ХПК 2014
@@ -16,7 +17,7 @@
  * @property array $weeks
  * @property array $control
  * @property integer $cyclic_commission_id
- * @property string $atestat_name
+ * @property string $certificate_name
  * @property string $diploma_name
  * @property array $control_hours
  *
@@ -26,6 +27,15 @@
  */
 class WorkSubject extends ActiveRecord
 {
+
+
+    public function rules()
+    {
+        return array(
+            array('subject_id, total, lectures, labs, practs, weeks, control, cyclic_commission_id, certificate_name, diploma_name', 'safe'),
+        );
+    }
+
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -73,6 +83,9 @@ class WorkSubject extends ActiveRecord
             'workSemesters' => 'Курсова робота',
             'projectSemesters' => 'Курсовий проект',
             'weeks' => 'Годин на тиждень',
+            'cyclic_commission_id' => 'Циклова комісія',
+            'certificate_name' => 'Назва в атестат',
+            'diploma_name' => 'Назва в диплом',
         );
     }
 
