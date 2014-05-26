@@ -9,7 +9,6 @@ $this->breadcrumbs = array(
 
 $this->menu = array(
 	array('label' => Yii::t('settings', 'List Settings'), 'url'=>array('index')),
-//	array('label' => Yii::t('settings', 'Manage Settings'), 'url'=>array('admin')),
 );
 ?>
 
