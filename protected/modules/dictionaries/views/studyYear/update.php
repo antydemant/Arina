@@ -7,7 +7,7 @@ $this->breadcrumbs=array(
     Yii::t('studyYears', 'Update study year') . " {$model -> title}",
 );
 
-$this->menu=array(
+$this->menu = array(
     array('type' => BoosterHelper::TYPE_PRIMARY, 'label' => Yii::t('studyYears', 'Study years list'), 'url' => array('index')),
 
 	array(
