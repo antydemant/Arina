@@ -119,6 +119,6 @@ class StudyYear extends ActiveRecord
 
     public static function getList()
     {
-        return CHtml::listData(StudyYear::model()->findAll(), 'id', 'begin', 'end');
+        return CHtml::listData(StudyYear::model()->findAll(), 'id', 'title');
     }
 }

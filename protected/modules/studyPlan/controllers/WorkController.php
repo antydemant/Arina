@@ -153,4 +153,19 @@ class WorkController extends Controller
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
         }
     }
+
+
+    public function actionAddSubject($id)
+    {
+        $model = new WorkSubject();
+        $model->plan_id = $id;
+
+        if (isset($_POST['WorkSubject'])) {
+            $model->attributes = $_POST['WorkSubject'];
+            if ($model->save())
+                $this->redirect($this->createUrl('subjects', array('id' => $id)));
+        }
+
+        $this->render('add_subject', array('model' => $model));
+    }
 } 
