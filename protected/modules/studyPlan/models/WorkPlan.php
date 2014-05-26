@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * @copyright ХПК 2014
@@ -16,7 +17,7 @@
  *
  * The followings are the available model relations:
  * @property StudyYear $year
- * @property StudySubject[] $subjects
+ * @property WorkSubject[] $subjects
  * @property Speciality $speciality
  */
 class WorkPlan extends ActiveRecord
@@ -115,22 +116,6 @@ class WorkPlan extends ActiveRecord
                 'setUpdateOnCreate' => true,
             ),
         );
-    }
-
-    /**
-     * @param null $course
-     * @return CActiveDataProvider
-     */
-    public function getPlanSubjectProvider($course = null)
-    {
-        $dataProvider = new CActiveDataProvider(WorkSubject::model(), array(
-            'criteria' => array(
-                'condition' => 'plan_id=' . $this->id,
-            )
-        ));
-        $data = $dataProvider->getData();
-
-        return new CArrayDataProvider($data);
     }
 
     protected function afterSave()

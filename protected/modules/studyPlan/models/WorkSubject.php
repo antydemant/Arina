@@ -117,4 +117,52 @@ class WorkSubject extends ActiveRecord
             )
         );
     }
+
+    /**
+     * @param $semester
+     * @return integer
+     */
+    public function getClasses($semester)
+    {
+        return $this->lectures[$semester] + $this->practs[$semester] + $this->labs[$semester];
+    }
+
+    /**
+     * @param $semester
+     * @return integer
+     */
+    public function getSelfwork($semester)
+    {
+        return $this->total[$semester] - $this->getClasses($semester);
+    }
+
+    /**
+     * @param $course
+     * @return bool
+     */
+    public function presentIn($course)
+    {
+        switch ($course) {
+            case 1:
+                $fall = 0;
+                $spring = 1;
+                break;
+            case 2:
+                $fall = 2;
+                $spring = 3;
+                break;
+            case 3:
+                $fall = 4;
+                $spring = 5;
+                break;
+            case 4:
+                $fall = 6;
+                $spring = 7;
+                break;
+            default:
+                $fall = 0;
+                $spring = 1;
+        }
+        return !empty($this->total[$fall]) || !empty($this->total[$spring]);
+    }
 } 

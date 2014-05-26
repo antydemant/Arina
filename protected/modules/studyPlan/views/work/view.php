@@ -18,6 +18,4 @@ $this->breadcrumbs = array(
     <br/>
     <?php $this->widget('studyPlan.widgets.Graph', array('model' => $model, 'field' => '', 'readOnly' => true, 'graph' => $model->graph)); ?>
     <br/>
-<?php $this->widget('studyPlan.widgets.SubjectTable', array(
-    'subjectDataProvider' => $model->getPlanSubjectProvider()
-));
+<?php $this->renderPartial('_subjects', array('model' => $model)); ?>
