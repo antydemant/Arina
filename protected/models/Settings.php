@@ -9,6 +9,7 @@
  * @property string $title
  * @property string $value
  */
+
 class Settings extends ActiveRecord
 {
     protected static $values;
@@ -29,7 +30,6 @@ class Settings extends ActiveRecord
 
     /**
      * Returns the static model of the specified AR class.
-     * Please note that you should have this exact method in all your CActiveRecord descendants!
      * @param string $className active record class name.
      * @return Settings the static model class
      */
@@ -52,11 +52,21 @@ class Settings extends ActiveRecord
     /**
      * @return array validation rules for model attributes.
      */
+//    public function enabled($sw)
+//    {
+//        if ($sw == 'false')
+//
+//    }
+
     public function rules()
     {
+
         return array(
             array('key, title, value', 'length', 'max' => 255),
             array('key', 'unique'),
+            array('key', 'required'),
+            array('title', 'required'),
+            array('value', 'required'),
             array('id, key, title, value', 'safe', 'on' => 'search'),
         );
     }
@@ -76,22 +86,14 @@ class Settings extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'key' => 'Key',
-            'title' => 'Title',
-            'value' => 'Value',
+            'key' => Yii::t('settings', 'key'),
+            'title' => Yii::t('settings', 'title'),
+            'value' => Yii::t('settings', 'value'),
         );
     }
 
     /**
      * Retrieves a list of models based on the current search/filter conditions.
-     *
-     * Typical usecase:
-     * - Initialize the model fields with values from filter form.
-     * - Execute this method to get CActiveDataProvider instance which will filter
-     * models according to data in model fields.
-     * - Pass data provider to CGridView, CListView or any similar widget.
-     *
-     * @return CActiveDataProvider the data provider that can return the models
      * based on the search/filter conditions.
      */
     public function search()
