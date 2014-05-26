@@ -22,7 +22,7 @@
  * @property string $diploma_name
  * @property string $certificate_name
  *
- * @property StudyPlan $plan
+ * @property StudyPlan $plana
  * @property Subject $subject
  */
 class StudySubject extends ActiveRecord
