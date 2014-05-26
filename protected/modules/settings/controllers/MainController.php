@@ -6,6 +6,8 @@ class MainController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
+    public $name = 'Settings';
+
 	public function actionView($id)
 	{
 		$this->render('view',array(
@@ -79,23 +81,14 @@ class MainController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$model=new Settings('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Settings']))
-			$model->attributes=$_GET['Settings'];
-
-		$this->render('index',array(
-			'model'=>$model,
-		));
+        $dataProvider = new CActiveDataProvider('Settings', array('criteria' => array(
+            'order' => 'id',
+        )));
+        $this->render('index', array(
+            'dataProvider' => $dataProvider,
+        ));
 	}
 
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return Settings the loaded model
-	 * @throws CHttpException
-	 */
 	public function loadModel($id)
 	{
 		$model=Settings::model()->findByPk($id);
