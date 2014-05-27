@@ -6,6 +6,8 @@
  * The followings are the available columns in table 'position':
  * @property integer $id
  * @property string $title
+ * @property integer $max_load_hour_1
+ * @property integer $max_load_hour_2
  */
 class Position extends ActiveRecord
 {
@@ -22,12 +24,11 @@ class Position extends ActiveRecord
 	 */
 	public function rules()
 	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
 		return array(
 			array('title', 'required'),
+			array('max_load_hour_1, max_load_hour_2', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
-			array('id, title', 'safe', 'on'=>'search'),
+			array('id, title, max_load_hour_1, max_load_hour_2', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -37,7 +38,6 @@ class Position extends ActiveRecord
 	public function relations()
 	{
 		return array(
-
 		);
 	}
 
@@ -49,6 +49,8 @@ class Position extends ActiveRecord
 		return array(
 			'id' => 'ID',
 			'title' => Yii::t('position','Title'),
+			'max_load_hour_1' => Yii::t('position','Max Load Hour 1'),
+			'max_load_hour_2' => Yii::t('position','Max Load Hour 2'),
 		);
 	}
 
@@ -72,6 +74,8 @@ class Position extends ActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('title',$this->title,true);
+		$criteria->compare('max_load_hour_1',$this->max_load_hour_1);
+		$criteria->compare('max_load_hour_2',$this->max_load_hour_2);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

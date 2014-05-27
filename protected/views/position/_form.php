@@ -16,6 +16,8 @@
         <div class="span6">
 
             <?php echo $form->textFieldRow($model, 'title', array('size' => 200, 'maxlength' => 200, 'class' => 'span6')); ?>
+            <?php echo $form->numberFieldRow($model, 'max_load_hour_1', array('class' => 'span6')); ?>
+            <?php echo $form->numberFieldRow($model, 'max_load_hour_2', array('class' => 'span6')); ?>
 
         </div>
     </div>

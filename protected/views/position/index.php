@@ -14,6 +14,8 @@ $this->menu = array(
 <?php
 $columns = array(
     'title',
+    'max_load_hour_1',
+    'max_load_hour_2',
     /*array(
         'header' => Yii::t('department', 'Department'),
         'name' => 'department.title',
