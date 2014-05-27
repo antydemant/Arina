@@ -104,4 +104,30 @@ class Group extends ActiveRecord
             'monitor_id' => Yii::t('group', 'Monitor'),
         );
     }
+
+    private $curator_old;
+
+    protected function beforeSave() {
+        if ($this->curator_id != $this->curator_old) {
+            $auth = Yii::app()->authManager;
+            $curator_old_model = User::model()->findByAttributes(
+                array(
+                    'identity_id'=>$this->curator_old,
+                    'identity_type'=>User::TYPE_TEACHER
+                )
+            );
+            $curator_new_model = User::model()->findByAttributes(
+                array(
+                    'identity_id'=>$this->curator_id,
+                    'identity_type'=>User::TYPE_TEACHER
+                )
+            );
+            $auth->revoke('curator', $curator_old_model->getAttribute('id'));
+            $auth->assign('curator', $curator_new_model->getAttribute('id'));
+        }
+    }
+
+    protected function afterFind() {
+        $this->curator_old = $this->curator_id;
+    }
 }
