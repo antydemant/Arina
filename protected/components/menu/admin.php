@@ -23,4 +23,5 @@ $menu = array(
     array('label' => Yii::t('base', 'Study plans'), 'url' => array('/studyPlan')),
     array('label' => Yii::t('base', 'Students'), 'url' => array('/student')),
     array('label' => Yii::t('base', 'Journal'), 'url' => array('/journal')),
+    array('label' => Yii::t('base', 'Settings'), 'url' => array('/settings')),
 );

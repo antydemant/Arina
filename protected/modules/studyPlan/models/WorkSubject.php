@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Serhiy Vinichuk <serhiyvinichuk@gmail.com>
  * @copyright ХПК 2014
@@ -16,7 +17,7 @@
  * @property array $weeks
  * @property array $control
  * @property integer $cyclic_commission_id
- * @property string $atestat_name
+ * @property string $certificate_name
  * @property string $diploma_name
  * @property array $control_hours
  *
@@ -26,6 +27,15 @@
  */
 class WorkSubject extends ActiveRecord
 {
+
+
+    public function rules()
+    {
+        return array(
+            array('subject_id, total, lectures, labs, practs, weeks, control, cyclic_commission_id, certificate_name, diploma_name', 'safe'),
+        );
+    }
+
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -73,6 +83,9 @@ class WorkSubject extends ActiveRecord
             'workSemesters' => 'Курсова робота',
             'projectSemesters' => 'Курсовий проект',
             'weeks' => 'Годин на тиждень',
+            'cyclic_commission_id' => 'Циклова комісія',
+            'certificate_name' => 'Назва в атестат',
+            'diploma_name' => 'Назва в диплом',
         );
     }
 
@@ -103,5 +116,53 @@ class WorkSubject extends ActiveRecord
                 ),
             )
         );
+    }
+
+    /**
+     * @param $semester
+     * @return integer
+     */
+    public function getClasses($semester)
+    {
+        return $this->lectures[$semester] + $this->practs[$semester] + $this->labs[$semester];
+    }
+
+    /**
+     * @param $semester
+     * @return integer
+     */
+    public function getSelfwork($semester)
+    {
+        return $this->total[$semester] - $this->getClasses($semester);
+    }
+
+    /**
+     * @param $course
+     * @return bool
+     */
+    public function presentIn($course)
+    {
+        switch ($course) {
+            case 1:
+                $fall = 0;
+                $spring = 1;
+                break;
+            case 2:
+                $fall = 2;
+                $spring = 3;
+                break;
+            case 3:
+                $fall = 4;
+                $spring = 5;
+                break;
+            case 4:
+                $fall = 6;
+                $spring = 7;
+                break;
+            default:
+                $fall = 0;
+                $spring = 1;
+        }
+        return !empty($this->total[$fall]) || !empty($this->total[$spring]);
     }
 } 

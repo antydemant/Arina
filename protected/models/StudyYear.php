@@ -18,7 +18,7 @@ class StudyYear extends ActiveRecord
     }
 
 
-    public function equal($mEnd, $diff)
+    public function equal($mEnd)
     {
         $l = $this -> begin;
         $r = $this -> end;
@@ -29,7 +29,6 @@ class StudyYear extends ActiveRecord
 
     public function rules()
     {
-
         return array(
             array('begin', 'required'),
             array('end', 'required'),
@@ -38,7 +37,7 @@ class StudyYear extends ActiveRecord
             array('begin', 'numerical', 'integerOnly' => true),
             array('end', 'numerical', 'integerOnly' => true),
             array('begin', 'unique'),
-            array('end', 'equal', 'diff' => 1),
+            array('end', 'equal'),
 
         );
     }
@@ -120,6 +119,6 @@ class StudyYear extends ActiveRecord
 
     public static function getList()
     {
-        return CHtml::listData(StudyYear::model()->findAll(), 'id', 'begin', 'end');
+        return CHtml::listData(StudyYear::model()->findAll(), 'id', 'title');
     }
 }

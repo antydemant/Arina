@@ -2,20 +2,17 @@
 /* @var $this MainControllerController */
 /* @var $model Settings */
 
-$this->breadcrumbs=array(
-	'Settings'=>array('index'),
-	$model->title=>array('view','id'=>$model->id),
-	'Update',
+$this->breadcrumbs = array(
+    Yii::t('base', 'Settings') => array('index'),
+	$model->title => array('view','id'=>$model->id),
+    Yii::t('base', 'Update'),
 );
 
 $this->menu=array(
-	array('label'=>'List Settings', 'url'=>array('index')),
-	array('label'=>'Create Settings', 'url'=>array('create')),
-	array('label'=>'View Settings', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Settings', 'url'=>array('admin')),
+    array('label' => Yii::t('settings', 'List Settings'), 'url'=>array('index')),
 );
 ?>
 
-<h1>Update Settings <?php echo $model->id; ?></h1>
+<h2><?php echo Yii::t('settings', 'Update Settings') . ' ' .$model->key; ?></h2>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_form', array('model' => $model)); ?>

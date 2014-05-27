@@ -113,6 +113,38 @@ class WorkController extends Controller
 
     }
 
+    public function actionDelete($id)
+    {
+        WorkPlan::model()->loadContent($id)->delete();
+
+        if (!isset($_GET['ajax'])) {
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+        }
+    }
+
+
+    public function actionMakeExcel($id)
+    {
+        /**@var $excel ExcelMaker */
+        $excel = Yii::app()->getComponent('excel');
+        $plan = WorkPlan::model()->loadContent($id);
+        $excel->getDocument($plan, 'workPlan');
+    }
+
+    public function actionAddSubject($id)
+    {
+        $model = new WorkSubject();
+        $model->plan_id = $id;
+
+        if (isset($_POST['WorkSubject'])) {
+            $model->attributes = $_POST['WorkSubject'];
+            if ($model->save())
+                $this->redirect($this->createUrl('subjects', array('id' => $id)));
+        }
+
+        $this->render('add_subject', array('model' => $model,'plan'=>WorkPlan::model()->findByPk($id)));
+    }
+
     public function actionEditSubject($id)
     {
         /** @var WorkSubject $model */
@@ -125,7 +157,7 @@ class WorkController extends Controller
             }
         }
 
-        $this->render('edit_subject', array('model' => $model));
+        $this->render('add_subject', array('model' => $model));
     }
 
     public function actionDeleteSubject($id)
@@ -137,20 +169,4 @@ class WorkController extends Controller
         }
     }
 
-    public function actionMakeExcel($id)
-    {
-        /**@var $excel ExcelMaker */
-        $excel = Yii::app()->getComponent('excel');
-        $plan = WorkPlan::model()->loadContent($id);
-        $excel->getDocument($plan, 'workPlan');
-    }
-
-    public function actionDelete($id)
-    {
-        WorkPlan::model()->loadContent($id)->delete();
-
-        if (!isset($_GET['ajax'])) {
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
-        }
-    }
 } 
