@@ -12,7 +12,6 @@ class GlobalHelper
             case 2: return date('Y', time());
         }
     }
-   // public static function getNu
 
     public static function getWeeksByMonths()
     {

@@ -9,6 +9,7 @@ $menu = array(
         array('label' => Yii::t('base', 'Audiences'), 'url' => array('/audience')),
         array('label' => Yii::t('base', 'Departments'), 'url' => array('/department')),
         array('label' => Yii::t('base', 'Specialities'), 'url' => array('/speciality')),
+        array('label' => Yii::t('base', 'Positions'), 'url' => array('/position')),
         array('label' => Yii::t('base', 'Subjects'), 'items' => array(
             array('label' => Yii::t('base', 'List'), 'url' => array('/subject')),
             array('label' => Yii::t('base', 'Cycles'), 'url' => array('/cycle')),

@@ -85,4 +85,5 @@ return array(
     'August' => 'Серпень',
     'Yes'=>'Так',
     'No'=>'Ні',
+    'Positions' => 'Посади',
 );
