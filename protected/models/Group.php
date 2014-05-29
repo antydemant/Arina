@@ -106,6 +106,7 @@ class Group extends ActiveRecord
     }
 
     private $curator_old;
+    private $monitor_old;
 
     protected function beforeSave() {
 
@@ -129,6 +130,25 @@ class Group extends ActiveRecord
             if (isset($curator_new_user)) {
                 $auth->assign('curator', $curator_new_user->getAttribute('id'));
             }
+
+            $monitor_old_user = User::model()->findByAttributes(
+                array(
+                    'identity_id'=>$this->$monitor_old,
+                    'identity_type'=>User::TYPE_STUDENT
+                )
+            );
+            $monitor_new_user = User::model()->findByAttributes(
+                array(
+                    'identity_id'=>$this->monitor_id,
+                    'identity_type'=>User::TYPE_STUDENT
+                )
+            );
+            if (isset($monitor_old_user)) {
+                $auth->revoke('prefect', $curator_old_user->getAttribute('id'));
+            }
+            if (isset($monitor_new_user)) {
+                $auth->assign('prefect', $curator_new_user->getAttribute('id'));
+            }
         }
 
         return parent::beforeSave();
@@ -136,6 +156,7 @@ class Group extends ActiveRecord
 
     protected function afterFind() {
         $this->curator_old = $this->curator_id;
+        $this->monitor_old = $this->monitor_id;
         return parent::afterFind();
     }
 }

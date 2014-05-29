@@ -25,6 +25,15 @@ class DefaultController extends Controller
 
         if (isset($_POST['Student'])) {
             $model->attributes = $_POST['Student'];
+            if(!Yii::app()->user->checkAccess('manageStudent',
+                array(
+                    'id' => $model->group->speciality->department->head_id,
+                    'type' => User::TYPE_TEACHER,
+                )
+            ))
+            {
+                throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+            }
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id));
         }
@@ -45,6 +54,31 @@ class DefaultController extends Controller
          * @var $model Student
          */
         $model = Student::model()->loadContent($id);
+        if (
+            !Yii::app()->user->checkAccess('manageGroup',
+                array(
+                    'id' => $model->group->curator_id,
+                    'type' => User::TYPE_TEACHER,
+                )
+            )
+            &&
+            !Yii::app()->user->checkAccess('manageGroup',
+                array(
+                    'id' => $model->group->monitor_id,
+                    'type' => User::TYPE_STUDENT,
+                )
+            )
+            &&
+            !Yii::app()->user->checkAccess('manageGroup',
+                array(
+                    'id' => $model->group->speciality->department->head_id,
+                    'type' => User::TYPE_TEACHER,
+                )
+            )
+        )
+        {
+            throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
+        }
         $this->ajaxValidation('student-form', $model);
 
         if (isset($_POST['Student'])) {
@@ -68,8 +102,17 @@ class DefaultController extends Controller
      */
     public function actionDelete($id)
     {
-        Student::model()->loadContent($id)->delete();
-
+        $model = Student::model()->loadContent($id);
+        if(!Yii::app()->user->checkAccess('manageStudent',
+            array(
+                'id' => $model->group->speciality->department->head_id,
+                'type' => User::TYPE_TEACHER,
+            )
+        ))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
+        $model->delete();
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
