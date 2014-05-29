@@ -233,6 +233,18 @@ class SiteController extends Controller
 
         /* To do: Misc operations */
 
+        //Study Years
+        $auth->createOperation('createStudyYear','create a study year');
+        $auth->createOperation('readStudyYear','read a study year');
+        $auth->createOperation('updateStudyYear','update a study year');
+        $auth->createOperation('deleteStudyYear','delete a study year');
+
+        //Positions
+        $auth->createOperation('createPosition','create a position');
+        $auth->createOperation('readPosition','read a position');
+        $auth->createOperation('updatePosition','update a position');
+        $auth->createOperation('deletePosition','delete a position');
+
         /*
          * Tasks
          */
@@ -303,6 +315,16 @@ class SiteController extends Controller
             $task->addChild('readMAC');
             $task->addChild('updateMAC');
             $task->addChild('deleteMAC');
+        $task=$auth->createTask('manageStudyYear','description');
+            $task->addChild('createStudyYear');
+            $task->addChild('readStudyYear');
+            $task->addChild('updateStudyYear');
+            $task->addChild('deleteStudyYear');
+        $task=$auth->createTask('managePosition','description');
+            $task->addChild('createPosition');
+            $task->addChild('readPosition');
+            $task->addChild('updatePosition');
+            $task->addChild('deletePosition');
 
         $task=$auth->createTask('manageOwnGroup','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
             $task->addChild('manageGroup');
@@ -319,16 +341,12 @@ class SiteController extends Controller
 
         $task=$auth->createTask('manageOwnSpeciality','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
             $task->addChild('manageSpeciality');
-
-        //$bizRule='return Yii::app()->user->id==$params["post"]->authID;';
-        //$task=$auth->createTask('updateOwnPost','update a post by author himself',$bizRule);
-        //$task->addChild('updatePost');
+        $task=$auth->createTask('manageOwnDepartment','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
+            $task->addChild('manageDepartment');
 
         /*
          * Roles
          */
-
-        //$role->addChild('name');
 
         $role=$auth->createRole('student');
 
@@ -337,10 +355,10 @@ class SiteController extends Controller
         $role->addChild('manageOwnGroup');
 
         $role=$auth->createRole('teacher');
-        $role->addChild('manageOwnGroup');
 
         $role=$auth->createRole('curator');
         $role->addChild('teacher');
+        $role->addChild('manageOwnGroup');
 
         $role=$auth->createRole('cychead');
         $role->addChild('curator');
@@ -348,11 +366,16 @@ class SiteController extends Controller
         $role=$auth->createRole('dephead');
         $role->addChild('cychead');
         $role->addChild('manageOwnSpeciality');
+        $role->addChild('manageOwnDepartment');
 
         $role=$auth->createRole('admin');
         $role->addChild('dephead');
+        $role->addChild('manageAudience');
         $role->addChild('manageSpeciality');
+        $role->addChild('manageDepartment');
         $role->addChild('manageGroup');
+        $role->addChild('managePosition');
+        $role->addChild('manageStudyYear');
 
 
 
@@ -367,21 +390,6 @@ class SiteController extends Controller
         $auth->assign('student',94);
         $auth->assign('prefect',95);
 
-
-        if(Yii::app()->user->checkAccess('deletePost'))
-        {
-
-        }
-
-        //$params=array('post'=>$post);
-        //if(Yii::app()->user->checkAccess('updateOwnPost',$params))
-
-
-        //$bizRule='return !Yii::app()->user->isGuest;';
-        //$auth->createRole('authenticated', 'authenticated user', $bizRule);
-
-        //$bizRule='return Yii::app()->user->name === "admin";';
-        //$auth->createRole('admin', 'admin user', $bizRule);
         echo "OK";
         return;
     }

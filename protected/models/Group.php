@@ -108,26 +108,34 @@ class Group extends ActiveRecord
     private $curator_old;
 
     protected function beforeSave() {
+
         if ($this->curator_id != $this->curator_old) {
             $auth = Yii::app()->authManager;
-            $curator_old_model = User::model()->findByAttributes(
+            $curator_old_user = User::model()->findByAttributes(
                 array(
                     'identity_id'=>$this->curator_old,
                     'identity_type'=>User::TYPE_TEACHER
                 )
             );
-            $curator_new_model = User::model()->findByAttributes(
+            $curator_new_user = User::model()->findByAttributes(
                 array(
                     'identity_id'=>$this->curator_id,
                     'identity_type'=>User::TYPE_TEACHER
                 )
             );
-            $auth->revoke('curator', $curator_old_model->getAttribute('id'));
-            $auth->assign('curator', $curator_new_model->getAttribute('id'));
+            if (isset($curator_old_user)) {
+                $auth->revoke('curator', $curator_old_user->getAttribute('id'));
+            }
+            if (isset($curator_new_user)) {
+                $auth->assign('curator', $curator_new_user->getAttribute('id'));
+            }
         }
+
+        return parent::beforeSave();
     }
 
     protected function afterFind() {
         $this->curator_old = $this->curator_id;
+        return parent::afterFind();
     }
 }

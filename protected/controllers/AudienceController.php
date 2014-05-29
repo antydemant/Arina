@@ -10,6 +10,10 @@ class AudienceController extends Controller
      */
     public function actionCreate()
     {
+        if(!Yii::app()->user->checkAccess('createAudience'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
         $model = new Audience;
 
         $this->ajaxValidation('audience-form', $model);
@@ -32,6 +36,10 @@ class AudienceController extends Controller
      */
     public function actionUpdate($id)
     {
+        if(!Yii::app()->user->checkAccess('updateAudience'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
         $model = Audience::model()->loadContent($id);
 
         $this->ajaxValidation('audience-form', $model);
@@ -53,6 +61,10 @@ class AudienceController extends Controller
      */
     public function actionDelete($id)
     {
+        if(!Yii::app()->user->checkAccess('deleteAudience'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
         $model = Audience::model()->loadContent($id);
         $model->delete();
         if (!Yii::app()->getRequest()->isAjaxRequest) {
