@@ -76,7 +76,7 @@ class WorkPlan extends ActiveRecord
             array('speciality_id', 'numerical', 'integerOnly' => true),
             array('created', 'default', 'value' => date('Y-m-d', time()), 'on' => 'insert'),
             array('id, speciality_id', 'safe', 'on' => 'search'),
-            array('plan_origin, work_origin', 'check_origin'),
+            array('plan_origin, work_origin', 'check_origin', 'on'=>'create'),
         );
     }
 
@@ -186,7 +186,7 @@ class WorkPlan extends ActiveRecord
             $model->control_hours = $control_hours;
             $model->weeks = $subject->weeks;
             $model->control = $subject->control;
-            $model->save(false);
+            $model->save();
         }
     }
 
