@@ -35,7 +35,7 @@ class WorkController extends Controller
         $model = WorkPlan::model()->loadContent($id);
         $model->setScenario('graph');
 
-        if (isset($_POST['WorkPlan'])) {
+        if (isset($_POST['yt0'])) {
             if (isset(Yii::app()->session['weeks'])) {
                 $model->semesters = Yii::app()->session['weeks'];
                 unset(Yii::app()->session['weeks']);
