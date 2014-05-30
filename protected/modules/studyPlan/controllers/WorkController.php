@@ -48,7 +48,7 @@ class WorkController extends Controller
                 $this->redirect($this->createUrl('subjects', array('id' => $model->id)));
             }
         }
-        $this->render('graph', array('model'=>$model));
+        $this->render('graph', array('model' => $model));
     }
 
     public function actionView($id)
@@ -107,7 +107,7 @@ class WorkController extends Controller
                 $this->redirect($this->createUrl('subjects', array('id' => $id)));
         }
 
-        $this->render('subject_form', array('model' => $model,'plan'=>WorkPlan::model()->findByPk($id)));
+        $this->render('subject_form', array('model' => $model, 'plan' => WorkPlan::model()->findByPk($id)));
     }
 
     public function actionEditSubject($id)
@@ -122,7 +122,7 @@ class WorkController extends Controller
             }
         }
 
-        $this->render('subject_form', array('model' => $model, 'plan'=>$model->plan));
+        $this->render('subject_form', array('model' => $model, 'plan' => $model->plan));
     }
 
     public function actionDeleteSubject($id)
@@ -134,14 +134,11 @@ class WorkController extends Controller
         }
     }
 
-
-
-
-
     public function actionExecuteGraph()
     {
         $semesters = array();
-        if (isset($_POST['graph'])) {
+        if (isset($_POST['graph']) && isset($_POST['groups'])) {
+            $groups = $_POST['groups'];
             $g = $_POST['graph'];
             foreach ($g as $i => $v) {
                 $findFirst = false;
@@ -168,14 +165,23 @@ class WorkController extends Controller
             }
         }
         $weeks = array();
-        foreach ($semesters as $course) {
-            foreach ($course as $week) {
-                $weeks[] = $week;
+        $last = 0;
+        $semestersForGroups = array();
+        foreach ($groups as $course => $subGroups) {
+            foreach ($subGroups as $groupId => $groupName) {
+                $semestersForGroups[$groupName] = $semesters[$groupId + 1];
+                if ($course <> $last) {
+                    $last = $course;
+                    foreach ($semesters[$groupId + 1] as $semester) {
+
+                        $weeks[] = $semester;
+                    }
+                }
             }
         }
         Yii::app()->session['weeks'] = $weeks;
         Yii::app()->session['graph'] = $_POST['graph'];
-        $this->renderPartial('semestersPlan', array('data' => $semesters));
+        $this->renderPartial('semestersPlan', array('data' => $semestersForGroups));
     }
 
     public function actionMakeExcel($id)

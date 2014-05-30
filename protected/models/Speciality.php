@@ -56,8 +56,9 @@ class Speciality extends ActiveRecord implements IDateContainable
     {
         $list = array();
         foreach($this->groups as $group) {
-            $list[]= $group->title;
+            $list[$group->title]= $group->getCourse($yearId);
         }
+         array_multisort($list);
         return $list;
     }
 

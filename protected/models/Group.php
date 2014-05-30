@@ -26,11 +26,17 @@ class Group extends ActiveRecord
         return parent::model($className);
     }
 
-    public function getCourse()
+    public function getCourse($yearId = null)
     {
-        $year = date('Y', time());
-        $last_year = mb_substr($this->title,3,2,'UTF-8');
-        $value = $year-2000 - $last_year;
+        $year = null;
+        if (isset($yearId)) {
+            $year = StudyYear::model()->findByPk($yearId);
+        }
+        if (!isset($year)) {
+            $year = StudyYear::getCurrentYear();
+        }
+        $last_year = mb_substr($this->title, 3, 2, 'UTF-8');
+        $value = $year->end - 2000 - $last_year;
         return $value;
     }
 
@@ -85,7 +91,7 @@ class Group extends ActiveRecord
         return array(
             'speciality' => array(self::BELONGS_TO, 'Speciality', 'speciality_id'),
             'curator' => array(self::BELONGS_TO, 'Teacher', 'curator_id'),
-            'students' => array(self::HAS_MANY, 'Student', 'group_id', 'order'=>'last_name, first_name, middle_name ASC'),
+            'students' => array(self::HAS_MANY, 'Student', 'group_id', 'order' => 'last_name, first_name, middle_name ASC'),
             'loads' => array(self::HAS_MANY, 'TeacherLoad', 'group_id'),
         );
     }
@@ -108,20 +114,21 @@ class Group extends ActiveRecord
     private $curator_old;
     private $monitor_old;
 
-    protected function beforeSave() {
+    protected function beforeSave()
+    {
 
         if ($this->curator_id != $this->curator_old) {
             $auth = Yii::app()->authManager;
             $curator_old_user = User::model()->findByAttributes(
                 array(
-                    'identity_id'=>$this->curator_old,
-                    'identity_type'=>User::TYPE_TEACHER
+                    'identity_id' => $this->curator_old,
+                    'identity_type' => User::TYPE_TEACHER
                 )
             );
             $curator_new_user = User::model()->findByAttributes(
                 array(
-                    'identity_id'=>$this->curator_id,
-                    'identity_type'=>User::TYPE_TEACHER
+                    'identity_id' => $this->curator_id,
+                    'identity_type' => User::TYPE_TEACHER
                 )
             );
             if (isset($curator_old_user)) {
@@ -133,14 +140,14 @@ class Group extends ActiveRecord
 
             $monitor_old_user = User::model()->findByAttributes(
                 array(
-                    'identity_id'=>$this->$monitor_old,
-                    'identity_type'=>User::TYPE_STUDENT
+                    'identity_id' => $this->$monitor_old,
+                    'identity_type' => User::TYPE_STUDENT
                 )
             );
             $monitor_new_user = User::model()->findByAttributes(
                 array(
-                    'identity_id'=>$this->monitor_id,
-                    'identity_type'=>User::TYPE_STUDENT
+                    'identity_id' => $this->monitor_id,
+                    'identity_type' => User::TYPE_STUDENT
                 )
             );
             if (isset($monitor_old_user)) {
@@ -154,7 +161,8 @@ class Group extends ActiveRecord
         return parent::beforeSave();
     }
 
-    protected function afterFind() {
+    protected function afterFind()
+    {
         $this->curator_old = $this->curator_id;
         $this->monitor_old = $this->monitor_id;
         return parent::afterFind();

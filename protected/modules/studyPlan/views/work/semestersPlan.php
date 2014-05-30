@@ -8,7 +8,7 @@
 <table class="table table-striped table-condensed table-bordered table-hover">
     <thead>
     <tr>
-        <td>Курс</td>
+        <td>Група</td>
         <td>Осінній</td>
         <td>Весняний</td>
     </tr>
