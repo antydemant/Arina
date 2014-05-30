@@ -3,7 +3,7 @@
  * @var boolean $readOnly
  * @var Graph $this
  * @var array $list
- * @var integer $yearAmount
+ * @var array $rows
  */
 ?>
     <style>
@@ -66,9 +66,9 @@
         </tr>
         </thead>
         <tbody>
-        <?php for ($j = 0; $j < $yearAmount; $j++): ?>
+        <?php for ($j = 0; $j < count($rows); $j++): ?>
             <tr class="line">
-                <td><span><?php echo $j + 1; ?></span></td>
+                <td><span><?php echo $rows[$j]; ?></span></td>
                 <?php for ($i = 0; $i < $amount; $i++): ?>
                     <td>
                         <input

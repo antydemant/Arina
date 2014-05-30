@@ -2,14 +2,14 @@
 /* @var $this SiteController */
 
 $this->pageTitle = Yii::app()->name;
-
+/*
 if (isset(Yii::app()->user->identityId)) {
     echo 'Identity id -> ' . Yii::app()->user->identityId . '<br>';
 }
 if (isset(Yii::app()->user->identityType)) {
     echo 'Identity type -> ' . Yii::app()->user->identityType . '<br>';
 }
-    echo 'Id -> ' . Yii::app()->user->getId() . '<br>';
+    echo 'Id -> ' . Yii::app()->user->getId() . '<br>';*/
 
 ?>
 

@@ -49,6 +49,15 @@ class Speciality extends ActiveRecord implements IDateContainable
     }
 
     /**
+     * @param $yearId
+     * @return array
+     */
+    public function getGroupsByStudyYear($yearId)
+    {
+        return CHtml::listData($this->groups, 'title', 'title');
+    }
+
+    /**
      * @return array validation rules for model attributes.
      */
     public function rules()
@@ -86,11 +95,11 @@ class Speciality extends ActiveRecord implements IDateContainable
             'department' => Yii::t('department', 'Department'),
             'number' => Yii::t('speciality', 'Number'),
             'accreditation_date' => Yii::t('speciality', 'Last accreditation date'),
-            'qualification'=>Yii::t('speciality', 'Qualification'),
-            'apprenticeship'=>Yii::t('speciality', 'Apprenticeship'),
-            'discipline'=>Yii::t('speciality', 'Discipline'),
-            'direction'=>Yii::t('speciality', 'Direction'),
-            'education_form'=>Yii::t('speciality', 'Education Time'),
+            'qualification' => Yii::t('speciality', 'Qualification'),
+            'apprenticeship' => Yii::t('speciality', 'Apprenticeship'),
+            'discipline' => Yii::t('speciality', 'Discipline'),
+            'direction' => Yii::t('speciality', 'Direction'),
+            'education_form' => Yii::t('speciality', 'Education Time'),
         );
     }
 
