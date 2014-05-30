@@ -58,7 +58,8 @@ switch ($course) {
         'labs' => 0,
         'practs' => 0,
         'selfwork' => 0,
-        'weeks' => 0
+        'weeks' => 0,
+        'project' => 0,
     ); ?>
     <?php $springHours = array(
         'total' => 0,
@@ -67,12 +68,13 @@ switch ($course) {
         'labs' => 0,
         'practs' => 0,
         'selfwork' => 0,
-        'weeks' => 0
+        'weeks' => 0,
+        'project' => 0,
     ); ?>
     <?php foreach ($model->subjects as $subject): ?>
         <?php if ($subject->presentIn($course)): ?>
             <tr>
-                <td><?php echo $subject->subject->title; ?></td>
+                <td><?php echo $subject->subject->title; ?>: (<?php echo array_sum($subject->total); ?> годин)</td>
 
                 <td><?php echo $subject->total[$fall];
                     $fallHours['total'] += $subject->total[$fall]; ?></td>
@@ -86,7 +88,8 @@ switch ($course) {
                     $fallHours['labs'] += $subject->labs[$fall]; ?></td>
                 <td><?php echo $subject->getSelfWork($fall);
                     $fallHours['selfwork'] += $subject->getSelfwork($fall); ?></td>
-                <td>TBD</td>
+                <td><?php echo ($subject->control[$fall][4] || $subject->control[$fall][5]) ? $subject->project_hours: '';
+                    $fallHours['project'] += $subject->project_hours; ?></td>
                 <td><?php echo $subject->weeks[$fall];
                     $fallHours['weeks'] += $subject->weeks[$fall]; ?></td>
 
@@ -102,7 +105,8 @@ switch ($course) {
                     $springHours['labs'] += $subject->labs[$spring]; ?></td>
                 <td><?php echo $subject->getSelfWork($spring);
                     $springHours['selfwork'] += $subject->getSelfwork($spring); ?></td>
-                <td>TBD</td>
+                <td><?php echo ($subject->control[$spring][4] || $subject->control[$spring][5]) ? $subject->project_hours: '';
+                    $springHours['project'] += $subject->project_hours; ?></td>
                 <td><?php echo $subject->weeks[$spring];
                     $springHours['weeks'] += $subject->weeks[$spring]; ?></td>
 
@@ -126,7 +130,7 @@ switch ($course) {
         <td><b><?php echo $fallHours['practs']; ?></b></td>
         <td><b><?php echo $fallHours['labs']; ?></b></td>
         <td><b><?php echo $fallHours['selfwork']; ?></b></td>
-        <td><b>TBD</b></td>
+        <td><b><?php echo $fallHours['project']; ?></b></td>
         <td><b><?php echo $fallHours['weeks']; ?></b></td>
 
         <td><b><?php echo $springHours['total']; ?></b></td>
@@ -135,7 +139,7 @@ switch ($course) {
         <td><b><?php echo $springHours['practs']; ?></b></td>
         <td><b><?php echo $springHours['labs']; ?></b></td>
         <td><b><?php echo $springHours['selfwork']; ?></b></td>
-        <td><b>TBD</b></td>
+        <td><b><?php echo $springHours['project']; ?></b></td>
         <td><b><?php echo $springHours['weeks']; ?></b></td>
 
         <td></td>

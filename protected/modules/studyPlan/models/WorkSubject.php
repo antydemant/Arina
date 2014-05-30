@@ -19,6 +19,7 @@
  * @property integer $cyclic_commission_id
  * @property string $certificate_name
  * @property string $diploma_name
+ * @property integer $project_hours
  * @property array $control_hours
  *
  * The followings are the available model relations:
@@ -45,7 +46,7 @@ class WorkSubject extends ActiveRecord
     {
         return array(
             array(
-                'subject_id, total, lectures, labs, practs, weeks, control, cyclic_commission_id, certificate_name, diploma_name',
+                'subject_id, total, lectures, labs, practs, weeks, control, cyclic_commission_id, certificate_name, diploma_name, project_hours',
                 'safe'
             ),
             array('total, lectures, labs, practs', 'default', 'value' => array('', '', '', '', '', '', '', '')),
@@ -91,6 +92,7 @@ class WorkSubject extends ActiveRecord
             'cyclic_commission_id' => 'Циклова комісія',
             'certificate_name' => 'Назва в атестат',
             'diploma_name' => 'Назва в диплом',
+            'project_hours' => 'Годин для курсового проектування',
         );
     }
 

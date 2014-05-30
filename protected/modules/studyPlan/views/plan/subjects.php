@@ -110,6 +110,7 @@ $this->breadcrumbs = array(
     <?php echo CHtml::button('Очистити', array('type' => 'reset', 'class' => 'btn btn-danger')); ?>
 </div>
 <?php $this->endWidget(); ?>
+<?php echo CHtml::link('Завершити', $this->createUrl('index'), array('class' => 'btn btn-info btn-large')); ?>
 
 <?php $this->widget(
     'studyPlan.widgets.SubjectTable',
