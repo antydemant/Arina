@@ -5,6 +5,10 @@
  * @var WorkPlan $plan
  * @var TbActiveForm $form
  */
+$this->breadcrumbs = array(
+    'Робочі плани' => $this->createUrl('index'),
+    $model->plan->speciality->title . ': ' . $model->plan->year->title => $this->createUrl('subjects', array('id' => $model->plan_id)),
+);
 ?>
 
 <style>
@@ -101,6 +105,7 @@
             </div>
         <?php endfor; ?>
     </div>
+
     <?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
     <?php $this->endWidget(); ?>
 </div>

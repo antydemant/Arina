@@ -1,6 +1,8 @@
 <?php
 /**
+ * @var WorkController $this
  * @var WorkPlan $model
+ * @var TbActiveForm $form
  */
 $form = $this->beginWidget(
     BoosterHelper::FORM,
@@ -12,6 +14,9 @@ $form = $this->beginWidget(
         'id'=>'graph-form',
     )
 );
+
+echo $form->errorSummary($model);
+
 $this->widget(
     'studyPlan.widgets.Graph',
     array(
