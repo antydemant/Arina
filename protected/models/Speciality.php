@@ -54,7 +54,11 @@ class Speciality extends ActiveRecord implements IDateContainable
      */
     public function getGroupsByStudyYear($yearId)
     {
-        return CHtml::listData($this->groups, 'title', 'title');
+        $list = array();
+        foreach($this->groups as $group) {
+            $list[]= $group->title;
+        }
+        return $list;
     }
 
     /**
