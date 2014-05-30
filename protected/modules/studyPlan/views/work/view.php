@@ -1,7 +1,7 @@
 <?php
 /**
  * @var PlanController $this
- * @var StudyPlan $model
+ * @var WorkPlan $model
  */
 $this->breadcrumbs = array(
     Yii::t('base', 'Study plans') => $this->createUrl('index'),
@@ -16,6 +16,13 @@ $this->breadcrumbs = array(
     <?php echo CHtml::link('Експортувати', $this->createUrl('makeExcel', array('id' => $model->id)), array('class' => 'btn btn-primary')); ?>
     <?php echo CHtml::link('Редагувати предмети', $this->createUrl('subjects', array('id' => $model->id)), array('class' => 'btn btn-primary')); ?>
     <br/>
-    <?php $this->widget('studyPlan.widgets.Graph', array('model' => $model, 'field' => '', 'readOnly' => true, 'graph' => $model->graph)); ?>
+    <?php $this->widget('studyPlan.widgets.Graph', array('model' => $model, 'field' => '', 'readOnly' => true,
+            'graph' => $model->graph, 'specialityId'=>$model->speciality_id, 'studyYearId'=>$model->year_id, 'studyPlan'=>false
+        )); ?>
     <br/>
+    <div class="alert alert-warning">
+        <?php echo $model->checkSubjects(); ?>
+    </div>
+
 <?php $this->renderPartial('_subjects', array('model' => $model)); ?>
+</div>

@@ -22,6 +22,8 @@
  */
 class WorkPlan extends ActiveRecord
 {
+    /** Допустима різниця між годинами в навчальному та робочому плані */
+    const HOURS_DIFF = 5;
     public $plan_origin;
     public $work_origin;
 
@@ -68,7 +70,8 @@ class WorkPlan extends ActiveRecord
             array(
                 'semesters',
                 'required',
-                'message' => 'Натисніть кнопку "Генерувати" та перевірте правильність даних'
+                'message' => 'Натисніть кнопку "Генерувати" та перевірте правильність даних',
+                'on' => 'graph',
             ),
             array('speciality_id', 'numerical', 'integerOnly' => true),
             array('created', 'default', 'value' => date('Y-m-d', time()), 'on' => 'insert'),
@@ -116,6 +119,20 @@ class WorkPlan extends ActiveRecord
                 'setUpdateOnCreate' => true,
             ),
         );
+    }
+
+    /**
+     * @return array
+     */
+    public function checkSubjects()
+    {
+        $warnings = array();
+        foreach ($this->subjects as $subject) {
+            if (abs(array_sum($subject->total) - $subject->control_hours['total']) > self::HOURS_DIFF) {
+                $warnings[] = 'Предмет "' . $subject->subject->title . '" за загальною кількістю годин відрізняється від навчального плану більше ніж на ' . self::HOURS_DIFF . ' годин';
+            }
+        }
+        return implode(CHtml::tag('br'), $warnings);
     }
 
     protected function afterSave()
@@ -172,5 +189,6 @@ class WorkPlan extends ActiveRecord
             $model->save(false);
         }
     }
+
 
 } 

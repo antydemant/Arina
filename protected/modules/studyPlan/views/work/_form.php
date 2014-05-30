@@ -38,6 +38,6 @@
         array('empty' => '')
     ); ?>
 <?php endif; ?>
-<?php $this->widget('studyPlan.widgets.Graph', array('model' => $model, 'field' => '', 'graph' => $model->graph)); ?>
+
 <?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
 <?php $this->endWidget(); ?>

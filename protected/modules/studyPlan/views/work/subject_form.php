@@ -32,7 +32,7 @@
             'id' => 'add_subject',
             'htmlOptions' => array('class' => 'well'))
     ); ?>
-    <h2>Додання предмету</h2>
+    <h2><?php echo $model->isNewRecord ? 'Додання' : 'Редагування'; ?> предмету</h2>
 
     <div class="row">
         <div class="span5">
@@ -116,6 +116,8 @@
     }
 
     $(function () {
+        calcClasses();
+
         $("input[id^='WorkSubject_weeks_']").change(function () {
             calcClasses();
         });
