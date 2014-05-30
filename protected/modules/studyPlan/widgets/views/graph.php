@@ -103,6 +103,9 @@
         $(function () {
             var loader = $('img.load').hide();
             $('tr.line').find('input').click(function () {
+                $.get("<?php echo $this->controller->createUrl("/studyPlan/main/resetGraph");?>").done(function () {
+                    $("div.result").empty();
+                });
                 var obj = $(this);
                 switch (obj.attr('data-state')) {
                     case 'T':

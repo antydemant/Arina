@@ -73,11 +73,23 @@ class WorkPlan extends ActiveRecord
                 'message' => 'Натисніть кнопку "Генерувати" та перевірте правильність даних',
                 'on' => 'graph',
             ),
+            array('speciality_id, year_id', 'uniqueRecord'),
             array('speciality_id', 'numerical', 'integerOnly' => true),
             array('created', 'default', 'value' => date('Y-m-d', time()), 'on' => 'insert'),
             array('id, speciality_id', 'safe', 'on' => 'search'),
             array('plan_origin, work_origin', 'check_origin', 'on' => 'create'),
         );
+    }
+
+    public function uniqueRecord()
+    {
+        if (!$this->hasErrors()) {
+            $record = self::model()->find('(speciality_id =:speciality_id) AND ( year_id = :year_id)',
+                array(':speciality_id' => $this->speciality_id, ':year_id' => $this->year_id));
+            if (isset($record)) {
+                $this->addError('year_id', 'Для даного навчального року вже створений робочий план');
+            }
+        }
     }
 
     /**
@@ -139,7 +151,7 @@ class WorkPlan extends ActiveRecord
     {
         if (!empty($this->work_origin)) {
             $this->copyWorkPlan(WorkPlan::model()->findByPk($this->work_origin));
-            $this->work_origin= null;
+            $this->work_origin = null;
             $this->setIsNewRecord(false);
             $this->save(false);
         } elseif (!empty($this->plan_origin)) {
