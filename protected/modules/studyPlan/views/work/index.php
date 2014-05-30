@@ -1,10 +1,10 @@
 <?php
 /**
- * @var PlanController $this
+ * @var WorkController $this
  * @var CActiveDataProvider $dataProvider
  */
 $this->breadcrumbs = array(
-    Yii::t('base', 'Study plans') => $this->createUrl('/studyPlan'),
+    'Робочі плани' => $this->createUrl('/studyPlan'),
 );
 ?>
 

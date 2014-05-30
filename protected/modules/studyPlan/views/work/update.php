@@ -4,7 +4,7 @@
  * @var StudyPlan $model
  */
 $this->breadcrumbs = array(
-    Yii::t('base', 'Study plans') => $this->createUrl('index'),
+    'Робочі плани' => $this->createUrl('index'),
     $model->speciality->title => $this->createUrl('view', array('id' => $model->id,'graph'=>$model->graph)),
 );
 

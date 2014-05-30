@@ -4,7 +4,7 @@
  * @var StudyPlan $model
  */
 $this->breadcrumbs = array(
-    Yii::t('base', 'Study plans') => $this->createUrl('main/index'),
+    'Робочі плани'=> $this->createUrl('main/index'),
     'Новий робочий план'
 );
 ?>

@@ -4,6 +4,11 @@
  * @var WorkPlan $model
  * @var TbActiveForm $form
  */
+$this->breadcrumbs = array(
+    'Робочі плани' => $this->createUrl('index'),
+    $model->speciality->title => $this->createUrl('view', array('id' => $model->id,'graph'=>$model->graph)),
+);
+
 $form = $this->beginWidget(
     BoosterHelper::FORM,
     array(
