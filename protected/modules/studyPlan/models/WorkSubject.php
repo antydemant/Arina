@@ -27,15 +27,6 @@
  */
 class WorkSubject extends ActiveRecord
 {
-
-
-    public function rules()
-    {
-        return array(
-            array('subject_id, total, lectures, labs, practs, weeks, control, cyclic_commission_id, certificate_name, diploma_name', 'safe'),
-        );
-    }
-
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -45,6 +36,20 @@ class WorkSubject extends ActiveRecord
     public static function model($className = __CLASS__)
     {
         return parent::model($className);
+    }
+
+    /**
+     * @return array
+     */
+    public function rules()
+    {
+        return array(
+            array(
+                'subject_id, total, lectures, labs, practs, weeks, control, cyclic_commission_id, certificate_name, diploma_name',
+                'safe'
+            ),
+            array('total, lectures, labs, practs', 'default', 'value' => array('', '', '', '', '', '', '', '')),
+        );
     }
 
     /**
@@ -122,18 +127,18 @@ class WorkSubject extends ActiveRecord
      * @param $semester
      * @return integer
      */
-    public function getClasses($semester)
+    public function getSelfwork($semester)
     {
-        return $this->lectures[$semester] + $this->practs[$semester] + $this->labs[$semester];
+        return $this->total[$semester] - $this->getClasses($semester);
     }
 
     /**
      * @param $semester
      * @return integer
      */
-    public function getSelfwork($semester)
+    public function getClasses($semester)
     {
-        return $this->total[$semester] - $this->getClasses($semester);
+        return $this->weeks[$semester]  * $this->plan->semesters[$semester];
     }
 
     /**
@@ -163,6 +168,9 @@ class WorkSubject extends ActiveRecord
                 $fall = 0;
                 $spring = 1;
         }
-        return !empty($this->total[$fall]) || !empty($this->total[$spring]);
+        return !empty($this->total[$fall]) ||
+        !empty($this->weeks[$fall]) ||
+        !empty($this->total[$spring]) ||
+        !empty($this->weeks[$spring]);
     }
 } 
