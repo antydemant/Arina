@@ -55,7 +55,7 @@ $this->breadcrumbs = array(
     <?php echo $form->listBox(
         $model,
         'subject_id',
-        Subject::getListForSpeciality($model->plan->speciality_id),
+        $model->plan->getUnusedSubjects(),
         array('size' => 25)
     ); ?>
     <?php echo $form->telFieldRow($model, 'diploma_name'); ?>

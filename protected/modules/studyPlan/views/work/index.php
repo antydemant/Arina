@@ -17,6 +17,7 @@ $this->breadcrumbs = array(
             'type' => 'raw'
         ),
         array(
+            'header'=>Yii::t('base','Study year'),
             'name' => 'year.title',
         ),
         array(

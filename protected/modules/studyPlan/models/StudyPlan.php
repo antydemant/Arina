@@ -31,6 +31,25 @@ class StudyPlan extends ActiveRecord
         return parent::model($className);
     }
 
+    public function getUnusedSubjects()
+    {
+        $usedSubjects = CHtml::listData($this->subjects, 'subject_id', 'id');
+        $allSubjects = Subject::getListForSpeciality($this->speciality_id);
+        $result = array();
+        foreach ($allSubjects as $cycle => $subject) {
+            $result[$cycle] = array();
+            foreach ($subject as $id => $name) {
+                if (!isset($usedSubjects[$id])) {
+                    $result[$cycle][$id] = $name;
+                }
+            }
+            if (empty($result[$cycle])) {
+                unset($result[$cycle]);
+            }
+        }
+        return $result;
+    }
+
     /**
      * @return string the associated database table name
      */
@@ -163,6 +182,6 @@ class StudyPlan extends ActiveRecord
      */
     public function getTitle()
     {
-        return $this->speciality->title . ' - '. date('H d.m.Y', $this->updated);
+        return $this->speciality->title . ' - ' . date('H d.m.Y', $this->updated);
     }
 }
