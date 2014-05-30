@@ -49,7 +49,7 @@
         'class' => 'well row',
     )
 )); ?>
-    <h3>Редагування предмету у навчальному плані</h3>
+    <h3>Редагування предмету <?php echo $model->subject->title; ?></h3>
 <?php echo $form->errorSummary($model); ?>
     <div class="span3">
         <?php echo $form->dropDownListRow($model, 'subject_id',
