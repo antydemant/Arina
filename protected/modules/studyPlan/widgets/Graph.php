@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @author Dmytro Karpovych <ZAYEC77@gmail.com>
@@ -12,9 +13,9 @@ class Graph extends CWidget
     public $studyPlan = true;
     /** @var $yearAmount int for study plan */
     public $yearAmount = 4;
-    /** @var $specialityId int for work plan  */
+    /** @var $specialityId int for work plan */
     public $specialityId;
-    /** @var $studyYearId int for work plan  */
+    /** @var $studyYearId int for work plan */
     public $studyYearId;
 
     protected $list;
@@ -23,16 +24,16 @@ class Graph extends CWidget
 
     public function init()
     {
-        if (isset($this->graph)) {
-            $this->map = $this->graph;
-        } else {
-            $this->map = PlanHelper::getDefaultPlan();
-        }
         $this->list = GlobalHelper::getWeeksByMonths();
         if ($this->studyPlan) {
             if (empty($this->yearAmount)) throw new CException('Years amount must be set');
-            for($i = 0; $i < $this->yearAmount; $i++) {
-                $this->rows[] = $i+1;
+            for ($i = 0; $i < $this->yearAmount; $i++) {
+                $this->rows[] = $i + 1;
+            }
+            if (isset($this->graph)) {
+                $this->map = $this->graph;
+            } else {
+                $this->map = PlanHelper::getDefaultPlan();
             }
         } else {
             if (empty($this->specialityId)) throw new CException('Speciality Id must be set');
@@ -40,11 +41,17 @@ class Graph extends CWidget
             /** @var Speciality $speciality */
             $speciality = Speciality::model()->findByPk($this->specialityId);
             $this->rows = $speciality->getGroupsByStudyYear($this->studyYearId);
+
+            if (empty($this->graph)) {
+                $this->map = PlanHelper::getDefaultWorkPlan($this->rows);
+            } else {
+                $this->map = $this->graph;
+            }
         }
     }
 
     public function run()
     {
-        $this->render('graph', array('map'=>$this->map, 'list' => $this->list, 'rows' => $this->rows,'readOnly'=>$this->readOnly));
+        $this->render('graph', array('map' => $this->map, 'list' => $this->list, 'rows' => $this->rows, 'readOnly' => $this->readOnly));
     }
 }
