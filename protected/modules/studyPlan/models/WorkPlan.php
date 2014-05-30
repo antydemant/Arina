@@ -76,7 +76,7 @@ class WorkPlan extends ActiveRecord
             array('speciality_id', 'numerical', 'integerOnly' => true),
             array('created', 'default', 'value' => date('Y-m-d', time()), 'on' => 'insert'),
             array('id, speciality_id', 'safe', 'on' => 'search'),
-            array('plan_origin, work_origin', 'check_origin', 'on'=>'create'),
+            array('plan_origin, work_origin', 'check_origin', 'on' => 'create'),
         );
     }
 
@@ -139,8 +139,14 @@ class WorkPlan extends ActiveRecord
     {
         if (!empty($this->work_origin)) {
             $this->copyWorkPlan(WorkPlan::model()->findByPk($this->work_origin));
+            $this->work_origin= null;
+            $this->setIsNewRecord(false);
+            $this->save(false);
         } elseif (!empty($this->plan_origin)) {
             $this->copyFromStudyPlan(StudyPlan::model()->findByPk($this->plan_origin));
+            $this->plan_origin = null;
+            $this->setIsNewRecord(false);
+            $this->save(false);
         }
     }
 
@@ -150,6 +156,7 @@ class WorkPlan extends ActiveRecord
      */
     protected function copyWorkPlan($origin)
     {
+        $this->graph = $origin->graph;
         foreach ($origin->subjects as $subject) {
             $model = new WorkSubject();
             $model->attributes = $subject->attributes;
@@ -174,6 +181,12 @@ class WorkPlan extends ActiveRecord
      */
     protected function copyFromStudyPlan(StudyPlan $origin)
     {
+        $groups = $this->speciality->getGroupsByStudyYear($this->year_id);
+        $graph = array();
+        foreach ($groups as $course) {
+            $graph[] = $origin->graph[$course - 1];
+        }
+        $this->graph = $graph;
         foreach ($origin->subjects as $subject) {
             $model = new WorkSubject();
             $model->plan_id = $this->id;

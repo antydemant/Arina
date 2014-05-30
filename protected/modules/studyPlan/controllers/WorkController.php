@@ -137,6 +137,7 @@ class WorkController extends Controller
     public function actionExecuteGraph()
     {
         $semesters = array();
+        $groups = array();
         if (isset($_POST['graph']) && isset($_POST['groups'])) {
             $groups = $_POST['groups'];
             $g = $_POST['graph'];
@@ -166,22 +167,30 @@ class WorkController extends Controller
         }
         $weeks = array();
         $last = 0;
+        $lastYear = array();
+        $errors = array();
         $semestersForGroups = array();
         foreach ($groups as $course => $subGroups) {
             foreach ($subGroups as $groupId => $groupName) {
+                if (!empty($lastYear) && ($course == $last)) {
+                    $t = $semesters[$groupId + 1];
+                    if (($t[2] != $lastYear[2]) || ($t[1] != $lastYear[1])) {
+                        $errors[$groupName] = "Кількість тижнів для груп на одному курсі різна (група $groupName)";
+                    }
+                }
                 $semestersForGroups[$groupName] = $semesters[$groupId + 1];
                 if ($course <> $last) {
                     $last = $course;
                     foreach ($semesters[$groupId + 1] as $semester) {
-
                         $weeks[] = $semester;
                     }
+                    $lastYear = $semesters[$groupId + 1];
                 }
             }
         }
         Yii::app()->session['weeks'] = $weeks;
         Yii::app()->session['graph'] = $_POST['graph'];
-        $this->renderPartial('semestersPlan', array('data' => $semestersForGroups));
+        $this->renderPartial('semestersPlan', array('data' => $semestersForGroups, 'errors' => $errors));
     }
 
     public function actionMakeExcel($id)
