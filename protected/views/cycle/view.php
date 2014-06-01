@@ -36,12 +36,12 @@ $attributes = array(
         'value' => '',
     )
 );
-foreach ($model->subjects as $item) {
+foreach ($model->relations as $item) {
     $subject = array(
         'type' => 'raw',
-        'value' => CHtml::link($item->title, array('subject/update', 'id' => $item->id)),
+        'value' => CHtml::link($item->subject->title, array('subject/update', 'id' => $item->subject->id)),
     );
-    $attributes[] = $subject;
+    $attributes[$item->subject->id] = $subject;
 }
 $this->widget(BoosterHelper::DETAIL_VIEW, array(
     'data' => $model,
