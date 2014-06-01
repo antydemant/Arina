@@ -294,7 +294,7 @@ class ExcelMaker extends CComponent
         $i++;
         $j = 1;
         $totals = array();
-        foreach ($plan->getSubjectsByGroups() as $name => $group) {
+        foreach ($plan->getSubjectsByCycles() as $name => $group) {
             $sheet->setCellValue("B$i", "$j. " . $name);
             $sheet->insertNewRowBefore($i + 1, 1);
             $i++;

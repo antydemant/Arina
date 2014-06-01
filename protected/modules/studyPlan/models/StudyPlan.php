@@ -59,6 +59,29 @@ class StudyPlan extends ActiveRecord
     }
 
     /**
+     * @param null $config
+     * @return CActiveDataProvider
+     */
+    public function getProvider($config = null)
+    {
+        if (Yii::app()->user->checkAccess('dephead')) {
+            $headId = Yii::app()->getUser()->identityId;
+            if ($config === null) {
+                $config = array('criteria' => array());
+            } elseif ($config['criteria'] === null) {
+                $config['criteria'] = array();
+            }
+            $criteria = new CDbCriteria($config['criteria']);
+            $criteria->with = array('speciality'=>array('with'=>array('department')));
+            $criteria->addCondition('department.head_id = :head_id');
+            $criteria->params[':head_id'] = $headId;
+            $config['criteria'] = $criteria;
+            return new CActiveDataProvider($this, $config);
+        }
+        parent::getProvider($config);
+    }
+
+    /**
      * @return array validation rules for model attributes.
      */
     public function rules()
@@ -84,9 +107,10 @@ class StudyPlan extends ActiveRecord
     }
 
     /**
-     *
+     * Group subject by cycles
+     * @return array
      */
-    public function getSubjectsByGroups()
+    public function getSubjectsByCycles()
     {
         $list = array();
         foreach ($this->subjects as $item) {
@@ -166,22 +190,25 @@ class StudyPlan extends ActiveRecord
     }
 
     /**
+     * Get dataProvider for study plan subjects
      * @return CActiveDataProvider
      */
     public function getPlanSubjectProvider()
     {
         return new CActiveDataProvider(StudySubject::model(), array(
             'criteria' => array(
-                'condition' => 'plan_id=' . $this->id,
+                'condition' => 'plan_id = :plan_id',
+                'params' => array(':plan_id' => $this->id),
             )
         ));
     }
 
     /**
+     * Get full title with update datetime
      * @return string
      */
     public function getTitle()
     {
-        return $this->speciality->title . ' - ' . date('H d.m.Y', $this->updated);
+        return $this->speciality->title . ' - ' . date('H:i d.m.Y', $this->updated);
     }
 }
