@@ -62,6 +62,10 @@ class DepartmentController extends Controller
      */
     public function actionCreate()
     {
+        if(!Yii::app()->user->checkAccess('manageDepartment'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
         $model = new Department;
 
 // Uncomment the following line if AJAX validation is needed
@@ -87,6 +91,16 @@ class DepartmentController extends Controller
     {
         $model = $this->loadModel($id);
 
+        if(!Yii::app()->user->checkAccess('manageDepartment',
+            array(
+                'id' => $model->head_id,
+                'type' => User::TYPE_TEACHER,
+            )
+        ))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
+
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
 
@@ -108,6 +122,10 @@ class DepartmentController extends Controller
      */
     public function actionDelete($id)
     {
+        if(!Yii::app()->user->checkAccess('manageDepartment'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
         if (Yii::app()->request->isPostRequest) {
 // we only allow deletion via POST request
             $this->loadModel($id)->delete();
@@ -136,6 +154,10 @@ class DepartmentController extends Controller
 
     public function actionAdmin($id)
     {
+        if(!Yii::app()->user->checkAccess('manageDepartment'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
         $model = $this->loadModel($id);
         $this->render('admin', array(
             'model' => $model,

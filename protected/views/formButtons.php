@@ -15,4 +15,5 @@
         )
     ); ?>
     <?php $this->widget(BoosterHelper::BUTTON, array('buttonType' => 'reset', 'label' => Yii::t('base', 'Cancel'))); ?>
+    <?php echo CHtml::link('Повернутись',  Yii::app()->request->getUrlReferrer(),array('class'=>'btn btn-info') ); ?>
 </div>

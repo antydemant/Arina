@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @author Dmytro Karpovych <ZAYEC77@gmail.com>
@@ -9,8 +10,17 @@ class PlanHelper
     {
         $list = self::getDefaultPlan();
         return $list[$course][$week];
-     }
+    }
 
+    public static function getDefaultWorkPlan($groups)
+    {
+        $template = self::getDefaultPlan();
+        $list = array();
+        foreach($groups as $group) {
+            $list[]=$template[0];
+        }
+        return $list;
+    }
     /**
      * - T - theoretical training;
      * - S - examination session;
@@ -241,7 +251,7 @@ class PlanHelper
                 ' ', //52
             ),
         );
-     }
+    }
 
     /**
      * Види контролю

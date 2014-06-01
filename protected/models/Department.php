@@ -97,4 +97,38 @@ class Department extends ActiveRecord
     {
         return parent::model($className);
     }
+
+    private $head_old;
+
+    protected function beforeSave() {
+
+        if ($this->head_id != $this->head_old) {
+            $auth = Yii::app()->authManager;
+            $head_old_user = User::model()->findByAttributes(
+                array(
+                    'identity_id'=>$this->head_old,
+                    'identity_type'=>User::TYPE_TEACHER
+                )
+            );
+            $head_new_user = User::model()->findByAttributes(
+                array(
+                    'identity_id'=>$this->head_id,
+                    'identity_type'=>User::TYPE_TEACHER
+                )
+            );
+            if (isset($head_old_user)) {
+                $auth->revoke('dephead', $head_old_user->getAttribute('id'));
+            }
+            if (isset($head_new_user)) {
+                $auth->assign('dephead', $head_new_user->getAttribute('id'));
+            }
+        }
+
+        return parent::beforeSave();
+    }
+
+    protected function afterFind() {
+        $this->head_old = $this->head_id;
+        return parent::afterFind();
+    }
 }

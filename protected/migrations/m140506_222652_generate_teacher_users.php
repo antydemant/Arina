@@ -15,15 +15,4 @@ class m140506_222652_generate_teacher_users extends CDbMigration
 	{
 		return true;
 	}
-
-	/*
-	// Use safeUp/safeDown to do migration with transaction
-	public function safeUp()
-	{
-	}
-
-	public function safeDown()
-	{
-	}
-	*/
 }

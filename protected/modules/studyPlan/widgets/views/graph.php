@@ -2,8 +2,10 @@
 /**
  * @var boolean $readOnly
  * @var Graph $this
+ * @var string $graphProcessLink
  * @var array $list
- * @var integer $yearAmount
+ * @var array $rows
+ * @var array $map
  */
 ?>
     <style>
@@ -66,9 +68,14 @@
         </tr>
         </thead>
         <tbody>
-        <?php for ($j = 0; $j < $yearAmount; $j++): ?>
+        <?php
+        $j = 0;
+        foreach ($rows as $key => $name): ?>
             <tr class="line">
-                <td><span><?php echo $j + 1; ?></span></td>
+                <td><span><?php echo $key; ?></span>
+                    <input
+                        name="<?php echo "groups[$name][$j]"; ?>" data-state="<?php echo $key; ?>" type="hidden"/>
+                </td>
                 <?php for ($i = 0; $i < $amount; $i++): ?>
                     <td>
                         <input
@@ -79,7 +86,9 @@
                     </td>
                 <?php endfor; ?>
             </tr>
-        <?php endfor; ?>
+            <?php
+            $j++;
+        endforeach; ?>
         </tbody>
     </table>
 <?php if (!$readOnly): ?>
@@ -94,6 +103,9 @@
         $(function () {
             var loader = $('img.load').hide();
             $('tr.line').find('input').click(function () {
+                $.get("<?php echo $this->controller->createUrl("/studyPlan/main/resetGraph");?>").done(function () {
+                    $("div.result").empty();
+                });
                 var obj = $(this);
                 switch (obj.attr('data-state')) {
                     case 'T':
@@ -136,11 +148,14 @@
                 var myInputs = $('#graph').find('input').clone();
                 myInputs.each(function (i, val) {
                     var v = $(val);
+                    if (!v) {
+                        v = $(val).defaultValue;
+                    }
                     v.attr('type', 'text');
                     v.val(v.attr('data-state'));
                 });
                 var data = $('<form>').append(myInputs).serialize();
-                var url = "<?php echo $this->controller->createUrl('/studyPlan/plan/executeGraph');?>";
+                var url = "<?php echo $this->controller->createUrl($graphProcessLink);?>";
 
                 var posting = $.post(url, data).done(done);
                 e.preventDefault(e);

@@ -131,9 +131,8 @@ class UserController extends Controller
     }
 
     /**
-     * Deletes a particular model.
-     * If deletion is successful, the browser will be redirected to the 'admin' page.
-     * @param integer $id the ID of the model to be deleted
+     * @param $id
+     * @throws CHttpException
      */
     public function actionDelete($id)
     {

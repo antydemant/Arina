@@ -4,7 +4,7 @@
  * @var StudyPlan $model
  */
 $this->breadcrumbs = array(
-    Yii::t('base', 'Study plans') => $this->createUrl('index'),
+    'Робочі плани' => $this->createUrl('index'),
     $model->speciality->title => $this->createUrl('view', array('id' => $model->id,'graph'=>$model->graph)),
 );
 
@@ -24,6 +24,4 @@ $this->menu = array(
 
     <h3>Редагування</h3>
 <?php $this->renderPartial('_form', array('model' => $model)); ?>
-<?php $this->widget('studyPlan.widgets.SubjectTable', array(
-    'subjectDataProvider' => $model->getPlanSubjectProvider()
-));
+<?php $this->renderPartial('graph', array('model'=>$model)); ?>

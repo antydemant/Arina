@@ -19,7 +19,6 @@ class m140516_123640_create_work_subject extends CDbMigration
                 'cyclic_commission_id' => 'integer',
                 'atestat_name' => 'string',
                 'diploma_name' => 'string',
-                'control_hours' => 'string',
             )
         );
     }

@@ -6,6 +6,8 @@
  * The followings are the available columns in table 'study_year':
  * @property integer $id
  * @property string $title
+ * @property int $begin
+ * @property int $end
  */
 class StudyYear extends ActiveRecord
 {
@@ -15,6 +17,22 @@ class StudyYear extends ActiveRecord
     public function tableName()
     {
         return 'study_year';
+    }
+
+    public static function getCurrentYear()
+    {
+        $year = new self();
+        $now = new DateTime();
+        $month = (int)$now->format('m');
+        $nowYear = (int)$now->format('Y');
+        if ($month >= 1 AND $month <= 6) {
+            $year->begin = $nowYear - 1;
+            $year->end = $nowYear;
+        } else {
+            $year->begin = $nowYear;
+            $year->end = $nowYear + 1;
+        }
+        return $year;
     }
 
 

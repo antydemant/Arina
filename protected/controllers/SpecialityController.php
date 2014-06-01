@@ -73,11 +73,17 @@ class SpecialityController extends Controller
      */
     public function actionDelete($id)
     {
-        if(!Yii::app()->user->checkAccess('manageSpeciality'))
+        $model = Speciality::model()->loadContent($id);
+        if(!Yii::app()->user->checkAccess('manageSpeciality',
+            array(
+                'id' => $model->department->head_id,
+                'type' => User::TYPE_TEACHER,
+            )
+        ))
         {
             throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
         }
-        Speciality::model()->loadContent($id)->delete();
+        $model->delete();
 
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));

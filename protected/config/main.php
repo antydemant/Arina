@@ -9,7 +9,7 @@ return CMap::mergeArray(
         'theme' => 'booster',
         // preloading 'log' component
         'preload' => array(
-            //'log',
+            'log',
             'booster',
         ),
         'language' => 'uk',
@@ -85,13 +85,11 @@ return CMap::mergeArray(
                 'class' => 'CLogRouter',
                 'routes' => array(
                     array(
-                        'class' => 'CFileLogRoute',
-                        'levels' => 'error, warning',
+                        'class'=>'CWebLogRoute',  'levels'=>'trace, info, error, warning',
                     ),
                     array(
-                        'class'=>'CWebLogRoute',
+                        'class'=>'CFileLogRoute',  'levels'=>'trace, info, error, warning',
                     ),
-
                 ),
             ),
             'authManager'=>array(

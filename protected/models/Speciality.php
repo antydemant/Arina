@@ -22,11 +22,21 @@ Yii::import('application.behaviors.dateField.*');
 class Speciality extends ActiveRecord implements IDateContainable
 {
     /**
+     * @param null $headId
      * @return array for dropDownList
      */
-    public static function getList()
+    public static function getList($headId = null)
     {
-        return self::getListAll('id', 'title');
+        if (isset($id)){
+            return self::getListAll('id', 'title');
+        } else {
+            /** @var Department $department */
+            $department = Department::model()->findByAttributes(array('head_id'=>$headId));
+            if (isset($department)){
+                return CHtml::listData($department->specialities, 'id','title');
+            }
+            return array();
+        }
     }
 
     /**
@@ -46,6 +56,20 @@ class Speciality extends ActiveRecord implements IDateContainable
     public function tableName()
     {
         return 'speciality';
+    }
+
+    /**
+     * @param $yearId
+     * @return array
+     */
+    public function getGroupsByStudyYear($yearId)
+    {
+        $list = array();
+        foreach($this->groups as $group) {
+            $list[$group->title]= $group->getCourse($yearId);
+        }
+         array_multisort($list);
+        return $list;
     }
 
     /**
@@ -86,11 +110,11 @@ class Speciality extends ActiveRecord implements IDateContainable
             'department' => Yii::t('department', 'Department'),
             'number' => Yii::t('speciality', 'Number'),
             'accreditation_date' => Yii::t('speciality', 'Last accreditation date'),
-            'qualification'=>Yii::t('speciality', 'Qualification'),
-            'apprenticeship'=>Yii::t('speciality', 'Apprenticeship'),
-            'discipline'=>Yii::t('speciality', 'Discipline'),
-            'direction'=>Yii::t('speciality', 'Direction'),
-            'education_form'=>Yii::t('speciality', 'Education Time'),
+            'qualification' => Yii::t('speciality', 'Qualification'),
+            'apprenticeship' => Yii::t('speciality', 'Apprenticeship'),
+            'discipline' => Yii::t('speciality', 'Discipline'),
+            'direction' => Yii::t('speciality', 'Direction'),
+            'education_form' => Yii::t('speciality', 'Education Time'),
         );
     }
 

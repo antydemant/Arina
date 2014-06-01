@@ -22,6 +22,8 @@
  */
 class WorkPlan extends ActiveRecord
 {
+    /** Допустима різниця між годинами в навчальному та робочому плані */
+    const HOURS_DIFF = 5;
     public $plan_origin;
     public $work_origin;
 
@@ -68,13 +70,26 @@ class WorkPlan extends ActiveRecord
             array(
                 'semesters',
                 'required',
-                'message' => 'Натисніть кнопку "Генерувати" та перевірте правильність даних'
+                'message' => 'Натисніть кнопку "Генерувати" та перевірте правильність даних',
+                'on' => 'graph',
             ),
+            array('speciality_id, year_id', 'uniqueRecord'),
             array('speciality_id', 'numerical', 'integerOnly' => true),
             array('created', 'default', 'value' => date('Y-m-d', time()), 'on' => 'insert'),
             array('id, speciality_id', 'safe', 'on' => 'search'),
-            array('plan_origin, work_origin', 'check_origin'),
+            array('plan_origin, work_origin', 'check_origin', 'on' => 'create'),
         );
+    }
+
+    public function uniqueRecord()
+    {
+        if (!$this->hasErrors()) {
+            $record = self::model()->find('(speciality_id =:speciality_id) AND ( year_id = :year_id)',
+                array(':speciality_id' => $this->speciality_id, ':year_id' => $this->year_id));
+            if (isset($record)) {
+                $this->addError('year_id', 'Для даного навчального року вже створений робочий план');
+            }
+        }
     }
 
     /**
@@ -118,12 +133,32 @@ class WorkPlan extends ActiveRecord
         );
     }
 
+    /**
+     * @return array
+     */
+    public function checkSubjects()
+    {
+        $warnings = array();
+        foreach ($this->subjects as $subject) {
+            if (abs(array_sum($subject->total) - $subject->control_hours['total']) > self::HOURS_DIFF) {
+                $warnings[] = 'Предмет "' . $subject->subject->title . '" за загальною кількістю годин відрізняється від навчального плану більше ніж на ' . self::HOURS_DIFF . ' годин';
+            }
+        }
+        return implode(CHtml::tag('br'), $warnings);
+    }
+
     protected function afterSave()
     {
         if (!empty($this->work_origin)) {
             $this->copyWorkPlan(WorkPlan::model()->findByPk($this->work_origin));
+            $this->work_origin = null;
+            $this->setIsNewRecord(false);
+            $this->save(false);
         } elseif (!empty($this->plan_origin)) {
             $this->copyFromStudyPlan(StudyPlan::model()->findByPk($this->plan_origin));
+            $this->plan_origin = null;
+            $this->setIsNewRecord(false);
+            $this->save(false);
         }
     }
 
@@ -133,6 +168,7 @@ class WorkPlan extends ActiveRecord
      */
     protected function copyWorkPlan($origin)
     {
+        $this->graph = $origin->graph;
         foreach ($origin->subjects as $subject) {
             $model = new WorkSubject();
             $model->attributes = $subject->attributes;
@@ -157,6 +193,12 @@ class WorkPlan extends ActiveRecord
      */
     protected function copyFromStudyPlan(StudyPlan $origin)
     {
+        $groups = $this->speciality->getGroupsByStudyYear($this->year_id);
+        $graph = array();
+        foreach ($groups as $course) {
+            $graph[] = $origin->graph[$course - 1];
+        }
+        $this->graph = $graph;
         foreach ($origin->subjects as $subject) {
             $model = new WorkSubject();
             $model->plan_id = $this->id;
@@ -169,8 +211,9 @@ class WorkPlan extends ActiveRecord
             $model->control_hours = $control_hours;
             $model->weeks = $subject->weeks;
             $model->control = $subject->control;
-            $model->save(false);
+            $model->save();
         }
     }
+
 
 } 
