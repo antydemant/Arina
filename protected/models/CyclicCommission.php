@@ -135,7 +135,7 @@ class CyclicCommission extends ActiveRecord
 
     protected function beforeSave() {
 
-        if ($this->head_id != $this->head_old) {
+        if (isset($this->head_old)) {
             $auth = Yii::app()->authManager;
             $head_old_user = User::model()->findByAttributes(
                 array(
@@ -143,19 +143,20 @@ class CyclicCommission extends ActiveRecord
                     'identity_type'=>User::TYPE_TEACHER
                 )
             );
+            if (isset($head_old_user)) {
+                $auth->revoke('cychead', $head_old_user->getAttribute('id'));
+            }
+        }
             $head_new_user = User::model()->findByAttributes(
                 array(
                     'identity_id'=>$this->head_id,
                     'identity_type'=>User::TYPE_TEACHER
                 )
             );
-            if (isset($head_old_user)) {
-                $auth->revoke('cychead', $head_old_user->getAttribute('id'));
-            }
             if (isset($head_new_user)) {
                 $auth->assign('cychead', $head_new_user->getAttribute('id'));
             }
-        }
+
 
         return parent::beforeSave();
     }

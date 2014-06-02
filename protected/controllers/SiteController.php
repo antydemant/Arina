@@ -330,7 +330,7 @@ class SiteController extends Controller
         $task=$auth->createTask('manageOwnDepartment','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
             $task->addChild('manageDepartment');
         $task=$auth->createTask('manageOwnCyclicCommission','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
-            $task->addChild('manageOwnCyclicCommission');
+            $task->addChild('manageCyclicCommission');
         $task=$auth->createTask('manageOwnTeacher','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
             $task->addChild('manageTeacher');
 

@@ -66,7 +66,7 @@ class CyclicCommissionController extends Controller
     {
         $model = CyclicCommission::model()->loadContent($id);
 
-        if (!Yii::app()->user->checkAccess('manageOwnCyclicCommission',
+        if (!Yii::app()->user->checkAccess('manageCyclicCommission',
             array(
                 'id' => $model->head_id,
                 'type' => User::TYPE_TEACHER,
