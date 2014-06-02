@@ -27,15 +27,16 @@ class Speciality extends ActiveRecord implements IDateContainable
      */
     public static function getList($headId = null)
     {
-        if (isset($id)){
-            return self::getListAll('id', 'title');
-        } else {
+        // @todo output all specialities only for admin
+        if (isset($headId)){
             /** @var Department $department */
             $department = Department::model()->findByAttributes(array('head_id'=>$headId));
             if (isset($department)){
                 return CHtml::listData($department->specialities, 'id','title');
             }
             return array();
+        } else {
+            return self::getListAll('id', 'title');
         }
     }
 
