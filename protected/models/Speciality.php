@@ -24,15 +24,19 @@ Yii::import('application.behaviors.dateField.*');
 class Speciality extends ActiveRecord implements IDateContainable
 {
     /**
-     * @param null $headId
-     * @return array for dropDownList
+     * @param null $id
+     * @return array
      */
-    public static function getList($headId = null)
+    public static function getList($id = null)
     {
-        // @todo output all specialities only for admin
-        if (isset($headId)){
-            /** @var Department $department */
-            $department = Department::model()->findByAttributes(array('head_id'=>$headId));
+        if (isset($id)){
+            /** @var $department Department */
+            if (Yii::app()->user->checkAccess('dephead')) {
+                $department = Department::model()->findByAttributes(array('head_id'=>$id));
+            } else if (Yii::app()->user->checkAccess('curator')) {
+                $department = Group::model()->findByAttributes(array('curator_id'=>$id))->speciality->department;
+            }
+
             if (isset($department)){
                 return CHtml::listData($department->specialities, 'id','title');
             }
