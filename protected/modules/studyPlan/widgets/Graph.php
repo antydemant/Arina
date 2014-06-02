@@ -57,6 +57,11 @@ class Graph extends CWidget
 
     public function run()
     {
-        $this->render('graph', array('graphProcessLink' => $this->graphProcessLink, 'map' => $this->map, 'list' => $this->list, 'rows' => $this->rows, 'readOnly' => $this->readOnly));
+        $this->render('graph', array(
+            'graphProcessLink' => $this->graphProcessLink,
+            'map' => $this->map,
+            'list' => $this->list,
+            'rows' => $this->rows,
+            'readOnly' => $this->readOnly));
     }
 }

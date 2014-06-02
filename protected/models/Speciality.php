@@ -30,11 +30,11 @@ class Speciality extends ActiveRecord implements IDateContainable
     public static function getList($headId = null)
     {
         // @todo output all specialities only for admin
-        if (isset($headId)){
+        if (isset($headId)) {
             /** @var Department $department */
-            $department = Department::model()->findByAttributes(array('head_id'=>$headId));
-            if (isset($department)){
-                return CHtml::listData($department->specialities, 'id','title');
+            $department = Department::model()->findByAttributes(array('head_id' => $headId));
+            if (isset($department)) {
+                return CHtml::listData($department->specialities, 'id', 'title');
             }
             return array();
         } else {
@@ -69,7 +69,10 @@ class Speciality extends ActiveRecord implements IDateContainable
     {
         $list = array();
         foreach ($this->groups as $group) {
-            $list[$group->title] = $group->getCourse($yearId);
+            $course = $group->getCourse($yearId);
+            if (($course < 5) && ($course > 0)) {
+                $list[$group->title] = $group->getCourse($yearId);
+            }
         }
         array_multisort($list);
         return $list;
