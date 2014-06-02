@@ -280,6 +280,10 @@ class Student extends ActiveRecord
         if (empty($this->exemptions)) {
             $this->exemptions = array();
         }
+
+        if ($this->isNewRecord) {
+            UserGenerator::generateUser($this->id, User::TYPE_STUDENT);
+        }
         return parent::afterSave();
     }
 }

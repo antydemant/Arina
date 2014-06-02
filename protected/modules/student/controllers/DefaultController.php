@@ -19,12 +19,17 @@ class DefaultController extends Controller
      */
     public function actionCreate()
     {
+        if(!Yii::app()->user->checkAccess('dephead'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
         $model = new Student;
 
         $this->ajaxValidation('student-form', $model);
 
         if (isset($_POST['Student'])) {
             $model->attributes = $_POST['Student'];
+
             if(!Yii::app()->user->checkAccess('manageStudent',
                 array(
                     'id' => $model->group->speciality->department->head_id,
@@ -34,8 +39,9 @@ class DefaultController extends Controller
             {
                 throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
             }
-            if ($model->save())
+            if ($model->save()) {
                 $this->redirect(array('view', 'id' => $model->id));
+            }
         }
 
         $this->render('create', array(
@@ -55,21 +61,21 @@ class DefaultController extends Controller
          */
         $model = Student::model()->loadContent($id);
         if (
-            !Yii::app()->user->checkAccess('manageGroup',
+            !Yii::app()->user->checkAccess('manageStudent',
                 array(
                     'id' => $model->group->curator_id,
                     'type' => User::TYPE_TEACHER,
                 )
             )
             &&
-            !Yii::app()->user->checkAccess('manageGroup',
+            !Yii::app()->user->checkAccess('manageStudent',
                 array(
                     'id' => $model->group->monitor_id,
                     'type' => User::TYPE_STUDENT,
                 )
             )
             &&
-            !Yii::app()->user->checkAccess('manageGroup',
+            !Yii::app()->user->checkAccess('manageStudent',
                 array(
                     'id' => $model->group->speciality->department->head_id,
                     'type' => User::TYPE_TEACHER,

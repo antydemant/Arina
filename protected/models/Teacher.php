@@ -143,4 +143,12 @@ class Teacher extends ActiveRecord
 
         return $criteria;
     }
+
+    protected function afterSave()
+    {
+        if ($this->isNewRecord) {
+            UserGenerator::generateUser($this->id, User::TYPE_TEACHER);
+        }
+        return parent::afterSave();
+    }
 }

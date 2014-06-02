@@ -67,6 +67,10 @@ class TeacherController extends Controller
      */
     public function actionCreate()
     {
+        if (!Yii::app()->user->checkAccess('cychead')
+        ) {
+            throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
+        }
         $model = new Teacher();
 
         $this->ajaxValidation('teacher-form', $model);
@@ -74,6 +78,21 @@ class TeacherController extends Controller
         if (isset($_POST['Teacher'])) {
             $model->attributes = $_POST['Teacher'];
             $model->short_name = $model->getNameWithInitials();
+
+            if (!Yii::app()->user->checkAccess('manageTeacher',
+                array(
+                    'id' => $model->cyclicCommission->head_id,
+                    'type' => User::TYPE_TEACHER,
+                )
+            )
+            ) {
+                throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
+            }
+
+            if ($model->save()) {
+                $this->redirect(array('group/index'));
+            }
+
             if ($model->save()) {
                 $this->redirect(array('index'));
             }
@@ -87,6 +106,9 @@ class TeacherController extends Controller
      */
     public function actionDelete($id)
     {
+        if (!Yii::app()->user->checkAccess('manageTeacher')) {
+            throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
+        }
         $model = Teacher::model()->loadContent($id);
         $model->delete();
         if (!Yii::app()->getRequest()->isAjaxRequest) {
@@ -100,7 +122,15 @@ class TeacherController extends Controller
     public function actionUpdate($id)
     {
         $model = Teacher::model()->loadContent($id);
-
+        if (!Yii::app()->user->checkAccess('manageTeacher',
+            array(
+                'id' => $model->cyclicCommission->head_id,
+                'type' => User::TYPE_TEACHER,
+            )
+        )
+        ) {
+            throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
+        }
         $this->ajaxValidation('teacher-form', $model);
 
         if (isset($_POST['Teacher'])) {

@@ -15,6 +15,11 @@ class StudyYearController extends Controller
 	 */
 	public function actionCreate()
 	{
+        if(!Yii::app()->user->checkAccess('manageStudyYear'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
+
 		$model = new StudyYear;
 
 		// Uncomment the following line if AJAX validation is needed
@@ -39,6 +44,11 @@ class StudyYearController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+        if(!Yii::app()->user->checkAccess('manageStudyYear'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
+
         $model = StudyYear::model() -> loadContent($id);
 
 		// Uncomment the following line if AJAX validation is needed
@@ -63,6 +73,10 @@ class StudyYearController extends Controller
 	 */
 	public function actionDelete($id)
 	{
+        if(!Yii::app()->user->checkAccess('manageStudyYear'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
 		$model = StudyYear::model() -> loadContent($id);
         $model ->delete();
         if (!Yii::app()->getRequest()->isAjaxRequest) {

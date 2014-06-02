@@ -13,6 +13,10 @@ class SubjectController extends Controller
      */
     public function actionCreate()
     {
+        if(!Yii::app()->user->checkAccess('manageSubject'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
         $model = new Subject;
 
         if (isset($_POST['Subject'])) {
@@ -31,6 +35,10 @@ class SubjectController extends Controller
 
     public function actionAddRelation($id = null)
     {
+        if(!Yii::app()->user->checkAccess('manageSubject'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
         if (isset($_POST['SubjectRelation'])) {
             if (!isset(Yii::app()->session['subject'])) {
                 Yii::app()->session['subject'] = array('add' => array(), 'delete' => array());
@@ -70,6 +78,11 @@ class SubjectController extends Controller
     {
         $model = Subject::model()->loadContent($id);
 
+        if(!Yii::app()->user->checkAccess('manageSubject'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
+
         $this->ajaxValidation('subject-form', $model);
 
         if (isset($_POST['Subject'])) {
@@ -91,6 +104,10 @@ class SubjectController extends Controller
      */
     public function actionDelete($id)
     {
+        if(!Yii::app()->user->checkAccess('manageSubject'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
         if (Yii::app()->request->isPostRequest) {
             Subject::model()->loadContent($id)->delete();
             unset(Yii::app()->session['subject']);

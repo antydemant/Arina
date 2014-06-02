@@ -132,19 +132,6 @@ class SiteController extends Controller
          *  U: Teacher, Prefect                                                                 |
          *  D: Teacher                                                                          |
          * -------------------------------------------------------------------------------------+
-         *
-         *  60 access rules
-         *
-         *  7 roles:
-         *      Admin
-         *      Dep head
-         *      Cycle head
-         *      Curator
-         *      Teacher
-         *      Prefect
-         *      Student
-         *
-         * Schedule?
          */
 
         /*
@@ -328,40 +315,51 @@ class SiteController extends Controller
 
         $task=$auth->createTask('manageOwnGroup','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
             $task->addChild('manageGroup');
-        $task=$auth->createTask('manageOwnMAC','description' , 'return Yii::app()->user->id==$params["Id"];');
+        $task=$auth->createTask('manageOwnMAC','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
             $task->addChild('manageMAC');
-        $task=$auth->createTask('manageOwnLoad','description' , 'return Yii::app()->user->id==$params["Id"];');
+        $task=$auth->createTask('manageOwnLoad','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
             $task->addChild('manageLoad');
-        $task=$auth->createTask('manageOwnStudyPlan','description' , 'return Yii::app()->user->id==$params["Id"];');
+        $task=$auth->createTask('manageOwnStudyPlan','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
             $task->addChild('manageStudyPlan');
-        $task=$auth->createTask('manageOwnCycleSubjects','description' , 'return Yii::app()->user->id==$params["Id"];');
+        $task=$auth->createTask('manageOwnCycleSubject','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
             $task->addChild('manageSubject');
-        $task=$auth->createTask('manageOwnStudent','description' , 'return Yii::app()->user->id==$params["Id"];');
+        $task=$auth->createTask('manageOwnStudent','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
             $task->addChild('manageStudent');
-
         $task=$auth->createTask('manageOwnSpeciality','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
             $task->addChild('manageSpeciality');
         $task=$auth->createTask('manageOwnDepartment','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
             $task->addChild('manageDepartment');
+        $task=$auth->createTask('manageOwnCyclicCommission','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
+            $task->addChild('manageOwnCyclicCommission');
+        $task=$auth->createTask('manageOwnTeacher','description' , 'return (Yii::app()->user->identityId==$params["id"] && Yii::app()->user->identityType==$params["type"]);');
+            $task->addChild('manageTeacher');
 
         /*
          * Roles
          */
 
         $role=$auth->createRole('student');
+        $role->addChild('manageOwnMAC');
 
         $role=$auth->createRole('prefect');
         $role->addChild('student');
-        $role->addChild('manageOwnGroup');
+        $role->addChild('manageOwnStudent');
 
         $role=$auth->createRole('teacher');
+        $role->addChild('manageOwnMAC');
+        $role->addChild('manageOwnLoad');
 
         $role=$auth->createRole('curator');
         $role->addChild('teacher');
         $role->addChild('manageOwnGroup');
+        $role->addChild('manageOwnStudent');
 
         $role=$auth->createRole('cychead');
         $role->addChild('curator');
+        $role->addChild('manageOwnStudyPlan');
+        $role->addChild('manageOwnCycleSubject');
+        $role->addChild('manageOwnCyclicCommission');
+        $role->addChild('manageOwnTeacher');
 
         $role=$auth->createRole('dephead');
         $role->addChild('cychead');
@@ -376,12 +374,11 @@ class SiteController extends Controller
         $role->addChild('manageGroup');
         $role->addChild('managePosition');
         $role->addChild('manageStudyYear');
-
-
-
-
-        //$auth->assign('item','name');
-        //$auth->revoke('item','name');
+        $role->addChild('manageStudent');
+        $role->addChild('manageSubject');
+        $role->addChild('manageSubjectCycle');
+        $role->addChild('manageCyclicCommission');
+        $role->addChild('manageTeacher');
 
         $auth->assign('admin',1);
         $auth->assign('dephead',91);

@@ -48,10 +48,9 @@ class User extends ActiveRecord
     public function rules()
     {
         return array(
-            array('username, password, email', 'required'),
+            array('username, password', 'required'),
             array('role, identity_id', 'numerical', 'integerOnly' => true),
             array('username, password, email', 'length', 'max' => 255),
-            array('username, email', 'unique'),
             array('email', 'email'),
             array('id, username, password, email, role, identity_id', 'safe', 'on' => 'search'),
         );
@@ -117,17 +116,6 @@ class User extends ActiveRecord
     public static function model($className = __CLASS__)
     {
         return parent::model($className);
-    }
-
-    //IMPORTANT THINGAMAJIG
-
-    public function afterSave() {
-        if (!Yii::app()->authManager->isAssigned(
-            $this->role,$this->id)) {
-            Yii::app()->authManager->assign($this->type,
-                $this->id);
-        }
-        return parent::afterSave();
     }
 
 }

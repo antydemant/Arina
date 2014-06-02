@@ -21,10 +21,10 @@ class PositionController extends Controller
      */
     public function actionCreate()
     {
-        /*if(!Yii::app()->user->checkAccess('manageSpeciality'))
+        if(!Yii::app()->user->checkAccess('managePosition'))
         {
             throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
-        }*/
+        }
         $model = new Position();
 
         if (isset($_POST['Position'])) {
@@ -46,15 +46,10 @@ class PositionController extends Controller
     {
         $model = Position::model()->loadContent($id);
 
-        /*if(!Yii::app()->user->checkAccess('manageSpeciality',
-            array(
-                'id' => $model->department->head_id,
-                'type' => User::TYPE_TEACHER,
-            )
-        ))
+        if(!Yii::app()->user->checkAccess('managePosition'))
         {
             throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
-        }*/
+        }
 
         if (isset($_POST['Position'])) {
             $model->attributes = $_POST['Position'];
@@ -73,10 +68,10 @@ class PositionController extends Controller
      */
     public function actionDelete($id)
     {
-        /*if(!Yii::app()->user->checkAccess('manageSpeciality'))
+        if(!Yii::app()->user->checkAccess('managePosition'))
         {
             throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
-        }*/
+        }
         Position::model()->loadContent($id)->delete();
 
         if (!isset($_GET['ajax']))
