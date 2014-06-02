@@ -31,6 +31,28 @@ class StudyPlan extends ActiveRecord
         return parent::model($className);
     }
 
+    /**
+     * @param $id
+     * @return array
+     */
+    public static function getList($id)
+    {
+        if (isset($id)){
+            /** @var Department $department */
+            $department = Department::model()->findByAttributes(array('head_id'=>$id));
+            if (isset($department)){
+                $list = array();
+                foreach($department->specialities as $speciality){
+                    $list[$speciality->title] = CHtml::listData($speciality->studyPlans, 'id','title');
+                }
+                return $list;
+            }
+            return array();
+        } else {
+            return self::getListAll('id', 'title');
+        }
+    }
+
     public function getUnusedSubjects()
     {
         $usedSubjects = CHtml::listData($this->subjects, 'subject_id', 'id');
@@ -76,9 +98,8 @@ class StudyPlan extends ActiveRecord
             $criteria->addCondition('department.head_id = :head_id');
             $criteria->params[':head_id'] = $headId;
             $config['criteria'] = $criteria;
-            return new CActiveDataProvider($this, $config);
         }
-        parent::getProvider($config);
+        return parent::getProvider($config);
     }
 
     /**

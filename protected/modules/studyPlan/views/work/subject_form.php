@@ -91,7 +91,8 @@ $this->breadcrumbs = array(
     <hr/>
     <div class="row">
         <div class="span6">
-            Загальна кількість в навчальному плані: <?php echo isset($model->control_hours['total']) ? $model->control_hours['total'] : 'невказано'; ?>
+            Загальна кількість в навчальному
+            плані: <?php echo isset($model->control_hours['total']) ? $model->control_hours['total'] : 'невказано'; ?>
         </div>
         <div class="span6">
             <?php echo $form->numberFieldRow($model, 'project_hours'); ?>
@@ -99,8 +100,9 @@ $this->breadcrumbs = array(
     </div>
     <div class="row">
         <?php for ($i = 0; $i < 8; $i++): ?>
-            <div class="span6 semester">
-                <h4><?php echo $i + 1; ?>-й семестр: <?php echo $model->plan->semesters[$i]; ?> тижнів</h4>
+            <div class="span6 semester" id="semester_<?php echo $i; ?>">
+                <h4><?php echo $i + 1; ?>-й семестр: <?php echo $model->plan->semesters[$i]; ?> тижнів (<span
+                        class="total">0</span> год.)</h4>
 
                 <div class="hours">
                     <div>
@@ -120,7 +122,7 @@ $this->breadcrumbs = array(
                             array('placeholder' => 'Годин на тиждень', 'style' => 'width:140px')
                         ); ?>
                     </div>
-                    <div>
+                    <div class="second_section">
                         <?php echo $form->numberField(
                             $model,
                             "lectures[$i]",
@@ -184,7 +186,7 @@ $this->breadcrumbs = array(
     function calcClasses() {
         for (i = 0; i < 8; i++) {
             if ($("#WorkSubject_weeks_" + i).val()) {
-                $("#classes_" + i).val(weeks[i] * parseInt($("#WorkSubject_weeks_" + i).val()));
+                $("#semester_" + i+' span.total').html(weeks[i] * parseInt($("#WorkSubject_weeks_" + i).val()));
             }
         }
     }
@@ -194,6 +196,19 @@ $this->breadcrumbs = array(
 
         $("input[id^='WorkSubject_weeks_']").change(function () {
             calcClasses();
+        });
+
+        $("div[id^=semester_]").each(function (i, ee) {
+            var inputs = $(ee).find('.second_section input');
+            inputs.change(function (e) {
+                var total = $(ee).find('input[id^="classes"]');
+                var amount = 0;
+                inputs.each(function (i, e) {
+                    var val = $(e).val();
+                    if (val) amount += parseInt(val);
+                });
+                total.val(amount);
+            });
         });
     });
 </script>

@@ -1,4 +1,4 @@
-function makeHandler () {
+function makeHandler() {
     var button = $('.bind');
     button.unbind();
     button.click(function () {
@@ -10,3 +10,11 @@ function makeHandler () {
         return false;
     });
 }
+
+$(function () {
+    $('input[type="number"]').change(function (e) {
+        if ($(this).val() < 0) {
+            $(this).val(0);
+        }
+    });
+});
