@@ -18,7 +18,7 @@
 ?>
 <?php echo $form->textFieldRow($model, 'title'); ?>
 
-<?php echo $form->dropDownListRow($model, 'speciality_id', Speciality::getList(), array('empty' => Yii::t('group', 'Select speciality'), 'class' => 'span6')); ?>
+<?php echo $form->dropDownListRow($model, 'speciality_id', Speciality::getList(Yii::app()->user->identityId), array('empty' => Yii::t('group', 'Select speciality'), 'class' => 'span6')); ?>
 <?php echo $form->dropDownListRow($model, 'curator_id', Teacher::getList(), array('empty' => Yii::t('group', 'Select curator'), 'class' => 'span6')); ?>
 <?php
 if (!$model->isNewRecord) {
