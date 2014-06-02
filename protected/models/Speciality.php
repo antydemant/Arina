@@ -18,6 +18,7 @@ Yii::import('application.behaviors.dateField.*');
  *
  * @property Group[] $groups
  * @property Department $department
+ * @property StudyPlan[] $studyPlans
  */
 class Speciality extends ActiveRecord implements IDateContainable
 {
@@ -66,10 +67,10 @@ class Speciality extends ActiveRecord implements IDateContainable
     public function getGroupsByStudyYear($yearId)
     {
         $list = array();
-        foreach($this->groups as $group) {
-            $list[$group->title]= $group->getCourse($yearId);
+        foreach ($this->groups as $group) {
+            $list[$group->title] = $group->getCourse($yearId);
         }
-         array_multisort($list);
+        array_multisort($list);
         return $list;
     }
 
@@ -96,6 +97,7 @@ class Speciality extends ActiveRecord implements IDateContainable
         return array(
             'groups' => array(self::HAS_MANY, 'Group', 'speciality_id', 'order' => 'title ASC'),
             'department' => array(self::BELONGS_TO, 'Department', 'department_id'),
+            'studyPlans' => array(self::HAS_MANY, 'StudyPlan', 'speciality_id'),
         );
     }
 
