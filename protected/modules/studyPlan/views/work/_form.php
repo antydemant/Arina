@@ -20,22 +20,22 @@
 <?php echo $form->dropDownListRow(
     $model,
     'speciality_id',
-    Speciality::getList(),
-    array('empty' => 'Оберіть спеціальність')
+    Speciality::getList(Yii::app()->user->identityId),
+    array('empty' => 'Оберіть спеціальність', 'class'=>'span5')
 ); ?>
-<?php echo $form->dropDownListRow($model, 'year_id', StudyYear::getList(), array('empty' => '')); ?>
+<?php echo $form->dropDownListRow($model, 'year_id', StudyYear::getList(), array('empty' => '', 'class'=>'span5')); ?>
 <?php if ($model->isNewRecord): ?>
     <?php echo $form->dropDownListRow(
         $model,
         'plan_origin',
-        CHtml::listData(StudyPlan::model()->findAll(), 'id', 'title'),
-        array('empty' => '')
+        StudyPlan::getList(Yii::app()->user->identityId) ,
+        array('empty' => '', 'class'=>'span5')
     ); ?>
     <?php echo $form->dropDownListRow(
         $model,
         'work_origin',
-        CHtml::listData(WorkPlan::model()->findAll(), 'id', 'title'),
-        array('empty' => '')
+        WorkPlan::getList(Yii::app()->user->identityId),
+        array('empty' => '', 'class'=>'span5')
     ); ?>
 <?php endif; ?>
 

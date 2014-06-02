@@ -16,7 +16,7 @@ class WorkController extends Controller
 
     public function actionCreate()
     {
-        $model = new WorkPlan('create');
+        $model = new WorkPlan();
 
         if (isset($_POST['WorkPlan'])) {
             $model->attributes = $_POST['WorkPlan'];

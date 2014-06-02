@@ -19,6 +19,7 @@ Yii::import('application.behaviors.dateField.*');
  * @property Group[] $groups
  * @property Department $department
  * @property StudyPlan[] $studyPlans
+ * @property WorkPlan[] $workPlans
  */
 class Speciality extends ActiveRecord implements IDateContainable
 {
@@ -98,6 +99,7 @@ class Speciality extends ActiveRecord implements IDateContainable
             'groups' => array(self::HAS_MANY, 'Group', 'speciality_id', 'order' => 'title ASC'),
             'department' => array(self::BELONGS_TO, 'Department', 'department_id'),
             'studyPlans' => array(self::HAS_MANY, 'StudyPlan', 'speciality_id'),
+            'workPlans' => array(self::HAS_MANY, 'WorkPlan', 'speciality_id'),
         );
     }
 
