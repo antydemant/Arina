@@ -240,5 +240,13 @@ class WorkPlan extends ActiveRecord
         }
     }
 
+    protected function beforeSave()
+    {
+        if ($this->getScenario() == 'graph'){
+            if (count($this->semesters)< 8) throw new CException("Немає відповідних груп для плану");
+        }
+        return parent::beforeSave();
+    }
+
 
 } 
