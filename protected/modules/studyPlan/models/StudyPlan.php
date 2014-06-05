@@ -135,7 +135,8 @@ class StudyPlan extends ActiveRecord
     {
         $list = array();
         foreach ($this->subjects as $item) {
-            $name = $item->subject->getCycle($this->speciality_id)->title;
+            $cycle = $item->subject->getCycle($this->speciality_id);
+            $name = $cycle->id .' '. $cycle->title;
             if (isset($list[$name])) {
                 $list[$name][] = $item;
             } else {
