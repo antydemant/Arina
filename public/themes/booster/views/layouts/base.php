@@ -23,7 +23,7 @@
             'htmlOptions' => array('class' => 'pull-right'),
             'items' => array(
                 array('label' => Yii::t('base', 'Log in'), 'url' => array('/user/login'), 'visible' => Yii::app()->user->isGuest, 'icon' => 'ok'),
-                array('label' => Yii::t('base', 'Logout') . ' (' . Yii::app()->user->getName() . ')', 'url' => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest, 'icon' => 'off'),
+                array('label' => Yii::t('base', 'Logout') . ' (' . Yii::app()->user->username . ')', 'url' => array('/user/logout'), 'visible' => !Yii::app()->user->isGuest, 'icon' => 'off'),
             ),
         ),
     ),

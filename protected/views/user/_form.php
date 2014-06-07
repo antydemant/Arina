@@ -13,9 +13,13 @@
 
 <?php echo $form->textFieldRow($model, 'email', array('class' => 'span5', 'maxlength' => 255)); ?>
 
-<?php echo $form->textFieldRow($model, 'role', array('class' => 'span5')); ?>
-
-<?php echo $form->textFieldRow($model, 'identity_id', array('class' => 'span5')); ?>
+<?php
+if (Yii::app()->user->checkAccess('admin')) {
+    echo $form->textFieldRow($model, 'role', array('class' => 'span5'));
+    echo $form->textFieldRow($model, 'identity_id', array('class' => 'span5'));
+    echo $form->textFieldRow($model, 'identity_type', array('class' => 'span5'));
+}
+?>
 
 <div class="form-actions">
     <?php $this->widget('bootstrap.widgets.TbButton', array(
