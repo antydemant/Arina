@@ -24,10 +24,10 @@ Yii::import('application.behaviors.dateField.*');
 class Speciality extends ActiveRecord implements IDateContainable
 {
     /**
-     * @param null $id
-     * @return array
+     * @param null $headId
+     * @return array for dropDownList
      */
-    public static function getList($id = null)
+    public static function getList($headId = null)
     {
         if (isset($id)){
             /** @var $department Department */

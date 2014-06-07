@@ -42,19 +42,19 @@ class WorkPlan extends ActiveRecord
      */
     public static function getList($id)
     {
-        if (isset($id)){
+        if (isset($id)) {
             /** @var Department $department */
-            $department = Department::model()->findByAttributes(array('head_id'=>$id));
-            if (isset($department)){
+            $department = Department::model()->findByAttributes(array('head_id' => $id));
+            if (isset($department)) {
                 $list = array();
-                foreach($department->specialities as $speciality){
-                    $list[$speciality->title] = CHtml::listData($speciality->studyPlans, 'id','title');
+                foreach ($department->specialities as $speciality) {
+                    $list[$speciality->title] = CHtml::listData($speciality->studyPlans, 'id', 'title');
                 }
                 return $list;
             }
             return array();
         } else {
-            return self::getListAll('id', 'title');
+            return CHtml::listData(self::model()->findAll(), 'id', 'title');
         }
     }
 
@@ -96,7 +96,7 @@ class WorkPlan extends ActiveRecord
                 'message' => 'Натисніть кнопку "Генерувати" та перевірте правильність даних',
                 'on' => 'graph',
             ),
-            array('speciality_id, year_id', 'uniqueRecord', 'on' => 'insert update'),
+            array('speciality_id, year_id', 'uniqueRecord', 'on' => 'insert'),
             array('speciality_id', 'numerical', 'integerOnly' => true),
             array('created', 'default', 'value' => date('Y-m-d', time()), 'on' => 'insert'),
             array('id, speciality_id', 'safe', 'on' => 'search'),
@@ -219,7 +219,9 @@ class WorkPlan extends ActiveRecord
         $groups = $this->speciality->getGroupsByStudyYear($this->year_id);
         $graph = array();
         foreach ($groups as $course) {
-            $graph[] = $origin->graph[$course - 1];
+            if (isset($origin->graph[$course - 1])) {
+                $graph[] = $origin->graph[$course - 1];
+            }
         }
         $this->graph = $graph;
         foreach ($origin->subjects as $subject) {
@@ -236,6 +238,14 @@ class WorkPlan extends ActiveRecord
             $model->control = $subject->control;
             $model->save();
         }
+    }
+
+    protected function beforeSave()
+    {
+        if ($this->getScenario() == 'graph'){
+            if (count($this->semesters)< 8) throw new CException("Немає відповідних груп для плану");
+        }
+        return parent::beforeSave();
     }
 
 

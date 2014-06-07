@@ -22,6 +22,17 @@ class Teacher extends ActiveRecord
 
     }
 
+    public static function getListByCycle($id)
+    {
+        /** @var CyclicCommission|null $model */
+        $model = CyclicCommission::model()->findByPk($id);
+        if ($model) {
+            return CHtml::listData($model->teachers,'id','fullName');
+        } else {
+            return array();
+        }
+    }
+
     /**
      * @return array for dropDownList
      */

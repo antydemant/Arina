@@ -49,7 +49,7 @@ class StudyPlan extends ActiveRecord
             }
             return array();
         } else {
-            return self::getListAll('id', 'title');
+            return CHtml::listData(self::model()->findAll(),'id', 'title');
         }
     }
 
@@ -86,7 +86,7 @@ class StudyPlan extends ActiveRecord
      */
     public function getProvider($config = null)
     {
-        if (Yii::app()->user->checkAccess('dephead')) {
+        if (Yii::app()->user->checkAccess('dephead') && !Yii::app()->user->checkAccess('admin')) {
             $headId = Yii::app()->getUser()->identityId;
             if ($config === null) {
                 $config = array('criteria' => array());
@@ -135,7 +135,8 @@ class StudyPlan extends ActiveRecord
     {
         $list = array();
         foreach ($this->subjects as $item) {
-            $name = $item->subject->getCycle($this->speciality_id)->title;
+            $cycle = $item->subject->getCycle($this->speciality_id);
+            $name = $cycle->id .' '. $cycle->title;
             if (isset($list[$name])) {
                 $list[$name][] = $item;
             } else {
