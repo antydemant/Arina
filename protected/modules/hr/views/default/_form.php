@@ -40,7 +40,23 @@
 
             <?php echo $form->dropDownListRow($model, 'education', EmployeeHelper::getEducationTypes()); ?>
 
+
             <!--@todo Add educations list control-->
+            <?php $this->widget('hr.widgets.TableInput',
+                array(
+                    'model'=> $model,
+                    'name'=>'educations_list',
+                    'fields' => array(
+                        '0' => 'Назва освітнього закладу',
+                        '1' => 'Диплом (свідоцтво) серія, номер',
+                        '2' => 'Рік закінчення',
+                        '3' => 'Спеціальність (професія) за дипломом (свідоцтвом)',
+                        '4' => 'Кваліфікація за дипломом (свідоцтвом)',
+                        '5' => 'Форма навчання',
+                    )
+                )
+            ); ?>
+
 
             <?php echo $form->dropDownListRow($model, 'postgraduate_training', EmployeeHelper::getPostgraduateTypes()); ?>
 
@@ -89,6 +105,8 @@
             <?php echo $form->textFieldRow($model, 'military_district_office_registration_name', array('size'=>40, 'maxlength'=>'40'));  ?>
 
             <?php echo $form->textFieldRow($model, 'military_district_office_residence_name', array('size'=>40, 'maxlength'=>'40'));  ?>
+
+
 
         </div>
 
