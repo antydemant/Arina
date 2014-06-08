@@ -57,4 +57,8 @@ return array(
     'Update Student' => 'Змінити дані про студента',
     'Delete Student' => 'Видалити студента',
     'Do you want to delete this item?' => 'Ви дійсно хочете видалити цього студента?',
+    'SSEED Id' => 'ID ЄДЕБО',
+    'Document' => 'Серія, № паспорту (свідоцтва про народження)',
+    'Identification code' => 'Ідентифікаційний код',
+    'Full name' => 'Повне ім’я',
 );

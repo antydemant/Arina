@@ -36,6 +36,10 @@
         <?php echo $form->textFieldRow($model, 'mother_name', array('size' => 60, 'maxlength' => 60)); ?>
 
         <?php echo $form->textFieldRow($model, 'father_name', array('size' => 60, 'maxlength' => 60)); ?>
+
+        <?php echo $form->textFieldRow($model, 'document', array(/*'size' => 60, 'maxlength' => 60*/)); ?>
+
+        <?php echo $form->textFieldRow($model, 'identification_code', array(/*'size' => 60, 'maxlength' => 60*/)); ?>
     </div>
     <div class="span3">
         <?php echo $form->dropDownListRow($model, 'gender', array(0 => Yii::t('terms', 'Male'), 1 => Yii::t('terms', 'Female'),), array('empty' => Yii::t('terms', 'Select gender'))); ?>
@@ -101,6 +105,8 @@
         <?php echo $form->textFieldRow($model, 'misc_data', array('size' => 60, 'maxlength' => 100)); ?>
 
         <?php echo $form->textFieldRow($model, 'hobby', array('size' => 60, 'maxlength' => 100)); ?>
+
+        <?php echo $form->textFieldRow($model, 'sseed_id', array('size' => 60, 'maxlength' => 100)); ?>
     </div>
    </div>
     <br>

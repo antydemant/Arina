@@ -48,7 +48,7 @@ $this->widget(
 
 <h1><?php echo Yii::t("student", "View Student") . ' ' . $model->id; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
+<?php $this->widget('booster.widgets.TbDetailView', array(
     'data' => $model,
     'attributes' => array(
         'fullName',
@@ -67,11 +67,19 @@ $this->widget(
             'name' => 'gender',
             'value' => $model->getGenderName(),
         ),
+        'document',
+        'identification_code',
         'official_address',
         'characteristics',
         'factual_address',
-        'birth_date',
-        'admission_date',
+        array(
+            'name' => 'birth_date',
+            'value' => Yii::app()->getDateFormatter()->format('dd MMM y', $model->birth_date)
+        ),
+        array(
+            'name' => 'admission_date',
+            'value' => Yii::app()->getDateFormatter()->format('dd MMM y', $model->admission_date)
+        ),
         'tuition_payment',
         'admission_order_number',
         'admission_semester',
@@ -89,7 +97,10 @@ $this->widget(
         'father_workphone',
         'father_boss_workphone',
         'graduated',
-        'graduation_date',
+        array(
+            'name' => 'graduation_date',
+            'value' => (($model->graduation_date != NULL && (strtotime($model->graduation_date) != strtotime('0000-00-00')) ) ? Yii::app()->getDateFormatter()->format('dd.MMM y', $model->graduation_date) : '')
+        ),
         'graduation_basis',
         'graduation_semester',
         'graduation_order_number',
@@ -97,5 +108,6 @@ $this->widget(
         'direction',
         'misc_data',
         'hobby',
+        'sseed_id',
     ),
 )); ?>

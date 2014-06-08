@@ -4,7 +4,7 @@
 /* @var $model Student */
 
 $this->breadcrumbs = array(
-    Yii::t("student", "Students") => array('index'),
+    Yii::t('student', 'Students') => array('index'),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -21,7 +21,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo Yii::t("student", "Students") ?></h1>
+<h1><?php echo Yii::t('student', 'Students') ?></h1>
 
 <?php
 $this->widget(BoosterHelper::GRID_VIEW, array(
@@ -32,28 +32,20 @@ $this->widget(BoosterHelper::GRID_VIEW, array(
     'type' => 'striped condensed bordered hover',
 
     'columns' => array(
-        'code',
-        'last_name',
-        'first_name',
-        'middle_name',
-        'birth_date',
         array(
-            'name' => 'group_id',
-            'value' => '$data->group->title',
-            'htmlOptions' => array('width' => '50px'),
-            /*'filter' => CHtml::dropDownList('Student[group_id]',
-                    $model->group_id,
-                    CHtml::listData(Group::model()->findAll(), 'id', 'title'),
-                    array('empty' => ''))*/
-
+            'name' => Yii::t('student', 'Full name'),
+            'value' => '$data->getFullName()'
+        ),
+        array(
+            'name' => Yii::t('student', 'Birth Date'),
+            'value' => '$data->birth_date'
         ),
 
-        /*array(
-            'header' => Yii::t('base', 'Actions'),
-            'htmlOptions' => array('nowrap' => 'nowrap'),
-            'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => '{update}{delete}{view}',
-        ),*/
+        array(
+            'name' => Yii::t('group', 'Group'),
+            'value' => '$data->group->title',
+            'htmlOptions' => array('width' => '50px'),
+        ),
     ),
 ));
 ?>

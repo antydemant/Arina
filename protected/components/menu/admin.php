@@ -25,4 +25,8 @@ $menu = array(
     array('label' => Yii::t('base', 'Load'), 'url' => array('/load')),
     array('label' => Yii::t('base', 'Students'), 'url' => array('/student')),
     array('label' => Yii::t('base', 'Journal'), 'url' => array('/journal')),
+    array('label' => Yii::t('base', 'Human resources'), 'items' => array(
+        array('label' => Yii::t('base', 'Human resources'), 'url' => array('/hr')),
+        array('label' => Yii::t('base', 'Students import'), 'url' => array('/import')),
+    )),
 );

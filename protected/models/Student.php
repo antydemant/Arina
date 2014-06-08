@@ -1,4 +1,5 @@
 <?php
+Yii::import('application.behaviors.dateField.*');
 
 /**
  * This is the model class for table "student".
@@ -45,6 +46,9 @@
  * @property string $direction
  * @property string $misc_data
  * @property string $hobby
+ * @property integer $sseed_id
+ * @property string $document
+ * @property string $identification_code
  *
  * @property string $exemptionNames
  *
@@ -53,7 +57,7 @@
  * @property ClassMark[] $marks
  * @property ClassAbsence[] $absences
  */
-class Student extends ActiveRecord
+class Student extends ActiveRecord implements IDateContainable
 {
     public $classes = array();
     public $exemptionNames = 'None';
@@ -78,7 +82,9 @@ class Student extends ActiveRecord
     {
         return array(
             'EActiveRecordRelationBehavior' => array(
-                'class' => 'vendor.yiiext.activerecord-relation-behavior.EActiveRecordRelationBehavior')
+                'class' => 'vendor.yiiext.activerecord-relation-behavior.EActiveRecordRelationBehavior'
+            ),
+            'DateBehavior'
         );
     }
 
@@ -114,21 +120,22 @@ class Student extends ActiveRecord
     public function rules()
     {
         return array(
-            array('code, last_name, first_name, middle_name, group_id, gender', 'required'),
-            array('group_id, admission_order_number, admission_semester, math_mark, ua_language_mark, graduated, graduation_semester, graduation_order_number', 'numerical', 'integerOnly' => true),
+            array('last_name, first_name, middle_name, group_id, gender', 'required'),
+            array('group_id, admission_order_number, admission_semester, math_mark, ua_language_mark, graduated, graduation_semester, graduation_order_number, sseed_id', 'numerical', 'integerOnly' => true),
             array('code', 'length', 'max' => 12),
             array('last_name, first_name, middle_name', 'length', 'max' => 40),
             array('phone_number, mobile_number', 'length', 'max' => 15),
-            array('mother_name, father_name', 'length', 'max' => 60),
+            array('mother_name, father_name, identification_code', 'length', 'max' => 60),
             array('gender', 'length', 'max' => 10),
             array('official_address', 'length', 'max' => 200),
             array('factual_address, entry_exams, misc_data, hobby', 'length', 'max' => 100),
-            array('tuition_payment, education_document, contract, mother_workplace, mother_position, father_workplace, father_position, graduation_basis, diploma, direction', 'length', 'max' => 50),
+            array('tuition_payment, contract, mother_workplace, mother_position, father_workplace, father_position, graduation_basis, diploma, direction', 'length', 'max' => 50),
+            array('education_document, document', 'length', 'max' => 255),
             array('mother_workphone, mother_boss_workphone, father_workphone, father_boss_workphone', 'length', 'max' => 20),
             array('characteristics, birth_date, admission_date, graduation_date, exemptions', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, code, last_name, first_name, middle_name, group_id, phone_number, mobile_number, mother_name, father_name, gender, official_address, characteristics, factual_address, birth_date, admission_date, tuition_payment, admission_order_number, admission_semester, entry_exams, education_document, contract, math_mark, ua_language_mark, mother_workplace, mother_position, mother_workphone, mother_boss_workphone, father_workplace, father_position, father_workphone, father_boss_workphone, graduated, graduation_date, graduation_basis, graduation_semester, graduation_order_number, diploma, direction, misc_data, hobby, exemptions', 'safe', 'on' => 'search'),
+            array('id, code, last_name, first_name, middle_name, group_id, phone_number, mobile_number, mother_name, father_name, gender, official_address, characteristics, factual_address, birth_date, admission_date, tuition_payment, admission_order_number, admission_semester, entry_exams, education_document, contract, math_mark, ua_language_mark, mother_workplace, mother_position, mother_workphone, mother_boss_workphone, father_workplace, father_position, father_workphone, father_boss_workphone, graduated, graduation_date, graduation_basis, graduation_semester, graduation_order_number, diploma, direction, misc_data, hobby, exemptions, sseed_id, document, identification_code', 'safe', 'on' => 'search'),
         );
     }
 
@@ -196,6 +203,9 @@ class Student extends ActiveRecord
             'exemptions' => Yii::t('student', 'Exemptions'),
             'exemptionNames' => Yii::t('student', 'Exemptions'),
             'fullName' => Yii::t('terms', 'Full name'),
+            'sseed_id' => Yii::t('student', 'SSEED Id'),
+            'document' => Yii::t('student', 'Document'),
+            'identification_code' => Yii::t('student', 'Identification code'),
         );
     }
 
@@ -245,6 +255,7 @@ class Student extends ActiveRecord
         $criteria->compare('direction', $this->direction, true);
         $criteria->compare('misc_data', $this->misc_data, true);
         $criteria->compare('hobby', $this->hobby, true);
+        $criteria->compare('sseed_id', $this->sseed_id, true);
 
         if (!empty($this->exemptions)) {
             $ids = implode(', ', $this->exemptions);
@@ -285,5 +296,14 @@ class Student extends ActiveRecord
             UserGenerator::generateUser($this->id, User::TYPE_STUDENT);
         }
         return parent::afterSave();
+    }
+
+    public function getDateFields()
+    {
+        return array(
+            'birth_date',
+            'admission_date',
+            'graduation_date'
+        );
     }
 }
