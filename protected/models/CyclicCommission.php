@@ -125,4 +125,39 @@ class CyclicCommission extends ActiveRecord
             'sort'=>$sort,
         ));
     }
+
+    private $head_old;
+
+    protected function afterFind() {
+        $this->head_old = $this->head_id;
+        return parent::afterFind();
+    }
+
+    protected function beforeSave() {
+
+        if (isset($this->head_old)) {
+            $auth = Yii::app()->authManager;
+            $head_old_user = User::model()->findByAttributes(
+                array(
+                    'identity_id'=>$this->head_old,
+                    'identity_type'=>User::TYPE_TEACHER
+                )
+            );
+            if (isset($head_old_user)) {
+                $auth->revoke('cychead', $head_old_user->getAttribute('id'));
+            }
+        }
+            $head_new_user = User::model()->findByAttributes(
+                array(
+                    'identity_id'=>$this->head_id,
+                    'identity_type'=>User::TYPE_TEACHER
+                )
+            );
+            if (isset($head_new_user)) {
+                $auth->assign('cychead', $head_new_user->getAttribute('id'));
+            }
+
+
+        return parent::beforeSave();
+    }
 }

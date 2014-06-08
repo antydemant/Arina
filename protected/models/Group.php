@@ -140,7 +140,7 @@ class Group extends ActiveRecord
 
             $monitor_old_user = User::model()->findByAttributes(
                 array(
-                    'identity_id' => $this->$monitor_old,
+                    'identity_id' => $this->monitor_old,
                     'identity_type' => User::TYPE_STUDENT
                 )
             );
@@ -151,10 +151,10 @@ class Group extends ActiveRecord
                 )
             );
             if (isset($monitor_old_user)) {
-                $auth->revoke('prefect', $curator_old_user->getAttribute('id'));
+                $auth->revoke('prefect', $monitor_old_user->getAttribute('id'));
             }
             if (isset($monitor_new_user)) {
-                $auth->assign('prefect', $curator_new_user->getAttribute('id'));
+                $auth->assign('prefect', $monitor_new_user->getAttribute('id'));
             }
         }
 

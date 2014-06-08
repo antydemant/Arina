@@ -38,6 +38,10 @@ class CyclicCommissionController extends Controller
      */
     public function actionCreate()
     {
+        if (!Yii::app()->user->checkAccess('manageCyclicCommission'))
+        {
+            throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
+        }
         $model = new CyclicCommission;
 
         $this->ajaxValidation('cyclic-commission-form', $model);
@@ -62,6 +66,16 @@ class CyclicCommissionController extends Controller
     {
         $model = CyclicCommission::model()->loadContent($id);
 
+        if (!Yii::app()->user->checkAccess('manageCyclicCommission',
+            array(
+                'id' => $model->head_id,
+                'type' => User::TYPE_TEACHER,
+            )
+        ))
+        {
+            throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
+        }
+
         $this->ajaxValidation('cyclic-commission-form', $model);
 
         if (isset($_POST['CyclicCommission'])) {
@@ -81,6 +95,10 @@ class CyclicCommissionController extends Controller
      */
     public function actionDelete($id)
     {
+        if (!Yii::app()->user->checkAccess('manageCyclicCommission'))
+        {
+            throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
+        }
         if (Yii::app()->request->isPostRequest) {
             CyclicCommission::model()->loadContent($id)->delete();
 

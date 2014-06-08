@@ -71,6 +71,11 @@ class GroupController extends Controller
      */
     public function actionCreate()
     {
+        if (!Yii::app()->user->checkAccess('dephead'
+        )
+        ) {
+            throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
+        }
         $model = new Group();
 
         $this->ajaxValidation('group-form', $model);
@@ -108,13 +113,6 @@ class GroupController extends Controller
                 array(
                     'id' => $model->curator_id,
                     'type' => User::TYPE_TEACHER,
-                )
-            )
-            &&
-            !Yii::app()->user->checkAccess('manageGroup',
-                array(
-                    'id' => $model->monitor_id,
-                    'type' => User::TYPE_STUDENT,
                 )
             )
             &&

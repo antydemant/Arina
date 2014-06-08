@@ -63,13 +63,15 @@ $this->breadcrumbs = array(
 </div>
 <div class="span3">
     <?php echo $form->numberFieldRow($model, 'total'); ?>
+    <?php echo CHtml::label('Тижневі', 'classes_weeks'); ?>
+    <?php echo CHtml::numberField('classes_weeks', '', array('placeholder' => 'Тижневі', 'readonly' => true)); ?>
     <?php echo CHtml::label('Аудиторні', 'classes'); ?>
     <?php echo CHtml::numberField('classes', '', array('placeholder' => 'Аудиторні', 'readonly' => true)); ?>
     <?php echo $form->numberFieldRow($model, 'lectures'); ?>
     <?php echo $form->numberFieldRow($model, 'labs'); ?>
-    <?php echo $form->checkBoxRow($model,'dual_labs'); ?>
+    <?php echo $form->checkBoxRow($model, 'dual_labs'); ?>
     <?php echo $form->numberFieldRow($model, 'practs'); ?>
-    <?php echo $form->checkBoxRow($model,'dual_practice'); ?>
+    <?php echo $form->checkBoxRow($model, 'dual_practice'); ?>
     <?php echo $form->numberFieldRow($model, 'practice_weeks'); ?>
 </div>
 <div class="span5">
@@ -77,7 +79,7 @@ $this->breadcrumbs = array(
         <div class="input">
             <?php echo CHtml::label(
                 $semester + 1 . '-й семестр: ' . $weeks . ' тижнів',
-                'StudySubject_weeks_' . $semester, array('style'=>'font-weight: bold')
+                'StudySubject_weeks_' . $semester, array('style' => 'font-weight: bold')
             ); ?>
             <?php echo $form->numberField($model, "weeks[$semester]", array('placeholder' => 'годин на тиждень')); ?>
         </div>
@@ -127,22 +129,38 @@ $this->breadcrumbs = array(
         <?php echo implode(', ', $model->plan->semesters); ?>
     ];
 
-    function calcClasses() {
-        var classes = 0;
+
+    function calcClassesWeeks() {
+        var classes_weeks = 0;
         for (i = 0; i < 8; i++) {
-            if ($("#StudySubject_weeks_" + i).val())
-                classes += weeks[i] * parseInt($("#StudySubject_weeks_" + i).val());
+            var e = "#StudySubject_weeks_" + i;
+            if ($(e).val())
+                classes_weeks += weeks[i] * parseInt($(e).val());
         }
-        $("#classes").val(classes);
+        $("#classes_weeks").val(classes_weeks);
     }
 
     var flag = false;
 
     $(function () {
+        var selector = $('#StudySubject_lectures, #StudySubject_labs, #StudySubject_practs');
+
+        function calcClasses() {
+            selector.change(function () {
+                var amount = 0;
+                selector.each(function (i, e) {
+                        var val = $(e).val();
+                        if (val) amount += parseInt(val);
+                    }
+                );
+                $('#classes').val(amount);
+            })
+        }
         calcClasses();
+        calcClassesWeeks();
 
         $("input[id^='StudySubject_weeks_']").change(function () {
-            calcClasses();
+            calcClassesWeeks();
         });
 
 

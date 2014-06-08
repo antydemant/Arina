@@ -31,6 +31,28 @@ class StudyPlan extends ActiveRecord
         return parent::model($className);
     }
 
+    /**
+     * @param $id
+     * @return array
+     */
+    public static function getList($id)
+    {
+        if (isset($id)){
+            /** @var Department $department */
+            $department = Department::model()->findByAttributes(array('head_id'=>$id));
+            if (isset($department)){
+                $list = array();
+                foreach($department->specialities as $speciality){
+                    $list[$speciality->title] = CHtml::listData($speciality->studyPlans, 'id','title');
+                }
+                return $list;
+            }
+            return array();
+        } else {
+            return CHtml::listData(self::model()->findAll(),'id', 'title');
+        }
+    }
+
     public function getUnusedSubjects()
     {
         $usedSubjects = CHtml::listData($this->subjects, 'subject_id', 'id');
@@ -64,7 +86,7 @@ class StudyPlan extends ActiveRecord
      */
     public function getProvider($config = null)
     {
-        if (Yii::app()->user->checkAccess('dephead')) {
+        if (Yii::app()->user->checkAccess('dephead') && !Yii::app()->user->checkAccess('admin')) {
             $headId = Yii::app()->getUser()->identityId;
             if ($config === null) {
                 $config = array('criteria' => array());
@@ -76,9 +98,8 @@ class StudyPlan extends ActiveRecord
             $criteria->addCondition('department.head_id = :head_id');
             $criteria->params[':head_id'] = $headId;
             $config['criteria'] = $criteria;
-            return new CActiveDataProvider($this, $config);
         }
-        parent::getProvider($config);
+        return parent::getProvider($config);
     }
 
     /**
@@ -114,7 +135,8 @@ class StudyPlan extends ActiveRecord
     {
         $list = array();
         foreach ($this->subjects as $item) {
-            $name = $item->subject->getCycle($this->speciality_id)->title;
+            $cycle = $item->subject->getCycle($this->speciality_id);
+            $name = $cycle->id .' '. $cycle->title;
             if (isset($list[$name])) {
                 $list[$name][] = $item;
             } else {

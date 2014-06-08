@@ -22,6 +22,17 @@ class Teacher extends ActiveRecord
 
     }
 
+    public static function getListByCycle($id)
+    {
+        /** @var CyclicCommission|null $model */
+        $model = CyclicCommission::model()->findByPk($id);
+        if ($model) {
+            return CHtml::listData($model->teachers,'id','fullName');
+        } else {
+            return array();
+        }
+    }
+
     /**
      * @return array for dropDownList
      */
@@ -142,5 +153,13 @@ class Teacher extends ActiveRecord
         $criteria->compare('cyclic_commission_id', $this->cyclic_commission_id);
 
         return $criteria;
+    }
+
+    protected function afterSave()
+    {
+        if ($this->isNewRecord) {
+            UserGenerator::generateUser($this->id, User::TYPE_TEACHER);
+        }
+        return parent::afterSave();
     }
 }

@@ -10,6 +10,10 @@ class MainController extends Controller
 
 	public function actionView($id)
 	{
+        if(!Yii::app()->user->checkAccess('admin'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
 		));
@@ -21,6 +25,10 @@ class MainController extends Controller
 	 */
 	public function actionCreate()
 	{
+        if(!Yii::app()->user->checkAccess('admin'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
 		$model=new Settings;
 
 		// Uncomment the following line if AJAX validation is needed
@@ -45,6 +53,10 @@ class MainController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+        if(!Yii::app()->user->checkAccess('admin'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
@@ -69,6 +81,10 @@ class MainController extends Controller
 	 */
 	public function actionDelete($id)
 	{
+        if(!Yii::app()->user->checkAccess('admin'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
 		$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
@@ -81,6 +97,10 @@ class MainController extends Controller
 	 */
 	public function actionIndex()
 	{
+        if(!Yii::app()->user->checkAccess('admin'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
         $dataProvider = new CActiveDataProvider('Settings', array('criteria' => array(
             'order' => 'id',
         )));

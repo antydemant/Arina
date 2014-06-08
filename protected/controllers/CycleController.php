@@ -21,6 +21,10 @@ class CycleController extends Controller
      */
     public function actionCreate()
     {
+        if(!Yii::app()->user->checkAccess('manageSubjectCycle'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
         $model = new SubjectCycle;
 
         $this->ajaxValidation('subject-cycle-form', $model);
@@ -43,6 +47,10 @@ class CycleController extends Controller
      */
     public function actionUpdate($id)
     {
+        if(!Yii::app()->user->checkAccess('manageSubjectCycle'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
         $model = SubjectCycle::model()->loadContent($id);
 
         $this->ajaxValidation('subject-cycle-form', $model);
@@ -65,6 +73,10 @@ class CycleController extends Controller
      */
     public function actionDelete($id)
     {
+        if(!Yii::app()->user->checkAccess('manageSubjectCycle'))
+        {
+            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        }
         SubjectCycle::model()->loadContent($id)->delete();
 
         if (!isset($_GET['ajax']))

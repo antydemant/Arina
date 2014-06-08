@@ -18,6 +18,7 @@ $menu = array(
             array('label' => Yii::t('base', 'List'), 'url' => array('/teacher'),),
             array('label' => Yii::t('base', 'Cyclic commissions'), 'url' => array('/cyclicCommission')),
         )),
+        array('label' => Yii::t('base', 'Settings'), 'url' => array('/settings')),
     )),
     array('label' => Yii::t('base', 'Groups'), 'url' => array('/group')),
     array('label' => Yii::t('base', 'Study plans'), 'url' => array('/studyPlan')),
@@ -27,5 +28,4 @@ $menu = array(
         array('label' => Yii::t('base', 'Human resources'), 'url' => array('/hr')),
         array('label' => Yii::t('base', 'Students import'), 'url' => array('/import')),
     )),
-    array('label' => Yii::t('base', 'Settings'), 'url' => array('/settings')),
 );
