@@ -21,6 +21,8 @@
  * @property string $diploma_name
  * @property integer $project_hours
  * @property array $control_hours
+ * @property bool $dual_labs
+ * @property bool $dual_practice
  *
  * The followings are the available model relations:
  * @property WorkPlan $plan
@@ -140,7 +142,7 @@ class WorkSubject extends ActiveRecord
      */
     public function getClasses($semester)
     {
-        return $this->weeks[$semester]  * $this->plan->semesters[$semester];
+        return $this->weeks[$semester] * $this->plan->semesters[$semester];
     }
 
     /**
