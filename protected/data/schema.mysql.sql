@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   `admission_order_number` int(10) DEFAULT NULL,
   `admission_semester` int(11) DEFAULT NULL,
   `entry_exams` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `education_document` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `education_document` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `contract` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `math_mark` int(11) DEFAULT NULL,
   `ua_language_mark` int(11) DEFAULT NULL,

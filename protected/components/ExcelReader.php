@@ -26,27 +26,45 @@ class ExcelReader extends CComponent
         $highestColumn = $sheet->getHighestColumn();
 
         $students = array();
-        for ($row = 2; $row <= $highestRow; $row++) {
+        for ($row = 5; $row < $highestRow; $row+=2) {
             $rowData = $sheet->rangeToArray('A' . $row . ':' . $highestColumn . $row, NULL, TRUE, FALSE);
             $data = $rowData[0];
 
-            $student = new Student();
-            $student->code = trim($data[0]);
+            $group = Group::model()->findByAttributes(array(
+                'title' => $data[18],
+            ));
+
+            if ($group == null) {
+                continue;
+            }
+
+            $model = Student::model()->findByAttributes(array('sseed_id' => trim($data[0])));
+            if ($model !== NULL) {
+                $student = $model;
+            } else {
+                $student = new Student();
+                $student->sseed_id = trim($data[0]);
+            }
 
             $names = explode(' ', $data[1]);
 
             $student->last_name = $names[0];
             $student->first_name = $names[1];
             $student->middle_name = $names[2];
-            $student->gender = 0;
-            $student->birth_date = date('d.m.Y', PHPExcel_Shared_Date::ExcelToPHP($data[2]));
-            $student->admission_date = date('d.m.Y', PHPExcel_Shared_Date::ExcelToPHP($data[6]));
-            $student->admission_order_number = $data[4];
-            $group = Group::model()->findByAttributes(array(
-                'title' => $data[44],
-            ));
+            $student->gender = intval($data[6] != 'Чоловіча');
+            $student->birth_date = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($data[5]));
+            $student->admission_date = date('Y-m-d', PHPExcel_Shared_Date::ExcelToPHP($data[15]));
+            $student->admission_order_number = $data[32] + 0;
+            $student->education_document = $data[10] .' ' . $data[12] . ' ' . $data[13];
+            $student->document = $data[4];
+            $student->identification_code = $data[9];
 
             $student->group_id = $group->id;
+
+            /*if (!$student->save()) {
+                print_r($student->getErrors());
+                die();
+            }*/
 
             $student->save();
 

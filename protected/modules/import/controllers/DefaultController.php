@@ -9,7 +9,7 @@ class DefaultController extends Controller
             $model->attributes = $_POST['FileModel'];
             $temp = CUploadedFile::getInstance($model, 'file');
             $temp->saveAs('files/' . $temp->name);
-            $fileName = Yii::app()->basePath . '\\..\\public\\files\\' . $temp;
+            $fileName = Yii::app()->basePath . '/../public/files/' . $temp;
 
             $excelReader = new ExcelReader();
             $excelReader->init();

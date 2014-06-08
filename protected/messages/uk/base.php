@@ -88,4 +88,6 @@ return array(
     'Yes'=>'Так',
     'No'=>'Ні',
     'Positions' => 'Посади',
+    'Human resources' => 'Відділ кадрів',
+    'Students import' => 'Імпорт студентів з ЄДЕБО',
 );
