@@ -90,4 +90,5 @@ return array(
     'Positions' => 'Посади',
     'Human resources' => 'Відділ кадрів',
     'Students import' => 'Імпорт студентів з ЄДЕБО',
+
 );

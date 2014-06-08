@@ -1,11 +1,13 @@
 <?php
 
-class m140527_080046_create_table_employee extends CDbMigration
+class m140608_142403_create_employee_table extends CDbMigration
 {
     public function up()
     {
         $this->createTable('employee', array(
             'id' => 'pk',
+            'position_id' => 'int',
+            'participates_in_study_process' => 'bool',
             'start_date' => 'date',
             'last_name' => 'string',
             'first_name' => 'string',
@@ -13,7 +15,8 @@ class m140527_080046_create_table_employee extends CDbMigration
             'short_name' => 'string',
             'gender' => 'bool',
             'cyclic_commission_id' => 'int',
-            'birth_data' => 'date',
+            'birth_date' => 'date',
+            'nationality' => 'string',
             'education' => 'int',
             'educations_list' => 'text',
             'postgraduate_training' => 'int',
@@ -40,11 +43,17 @@ class m140527_080046_create_table_employee extends CDbMigration
             'military_suitability' => 'bool',
             'military_district_office_registration_name' => 'string',
             'military_district_office_residence_name' => 'string',
+            'professional_education' => 'text',
+            'appointments_and_transfers' => 'text',
+            'vacations' => 'text',
         ));
+
+        $this->addForeignKey('employee_position', 'employee', 'position_id', 'position', 'id');
     }
 
     public function down()
     {
+        $this->dropForeignKey('employee_position', 'employee');
         $this->dropTable('employee');
         return true;
     }
