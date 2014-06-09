@@ -2,6 +2,13 @@
 
 class DefaultController extends Controller
 {
+    public function actionView($id)
+    {
+        $this->render('view', array(
+            'model' => Employee::model()->loadContent($id),
+        ));
+    }
+
     public function actionIndex()
     {
         $model = new Employee('search');
@@ -37,6 +44,27 @@ class DefaultController extends Controller
             'model' => $model,
         ));
     }
+
+    public function actionUpdate($id)
+    {
+        /**
+         * @var $model Student
+         */
+        $model = Employee::model()->loadContent($id);
+
+        $this->ajaxValidation('student-form', $model);
+
+        if (isset($_POST['Employee'])) {
+            $model->attributes = $_POST['Employee'];
+            if ($model->save())
+                $this->redirect(array('view', 'id' => $model->id));
+        }
+
+        $this->render('update', array(
+            'model' => $model,
+        ));
+    }
+
 
     public function actionDelete($id)
     {

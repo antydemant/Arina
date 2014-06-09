@@ -213,4 +213,9 @@ class Employee extends ActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function getFullName()
+    {
+        return "$this->last_name $this->first_name $this->middle_name";
+    }
 }

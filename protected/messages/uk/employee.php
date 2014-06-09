@@ -18,6 +18,7 @@ return array(
     'First name' => 'Ім’я',
     'Middle name' => 'По батькові',
     'Short name' => 'Ім’я скорочено',
+    'Full name title' => 'Прізвище, ім’я, по батькові',
     'Gender' => 'Стать',
     'Cyclic commission id' => 'Циклова комісія',
     'Birth date' => 'Дата народження',
@@ -59,4 +60,7 @@ return array(
     'Diploma qualification' => 'Кваліфікація за дипломом (свідоцтвом)',
     'Form of study' => 'Форма навчання',
     'Academic degree, academic title' => 'Науковий ступінь, учене звання',
+    'Family members' => 'Ступінь родинного зв’язку (склад сім’ї)',
+    'Birth year' => 'Рік народження',
+
 );

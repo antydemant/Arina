@@ -33,6 +33,14 @@
 <button id="<?= $this->name ?>_remove_btn"><?= Yii::t('base', 'Remove') ?></button>
 <script>
 
+    <?php
+    if ($this->model[$this->name] !== NULL):
+    foreach (explode('|', $this->model[$this->name]) as $value):   ?>
+        $("#<?= $this->name ?>_select").append(
+            $("<option></option>").text("<?= $value ?>")
+        );
+    <?php endforeach; endif; ?>
+
     var <?= $this->name ?>_add = function () {
         var values = [];
         $("#<?= $this->name ?>_select option").each(function () {
@@ -55,7 +63,8 @@
         $("#<?= $this->name?>_input").val();
 
         $("#<?= $this->name ?>_select").append(
-            $("<option></option>").text(value.join(', ')));
+            $("<option></option>").text(value.join(', '))
+        );
 
         <?= $this->name ?>_add();
         <?= $this->name ?>_clear();

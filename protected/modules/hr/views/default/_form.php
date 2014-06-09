@@ -135,16 +135,29 @@
             ); ?>
         </div>
         <div class="span3">
-            <!--Add family states control-->
+            <!--family states control-->
             <?php $this->widget('hr.widgets.TableInput',
                 array(
                     'model' => $model,
                     'name' => 'family_data',
                     'fields' => array(
-                        'Ступінь родинного зв’язку (склад сім’ї)',
-                        'Прізвище, ім’я, по батькові',
-                        'Рік народження',
-                        'Науковий ступінь, учене звання',
+                        Yii::t('employee','Family members'),
+                        Yii::t('employee','Full name title'),
+                        Yii::t('employee','Birth year'),
+                    ),
+                )
+            ); ?>
+        </div>
+        <div class="span3">
+            <!--professional_education-->
+            <?php $this->widget('hr.widgets.TableInput',
+                array(
+                    'model' => $model,
+                    'name' => 'professional_education',
+                    'fields' => array(
+                        Yii::t('employee','Family members'),
+                        Yii::t('employee','Full name title'),
+                        Yii::t('employee','Birth year'),
                     ),
                 )
             ); ?>
