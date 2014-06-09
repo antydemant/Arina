@@ -15,9 +15,14 @@
  * @property string $projects_hours
  * @property integer $type
  * @property integer $course
+ * @property array $consult
+ * @property array $students
+ * @property array $hours
  *
  * @property StudyYear $studyYear
- *
+ * @property Group $group
+ * @property Teacher $teacher
+ * @property WorkSubject $planSubject
  */
 class Load extends ActiveRecord
 {
@@ -25,6 +30,12 @@ class Load extends ActiveRecord
     const TYPE_PRACTS = 2;
     const TYPE_LABS = 3;
 
+    //Курсові роботи проекти
+    const HOURS_PROJECT = 0; //Проектування
+    const HOURS_CHECK = 1; //Перевірка
+    const HOURS_CONTROL = 2; //Захист
+    const HOURS_WORKS = 3; //розрах. та контр. роб.
+    const HOURS_DKK = 4; //Керівництво практикою, дипломне нормоконтроль, ДКК
 
     /**
      * Returns the static model of the specified AR class.
@@ -73,7 +84,16 @@ class Load extends ActiveRecord
      */
     public function behaviors()
     {
-        return array();
+        return array(
+            'StrBehavior' => array(
+                'class' => 'application.behaviors.StrBehavior',
+                'fields' => array(
+                    'consult',
+                    'students',
+                    'hours',
+                )
+            ),
+        );
     }
 
     /**
@@ -86,18 +106,6 @@ class Load extends ActiveRecord
         );
     }
 
-    /**
-     * Retrieves a list of models based on the current search/filter conditions.
-     *
-     * Typical usecase:
-     * - Initialize the model fields with values from filter form.
-     * - Execute this method to get CActiveDataProvider instance which will filter
-     * models according to data in model fields.
-     * - Pass data provider to CGridView, CListView or any similar widget.
-     *
-     * @return CActiveDataProvider the data provider that can return the models
-     * based on the search/filter conditions.
-     */
     public function search()
     {
         $criteria = new CDbCriteria;
@@ -108,4 +116,107 @@ class Load extends ActiveRecord
             'criteria' => $criteria,
         ));
     }
+
+    /**
+     * @param int $semester
+     * @return float
+     */
+    public function getConsultation($semester)
+    {
+        $control = $this->planSubject->control[$semester];
+        return floor($this->planSubject->total[$semester] * 0.06) + ($control[WorkSubject::CONTROL_EXAM] || $control[WorkSubject::CONTROL_DPA] ? 2 : 0);
+    }
+
+    /**
+     * @param int $semester
+     * @return bool
+     */
+    public function hasExam($semester)
+    {
+        $control = $this->planSubject->control[$semester];
+        return $control[WorkSubject::CONTROL_EXAM] || $control[WorkSubject::CONTROL_DPA];
+    }
+
+    /**
+     * @param int $semester
+     * @return float
+     */
+    public function getExam($semester)
+    {
+        if (!$this->hasExam($semester))
+            return 0;
+        $control = $this->planSubject->control[$semester];
+        $k = $control[WorkSubject::CONTROL_EXAM] ? 0.33 : 0.5;
+        return floor($this->group->getStudentsCount() * $k);
+    }
+
+    /**
+     * @param int $semester
+     * @return bool
+     */
+    public function hasTest($semester)
+    {
+        $control = $this->planSubject->control[$semester];
+        return $control[WorkSubject::CONTROL_TEST];
+    }
+
+    /**
+     * @param int $semester
+     * @return int
+     */
+    public function getTest($semester)
+    {
+        if ($this->hasTest($semester))
+            return 2;
+        else return 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStudentsCount()
+    {
+        if (isset($this->students[0]))
+            return $this->students[0];
+        else return $this->group->getStudentsCount();
+    }
+
+    /**
+     * @return int
+     */
+    public function getBudgetStudentsCount()
+    {
+        if (isset($this->students[1]))
+            return $this->students[1];
+        else return $this->group->getBudgetStudentsCount();
+    }
+
+    /**
+     * @return float
+     */
+    public function getBudgetPercent()
+    {
+        return floor(($this->getBudgetStudentsCount() / $this->getStudentsCount()) * 100);
+    }
+
+    /**
+     * @return float
+     */
+    public function getContractPercent()
+    {
+        return floor(($this->getContractStudentsCount() / $this->getStudentsCount()) * 100);
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getContractStudentsCount()
+    {
+        if (isset($this->students[2]))
+            return $this->students[2];
+        else return $this->group->getContractStudentsCount();
+    }
+
+
 }

@@ -30,6 +30,14 @@
  */
 class WorkSubject extends ActiveRecord
 {
+    const CONTROL_TEST = 0;
+    const CONTROL_EXAM = 1;
+    const CONTROL_DPA = 2;
+    const CONTROL_DA = 3;
+    const CONTROL_WORK = 4;
+    const CONTROL_PROJECT = 5;
+
+
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!

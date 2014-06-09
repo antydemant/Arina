@@ -109,6 +109,9 @@ $fall['classes'] = 0;
 $fall['lectures'] = 0;
 $fall['labs'] = 0;
 $fall['practs'] = 0;
+$fall['consult'] = 0;
+$fall['exam'] = 0;
+$fall['test'] = 0;
 $fall['pay'] = 0;
 
 $spring = array();
@@ -118,6 +121,9 @@ $spring['classes'] = 0;
 $spring['lectures'] = 0;
 $spring['labs'] = 0;
 $spring['practs'] = 0;
+$spring['consult'] = 0;
+$spring['exam'] = 0;
+$spring['test'] = 0;
 $spring['pay'] = 0;
 
 $totals = array();
@@ -126,54 +132,59 @@ $totals['budget'] = 0;
 $totals['contract'] = 0;
 ?>
 
-<?php foreach ($dataProvider->getData() as $data): ?>
+<?php
+/** @var Load $data */
+foreach ($dataProvider->getData() as $data):
+    $springSemester = $data->course * 2;
+    $fallSemester = $springSemester - 1;
+    ?>
     <tr>
         <td><?php echo $data->planSubject->subject->title; ?></td>
         <td><?php echo $data->course; ?></td>
         <td><?php echo $data->group->title; ?></td>
-        <td>Студентів всього</td>
-        <td>Студентів бюджет</td>
-        <td>Студентів контракт</td>
+        <td><?php echo $data->getStudentsCount(); ?></td>
+        <td><?php echo $data->getBudgetStudentsCount(); ?></td>
+        <td><?php echo $data->getContractStudentsCount(); ?></td>
         <td>Кредитів ECTS</td>
         <td>З плану всього</td>
         <td>З плану аудиторних</td>
         <td>З плану СРС</td>
         <td>
-            <?php $total = $data->planSubject->total[$data->course * 2 - 1];
+            <?php $total = $data->planSubject->total[$fallSemester];
             $fall['total'] += $total;
             echo $total; ?>
         </td>
         <td>
             <?php
-            $selfwork = $data->planSubject->getSelfwork($data->course * 2 - 1);
+            $selfwork = $data->planSubject->getSelfwork($fallSemester);
             $fall['selfwork'] += $selfwork;
             echo $selfwork;
             ?>
         </td>
         <td>
             <?php
-            $classes = $data->planSubject->getClasses($data->course * 2 - 1);
+            $classes = $data->planSubject->getClasses($fallSemester);
             $fall['classes'] += $classes;
             echo $classes;
             ?>
         </td>
         <td>
             <?php
-            $lectures = $data->planSubject->lectures[$data->course * 2 - 1];
+            $lectures = $data->planSubject->lectures[$fallSemester];
             $fall['lectures'] += $lectures;
             echo $lectures;
             ?>
         </td>
         <td>
             <?php
-            $labs = $data->planSubject->labs[$data->course * 2 - 1];
+            $labs = $data->planSubject->labs[$fallSemester];
             $fall['labs'] += $labs;
             echo $labs;
             ?>
         </td>
         <td>
             <?php
-            $practs = $data->planSubject->practs[$data->course * 2 - 1];
+            $practs = $data->planSubject->practs[$fallSemester];
             $fall['practs'] += $practs;
             echo $practs;
             ?>
@@ -183,48 +194,73 @@ $totals['contract'] = 0;
         <td>Захист</td>
         <td>контр. роб.</td>
         <td>ДКК</td>
-        <td>Консультації</td>
-        <td>екзамен, ДПА</td>
-        <td>залік</td>
-        <td>Всього до оплати</td>
+        <td>
+            <?php
+            echo $data->consult[0];
+            $fall['consult'] += $data->consult[0];
+            ?>
+        </td>
+        <td>
+            <?php
+            echo $data->getExam($fallSemester);
+            if ($data->hasExam($fallSemester)) {
+                $fall['exam'] += $data->getExam($fallSemester);
+            }
+            ?>
+        </td>
+        <td>
+            <?php
+            if ($data->hasTest($fallSemester)) {
+                echo $data->getTest($fallSemester);
+                $fall['test'] += $data->getTest($fallSemester);
+            }
+            ?>
+        </td>
+        <td>
+            <?php
+            $pay_first = $classes + $data->consult[0] + $data->getExam($fallSemester) + $data->getTest($fallSemester);
+            echo $pay_first;
+            $fall['pay'] += $pay_first;
+            ?>
+        </td>
 
         <td>
             <?php
-            $total = $data->planSubject->total[$data->course * 2];
+            $total = $data->planSubject->total[$springSemester];
             $spring['total'] += $total;
             echo $total;?>
         </td>
         <td>
             <?php
-            $selfwork = $data->planSubject->getSelfwork($data->course * 2);
+            $selfwork = $data->planSubject->getSelfwork($springSemester);
             $spring['selfwork'] += $selfwork;
             echo $selfwork;
             ?>
         </td>
         <td>
             <?php
-            $classes = $data->planSubject->getClasses($data->course * 2);
+            $classes = $data->planSubject->getClasses($springSemester);
             $spring['classes'] += $classes;
             echo $classes;
             ?>
         </td>
         <td>
             <?php
-            $lectures = $data->planSubject->lectures[$data->course * 2];
+            $lectures = $data->planSubject->lectures[$springSemester];
             $spring['lectures'] += $lectures;
             echo $lectures;
             ?>
         </td>
         <td>
             <?php
-            $labs = $data->planSubject->labs[$data->course * 2];
+            $labs = $data->planSubject->labs[$springSemester];
             $spring['labs'] += $labs;
             echo $labs;
             ?>
         </td>
         <td>
             <?php
-            $practs = $data->planSubject->practs[$data->course * 2];
+            $practs = $data->planSubject->practs[$springSemester];
             $spring['practs'] += $practs;
             ?>
         </td>
@@ -233,14 +269,57 @@ $totals['contract'] = 0;
         <td>Захист</td>
         <td>контр. роб.</td>
         <td>ДКК</td>
-        <td>Консультації</td>
-        <td>екзамен, ДПА</td>
-        <td>залік</td>
-        <td>Всього до оплати</td>
+        <td>
+            <?php
+            echo $data->consult[1];
+            $spring['consult'] += $data->consult[1];
+            ?>
+        </td>
+        <td>
+            <?php
+            if ($data->hasExam($springSemester)) {
+                echo $data->getExam($springSemester);
+                $spring['exam'] += $data->getExam($springSemester);
+            }
+            ?>
+        </td>
+        <td>
+            <?php
+            if ($data->hasTest($springSemester)) {
+                echo $data->getTest($springSemester);
+                $spring['test'] += $data->getTest($springSemester);
+            }
+            ?>
+        </td>
+        <td>
+            <?php
+            $pay_second = $classes + $data->consult[1] + $data->getExam($springSemester) + $data->getTest($springSemester);
+            echo $pay_second;
+            $spring['pay'] += $pay_second;
+            ?>
+        </td>
 
-        <td>Всього</td>
-        <td>Бюджет</td>
-        <td>Контракт</td>
+        <td>
+            <?php
+            $all = $pay_first + $pay_second;
+            echo $all;
+            $totals['total'] += $all;
+            ?>
+        </td>
+        <td>
+            <?php
+            $budget = round($all * $data->getBudgetPercent() / 100);
+            echo $budget;
+            $totals['budget'] += $budget;
+            ?>
+        </td>
+        <td>
+            <?php
+            $contract = round($all * $data->getContractPercent() / 100);
+            echo $contract;
+            $totals['contract'] += $contract;
+            ?>
+        </td>
     </tr>
 <?php endforeach; ?>
 <tr>
@@ -251,20 +330,31 @@ $totals['contract'] = 0;
     <td><?php echo $fall['lectures']; ?></td>
     <td><?php echo $fall['labs']; ?></td>
     <td><?php echo $fall['practs']; ?></td>
-    <td>a</td>
-    <td>b</td>
-    <td>c</td>
-    <td>d</td>
-    <td colspan="4">empty</td>
+    <td>Проектування</td>
+    <td>Перевірка</td>
+    <td>Захист</td>
+    <td>контр. роб.</td>
+    <td>ДКК</td>
+    <td><?php echo $fall['consult']; ?></td>
+    <td><?php echo $fall['exam']; ?></td>
+    <td><?php echo $fall['test']; ?></td>
     <td><?php echo $fall['pay']; ?></td>
+
     <td><?php echo $spring['total']; ?></td>
     <td><?php echo $spring['selfwork']; ?></td>
     <td><?php echo $spring['classes']; ?></td>
     <td><?php echo $spring['lectures']; ?></td>
     <td><?php echo $spring['labs']; ?></td>
     <td><?php echo $spring['practs']; ?></td>
+    <td>Проектування</td>
+    <td>Перевірка</td>
+    <td>Захист</td>
+    <td>контр. роб.</td>
+    <td>ДКК</td>
+    <td><?php echo $spring['consult']; ?></td>
+    <td><?php echo $spring['exam']; ?></td>
+    <td><?php echo $spring['test']; ?></td>
     <td><?php echo $spring['pay']; ?></td>
-    <td colspan="9"></td>
 
     <td><?php echo $totals['total']; ?></td>
     <td><?php echo $totals['budget']; ?></td>

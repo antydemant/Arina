@@ -38,6 +38,33 @@ class MainController extends Controller
     }
 
     /**
+     * @param StudyYear $studyYear
+     * @param WorkSubject $subject
+     * @param Group $group
+     * @param int $course
+     * @param int $type
+     */
+    protected function getNewLoad($studyYear, $subject, $group, $course, $type)
+    {
+        $model = new Load();
+        $model->study_year_id = $studyYear->id;
+        $model->wp_subject_id = $subject->id;
+        $model->group_id = $group->id;
+        $model->type = $type;
+        $model->course = $course;
+        $consult = array();
+        $consult[0] = $model->getConsultation($course * 2 - 1);
+        $consult[1] = $model->getConsultation($course * 2);
+        $model->consult = $consult;
+        $students = array();
+        $students[0] = $group->getStudentsCount();
+        $students[1] = $group->getBudgetStudentsCount();
+        $students[2] = $group->getContractStudentsCount();
+        $model->students = $students;
+        $model->save();
+    }
+
+    /**
      * @param integer $studyYear
      */
     protected function generateLoadFor($studyYear)
@@ -48,39 +75,18 @@ class MainController extends Controller
             $groups = $plan->speciality->getGroupsByStudyYear($year->id);
             foreach ($plan->subjects as $subject) {
                 foreach ($groups as $title => $course) {
-                    $fall = $course * 2 - 1;
                     $spring = $course * 2;
+                    $fall = $spring - 1;
                     $group = Group::model()->find("title='$title'");
                     if (!empty($subject->total[$fall]) || !empty($subject->total[$spring])) {
-                        $model = new Load();
-                        $model->study_year_id = $year->id;
-                        $model->wp_subject_id = $subject->id;
-                        $model->group_id = $group->id;
-                        $model->type = Load::TYPE_LECTURES;
-                        $model->course = $course;
-                        $model->save();
-                        if ($subject->dual_practice &&
-                            (!empty($subject->practs[$fall]) || !empty($subject->practs[$spring]))
-                        ) {
-                            $model = new Load();
-                            $model->study_year_id = $year->id;
-                            $model->wp_subject_id = $subject->id;
-                            $model->group_id = $group->id;
-                            $model->course = $course;
-                            $model->type = Load::TYPE_PRACTS;
-                            $model->save();
-                        }
-                        if ($subject->dual_labs &&
-                            (!empty($subject->labs[$fall]) || !empty($subject->labs[$spring]))
-                        ) {
-                            $model = new Load();
-                            $model->study_year_id = $year->id;
-                            $model->wp_subject_id = $subject->id;
-                            $model->course = $course;
-                            $model->group_id = $group->id;
-                            $model->type = Load::TYPE_LABS;
-                            $model->save();
-                        }
+                        $this->getNewLoad($year, $subject, $group, $course, Load::TYPE_LECTURES);
+
+                        if ($subject->dual_practice && (!empty($subject->practs[$fall]) || !empty($subject->practs[$spring])))
+                            $this->getNewLoad($year, $subject, $group, $course, Load::TYPE_PRACTS);
+
+                        if ($subject->dual_labs && (!empty($subject->labs[$fall]) || !empty($subject->labs[$spring])))
+                            $this->getNewLoad($year, $subject, $group, $course, Load::TYPE_LABS);
+
                     }
                 }
             }

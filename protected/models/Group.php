@@ -165,6 +165,32 @@ class Group extends ActiveRecord
     {
         $this->curator_old = $this->curator_id;
         $this->monitor_old = $this->monitor_id;
-        return parent::afterFind();
+        parent::afterFind();
+    }
+
+    /**
+     * @return int
+     */
+    public function getStudentsCount()
+    {
+        return count($this->students);
+    }
+
+    /**
+     * @return int
+     */
+    public function getBudgetStudentsCount()
+    {
+        $command = Yii::app()->db->createCommand();
+        return $command->select('count(id)')->from('student')->where('contract=0 AND group_id=:group', array(':group' => $this->id))->queryScalar();
+    }
+
+    /**
+     * @return int
+     */
+    public function getContractStudentsCount()
+    {
+        $command = Yii::app()->db->createCommand();
+        return $command->select('count(id)')->from('student')->where('contract=1 AND group_id=:group', array(':group' => $this->id))->queryScalar();
     }
 }
