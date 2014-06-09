@@ -41,7 +41,8 @@ return CMap::mergeArray(
             'admin',
             'settings',
             'curator',
-            'import'
+            'import',
+            'load',
         ),
 
         'components' => array(
@@ -85,20 +86,20 @@ return CMap::mergeArray(
                 'class' => 'CLogRouter',
                 'routes' => array(
                     array(
-                        'class'=>'CWebLogRoute',  'levels'=>'trace, info, error, warning',
+                        'class' => 'CWebLogRoute', 'levels' => 'trace, info, error, warning',
                     ),
                     array(
-                        'class'=>'CFileLogRoute',  'levels'=>'trace, info, error, warning',
+                        'class' => 'CFileLogRoute', 'levels' => 'trace, info, error, warning',
                     ),
                 ),
             ),
-            'authManager'=>array(
-                'class'=>'CDbAuthManager',
-                'connectionID'=>'db',
+            'authManager' => array(
+                'class' => 'CDbAuthManager',
+                'connectionID' => 'db',
             ),
         ),
 
         'params' => array(),
     ),
-    require(__DIR__ . '/env/'.((YII_DEBUG)?'dev':'prod').'.php')
+    require(__DIR__ . '/env/' . ((YII_DEBUG) ? 'dev' : 'prod') . '.php')
 );
