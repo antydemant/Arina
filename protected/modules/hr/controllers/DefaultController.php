@@ -27,15 +27,7 @@ class DefaultController extends Controller
 
         if (isset($_POST['Employee'])) {
             $model->attributes = $_POST['Employee'];
-            /*if(!Yii::app()->user->checkAccess('manageStudent',
-                array(
-                    'id' => $model->group->speciality->department->head_id,
-                    'type' => User::TYPE_TEACHER,
-                )
-            ))
-            {
-                throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
-            }*/
+
             if ($model->save()) {
                 $this->redirect(array('index'));//, 'id' => $model->id));
             }
@@ -44,5 +36,14 @@ class DefaultController extends Controller
         $this->render('create', array(
             'model' => $model,
         ));
+    }
+
+    public function actionDelete($id)
+    {
+        $model = Employee::model()->loadContent($id);
+        $model->delete();
+        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        if (!isset($_GET['ajax']))
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 }

@@ -12,10 +12,12 @@
 <?php echo CHtml::activeTextArea($this->model, $this->name, array('id' => $this->name, 'style' => 'display: none')); ?>
 
 <label for="<?= $this->name ?>_input">
-    <?php
-    $label = $this->model->attributeLabels();
-    echo $label[$this->name];
-    ?>
+    <h6>
+        <?php
+        $label = $this->model->attributeLabels();
+        echo $label[$this->name];
+        ?>
+    </h6>
 </label>
 <select id="<?= $this->name ?>_select" multiple class="form-control">
 </select>
@@ -31,14 +33,19 @@
 <button id="<?= $this->name ?>_remove_btn"><?= Yii::t('base', 'Remove') ?></button>
 <script>
 
-    var <?= $this->name ?>_add = function() {
+    var <?= $this->name ?>_add = function () {
         var values = [];
         $("#<?= $this->name ?>_select option").each(function () {
             values.push($(this).text());
         });
-        alert(values.join('|'));
         $("#<?= $this->name ?>").val(values.join('|'));
-    }
+    };
+
+    var <?= $this->name ?>_clear = function () {
+        <?php foreach ($this->fields as $key => $value): ?>
+        $("#<?= $this->name ?>_field_<?= $key ?>").val('');
+        <?php endforeach;?>
+    };
 
     $("#<?= $this->name?>_add_btn").click(function (event) {
         var value = [];
@@ -51,13 +58,15 @@
             $("<option></option>").text(value.join(', ')));
 
         <?= $this->name ?>_add();
-        event.preventDefault();
-    });
-    $("#<?= $this->name?>_remove_btn").click(function (event) {
-        $("#<?= $this->name ?>_select option:selected").remove();
-        <?= $this->name ?>_add();
+        <?= $this->name ?>_clear();
         event.preventDefault();
     });
 
+    $("#<?= $this->name?>_remove_btn").click(function (event) {
+        $("#<?= $this->name ?>_select option:selected").remove();
+        <?= $this->name ?>_add();
+        <?= $this->name ?>_clear();
+        event.preventDefault();
+    });
 
 </script>
