@@ -14,6 +14,10 @@
  */
 class Subject extends ActiveRecord
 {
+
+    public $cycleId;
+    public $specialityId;
+
     /**
      * @return array for dropDownList
      */
@@ -58,7 +62,9 @@ class Subject extends ActiveRecord
     public function getCycle($specialityId)
     {
         /**@var $relation SubjectRelation */
-        $relation = SubjectRelation::model()->findByAttributes(array('speciality_id' => $specialityId, 'subject_id' => $this->id));
+        $relation = SubjectRelation::model()->findByAttributes(
+            array('speciality_id' => $specialityId, 'subject_id' => $this->id)
+        );
         return $relation->cycle;
     }
 
@@ -105,8 +111,14 @@ class Subject extends ActiveRecord
             'cycle_id' => Yii::t('base', 'Subject cycles'),
             'code' => Yii::t('base', 'Code'),
             'short_name' => Yii::t('base', 'Short name'),
-            'practice'=>Yii::t('base', 'Practice'),
+            'practice' => Yii::t('base', 'Practice'),
+            'specialityId' => 'Спеціальність',
+            'cycleId' => 'Цикл',
         );
+    }
+    public function attributeNames()
+    {
+        return CMap::mergeArray(array_keys($this->getMetaData()->columns), array('cycleId', 'specialityId'));
     }
 
     /**
@@ -127,9 +139,16 @@ class Subject extends ActiveRecord
 
         $criteria->compare('id', $this->id);
         $criteria->compare('title', $this->title, true);
+        $criteria->compare('code', $this->code, true);
+        $criteria->compare('short_name', $this->short_name, true);
+        $criteria->compare('relations.cycle_id', $this->cycleId);
+        $criteria->compare('relations.speciality_id', $this->specialityId);
+
+        $criteria->with = array('relations' => array('together' => true));
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'pagination' => array('pageSize' => 20),
         ));
     }
 
@@ -148,7 +167,9 @@ class Subject extends ActiveRecord
                     break;
                 }
             }
-            if ($continue) continue;
+            if ($continue) {
+                continue;
+            }
             $item->subject_id = $this->id;
             $item->save(false);
         }

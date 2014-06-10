@@ -1,9 +1,9 @@
 <?php
 /**
  * @var $this \SubjectController
- * @var $cycle_id
- * @var $speciality_id
  * @var $dataProvider CActiveDataProvider
+ * @var $form TbActiveForm
+ * @var $model Subject
  */
 
 $this->breadcrumbs = array(
@@ -11,18 +11,38 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Yii::t('subject', 'Create subject'), 'url' => array('create'), 'type' => BoosterHelper::TYPE_PRIMARY),
+    array(
+        'label' => Yii::t('subject', 'Create subject'),
+        'url' => array('create'),
+        'type' => BoosterHelper::TYPE_PRIMARY
+    ),
 );
 ?>
-<?php echo TbHtml::beginFormTb(TbHtml::FORM_LAYOUT_VERTICAL,$this->createUrl(''),'GET',array('id'=>'filter-form')); ?>
-<?php echo TbHtml::dropDownListControlGroup('Speciality', $speciality_id,
+
+<?php $form = $this->beginWidget(
+    BoosterHelper::FORM,
+    array('id' => 'subject-form', 'htmlOptions' => array('class' => 'well'), 'method' => 'GET')
+); ?>
+<?php echo $form->dropDownListRow(
+    $model,
+    'specialityId',
     CHtml::listData(Speciality::model()->findAll(), 'id', 'title'),
-    array('class'=>'span6','label'=>Yii::t('base','Speciality'),'empty'=>'')); ?>
-<?php echo TbHtml::dropDownListControlGroup('Cycle', $cycle_id,
+    array('class' => 'span6', 'empty' => '')
+); ?>
+<?php echo $form->dropDownListRow(
+    $model,
+    'cycleId',
     CHtml::listData(SubjectCycle::model()->findAll(), 'id', 'title'),
-    array('class'=>'span6','label'=>Yii::t('base','Cycle'),'empty'=>'')); ?>
-<?php echo TbHtml::submitButton(Yii::t('base','Filter')); ?>
-<?php echo TbHtml::endForm(); ?>
+    array('class' => 'span6', 'empty' => '')
+); ?>
+<div class="form-actions">
+    <?php echo TbHtml::submitButton(Yii::t('base', 'Filter'),array('class'=>'btn btn-primary')); ?>
+    <?php echo TbHtml::link('Скасувати', $this->createUrl('index'), array('class' => 'btn btn-info')); ?>
+</div>
+<?php $this->endWidget(); ?>
+
+
+
 
 <h2><?php echo Yii::t('subject', 'Subject list'); ?></h2>
 
@@ -37,5 +57,8 @@ $columns = array(
         'template' => '{update}{delete}',
     ),
 );
-$this->renderPartial('//tableList', array('columns' => $columns, 'provider' => $dataProvider));
+$this->renderPartial(
+    '//tableList',
+    array('columns' => $columns, 'provider' => $dataProvider, 'filter' => $model)
+);
 ?>
