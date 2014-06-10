@@ -46,12 +46,11 @@ $this->widget(
 
 ?>
 
-<h1><?php echo Yii::t("student", "View Student") . ' ' . $model->id; ?></h1>
+<h2><?php echo $model->getFullName(); ?></h2>
 
 <?php $this->widget('booster.widgets.TbDetailView', array(
     'data' => $model,
     'attributes' => array(
-        'fullName',
         array(
             'type' => 'raw',
             'name' => 'group_id',
