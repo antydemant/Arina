@@ -151,6 +151,7 @@ class DefaultController extends Controller
             array(
                 'provider' => $provider,
                 'groupName' => $groupName,
+                'group' => $group,
             )
         );
     }

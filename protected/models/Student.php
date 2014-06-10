@@ -26,7 +26,7 @@ Yii::import('application.behaviors.dateField.*');
  * @property integer $admission_semester
  * @property string $entry_exams
  * @property string $education_document
- * @property string $contract
+ * @property boolean $contract
  * @property integer $math_mark
  * @property integer $ua_language_mark
  * @property string $mother_workplace
@@ -49,6 +49,7 @@ Yii::import('application.behaviors.dateField.*');
  * @property integer $sseed_id
  * @property string $document
  * @property string $identification_code
+ * @property string $form_of_study_notes
  *
  * @property string $exemptionNames
  *
@@ -206,6 +207,7 @@ class Student extends ActiveRecord implements IDateContainable
             'sseed_id' => Yii::t('student', 'SSEED Id'),
             'document' => Yii::t('student', 'Document'),
             'identification_code' => Yii::t('student', 'Identification code'),
+            'form_of_study_notes' => Yii::t('student', 'Form of study notes'),
         );
     }
 

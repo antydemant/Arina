@@ -4,6 +4,7 @@
  * @var StudentController $this
  * @var \CActiveDataProvider $provider
  * @var string $groupName
+ * @var Group $group
  */
 ?>
 <?php
@@ -13,7 +14,11 @@ $this->breadcrumbs = array(
 );
 ?>
     <header>
-
+        <?php echo Yii::t('student','Students list') . ': '. $group->getStudentsCount();?>
+        <br>
+        <?php echo Yii::t('student','Budget students count') . ': '. $group->getBudgetStudentsCount();?>
+        <br>
+        <?php echo Yii::t('student','Contract students count') . ': '. $group->getContractStudentsCount();?>
     </header>
 <?php
 $columns = array(

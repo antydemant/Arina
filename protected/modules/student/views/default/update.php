@@ -33,6 +33,6 @@ $this->widget(
 
 ?>
 
-    <h1><?php echo Yii::t('student', 'Update Student') . ' ' . $model->id; ?></h1>
+    <h1><?php echo $model->getFullName(); ?></h1>
 
 <?php $this->renderPartial('_form', array('model' => $model)); ?>

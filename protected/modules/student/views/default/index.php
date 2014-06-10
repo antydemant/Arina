@@ -54,9 +54,10 @@ $this->widget(BoosterHelper::GRID_VIEW, array(
 
     'columns' => array(
         'code',
-        'last_name',
-        'first_name',
-        'middle_name',
+        array(
+            'name' => 'fullName',
+            'value' => '$data->getFullName()',
+        ),
         array(
             'name' => 'group_id',
             'value' => '$data->group->title',

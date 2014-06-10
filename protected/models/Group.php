@@ -182,7 +182,7 @@ class Group extends ActiveRecord
     public function getBudgetStudentsCount()
     {
         $command = Yii::app()->db->createCommand();
-        return $command->select('count(id)')->from('student')->where('contract=0 AND group_id=:group', array(':group' => $this->id))->queryScalar();
+        return $command->select('count(id)')->from('student')->where('((contract=0) OR (contract IS NULL)) AND group_id=:group', array(':group' => $this->id))->queryScalar();
     }
 
     /**

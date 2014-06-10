@@ -1,8 +1,7 @@
 <?php
 /**
- *
  * @var GroupController $this
- * @var array|\CActiveRecord|mixed|null $model
+ * @var Group $model
  */
 
 $this->breadcrumbs = array(
@@ -51,6 +50,18 @@ $this->menu = array(
     'attributes' => array(
         'title',
         array('value' => $model->curator->fullName, 'name' => 'curator_id'),
+        array(
+            'name' => Yii::t('student','Students count'),
+            'value' => $model->getStudentsCount(),
+        ),
+        array(
+            'name' => Yii::t('student','Budget students count'),
+            'value' => $model->getBudgetStudentsCount(),
+        ),
+        array(
+            'name' => Yii::t('student','Contract students count'),
+            'value' => $model->getContractStudentsCount(),
+        ),
     ),
 ));
 ?>
