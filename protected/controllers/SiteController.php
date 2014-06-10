@@ -56,6 +56,10 @@ class SiteController extends Controller
 
     public function actionTest()
     {
+
+        $auth = Yii::app()->authManager;
+        $auth->assign('dephead',10);
+        echo "ok";
         $this->render('test');
     }
 

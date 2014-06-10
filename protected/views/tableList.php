@@ -16,7 +16,7 @@ $this->widget(
         'dataProvider' => $provider,
         'filter' => $filter,
         'columns' => $columns,
-        'responsiveTable' => true,
+        'responsiveTable' => false,
         'type' => 'striped condensed bordered hover',
     )
 );

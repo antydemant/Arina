@@ -13,31 +13,34 @@ class SubjectController extends Controller
      */
     public function actionCreate()
     {
-        if(!Yii::app()->user->checkAccess('manageSubject'))
-        {
-            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        if (!Yii::app()->user->checkAccess('manageSubject')) {
+            throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
         }
         $model = new Subject;
 
         if (isset($_POST['Subject'])) {
             $model->attributes = $_POST['Subject'];
-            if ($model->save())
+            if ($model->save()) {
                 $this->redirect(array('index'));
+            }
         }
 
-        if (!Yii::app()->request->isAjaxRequest)
+        if (!Yii::app()->request->isAjaxRequest) {
             unset(Yii::app()->session['subject']);
+        }
 
-        $this->render('create', array(
-            'model' => $model,
-        ));
+        $this->render(
+            'create',
+            array(
+                'model' => $model,
+            )
+        );
     }
 
     public function actionAddRelation($id = null)
     {
-        if(!Yii::app()->user->checkAccess('manageSubject'))
-        {
-            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        if (!Yii::app()->user->checkAccess('manageSubject')) {
+            throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
         }
         if (isset($_POST['SubjectRelation'])) {
             if (!isset(Yii::app()->session['subject'])) {
@@ -73,29 +76,34 @@ class SubjectController extends Controller
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
+     * @throws CHttpException
      */
     public function actionUpdate($id)
     {
         $model = Subject::model()->loadContent($id);
 
-        if(!Yii::app()->user->checkAccess('manageSubject'))
-        {
-            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        if (!Yii::app()->user->checkAccess('manageSubject')) {
+            throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
         }
 
         $this->ajaxValidation('subject-form', $model);
 
         if (isset($_POST['Subject'])) {
             $model->attributes = $_POST['Subject'];
-            if ($model->save())
+            if ($model->save()) {
                 $this->redirect(array('index'));
+            }
         }
 
-        if (!Yii::app()->request->isAjaxRequest)
+        if (!Yii::app()->request->isAjaxRequest) {
             unset(Yii::app()->session['subject']);
-        $this->render('update', array(
-            'model' => $model,
-        ));
+        }
+        $this->render(
+            'update',
+            array(
+                'model' => $model,
+            )
+        );
     }
 
     /**
@@ -104,17 +112,18 @@ class SubjectController extends Controller
      */
     public function actionDelete($id)
     {
-        if(!Yii::app()->user->checkAccess('manageSubject'))
-        {
-            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
+        if (!Yii::app()->user->checkAccess('manageSubject')) {
+            throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
         }
         if (Yii::app()->request->isPostRequest) {
             Subject::model()->loadContent($id)->delete();
             unset(Yii::app()->session['subject']);
-            if (!isset($_GET['ajax']))
+            if (!isset($_GET['ajax'])) {
                 $this->redirect(array('index'));
-        } else
+            }
+        } else {
             throw new CHttpException(400, Yii::t('base', 'Invalid request. Please do not repeat this request again.'));
+        }
     }
 
     /**
@@ -122,30 +131,17 @@ class SubjectController extends Controller
      */
     public function actionIndex()
     {
-        $speciality_id = 0;
-        $cycle_id = 0;
-        $conditions = array();
-        $params = array();
-        if (!empty($_GET['Speciality'])) {
-            $speciality_id = $_GET['Speciality'];
-            $conditions[] = 'relations.speciality_id = :spec';
-            $params[':spec'] = $_GET['Speciality'];
+        $model = new Subject();
+        if (isset($_GET['Subject'])) {
+            $model->setAttributes($_GET['Subject'], false);
         }
-        if (!empty($_GET['Cycle'])) {
-            $cycle_id = $_GET['Cycle'];
-            $conditions[] = 'relations.cycle_id = :cycle';
-            $params[':cycle'] = $_GET['Cycle'];
-        }
-        $config = array('pagination' => array('pageSize' => 20,));
-        if (!empty($conditions)) {
-            $config['criteria'] = array('with' => array('relations' => array('together' => true)), 'params' => $params, 'condition' => '(' . implode(') AND (', $conditions) . ')');
-        }
-        $dataProvider = new CActiveDataProvider('Subject', $config);
-        $this->render('index', array(
-            'dataProvider' => $dataProvider,
-            'cycle_id' => $cycle_id,
-            'speciality_id' => $speciality_id,
-        ));
+        $this->render(
+            'index',
+            array(
+                'model' => $model,
+                'dataProvider' => $model->search(),
+            )
+        );
     }
 
     public function actionListByCycle($id)
