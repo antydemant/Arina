@@ -34,7 +34,7 @@ class DefaultController extends Controller
 
         if (isset($_POST['Employee'])) {
             $model->attributes = $_POST['Employee'];
-
+            $model->short_name = $model->getShortName();
             if ($model->save()) {
                 $this->redirect(array('index'));//, 'id' => $model->id));
             }

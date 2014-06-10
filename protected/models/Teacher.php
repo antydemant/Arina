@@ -14,7 +14,7 @@
  *
  * @property CyclicCommission $cyclicCommission
  */
-class Teacher extends ActiveRecord
+class Teacher extends Employee
 {
     public function getCyclicCommissionName()
     {
@@ -68,25 +68,14 @@ class Teacher extends ActiveRecord
         return parent::model($className);
     }
 
-    public function getFullName()
-    {
-        return trim("$this->last_name $this->first_name $this->middle_name");
-    }
-
-    public function getNameWithInitials()
-    {
-        $firstNameInitial = mb_substr($this->first_name, 0, 1, 'UTF-8');
-        $middleNameInitial = mb_substr($this->last_name, 0, 1, 'UTF-8');
-        return trim("$this->last_name {$firstNameInitial}. {$middleNameInitial}.");
-    }
 
     /**
      * @return string the associated database table name
      */
-    public function tableName()
+/*    public function tableName()
     {
         return 'teacher';
-    }
+    }*/
 
     /**
      * @return array validation rules for model attributes.
@@ -162,4 +151,11 @@ class Teacher extends ActiveRecord
         }
         return parent::afterSave();
     }
+
+    function defaultScope(){
+        return array(
+            'condition'=>"participates_in_study_process=1",
+        );
+    }
+
 }

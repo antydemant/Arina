@@ -83,4 +83,5 @@ return array(
     'Staff reductions' => 'Скорочення штатів',
     'Voluntarily' => 'За власним бажанням',
     'For absenteeism' => 'За прогули',
+    'Cyclic commission' => 'Циклова комісія',
 );

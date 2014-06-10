@@ -20,7 +20,28 @@
 
         <div class="span3">
 
-            <?php echo $form->checkBoxRow($model, 'participates_in_study_process', array()); ?>
+            <?php echo $form->checkBoxRow($model, 'participates_in_study_process', array('id'=>'participates_in_study_process')); ?>
+
+
+<div id="cyclic_commission">
+            <?php echo $form->dropDownListRow($model, 'cyclic_commission_id', CyclicCommission::getList(), array('empty' => Yii::t('teacher', 'Select cycle commission'))); ?>
+    <script>
+        $('#cyclic_commission').hide();
+        function checkParticipatesInStudyProcess(){
+            var participates_in_study_process = $('#participates_in_study_process');
+            var cyclic_commission = $('#cyclic_commission');
+            if (participates_in_study_process.prop('checked')) {
+                cyclic_commission.show('slow');
+            } else {
+                cyclic_commission.hide('slow');
+            }
+        }
+        var participates_in_study_process = $('#participates_in_study_process');
+        participates_in_study_process.change(function(){
+            checkParticipatesInStudyProcess();
+        });
+    </script>
+</div>
 
             <?php echo $form->dateFieldRow($model, 'start_date', array()); ?>
 
