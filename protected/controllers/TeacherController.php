@@ -131,6 +131,9 @@ class TeacherController extends Controller
         ) {
             throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
         }
+        $this->redirect(array('hr/default/update', 'id' => $id));
+        /*//return;
+        //return
         $this->ajaxValidation('teacher-form', $model);
 
         if (isset($_POST['Teacher'])) {
@@ -145,7 +148,7 @@ class TeacherController extends Controller
             array(
                 'model' => $model,
             )
-        );
+        );*/
     }
 
     /**

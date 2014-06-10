@@ -46,7 +46,7 @@ $this->widget(
 
 ?>
 
-<h1><?php echo Yii::t('employee', 'View employee') . ' ' . $model->id; ?></h1>
+<h1><?php echo $model->getFullName(); ?></h1>
 
 <?php $this->widget('booster.widgets.TbDetailView', array(
     'data' => $model,
