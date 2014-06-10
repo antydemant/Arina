@@ -54,18 +54,22 @@
     <div class="span3">
         <?php echo $form->dropDownListRow($model, 'subject_id',
             Subject::getListForSpeciality($model->plan->speciality_id)); ?>
-        <?php echo $form->numberFieldRow($model, 'total'); ?>
-        <?php echo CHtml::label('Тижневі', 'classes_weeks'); ?>
-        <?php echo CHtml::numberField('classes_weeks', '', array('placeholder' => 'Тижневі', 'readonly' => true)); ?>
-        <?php echo CHtml::label('Аудиторні', 'classes'); ?>
-        <?php echo CHtml::numberField('classes', '', array('placeholder' => 'Аудиторні', 'readonly' => true)); ?>
-        <?php echo $form->numberFieldRow($model, 'lectures'); ?>
-        <?php echo $form->numberFieldRow($model, 'labs'); ?>
-        <?php echo $form->checkBoxRow($model, 'dual_labs'); ?>
-        <?php echo $form->numberFieldRow($model, 'practs'); ?>
-        <?php echo $form->checkBoxRow($model, 'dual_practice'); ?>
-        <?php echo $form->numberFieldRow($model, 'practice_weeks'); ?>
+        <?php echo $form->telFieldRow($model, 'diploma_name'); ?>
+        <?php echo $form->telFieldRow($model, 'certificate_name'); ?>
     </div>
+<div class="span3">
+    <?php echo $form->numberFieldRow($model, 'total'); ?>
+    <?php echo CHtml::label('Тижневі', 'classes_weeks'); ?>
+    <?php echo CHtml::numberField('classes_weeks', '', array('placeholder' => 'Тижневі', 'readonly' => true)); ?>
+    <?php echo CHtml::label('Аудиторні', 'classes'); ?>
+    <?php echo CHtml::numberField('classes', '', array('placeholder' => 'Аудиторні', 'readonly' => true)); ?>
+    <?php echo $form->numberFieldRow($model, 'lectures'); ?>
+    <?php echo $form->numberFieldRow($model, 'labs'); ?>
+    <?php echo $form->checkBoxRow($model, 'dual_labs'); ?>
+    <?php echo $form->numberFieldRow($model, 'practs'); ?>
+    <?php echo $form->checkBoxRow($model, 'dual_practice'); ?>
+    <?php echo $form->numberFieldRow($model, 'practice_weeks'); ?>
+</div>
     <div class="span5">
         <?php foreach ($model->plan->semesters as $semester => $weeks): ?>
             <div class="input">
@@ -98,6 +102,7 @@
     <div style="clear: both"></div>
     <div class="form-actions" style="width: 300px; margin: 0 auto">
         <?php echo CHtml::submitButton('Зберегти', array('class' => 'btn btn-primary')); ?>
+        <?php echo CHtml::button('Очистити', array('type' => 'reset', 'class' => 'btn btn-danger')); ?>
         <?php echo CHtml::link('Повернутись', $this->createUrl('subjects', array('id' => $model->plan_id)), array('class' => 'btn btn-info')); ?>
     </div>
 <?php $this->endWidget(); ?>
