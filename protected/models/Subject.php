@@ -84,7 +84,7 @@ class Subject extends ActiveRecord
         return array(
             array('title', 'unique'),
             array('title, code, short_name', 'required'),
-            array('title, code, short_name', 'length', 'max' => 50),
+            array('title, code, short_name', 'length', 'max' => 255),
             array('id, title, code, short_name, practice', 'safe', 'on' => 'search'),
         );
     }
@@ -116,6 +116,10 @@ class Subject extends ActiveRecord
             'cycleId' => 'Цикл',
         );
     }
+
+    /**
+     * @return array
+     */
     public function attributeNames()
     {
         return CMap::mergeArray(array_keys($this->getMetaData()->columns), array('cycleId', 'specialityId'));
