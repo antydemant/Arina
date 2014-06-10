@@ -91,5 +91,5 @@ return array(
     'Load' => 'Навантаження',
     'Human resources' => 'Відділ кадрів',
     'Students import' => 'Імпорт студентів з ЄДЕБО',
-
+    'Other' => 'Інше',
 );
