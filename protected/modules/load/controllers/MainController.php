@@ -24,17 +24,35 @@ class MainController extends Controller
         $this->render('create');
     }
 
-    public function actionView($id)
+    /**
+     * @param integer $studyYear
+     */
+    protected function generateLoadFor($studyYear)
     {
-        $dataProvider = Load::model()->getProvider(array('criteria' => array('condition' => 'study_year_id=' . $id)));
-        $year = StudyYear::model()->loadContent($id);
-        $this->render('view', array('dataProvider' => $dataProvider, 'year' => $year));
-    }
+        /** @var StudyYear $year */
+        $year = StudyYear::model()->loadContent($studyYear);
+        foreach ($year->workPlans as $plan) {
+            $groups = $plan->speciality->getGroupsByStudyYear($year->id);
+            foreach ($plan->subjects as $subject) {
+                foreach ($groups as $title => $course) {
+                    $spring = $course * 2;
+                    $fall = $spring - 1;
+                    $group = Group::model()->find("title='$title'");
+                    if (!empty($subject->total[$fall]) || !empty($subject->total[$spring])) {
+                        $this->getNewLoad($year, $subject, $group, $course, Load::TYPE_LECTURES);
 
+                        if ($subject->dual_practice && (!empty($subject->practs[$fall]) || !empty($subject->practs[$spring]))) {
+                            $this->getNewLoad($year, $subject, $group, $course, Load::TYPE_PRACTS);
+                        }
 
-    public function actionDelete($id)
-    {
+                        if ($subject->dual_labs && (!empty($subject->labs[$fall]) || !empty($subject->labs[$spring]))) {
+                            $this->getNewLoad($year, $subject, $group, $course, Load::TYPE_LABS);
+                        }
 
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -64,33 +82,23 @@ class MainController extends Controller
         $model->save();
     }
 
-    /**
-     * @param integer $studyYear
-     */
-    protected function generateLoadFor($studyYear)
+    public function actionView($id)
     {
-        /** @var StudyYear $year */
-        $year = StudyYear::model()->loadContent($studyYear);
-        foreach ($year->workPlans as $plan) {
-            $groups = $plan->speciality->getGroupsByStudyYear($year->id);
-            foreach ($plan->subjects as $subject) {
-                foreach ($groups as $title => $course) {
-                    $spring = $course * 2;
-                    $fall = $spring - 1;
-                    $group = Group::model()->find("title='$title'");
-                    if (!empty($subject->total[$fall]) || !empty($subject->total[$spring])) {
-                        $this->getNewLoad($year, $subject, $group, $course, Load::TYPE_LECTURES);
+        $model = new Load();
 
-                        if ($subject->dual_practice && (!empty($subject->practs[$fall]) || !empty($subject->practs[$spring])))
-                            $this->getNewLoad($year, $subject, $group, $course, Load::TYPE_PRACTS);
-
-                        if ($subject->dual_labs && (!empty($subject->labs[$fall]) || !empty($subject->labs[$spring])))
-                            $this->getNewLoad($year, $subject, $group, $course, Load::TYPE_LABS);
-
-                    }
-                }
-            }
+        if (isset($_GET['Load'])) {
+            $model->attributes = $_GET['Load'];
+            $model->commissionId = $_GET['Load']['commissionId'];
         }
+
+        $year = StudyYear::model()->loadContent($id);
+        $this->render('view', array('model'=>$model, 'dataProvider' => $model->search(), 'year' => $year));
+    }
+
+    public function actionGenerate($id)
+    {
+        $this->generateLoadFor($id);
+        $this->redirect($this->createUrl('view', array('id' => $id)));
     }
 
 } 

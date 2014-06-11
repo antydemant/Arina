@@ -37,6 +37,8 @@ class Load extends ActiveRecord
     const HOURS_WORKS = 3; //розрах. та контр. роб.
     const HOURS_DKK = 4; //Керівництво практикою, дипломне нормоконтроль, ДКК
 
+    public $commissionId;
+
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -55,7 +57,6 @@ class Load extends ActiveRecord
     {
         return 'load';
     }
-
 
     /**
      * @return array validation rules for model attributes.
@@ -77,7 +78,6 @@ class Load extends ActiveRecord
             'planSubject' => array(self::BELONGS_TO, 'WorkSubject', 'wp_subject_id'),
         );
     }
-
 
     /**
      * @return array
@@ -103,6 +103,8 @@ class Load extends ActiveRecord
     {
         return array(
             'course' => 'Курс',
+            'teacher_id' => 'Викладач',
+            'commissionId' => 'Циклова комісія',
         );
     }
 
@@ -111,9 +113,15 @@ class Load extends ActiveRecord
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
+        $criteria->compare('teacher_id', $this->teacher_id);
+        $criteria->compare('planSubject.cyclic_commission_id', $this->commissionId);
+
+        $criteria->with = array('planSubject' => array('together' => true));
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'pagination' => false,
+            'sort' => array('defaultOrder' => 'course ASC'),
         ));
     }
 
@@ -124,7 +132,23 @@ class Load extends ActiveRecord
     public function getConsultation($semester)
     {
         $control = $this->planSubject->control[$semester];
-        return floor($this->planSubject->total[$semester] * 0.06) + ($control[WorkSubject::CONTROL_EXAM] || $control[WorkSubject::CONTROL_DPA] ? 2 : 0);
+        return floor(
+            $this->planSubject->total[$semester] * 0.06
+        ) + ($control[WorkSubject::CONTROL_EXAM] || $control[WorkSubject::CONTROL_DPA] ? 2 : 0);
+    }
+
+    /**
+     * @param int $semester
+     * @return float
+     */
+    public function getExam($semester)
+    {
+        if (!$this->hasExam($semester)) {
+            return 0;
+        }
+        $control = $this->planSubject->control[$semester];
+        $k = $control[WorkSubject::CONTROL_EXAM] ? 0.33 : 0.5;
+        return floor($this->group->getStudentsCount() * $k);
     }
 
     /**
@@ -139,15 +163,15 @@ class Load extends ActiveRecord
 
     /**
      * @param int $semester
-     * @return float
+     * @return int
      */
-    public function getExam($semester)
+    public function getTest($semester)
     {
-        if (!$this->hasExam($semester))
+        if ($this->hasTest($semester)) {
+            return 2;
+        } else {
             return 0;
-        $control = $this->planSubject->control[$semester];
-        $k = $control[WorkSubject::CONTROL_EXAM] ? 0.33 : 0.5;
-        return floor($this->group->getStudentsCount() * $k);
+        }
     }
 
     /**
@@ -161,14 +185,14 @@ class Load extends ActiveRecord
     }
 
     /**
-     * @param int $semester
-     * @return int
+     * @return float
      */
-    public function getTest($semester)
+    public function getBudgetPercent()
     {
-        if ($this->hasTest($semester))
-            return 2;
-        else return 0;
+        if ($this->getStudentsCount() == 0) {
+            return 0;
+        }
+        return floor(($this->getBudgetStudentsCount() / $this->getStudentsCount()) * 100);
     }
 
     /**
@@ -176,9 +200,11 @@ class Load extends ActiveRecord
      */
     public function getStudentsCount()
     {
-        if (isset($this->students[0]))
+        if (isset($this->students[0])) {
             return $this->students[0];
-        else return $this->group->getStudentsCount();
+        } else {
+            return $this->group->getStudentsCount();
+        }
     }
 
     /**
@@ -186,17 +212,11 @@ class Load extends ActiveRecord
      */
     public function getBudgetStudentsCount()
     {
-        if (isset($this->students[1]))
+        if (isset($this->students[1])) {
             return $this->students[1];
-        else return $this->group->getBudgetStudentsCount();
-    }
-
-    /**
-     * @return float
-     */
-    public function getBudgetPercent()
-    {
-        return floor(($this->getBudgetStudentsCount() / $this->getStudentsCount()) * 100);
+        } else {
+            return $this->group->getBudgetStudentsCount();
+        }
     }
 
     /**
@@ -204,18 +224,58 @@ class Load extends ActiveRecord
      */
     public function getContractPercent()
     {
+        if ($this->getStudentsCount() == 0) {
+            return 0;
+        }
         return floor(($this->getContractStudentsCount() / $this->getStudentsCount()) * 100);
     }
-
 
     /**
      * @return int
      */
     public function getContractStudentsCount()
     {
-        if (isset($this->students[2]))
+        if (isset($this->students[2])) {
             return $this->students[2];
-        else return $this->group->getContractStudentsCount();
+        } else {
+            return $this->group->getContractStudentsCount();
+        }
+    }
+
+    /**
+     * @param $semester
+     * @return string
+     */
+    public function getLectures($semester)
+    {
+        if (!$this->type == self::TYPE_LECTURES) {
+            return '';
+        }
+        return $this->planSubject->lectures[$semester];
+    }
+
+    /**
+     * @param $semester
+     * @return string
+     */
+    public function getLabs($semester)
+    {
+        if (!$this->type == self::TYPE_LABS) {
+            return '';
+        }
+        return $this->planSubject->labs[$semester];
+    }
+
+    /**
+     * @param $semester
+     * @return string
+     */
+    public function getPracts($semester)
+    {
+        if (!$this->type == self::TYPE_PRACTS) {
+            return '';
+        }
+        return $this->planSubject->practs[$semester];
     }
 
 

@@ -3,33 +3,53 @@
  * @var MainController $this
  * @var StudyYear $year
  * @var CActiveDataProvider $dataProvider
+ * @var Load $model
+ * @var TbActiveForm $form
  */
 $this->breadcrumbs = array(
     Yii::t('base', 'Load') => $this->createUrl('index'),
     $year->title
 );
+
+$this->menu = array(
+    array(
+        'label' => 'Генерувати навантаження',
+        'url' => $this->createUrl('generate', array('id' => $year->id)),
+        'type' => 'primary',
+    )
+);
 ?>
 <div class="well">
 <h2>Навантаження на <?php echo $year->title; ?> навчальний рік</h2>
-<?php echo CHtml::beginForm(); ?>
-<div>
-    <?php echo TbHtml::label('Циклова комісія', 'cycle_id'); ?>
-    <?php echo TbHtml::dropDownList('cycle_id', '', CyclicCommission::getList(), array(
+
+<?php $form = $this->beginWidget(BoosterHelper::FORM, array('id' => 'load-filter-form', 'method' => 'GET')); ?>
+<?php echo $form->dropDownListRow(
+    $model,
+    'commissionId',
+    CyclicCommission::getList(),
+    array(
         'class' => 'span6',
         'empty' => '',
         'ajax' => array(
             'type' => 'GET',
             'url' => $this->createUrl('/teacher/listByCycle'), //url to call.
-            'update' => '#teacher_id',
+            'update' => '#Load_teacher_id',
             'data' => array('id' => 'js:this.value'),
-        ))); ?>
-    <?php echo TbHtml::label('Викладач', 'teacher_id'); ?>
-    <?php echo TbHtml::dropDownList('teacher_id', '', array(), array('class' => 'span6')); ?>
-    <br/>
-    <?php echo TbHtml::submitButton('Фільтрувати'); ?>
+        )
+    )
+); ?>
+<?php echo $form->dropDownListRow($model, 'teacher_id', array(), array('empty' => '', 'class' => 'span6')); ?>
+<div class="form-actions">
+    <?php echo TbHtml::submitButton('Фільтрувати', array('class'=>'btn-success')); ?>
+    <?php echo TbHtml::link(
+        'Скасувати фільтр',
+        $this->createUrl('view', array('id' => $year->id)),
+        array('class' => 'btn btn-danger')
+    ); ?>
 </div>
-<?php echo CHtml::endForm(); ?>
+<?php $this->endWidget(); ?>
 <hr/>
+
 <div class="tab-content">
 <table class="table table-bordered">
 <tr>
@@ -170,15 +190,15 @@ foreach ($dataProvider->getData() as $data):
         </td>
         <td>
             <?php
-            $lectures = $data->planSubject->lectures[$fallSemester];
-            $fall['lectures'] += $lectures;
+            $lectures = $data->getLectures($fallSemester);
+            $fall['lectures'] += intval($lectures);
             echo $lectures;
             ?>
         </td>
         <td>
             <?php
-            $labs = $data->planSubject->labs[$fallSemester];
-            $fall['labs'] += $labs;
+            $labs = $data->getPracts($fallSemester);
+            $fall['labs'] += intval($labs);
             echo $labs;
             ?>
         </td>
@@ -246,22 +266,22 @@ foreach ($dataProvider->getData() as $data):
         </td>
         <td>
             <?php
-            $lectures = $data->planSubject->lectures[$springSemester];
-            $spring['lectures'] += $lectures;
+            $lectures = $data->getLectures($springSemester);
+            $spring['lectures'] += intval($lectures);
             echo $lectures;
             ?>
         </td>
         <td>
             <?php
-            $labs = $data->planSubject->labs[$springSemester];
-            $spring['labs'] += $labs;
+            $labs = $data->getLabs($springSemester);
+            $spring['labs'] += intval($labs);
             echo $labs;
             ?>
         </td>
         <td>
             <?php
-            $practs = $data->planSubject->practs[$springSemester];
-            $spring['practs'] += $practs;
+            $practs = $data->getPracts($springSemester);
+            $spring['practs'] += intval($practs);
             ?>
         </td>
         <td>Проектування</td>
@@ -293,7 +313,9 @@ foreach ($dataProvider->getData() as $data):
         </td>
         <td>
             <?php
-            $pay_second = $classes + $data->consult[1] + $data->getExam($springSemester) + $data->getTest($springSemester);
+            $pay_second = $classes + $data->consult[1] + $data->getExam($springSemester) + $data->getTest(
+                    $springSemester
+                );
             echo $pay_second;
             $spring['pay'] += $pay_second;
             ?>
