@@ -74,8 +74,8 @@ switch ($course) {
     <?php foreach ($model->subjects as $subject): ?>
         <?php if ($subject->presentIn($course)): ?>
             <tr>
-                <td><?php echo $subject->subject->title ? $subject->subject->title : $subject->subject_id; ?>:
-                    (<?php echo array_sum($subject->total); ?> годин)
+                <td><?php echo isset($subject->subject) ? $subject->subject->title : $subject->subject_id; ?>:
+                    (<?php echo array_sum(isset($subject->subject) ? $subject->total : array()); ?> годин)
                 </td>
 
                 <td><?php echo $subject->total[$fall];
