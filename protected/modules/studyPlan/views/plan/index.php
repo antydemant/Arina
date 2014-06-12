@@ -10,6 +10,7 @@ $this->breadcrumbs = array(
 
 <?php $this->widget(BoosterHelper::GRID_VIEW, array(
     'dataProvider' => $dataProvider,
+    'responsiveTable' => false,
     'columns' => array(
         array(
             'name' => 'speciality.title',
