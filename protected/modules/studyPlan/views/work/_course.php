@@ -28,7 +28,7 @@ switch ($course) {
 ?>
 <table class="table table-bordered">
     <tr>
-        <th></th>
+        <th rowspan="2"></th>
         <th rowspan="2" style="vertical-align: top">Предмет</th>
         <th colspan="8">Осінній семестр: <?php echo $model->semesters[$fall]; ?> тижнів</th>
         <th colspan="8">Веснянний семестр: <?php echo $model->semesters[$spring]; ?> тижнів</th>
