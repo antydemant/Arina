@@ -74,7 +74,9 @@ switch ($course) {
     <?php foreach ($model->subjects as $subject): ?>
         <?php if ($subject->presentIn($course)): ?>
             <tr>
-                <td><?php echo $subject->subject->title; ?>: (<?php echo array_sum($subject->total); ?> годин)</td>
+                <td><?php echo $subject->subject->title ? $subject->subject->title : $subject->subject_id; ?>:
+                    (<?php echo array_sum($subject->total); ?> годин)
+                </td>
 
                 <td><?php echo $subject->total[$fall];
                     $fallHours['total'] += $subject->total[$fall]; ?></td>
@@ -88,7 +90,7 @@ switch ($course) {
                     $fallHours['labs'] += $subject->labs[$fall]; ?></td>
                 <td><?php echo $subject->getSelfWork($fall);
                     $fallHours['selfwork'] += $subject->getSelfwork($fall); ?></td>
-                <td><?php echo ($subject->control[$fall][4] || $subject->control[$fall][5]) ? $subject->project_hours: '';
+                <td><?php echo ($subject->control[$fall][4] || $subject->control[$fall][5]) ? $subject->project_hours : '';
                     $fallHours['project'] += $subject->project_hours; ?></td>
                 <td><?php echo $subject->weeks[$fall];
                     $fallHours['weeks'] += $subject->weeks[$fall]; ?></td>
@@ -105,7 +107,7 @@ switch ($course) {
                     $springHours['labs'] += $subject->labs[$spring]; ?></td>
                 <td><?php echo $subject->getSelfWork($spring);
                     $springHours['selfwork'] += $subject->getSelfwork($spring); ?></td>
-                <td><?php echo ($subject->control[$spring][4] || $subject->control[$spring][5]) ? $subject->project_hours: '';
+                <td><?php echo ($subject->control[$spring][4] || $subject->control[$spring][5]) ? $subject->project_hours : '';
                     $springHours['project'] += $subject->project_hours; ?></td>
                 <td><?php echo $subject->weeks[$spring];
                     $springHours['weeks'] += $subject->weeks[$spring]; ?></td>
