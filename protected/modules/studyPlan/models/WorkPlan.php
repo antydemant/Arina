@@ -164,6 +164,7 @@ class WorkPlan extends ActiveRecord
         $warnings = array();
         foreach ($this->subjects as $subject) {
             if (abs(array_sum($subject->total) - $subject->control_hours['total']) > self::HOURS_DIFF) {
+                if (isset($subject->subject))
                 $warnings[] = 'Предмет "' . $subject->subject->title . '" за загальною кількістю годин відрізняється від навчального плану більше ніж на ' . self::HOURS_DIFF . ' годин';
             }
         }
