@@ -78,6 +78,14 @@ switch ($course) {
                     (<?php echo array_sum(isset($subject->subject) ? $subject->total : array()); ?> годин)
                 </td>
 
+                <td><?php echo CHtml::link(
+                        'редагувати',
+                        $this->createUrl('editSubject', array('id' => $subject->id))
+                    ); ?>
+                    <?php echo CHtml::link(
+                        'видалити',
+                        $this->createUrl('deleteSubject', array('id' => $subject->id))
+                    ) ?></td>
                 <td><?php echo $subject->total[$fall];
                     $fallHours['total'] += $subject->total[$fall]; ?></td>
                 <td><?php echo $subject->getClasses($fall);
