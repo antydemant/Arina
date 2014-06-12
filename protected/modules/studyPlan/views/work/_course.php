@@ -28,6 +28,7 @@ switch ($course) {
 ?>
 <table class="table table-bordered">
     <tr>
+        <th></th>
         <th rowspan="2" style="vertical-align: top">Предмет</th>
         <th colspan="8">Осінній семестр: <?php echo $model->semesters[$fall]; ?> тижнів</th>
         <th colspan="8">Веснянний семестр: <?php echo $model->semesters[$spring]; ?> тижнів</th>
@@ -74,10 +75,6 @@ switch ($course) {
     <?php foreach ($model->subjects as $subject): ?>
         <?php if ($subject->presentIn($course)): ?>
             <tr>
-                <td><?php echo isset($subject->subject) ? $subject->subject->title : $subject->subject_id; ?>:
-                    (<?php echo array_sum(isset($subject->subject) ? $subject->total : array()); ?> годин)
-                </td>
-
                 <td><?php echo CHtml::link(
                         'редагувати',
                         $this->createUrl('editSubject', array('id' => $subject->id))
@@ -86,6 +83,10 @@ switch ($course) {
                         'видалити',
                         $this->createUrl('deleteSubject', array('id' => $subject->id))
                     ) ?></td>
+                <td><?php echo isset($subject->subject) ? $subject->subject->title : $subject->subject_id; ?>:
+                    (<?php echo array_sum(isset($subject->subject) ? $subject->total : array()); ?> годин)
+                </td>
+
                 <td><?php echo $subject->total[$fall];
                     $fallHours['total'] += $subject->total[$fall]; ?></td>
                 <td><?php echo $subject->getClasses($fall);
