@@ -31,7 +31,6 @@ return CMap::mergeArray(
             'booster.components.*',
             'booster.helpers.*'
         ),
-
         'modules' => array(
             'studyPlan',
             'journal',
@@ -44,7 +43,6 @@ return CMap::mergeArray(
             'import',
             'load',
         ),
-
         'components' => array(
             'excel' => array(
                 'class' => 'application.components.ExcelMaker',
