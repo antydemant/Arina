@@ -58,3 +58,14 @@ html[xmlns] .clear {
 * html .clear {
     height: 1%;
 }
+
+.label-width {
+    min-width: 300px;
+    padding: 0;
+    margin-right: 20px;
+}
+
+.central-header {
+    width: 300px;
+    margin: 0 auto;
+}

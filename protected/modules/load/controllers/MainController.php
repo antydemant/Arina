@@ -31,6 +31,10 @@ class MainController extends Controller
     {
         /** @var StudyYear $year */
         $year = StudyYear::model()->loadContent($studyYear);
+
+        $command = Yii::app()->db->createCommand();
+        $command->delete('load', 'study_year_id=' . $studyYear);
+
         foreach ($year->workPlans as $plan) {
             $groups = $plan->speciality->getGroupsByStudyYear($year->id);
             foreach ($plan->subjects as $subject) {
@@ -71,8 +75,8 @@ class MainController extends Controller
         $model->type = $type;
         $model->course = $course;
         $consult = array();
-        $consult[0] = $model->getConsultation($course * 2 - 1);
-        $consult[1] = $model->getConsultation($course * 2);
+        $consult[0] = $model->calcConsultation($course * 2 - 1);
+        $consult[1] = $model->calcConsultation($course * 2);
         $model->consult = $consult;
         $students = array();
         $students[0] = $group->getStudentsCount();
@@ -82,17 +86,32 @@ class MainController extends Controller
         $model->save();
     }
 
+    public function actionUpdate($id)
+    {
+        /** @var Load $model */
+        $model = Load::model()->loadContent($id);
+
+        if (isset($_POST['Load'])) {
+            $model->setAttributes($_POST['Load'], false);
+            if ($model->save()) {
+                $this->redirect($this->createUrl('view', array('id' => $model->study_year_id)));
+            }
+        }
+
+        $this->render('update', array('model' => $model));
+    }
+
     public function actionView($id)
     {
         $model = new Load();
 
         if (isset($_GET['Load'])) {
-            $model->attributes = $_GET['Load'];
+            $model->setAttributes($_GET['Load'], false);
             $model->commissionId = $_GET['Load']['commissionId'];
         }
 
         $year = StudyYear::model()->loadContent($id);
-        $this->render('view', array('model'=>$model, 'dataProvider' => $model->search(), 'year' => $year));
+        $this->render('view', array('model' => $model, 'dataProvider' => $model->search(), 'year' => $year));
     }
 
     public function actionGenerate($id)

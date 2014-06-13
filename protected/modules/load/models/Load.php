@@ -12,12 +12,12 @@
  * @property integer $teacher_id
  * @property integer $group_id
  * @property integer $wp_subject_id
- * @property string $projects_hours
  * @property integer $type
  * @property integer $course
  * @property array $consult
  * @property array $students
- * @property array $hours
+ * @property array $fall_hours
+ * @property array $spring_hours
  *
  * @property StudyYear $studyYear
  * @property Group $group
@@ -29,14 +29,12 @@ class Load extends ActiveRecord
     const TYPE_LECTURES = 1;
     const TYPE_PRACTS = 2;
     const TYPE_LABS = 3;
-
+    const HOURS_WORKS = 0; //розрах. та контр. роб.
+    const HOURS_DKK = 1; //Керівництво практикою, дипломне нормоконтроль, ДКК
     //Курсові роботи проекти
-    const HOURS_PROJECT = 0; //Проектування
-    const HOURS_CHECK = 1; //Перевірка
-    const HOURS_CONTROL = 2; //Захист
-    const HOURS_WORKS = 3; //розрах. та контр. роб.
-    const HOURS_DKK = 4; //Керівництво практикою, дипломне нормоконтроль, ДКК
-
+    const HOURS_PROJECT = 2; //Проектування
+    const HOURS_CHECK = 3; //Перевірка
+    const HOURS_CONTROL = 4; //Захист
     public $commissionId;
 
     /**
@@ -63,7 +61,10 @@ class Load extends ActiveRecord
      */
     public function rules()
     {
-        return array();
+        return array(
+            array('fall_hours, spring_hours', 'default', 'value' => array('', '', '', '', '')),
+            array('consult', 'validateConsultation'),
+        );
     }
 
     /**
@@ -90,7 +91,8 @@ class Load extends ActiveRecord
                 'fields' => array(
                     'consult',
                     'students',
-                    'hours',
+                    'fall_hours',
+                    'spring_hours',
                 )
             ),
         );
@@ -105,6 +107,12 @@ class Load extends ActiveRecord
             'course' => 'Курс',
             'teacher_id' => 'Викладач',
             'commissionId' => 'Циклова комісія',
+            'fall_hours[0]' => 'Розрахункові та контрольні роботи',
+            'fall_hours[1]' => 'Керівництво практикою, дипломне нормоконтроль, ДКК',
+            'spring_hours[0]' => 'Розрахункові та контрольні роботи',
+            'spring_hours[1]' => 'Керівництво практикою, дипломне нормоконтроль, ДКК',
+            'consult[0]' => 'Консультації',
+            'consult[1]' => 'Консультації',
         );
     }
 
@@ -123,65 +131,6 @@ class Load extends ActiveRecord
             'pagination' => false,
             'sort' => array('defaultOrder' => 'course ASC'),
         ));
-    }
-
-    /**
-     * @param int $semester
-     * @return float
-     */
-    public function getConsultation($semester)
-    {
-        $control = $this->planSubject->control[$semester];
-        return floor(
-            $this->planSubject->total[$semester] * 0.06
-        ) + ($control[WorkSubject::CONTROL_EXAM] || $control[WorkSubject::CONTROL_DPA] ? 2 : 0);
-    }
-
-    /**
-     * @param int $semester
-     * @return float
-     */
-    public function getExam($semester)
-    {
-        if (!$this->hasExam($semester)) {
-            return 0;
-        }
-        $control = $this->planSubject->control[$semester];
-        $k = $control[WorkSubject::CONTROL_EXAM] ? 0.33 : 0.5;
-        return floor($this->group->getStudentsCount() * $k);
-    }
-
-    /**
-     * @param int $semester
-     * @return bool
-     */
-    public function hasExam($semester)
-    {
-        $control = $this->planSubject->control[$semester];
-        return $control[WorkSubject::CONTROL_EXAM] || $control[WorkSubject::CONTROL_DPA];
-    }
-
-    /**
-     * @param int $semester
-     * @return int
-     */
-    public function getTest($semester)
-    {
-        if ($this->hasTest($semester)) {
-            return 2;
-        } else {
-            return 0;
-        }
-    }
-
-    /**
-     * @param int $semester
-     * @return bool
-     */
-    public function hasTest($semester)
-    {
-        $control = $this->planSubject->control[$semester];
-        return $control[WorkSubject::CONTROL_TEST];
     }
 
     /**
@@ -267,7 +216,7 @@ class Load extends ActiveRecord
     }
 
     /**
-     * @param $semester
+     * @param int $semester
      * @return string
      */
     public function getPracts($semester)
@@ -278,5 +227,211 @@ class Load extends ActiveRecord
         return $this->planSubject->practs[$semester];
     }
 
+    /**
+     * @param int $semester
+     * @return string
+     */
+    public function getControlWorks($semester)
+    {
+        if ($semester & 1) {
+            return isset($this->fall_hours[self::HOURS_WORKS]) ? $this->fall_hours[self::HOURS_WORKS] : '';
+        } else {
+            return isset($this->spring_hours[self::HOURS_WORKS]) ? $this->spring_hours[self::HOURS_WORKS] : '';
+        }
+    }
+
+    /**
+     * @param $semester
+     * @return string
+     */
+    public function getDkk($semester)
+    {
+        if ($semester & 1) {
+            return isset($this->fall_hours[self::HOURS_DKK]) ? $this->fall_hours[self::HOURS_DKK] : '';
+        } else {
+            return isset($this->spring_hours[self::HOURS_DKK]) ? $this->spring_hours[self::HOURS_DKK] : '';
+        }
+    }
+
+    /**
+     * @param int $semester
+     * @return string
+     */
+    public function getTotal($semester)
+    {
+        $total = $this->planSubject->total[$semester];
+        return !empty($total) ? $total : '';
+    }
+
+    /**
+     * @param int $semester
+     * @return string
+     */
+    public function getSelfwork($semester)
+    {
+        $selfwork = $this->planSubject->getSelfwork($semester);
+        return !empty($selfwork) ? $selfwork : '';
+    }
+
+    /**
+     * @param int $semester
+     * @return int
+     */
+    public function getPay($semester)
+    {
+        return intval($this->getClasses($semester)) + intval($this->getProject($semester)) +
+        intval($this->getCheck($semester)) + intval($this->getControl($semester)) +
+        intval($this->getConsultation($semester)) +
+        intval($this->getExam($semester)) + intval($this->getTest($semester));
+    }
+
+    /**
+     * @param int $semester
+     * @return string
+     */
+    public function getClasses($semester)
+    {
+        $classes = $this->planSubject->getClasses($semester);
+        return !empty($classes) ? $classes : '';
+    }
+
+    /**
+     * @param int $semester
+     * @return string
+     */
+    public function getProject($semester)
+    {
+        if ($semester & 1) {
+            $project = $this->fall_hours[self::HOURS_PROJECT];
+        } else {
+            $project = $this->spring_hours[self::HOURS_PROJECT];
+        }
+        return !empty($project) ? $project : '';
+    }
+
+    /**
+     * @param int $semester
+     * @return string
+     */
+    public function getCheck($semester)
+    {
+        if ($semester & 1) {
+            $check = $this->fall_hours[self::HOURS_CHECK];
+        } else {
+            $check = $this->spring_hours[self::HOURS_CHECK];
+        }
+        return !empty($check) ? $check : '';
+    }
+
+    /**
+     * @param int $semester
+     * @return string
+     */
+    public function getControl($semester)
+    {
+        if ($semester & 1) {
+            $control = $this->fall_hours[self::HOURS_CONTROL];
+        } else {
+            $control = $this->fall_hours[self::HOURS_CONTROL];
+        }
+        return !empty($control) ? $control : '';
+    }
+
+    /**
+     * @param int $semester
+     * @return float
+     */
+    public function getConsultation($semester)
+    {
+        if ($semester & 1) {
+            $consult = $this->consult[0];
+        } else {
+            $consult = $this->consult[1];
+        }
+        return isset($consult) ? $consult : $this->calcConsultation($semester);
+    }
+
+    /**
+     * @param int $semester
+     * @return float
+     */
+    public  function calcConsultation($semester)
+    {
+        $control = $this->planSubject->control[$semester];
+        return floor(
+            $this->planSubject->total[$semester] * 0.06
+        ) + ($control[WorkSubject::CONTROL_EXAM] || $control[WorkSubject::CONTROL_DPA] ? 2 : 0);
+    }
+
+    /**
+     * @param int $semester
+     * @return float
+     */
+    public function getExam($semester)
+    {
+        $control = $this->planSubject->control[$semester];
+        if (!$control[WorkSubject::CONTROL_EXAM] && !$control[WorkSubject::CONTROL_DPA]) {
+            return 0;
+        }
+        $k = $control[WorkSubject::CONTROL_EXAM] ? 0.33 : 0.5;
+        return floor($this->group->getStudentsCount() * $k);
+    }
+
+    /**
+     * @param int $semester
+     * @return int
+     */
+    public function getTest($semester)
+    {
+        $control = $this->planSubject->control[$semester];
+        if ($control[WorkSubject::CONTROL_TEST]) {
+            return 2;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getPlanTotal()
+    {
+        $spring = $this->course * 2;
+        $fall = $spring - 1;
+        return $this->planSubject->total[$fall] + $this->planSubject->total[$spring];
+    }
+
+    /**
+     * @return int
+     */
+    public function getPlanClasses()
+    {
+        $spring = $this->course * 2;
+        $fall = $spring - 1;
+        return $this->planSubject->getClasses($fall) + $this->planSubject->getClasses($spring);
+    }
+
+    /**
+     * @return int
+     */
+    public function getPlanSelfwork()
+    {
+        $spring = $this->course * 2;
+        $fall = $spring - 1;
+        return $this->planSubject->getSelfwork($fall) + $this->planSubject->getSelfwork($spring);
+    }
+
+
+    public function validateConsultation()
+    {
+        if (!$this->hasErrors()) {
+            $spring = $this->course * 2;
+            $fall = $spring - 1;
+            if ($this->consult[0] > $this->calcConsultation($fall))
+                $this->addError('consult[0]', 'Кількість консультацій перевищує максимальну');
+            if ($this->consult[1] > $this->calcConsultation($spring))
+                $this->addError('consult[1]', 'Кількість консультацій перевищує максимальну');
+        }
+    }
 
 }
