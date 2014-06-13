@@ -120,4 +120,18 @@ class MainController extends Controller
         $this->redirect($this->createUrl('view', array('id' => $id)));
     }
 
+    public function actionProject($id)
+    {
+        $model = new Load();
+        $model->study_year_id = $id;
+
+        if (isset($_POST['Load'])) {
+            $model->setAttributes($_POST['Load'], false);
+            if ($model->save()) {
+                $this->redirect($this->createUrl('view', array('id' => $id)));
+            }
+        }
+
+        $this->render('project', array('model' => $model));
+    }
 } 

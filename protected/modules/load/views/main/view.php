@@ -16,7 +16,23 @@ $this->menu = array(
         'label' => 'Генерувати навантаження',
         'url' => $this->createUrl('generate', array('id' => $year->id)),
         'type' => 'primary',
-    )
+    ),
+    array(
+        'label' => 'Розподілити курсові роботи, проекти',
+        'url' => $this->createUrl('project', array('id' => $year->id)),
+        'type' => 'info'
+    ),
+);
+Yii::app()->clientScript->registerScript(
+    'load-buttons',
+    '
+       function toggleSection(section, sender) {
+           $("."+section).toggle();
+           $(sender).toggleClass("btn-info");
+           $(sender).toggleClass("btn-warning");
+       }
+   ',
+    CClientScript::POS_END
 );
 ?>
 <div class="well">
@@ -50,10 +66,10 @@ $this->menu = array(
 <?php $this->endWidget(); ?>
 <hr/>
 
-<div>
-    <button onclick="$('.general').toggle();" class="btn">General</button>
-    <button onclick="$('.fall').toggle();" class="btn">Fall</button>
-    <button onclick="$('.spring').toggle();" class="btn">Spring</button>
+<div class="form-actions">
+    <button onclick="toggleSection('general', this)" class="btn btn-info">Загальні дані</button>
+    <button onclick="toggleSection('fall', this)" class="btn btn-info">Осінній семестр</button>
+    <button onclick="toggleSection('spring', this)" class="btn btn-info">Весняний семестр</button>
 </div>
 
 <div class="tab-content">
