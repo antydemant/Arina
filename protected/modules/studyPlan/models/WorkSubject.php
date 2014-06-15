@@ -159,30 +159,47 @@ class WorkSubject extends ActiveRecord
      */
     public function presentIn($course)
     {
-        switch ($course) {
-            case 1:
-                $fall = 0;
-                $spring = 1;
-                break;
-            case 2:
-                $fall = 2;
-                $spring = 3;
-                break;
-            case 3:
-                $fall = 4;
-                $spring = 5;
-                break;
-            case 4:
-                $fall = 6;
-                $spring = 7;
-                break;
-            default:
-                $fall = 0;
-                $spring = 1;
-        }
+        $spring = $course * 2;
+        $fall = $spring - 1;
         return !empty($this->total[$fall]) ||
         !empty($this->weeks[$fall]) ||
         !empty($this->total[$spring]) ||
         !empty($this->weeks[$spring]);
     }
+
+    /**
+     * @return bool
+     */
+    public function hasProject()
+    {
+        for ($i = 0; $i < count($this->control); $i++)
+            if ($this->control[$i][self::CONTROL_PROJECT] || $this->control[$i][self::CONTROL_WORK])
+                return true;
+
+        return false;
+    }
+
+    /**
+     * @param int $year
+     * @param bool $onlyProjects
+     * @return array
+     */
+    public static function getListByYear($year, $onlyProjects = false)
+    {
+        /** @var StudyYear $model */
+        $model = StudyYear::model()->loadContent($year);
+        $subjects = array();
+
+        if ($onlyProjects) {
+            foreach ($model->workPlans as $plan)
+                foreach ($plan->subjects as $subject)
+                    if ($subject->hasProject())
+                        $subjects[] = $subject;
+        } else {
+            foreach ($model->workPlans as $plan)
+                $subjects = array_merge($subjects, $plan->subjects);
+        }
+        return CHtml::listData($subjects, 'id', 'subject.title');
+    }
+
 } 

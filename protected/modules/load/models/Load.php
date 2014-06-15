@@ -29,13 +29,22 @@ class Load extends ActiveRecord
     const TYPE_LECTURES = 1;
     const TYPE_PRACTS = 2;
     const TYPE_LABS = 3;
+    const TYPE_PROJECT = 4;
+
     const HOURS_WORKS = 0; //розрах. та контр. роб.
     const HOURS_DKK = 1; //Керівництво практикою, дипломне нормоконтроль, ДКК
     //Курсові роботи проекти
     const HOURS_PROJECT = 2; //Проектування
     const HOURS_CHECK = 3; //Перевірка
     const HOURS_CONTROL = 4; //Захист
+
+    protected $WORK_RATE = array(1, 1, 1);
+    protected $PROJECT_RATE = array(2, 1, 1);
+    protected $DIPLOMA_RATE = array(4, 4, 4);
+
     public $commissionId;
+
+    public $workType;
 
     /**
      * Returns the static model of the specified AR class.
@@ -113,6 +122,12 @@ class Load extends ActiveRecord
             'spring_hours[1]' => 'Керівництво практикою, дипломне нормоконтроль, ДКК',
             'consult[0]' => 'Консультації',
             'consult[1]' => 'Консультації',
+            'wp_subject_id' => 'Предмет',
+            'students[0]' => 'Кількість студентів всього',
+            'students[1]' => 'Кількість студентів бюджет',
+            'students[2]' => 'Кількість студентів контракт',
+            'workType' => 'Тип проекту',
+            'group_id' => 'Група',
         );
     }
 
@@ -197,7 +212,7 @@ class Load extends ActiveRecord
      */
     public function getLectures($semester)
     {
-        if (!$this->type == self::TYPE_LECTURES) {
+        if ($this->type != self::TYPE_LECTURES) {
             return '';
         }
         return $this->planSubject->lectures[$semester];
@@ -209,7 +224,7 @@ class Load extends ActiveRecord
      */
     public function getLabs($semester)
     {
-        if (!$this->type == self::TYPE_LABS) {
+        if ($this->type != self::TYPE_LABS) {
             return '';
         }
         return $this->planSubject->labs[$semester];
@@ -221,7 +236,7 @@ class Load extends ActiveRecord
      */
     public function getPracts($semester)
     {
-        if (!$this->type == self::TYPE_PRACTS) {
+        if ($this->type != self::TYPE_PRACTS) {
             return '';
         }
         return $this->planSubject->practs[$semester];
@@ -233,6 +248,7 @@ class Load extends ActiveRecord
      */
     public function getControlWorks($semester)
     {
+
         if ($semester & 1) {
             return isset($this->fall_hours[self::HOURS_WORKS]) ? $this->fall_hours[self::HOURS_WORKS] : '';
         } else {
@@ -259,6 +275,7 @@ class Load extends ActiveRecord
      */
     public function getTotal($semester)
     {
+        if ($this->type == self::TYPE_PROJECT) return '';
         $total = $this->planSubject->total[$semester];
         return !empty($total) ? $total : '';
     }
@@ -269,6 +286,7 @@ class Load extends ActiveRecord
      */
     public function getSelfwork($semester)
     {
+        if ($this->type == self::TYPE_PROJECT) return '';
         $selfwork = $this->planSubject->getSelfwork($semester);
         return !empty($selfwork) ? $selfwork : '';
     }
@@ -291,6 +309,7 @@ class Load extends ActiveRecord
      */
     public function getClasses($semester)
     {
+        if ($this->type == self::TYPE_PROJECT) return '';
         $classes = $this->planSubject->getClasses($semester);
         return !empty($classes) ? $classes : '';
     }
@@ -332,7 +351,7 @@ class Load extends ActiveRecord
         if ($semester & 1) {
             $control = $this->fall_hours[self::HOURS_CONTROL];
         } else {
-            $control = $this->fall_hours[self::HOURS_CONTROL];
+            $control = $this->spring_hours[self::HOURS_CONTROL];
         }
         return !empty($control) ? $control : '';
     }
@@ -343,6 +362,7 @@ class Load extends ActiveRecord
      */
     public function getConsultation($semester)
     {
+        if ($this->type == self::TYPE_PROJECT) return '';
         if ($semester & 1) {
             $consult = $this->consult[0];
         } else {
@@ -355,8 +375,9 @@ class Load extends ActiveRecord
      * @param int $semester
      * @return float
      */
-    public  function calcConsultation($semester)
+    public function calcConsultation($semester)
     {
+        if ($this->type == self::TYPE_PROJECT) return 0;
         $control = $this->planSubject->control[$semester];
         return floor(
             $this->planSubject->total[$semester] * 0.06
@@ -369,6 +390,7 @@ class Load extends ActiveRecord
      */
     public function getExam($semester)
     {
+        if ($this->type == self::TYPE_PROJECT) return '';
         $control = $this->planSubject->control[$semester];
         if (!$control[WorkSubject::CONTROL_EXAM] && !$control[WorkSubject::CONTROL_DPA]) {
             return 0;
@@ -383,6 +405,7 @@ class Load extends ActiveRecord
      */
     public function getTest($semester)
     {
+        if ($this->type == self::TYPE_PROJECT) return '';
         $control = $this->planSubject->control[$semester];
         if ($control[WorkSubject::CONTROL_TEST]) {
             return 2;
@@ -396,6 +419,7 @@ class Load extends ActiveRecord
      */
     public function getPlanTotal()
     {
+        if ($this->type == self::TYPE_PROJECT) return '';
         $spring = $this->course * 2;
         $fall = $spring - 1;
         return $this->planSubject->total[$fall] + $this->planSubject->total[$spring];
@@ -406,6 +430,7 @@ class Load extends ActiveRecord
      */
     public function getPlanClasses()
     {
+        if ($this->type == self::TYPE_PROJECT) return '';
         $spring = $this->course * 2;
         $fall = $spring - 1;
         return $this->planSubject->getClasses($fall) + $this->planSubject->getClasses($spring);
@@ -416,6 +441,7 @@ class Load extends ActiveRecord
      */
     public function getPlanSelfwork()
     {
+        if ($this->type == self::TYPE_PROJECT) return '';
         $spring = $this->course * 2;
         $fall = $spring - 1;
         return $this->planSubject->getSelfwork($fall) + $this->planSubject->getSelfwork($spring);
@@ -424,7 +450,7 @@ class Load extends ActiveRecord
 
     public function validateConsultation()
     {
-        if (!$this->hasErrors()) {
+        if (!$this->hasErrors() && $this->scenario != 'project') {
             $spring = $this->course * 2;
             $fall = $spring - 1;
             if ($this->consult[0] > $this->calcConsultation($fall))
@@ -434,4 +460,54 @@ class Load extends ActiveRecord
         }
     }
 
+    protected function beforeSave()
+    {
+        if ($this->scenario == 'project' && isset($this->wp_subject_id)) {
+            $control = $this->planSubject->control;
+            for ($i = 0; $i < count($control); $i++) {
+                $students = $this->students[0];
+                if ($control[WorkSubject::CONTROL_PROJECT] || $control[WorkSubject::CONTROL_WORK]) {
+                    switch ($this->workType) {
+                        case 0:
+                            $rate = $this->WORK_RATE;
+                            break;
+                        case 1:
+                            $rate = $this->PROJECT_RATE;
+                            break;
+                        case 2:
+                            $rate = $this->DIPLOMA_RATE;
+                            break;
+                        default:
+                            $rate = $this->WORK_RATE;
+                    }
+                    $hours = array();
+                    $hours[self::HOURS_WORKS] = 0;
+                    $hours[self::HOURS_DKK] = 0;
+                    $hours[self::HOURS_PROJECT] = $students * $rate[0];
+                    $hours[self::HOURS_CHECK] = $students * $rate[1];
+                    $hours[self::HOURS_CONTROL] = $students * $rate[2];
+                    if ($i & 1) {
+                        $this->fall_hours = $hours;
+                    } else {
+                        $this->spring_hours = $hours;
+                    }
+                    break;
+                }
+            }
+
+        }
+        return parent::beforeSave();
+    }
+
+    /**
+     * @return array
+     */
+    public static function getTypes()
+    {
+        return array(
+            0 => 'Курсова робота',
+            1 => 'Курсовий проект',
+            2 => 'Дипломний проект',
+        );
+    }
 }

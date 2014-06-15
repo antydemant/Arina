@@ -147,22 +147,38 @@ Yii::app()->clientScript->registerScript(
 </tr>
 
 <?php
-$fall = array();            $spring = array();
-$fall['total'] = 0;         $spring['total'] = 0;
-$fall['selfwork'] = 0;      $spring['selfwork'] = 0;
-$fall['classes'] = 0;       $spring['classes'] = 0;
-$fall['lectures'] = 0;      $spring['lectures'] = 0;
-$fall['labs'] = 0;          $spring['labs'] = 0;
-$fall['practs'] = 0;        $spring['practs'] = 0;
-$fall['project'] = 0;       $spring['project'] = 0;
-$fall['check'] = 0;         $spring['check'] = 0;
-$fall['control'] = 0;       $spring['control'] = 0;
-$fall['works'] = 0;         $spring['works'] = 0;
-$fall['dkk'] = 0;           $spring['dkk'] = 0;
-$fall['consult'] = 0;       $spring['consult'] = 0;
-$fall['exam'] = 0;          $spring['exam'] = 0;
-$fall['test'] = 0;          $spring['test'] = 0;
-$fall['pay'] = 0;           $spring['pay'] = 0;
+$fall = array();
+$spring = array();
+$fall['total'] = 0;
+$spring['total'] = 0;
+$fall['selfwork'] = 0;
+$spring['selfwork'] = 0;
+$fall['classes'] = 0;
+$spring['classes'] = 0;
+$fall['lectures'] = 0;
+$spring['lectures'] = 0;
+$fall['labs'] = 0;
+$spring['labs'] = 0;
+$fall['practs'] = 0;
+$spring['practs'] = 0;
+$fall['project'] = 0;
+$spring['project'] = 0;
+$fall['check'] = 0;
+$spring['check'] = 0;
+$fall['control'] = 0;
+$spring['control'] = 0;
+$fall['works'] = 0;
+$spring['works'] = 0;
+$fall['dkk'] = 0;
+$spring['dkk'] = 0;
+$fall['consult'] = 0;
+$spring['consult'] = 0;
+$fall['exam'] = 0;
+$spring['exam'] = 0;
+$fall['test'] = 0;
+$spring['test'] = 0;
+$fall['pay'] = 0;
+$spring['pay'] = 0;
 
 $totals = array();
 $totals['total'] = 0;
@@ -177,7 +193,11 @@ foreach ($dataProvider->getData() as $data):
     $fallSemester = $springSemester - 1;
     ?>
     <tr>
-        <td><?php echo CHtml::link('редагувати', $this->createUrl('update', array('id' => $data->id))); ?></td>
+        <td>
+            <?php if ($data->type == Load::TYPE_PROJECT)
+                echo CHtml::link('видалити', $this->createUrl('delete', array('id' => $data->id)));
+            else echo CHtml::link('редагувати', $this->createUrl('update', array('id' => $data->id))); ?>
+        </td>
         <td><b><?php echo $data->planSubject->subject->title; ?></b></td>
         <td><b><?php echo isset($data->teacher) ? $data->teacher->getFullName() :
                     '<span style="color: red">непризначено</span>'; ?></b></td>
@@ -326,7 +346,11 @@ foreach ($dataProvider->getData() as $data):
             <?php echo $contract = round($all * $data->getContractPercent() / 100);
             $totals['contract'] += $contract; ?>
         </td>
-        <td><?php echo CHtml::link('редагувати', $this->createUrl('update', array('id' => $data->id))); ?></td>
+        <td>
+            <?php if ($data->type == Load::TYPE_PROJECT)
+                echo CHtml::link('видалити', $this->createUrl('delete', array('id' => $data->id)));
+            else echo CHtml::link('редагувати', $this->createUrl('update', array('id' => $data->id))); ?>
+        </td>
     </tr>
 <?php endforeach; ?>
 <!-- Підсумки -->

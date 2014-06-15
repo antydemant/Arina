@@ -84,7 +84,7 @@ switch ($course) {
                         $this->createUrl('deleteSubject', array('id' => $subject->id))
                     ) ?></td>
                 <td><?php echo isset($subject->subject) ? $subject->subject->title : $subject->subject_id; ?>:
-                    (<?php echo array_sum(isset($subject->subject) ? $subject->total : array()); ?> годин)
+                    <b>(<?php echo array_sum(isset($subject->subject) ? $subject->total : array()); ?> годин)</b>
                 </td>
 
                 <td><?php echo $subject->total[$fall];
@@ -133,7 +133,7 @@ switch ($course) {
         <?php endif; ?>
     <?php endforeach; ?>
     <tr>
-        <td><b>Всього</b></td>
+        <td colspan="2"><b>Всього</b></td>
 
         <td><b><?php echo $fallHours['total']; ?></b></td>
         <td><b><?php echo $fallHours['classes']; ?></b></td>

@@ -24,6 +24,14 @@ class MainController extends Controller
         $this->render('create');
     }
 
+    public function actionDelete($id)
+    {
+        $model = Load::model()->loadContent($id);
+        $year = $model->study_year_id;
+        $model->delete();
+        $this->redirect($this->createUrl('view', array('id' => $year)));
+    }
+
     /**
      * @param integer $studyYear
      */
@@ -122,8 +130,9 @@ class MainController extends Controller
 
     public function actionProject($id)
     {
-        $model = new Load();
+        $model = new Load('project');
         $model->study_year_id = $id;
+        $model->type = Load::TYPE_PROJECT;
 
         if (isset($_POST['Load'])) {
             $model->setAttributes($_POST['Load'], false);
