@@ -14,11 +14,11 @@ $this->menu = array(
 ?>
 
 <h2><?php echo Yii::t('fileShare', 'View file info')." ".$model->file_name; ?></h2>
-
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'file_name',
 		'master_user',
+        'another_master_fullname',
 	),
 )); ?>

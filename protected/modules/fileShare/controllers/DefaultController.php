@@ -51,8 +51,20 @@ class DefaultController extends Controller
 	 */
 	public function actionView($id)
 	{
+        $model = $this->loadModel($id);
+        $another_user_name = $model->master_user;
+        if (!empty($another_user_name))
+        {
+            $another_user = User::model()->findByAttributes(array('username' => $model->master_user));
+            if ($another_user->identity_id)
+            {
+                $another_teacher = Teacher::model()->findByAttributes(array('id' => $another_user->identity_id));
+                $model->another_master_fullname =
+                    $another_teacher->last_name." ".$another_teacher->first_name." ".$another_teacher->middle_name;
+            }
+        }
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$model,
 		));
 	}
 
@@ -96,8 +108,11 @@ class DefaultController extends Controller
 		if(isset($_POST['FileShare']))
 		{
 //			$model->attributes=$_POST['FileShare'];
-            if(!$model->file_lock)
+            if(!$_POST['FileShare']['file_lock'])
                 $model->master_user = null;
+            else
+                $model->master_user = Yii::app()->user->name;
+
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -151,7 +166,7 @@ class DefaultController extends Controller
 		$model=new FileShare('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['FileShare']))
-			$model->attributes=$_GET['FileShare'];
+			$model->attributes = $_GET['FileShare'];
 
 		$this->render('admin',array(
 			'model'=>$model,

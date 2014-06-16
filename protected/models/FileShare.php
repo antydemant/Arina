@@ -15,7 +15,7 @@ class FileShare extends CActiveRecord
 	 */
     public $upload_file;
     public $file_lock = false;
-
+    public $another_master_fullname;
 	public function tableName()
 	{
 		return 'file_share';
@@ -61,6 +61,7 @@ class FileShare extends CActiveRecord
 			'file_name' => Yii::t('fileShare', 'File Name'),
 			'master_user' => Yii::t('fileShare', 'Master User'),
             'file_lock' => Yii::t('fileShare', 'Locked'),
+            'another_master_fullname' => Yii::t('fileShare', 'Master full name')
 		);
 	}
 
@@ -74,6 +75,8 @@ class FileShare extends CActiveRecord
             $this->upload_file=$document;
             $this->upload_file->saveAs(
                 Yii::getPathOfAlias('webroot.files').DIRECTORY_SEPARATOR.$this->upload_file);
+
+
         }
         return true;
     }

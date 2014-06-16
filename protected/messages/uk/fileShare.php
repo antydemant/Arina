@@ -11,4 +11,5 @@ return array(
     'File using by another user' => 'Файл використовується іншим користувачем',
     'Locked' => 'Заблокований',
     'View file info' => 'Інформація щодо файлу',
+    'Master full name' => 'ПІБ поточного власника',
 );
