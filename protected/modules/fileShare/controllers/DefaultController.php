@@ -20,46 +20,21 @@ class DefaultController extends Controller
 	}
 
 	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-	public function accessRules()
-	{
-		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','delete'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','delete'),
-				'users'=>array('@'),
-			),
-//			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-//				'actions'=>array('admin','delete'),
-//				'users'=>array('admin'),
-//			),
-//			array('deny',  // deny all users
-//				'users'=>array('*'),
-//			),
-		);
-	}
-
-	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
 	public function actionView($id)
 	{
         $model = $this->loadModel($id);
-        $another_user_name = $model->master_user;
-        if (!empty($another_user_name))
+        $another_user_name = $model->master_user;   // name of another master user
+        if (!empty($another_user_name))             // if it is here...
         {
-            $another_user = User::model()->findByAttributes(array('username' => $model->master_user));
-            if ($another_user->identity_id)
+            $another_user = User::model()->findByAttributes(array('username' => $model->master_user));  // get this user
+            if ($another_user->identity_id)                 // find identification number for get more info about he/she
             {
                 $another_teacher = Teacher::model()->findByAttributes(array('id' => $another_user->identity_id));
-                $model->another_master_fullname =
+                                                                              // find model about additional information
+                $model->another_master_fullname =                                                        //get full name
                     $another_teacher->last_name." ".$another_teacher->first_name." ".$another_teacher->middle_name;
             }
         }
@@ -76,12 +51,8 @@ class DefaultController extends Controller
 	{
 		$model=new FileShare;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['FileShare']))
 		{
-//			$model->attributes=$_POST['FileShare'];
             $model->file_name = CUploadedFile::getInstance($model,'upload_file');
             $model->master_user = null;
 			if($model->save())
@@ -102,12 +73,8 @@ class DefaultController extends Controller
 	{
 		$model=$this->loadModel($id);
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['FileShare']))
 		{
-//			$model->attributes=$_POST['FileShare'];
             if(!$_POST['FileShare']['file_lock'])
                 $model->master_user = null;
             else

@@ -18,7 +18,6 @@ $this->menu=array(
 $columns = array(
 'file_name',
 'master_user',
-//'another_master_fullname',
 array(
     'header' => Yii::t('base', 'Actions'),
     'htmlOptions' => array('nowrap' => 'nowrap'),
