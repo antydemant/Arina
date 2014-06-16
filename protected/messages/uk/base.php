@@ -92,4 +92,6 @@ return array(
     'Human resources' => 'Відділ кадрів',
     'Students import' => 'Імпорт студентів з ЄДЕБО',
     'Other' => 'Інше',
+    'File Shares' => 'Файли',
+    'Download' => 'Скачати',
 );

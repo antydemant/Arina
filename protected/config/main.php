@@ -42,6 +42,14 @@ return CMap::mergeArray(
             'curator',
             'import',
             'load',
+            'fileShare',
+            'gii'=>array(
+                'class'=>'system.gii.GiiModule',
+                'password'=>'123',
+                // 'ipFilters'=>array(…перелік IP…),
+                // 'newFileMode'=>0666,
+                // 'newDirMode'=>0777,
+            ),
         ),
         'components' => array(
             'excel' => array(

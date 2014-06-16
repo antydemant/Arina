@@ -29,4 +29,5 @@ $menu = array(
         array('label' => Yii::t('base', 'Human resources'), 'url' => array('/hr')),
         array('label' => Yii::t('base', 'Students import'), 'url' => array('/import')),
     )),
+    array('label' => Yii::t('base', 'File Shares'), 'url' => array('/fileShare')),
 );
