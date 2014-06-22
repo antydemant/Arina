@@ -9,6 +9,14 @@ class DefaultController extends Controller
         ));
     }
 
+    public function actionExcelList()
+    {
+        /**@var $excel ExcelMaker */
+        $excel = Yii::app()->getComponent('excel');
+        $excel->getDocument(NULL, 'employeesList');
+    }
+
+
     public function actionIndex()
     {
         $model = new Employee('search');

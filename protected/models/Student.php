@@ -207,6 +207,7 @@ class Student extends ActiveRecord implements IDateContainable
             'document' => Yii::t('student', 'Document'),
             'identification_code' => Yii::t('student', 'Identification code'),
             'form_of_study_notes' => Yii::t('student', 'Form of study notes'),
+            'fullName' => Yii::t('student', 'Full name'),
         );
     }
 

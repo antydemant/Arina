@@ -13,6 +13,11 @@ $this->menu = array(
         'label' => Yii::t('employee', 'Create an employee'),
         'url' => $this->createUrl('create'),
     ),
+    array(
+        'type' => BoosterHelper::TYPE_INFO,
+        'label' => Yii::t('employee', 'Get list in excel'),
+        'url' => $this->createUrl('excelList'),
+    ),
 );
 
 Yii::app()->clientScript->registerScript('search', "

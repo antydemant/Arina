@@ -362,4 +362,27 @@ class ExcelMaker extends CComponent
 
         return $objPHPExcel;
     }
+
+    protected function makeEmployeesList($data)
+    {
+        $objPHPExcel = $this->loadTemplate('teachers_list.xls');
+
+        $sheet = $objPHPExcel->setActiveSheetIndex(0);
+
+        $employees = Employee::model()->findAll();
+
+        $i = 9;
+        /** @var $employee Employee */
+        foreach ($employees as $employee) {
+            $sheet->setCellValue("A$i", $i - 8);
+            $sheet->setCellValue("B$i", $employee->getFullName());
+            $sheet->setCellValue("C$i", isset($employee->position) ? $employee->position->title : '');
+
+            $sheet->insertNewRowBefore($i + 1, 1);
+            $i++;
+        }
+
+
+        return $objPHPExcel;
+    }
 }
