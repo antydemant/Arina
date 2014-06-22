@@ -27,18 +27,32 @@ class DefaultController extends Controller
         ));
     }
 
-    public function actionTest()
+    protected function adminView()
     {
-        $model = new JournalViewer();
-        $model->setScenario('group');
-        $model->groupId = 2;
-        $model->subjectId = 1;
-        if ($model->validate()) {
-            $model->isEmpty = false;
-        }
-        $this->render('index', array(
-            'model' => $model,
-        ));
+
+    }
+
+    protected function depHeadView()
+    {
+        // select all classes from groups from current departure
+        $dataProvider = ActualClass::model()->getProvider(array('criteria'=>array()));
+
+        $this->render('dephead_view',array('dataProvider'=>$dataProvider));
+    }
+
+    protected function teacherView()
+    {
+        // select all classes with current teacher
+    }
+
+    protected function curatorAndPrefectView()
+    {
+
+    }
+
+    protected function StudentView()
+    {
+
     }
 
 }

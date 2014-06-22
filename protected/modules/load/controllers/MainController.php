@@ -162,4 +162,18 @@ class MainController extends Controller
 
         $this->render('project', array('model' => $model));
     }
+
+    public function actionDoc($id)
+    {
+        /** @var StudyYear $year */
+        $year = StudyYear::model()->loadContent($id);
+        $model = new LoadDocGenerateModel();
+        if (isset($_POST['LoadDocGenerateModel'])) {
+            $model->setAttributes($_POST['LoadDocGenerateModel'], false);
+            $model->generate();
+        }
+        $this->render('doc', array(
+            'model' => $model,
+        ));
+    }
 } 

@@ -22,6 +22,11 @@ $this->menu = array(
         'url' => $this->createUrl('project', array('id' => $year->id)),
         'type' => 'info'
     ),
+    array(
+        'label' => 'Генерувати документ',
+        'url' => $this->createUrl('doc', array('id' => $year->id)),
+        'type'=>'info',
+    ),
 );
 Yii::app()->clientScript->registerScript(
     'load-buttons',
