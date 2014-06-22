@@ -94,4 +94,5 @@ return array(
     'Other' => 'Інше',
     'File Shares' => 'Файли',
     'Download' => 'Скачати',
+    'users'=>'Користувачі',
 );

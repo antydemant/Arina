@@ -14,6 +14,8 @@
  */
 class User extends ActiveRecord
 {
+    protected $oldPasswordHash = null;
+
     const ROLE_GUEST = 0;
     const ROLE_ADMIN = 1;
     const ROLE_TEACHER = 2;
@@ -35,6 +37,25 @@ class User extends ActiveRecord
         return 'user';
     }
 
+    /**
+     * Save current password
+     */
+    protected function afterFind()
+    {
+        $this->oldPasswordHash = $this->password;
+        parent::afterFind();
+    }
+
+    protected function beforeSave()
+    {
+        if (!empty($this->password) && ($this->password != $this->oldPasswordHash)) {
+            $this->password = md5($this->password);
+        } else {
+            $this->password = $this->oldPasswordHash;
+        }
+        return parent::beforeSave();
+    }
+
     public static function getRoleList()
     {
         return array(
@@ -48,8 +69,9 @@ class User extends ActiveRecord
     public function rules()
     {
         return array(
-            array('username, password', 'required'),
-            array('username','unique', 'message'=>'Користувач з таким іменем вже існує.'),
+            array('username', 'required'),
+            array('password', 'required', 'on' => 'insert'),
+            array('username', 'unique', 'message' => 'Користувач з таким іменем вже існує.'),
             array('role, identity_id', 'numerical', 'integerOnly' => true),
             array('username, password, email', 'length', 'max' => 255),
             array('email', 'email'),

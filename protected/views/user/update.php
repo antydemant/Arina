@@ -1,8 +1,13 @@
 <?php
+/**
+ * @var $model User
+ * @var $this UserController
+ */
+
 $this->breadcrumbs = array(
     'Користувачі' => array('index'),
-    $model->id => array('view', 'id' => $model->id),
-    'Змінити',
+    $model->username => array('view', 'id' => $model->id),
+    'Редагування даних',
 );
 
 if (Yii::app()->user->checkAccess('admin')) {

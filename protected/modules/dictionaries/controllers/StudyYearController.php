@@ -44,10 +44,6 @@ class StudyYearController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-        if(!Yii::app()->user->checkAccess('manageStudyYear'))
-        {
-            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
-        }
 
         $model = StudyYear::model() -> loadContent($id);
 

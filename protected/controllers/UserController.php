@@ -77,8 +77,8 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a particular model.
-     * @param integer $id the ID of the model to be displayed
+     * @param $id
+     * @throws CHttpException
      */
     public function actionView($id)
     {
@@ -115,23 +115,25 @@ class UserController extends Controller
     }
 
     /**
-     * Updates a particular model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id the ID of the model to be updated
+     * @param $id
+     * @throws CHttpException
      */
     public function actionUpdate($id)
     {
         if ((!Yii::app()->user->checkAccess('admin')) && (Yii::app()->user->id != $id)) {
             throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
         }
+        /** @var User $model */
         $model = $this->loadModel($id);
-
+        $model->password = '';
         //$this->performAjaxValidation('user-form', $model);
 
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
-            if ($model->save())
+            if ($model->save()){
+                Yii::app()->getUser()->setFlash('success','Дані були успішно змінені');
                 $this->redirect(array('update', 'id' => $model->id));
+            }
         }
 
         $this->render('update', array(

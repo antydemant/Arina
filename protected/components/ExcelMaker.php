@@ -163,6 +163,17 @@ class ExcelMaker extends CComponent
     }
 
     /**
+     * @param $data TeacherDocument
+     * @return PHPExcel
+     */
+    protected function makeTeacherList($data)
+    {
+        $objPHPExcel = $this->loadTemplate('teacherList.xls');
+
+        return $objPHPExcel;
+    }
+
+    /**
      * Generate study plan document
      * @param $plan StudyPlan
      * @return PHPExcel
