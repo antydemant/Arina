@@ -101,7 +101,7 @@ class UserController extends Controller
         }
         $model = new User;
 
-        $this->performAjaxValidation('user-form', $model);
+        //$this->performAjaxValidation('user-form', $model);
 
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];

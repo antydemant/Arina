@@ -89,10 +89,16 @@ return CMap::mergeArray(
                 'class' => 'CLogRouter',
                 'routes' => array(
                     array(
-                        'class' => 'CWebLogRoute', 'levels' => 'error, warning',
+                        'class' => 'CWebLogRoute',
+                        'levels' => 'error, warning',
                     ),
                     array(
-                        'class' => 'CFileLogRoute', 'levels' => 'trace, info, error, warning',
+                        'class' => 'CFileLogRoute',
+                        'levels' => CLogger::LEVEL_INFO,
+                        'logFile' => 'log',
+                        'maxFileSize' => 1,
+                        'maxLogFiles' => 100,
+                        'rotateByCopy' => false,
                     ),
                 ),
             ),

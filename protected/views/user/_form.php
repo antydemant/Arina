@@ -3,7 +3,7 @@
     'enableAjaxValidation' => false,
 )); ?>
 
-<p class="help-block">Fields with <span class="required">*</span> are required.</p>
+<p class="help-block">Поля, відмічені <span class="required">*</span>, обов'язкові для заповнення.</p>
 
 <?php echo $form->errorSummary($model); ?>
 
@@ -15,7 +15,7 @@
 
 <?php
 if (Yii::app()->user->checkAccess('admin')) {
-    echo $form->textFieldRow($model, 'role', array('class' => 'span5'));
+    //echo $form->textFieldRow($model, 'role', array('class' => 'span5'));
     echo $form->textFieldRow($model, 'identity_id', array('class' => 'span5'));
     echo $form->textFieldRow($model, 'identity_type', array('class' => 'span5'));
 }

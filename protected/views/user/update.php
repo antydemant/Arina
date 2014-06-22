@@ -1,8 +1,8 @@
 <?php
 $this->breadcrumbs = array(
-    'Users' => array('index'),
+    'Користувачі' => array('index'),
     $model->id => array('view', 'id' => $model->id),
-    'Update',
+    'Змінити',
 );
 
 if (Yii::app()->user->checkAccess('admin')) {
@@ -16,6 +16,6 @@ if (Yii::app()->user->checkAccess('admin')) {
 
 ?>
 
-    <h1>Update User <?php echo $model->id; ?></h1>
+    <h1>Редагування користувача <?php echo $model->username; ?></h1>
 
 <?php echo $this->renderPartial('_form', array('model' => $model)); ?>

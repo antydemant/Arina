@@ -360,13 +360,13 @@ class SiteController extends Controller
 
         $role=$auth->createRole('cychead');
         $role->addChild('curator');
-        $role->addChild('manageOwnStudyPlan');
         $role->addChild('manageOwnCycleSubject');
         $role->addChild('manageOwnCyclicCommission');
         $role->addChild('manageOwnTeacher');
 
         $role=$auth->createRole('dephead');
         $role->addChild('cychead');
+        $role->addChild('manageOwnStudyPlan');
         $role->addChild('manageOwnSpeciality');
         $role->addChild('manageOwnDepartment');
 

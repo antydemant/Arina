@@ -49,6 +49,7 @@ class User extends ActiveRecord
     {
         return array(
             array('username, password', 'required'),
+            array('username','unique', 'message'=>'Користувач з таким іменем вже існує.'),
             array('role, identity_id', 'numerical', 'integerOnly' => true),
             array('username, password, email', 'length', 'max' => 255),
             array('email', 'email'),
@@ -71,11 +72,12 @@ class User extends ActiveRecord
     {
         return array(
             'id' => 'ID',
-            'username' => 'Username',
-            'password' => 'Password',
-            'email' => 'Email',
-            'role' => 'Role',
-            'identity_id' => 'Identity',
+            'username' => Yii::t('user', 'Username'),
+            'password' => Yii::t('user', 'Password'),
+            'email' => Yii::t('user', 'Email'),
+            'role' => Yii::t('user', 'Role'),
+            'identity_id' => Yii::t('user', 'Identity ID'),
+            'identity_type' => Yii::t('user', 'Identity Type'),
         );
     }
 
@@ -117,5 +119,6 @@ class User extends ActiveRecord
     {
         return parent::model($className);
     }
+
 
 }

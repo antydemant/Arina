@@ -7,7 +7,7 @@ $env = (isset($_SERVER['APP_ENV'])) ? $_SERVER['APP_ENV'] : 'prod';
 // remove the following lines when in production mode
 defined('YII_DEBUG') or define('YII_DEBUG', ($env == 'dev'));
 // specify how many levels of call stack should be shown in each log message
-defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 3);
+defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL', 0);
 
 // change the following paths if necessary
 $yii = dirname(__FILE__) . '/../vendor/yiisoft/yii/framework/yii.php';
