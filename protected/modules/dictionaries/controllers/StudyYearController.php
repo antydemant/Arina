@@ -7,7 +7,7 @@ class StudyYearController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 //	public $layout = '//layouts/column2';
-    public $name = 'Study_Years';
+    public $name = 'Study years';
 
 	/**
 	 * Creates a new model.

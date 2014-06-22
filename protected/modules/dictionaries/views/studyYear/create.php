@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	Yii::t('base','Study Years') => array('index'),
+	Yii::t('base','Study years') => array('index'),
     Yii::t('studyYears', 'Adding new study year'),
 );
 
