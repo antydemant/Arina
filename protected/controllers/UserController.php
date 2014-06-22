@@ -59,7 +59,14 @@ class UserController extends Controller
 
         $this->ajaxValidation('restore-form', $model);
 
-        //TODO processing of request
+        if (isset($_POST['ERestorePasswordForm']['username'])) {
+            $username = $_POST['ERestorePasswordForm']['username'];
+            $user = User::model()->findByAttributes(array('username' => $username));
+            if (isset($user)) {
+                
+            }
+        }
+
         $this->render(
             'restore',
             array('model' => $model,)
@@ -209,7 +216,7 @@ class UserController extends Controller
         return CMap::mergeArray(
             array(
                 array('allow',
-                    'actions' => array('login'),
+                    'actions' => array('login', 'restore'),
                     'users' => array('*'),
                 ),
             ),
