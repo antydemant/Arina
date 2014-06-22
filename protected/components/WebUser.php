@@ -38,11 +38,11 @@ class WebUser extends CWebUser
     public function getMainMenu()
     {
         $menu = array();
-        if (Yii::app()->user->checkAccess('student')) {
-            require_once('menu/student.php');
+        if (Yii::app()->user->checkAccess('admin')) {
+            require_once('menu/admin.php');
             return $menu;
-        } else if (Yii::app()->user->checkAccess('teacher')) {
-            require_once('menu/teacher.php');
+        } else if (Yii::app()->user->checkAccess('dephead')) {
+            require_once('menu/dephead.php');
             return $menu;
         } else if (Yii::app()->user->checkAccess('cychead')) {
             require_once('menu/cychead.php');
@@ -50,11 +50,11 @@ class WebUser extends CWebUser
         } else if (Yii::app()->user->checkAccess('curator')) {
             require_once('menu/curator.php');
             return $menu;
-        } else if (Yii::app()->user->checkAccess('dephead')) {
-            require_once('menu/dephead.php');
+        } else if (Yii::app()->user->checkAccess('teacher')) {
+            require_once('menu/teacher.php');
             return $menu;
-        } else if (Yii::app()->user->checkAccess('admin')) {
-            require_once('menu/admin.php');
+        } else if (Yii::app()->user->checkAccess('student')) {
+            require_once('menu/student.php');
             return $menu;
         } else {
             require_once('menu/guest.php');
