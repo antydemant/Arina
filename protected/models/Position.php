@@ -8,6 +8,7 @@
  * @property string $title
  * @property integer $max_load_hour_1
  * @property integer $max_load_hour_2
+ * @property Employee[] $employees
  */
 class Position extends ActiveRecord
 {
@@ -38,6 +39,7 @@ class Position extends ActiveRecord
 	public function relations()
 	{
 		return array(
+            'employees' => array(self::HAS_MANY, 'Employee', 'position_id'),
 		);
 	}
 

@@ -53,6 +53,11 @@ $this->widget(BoosterHelper::GRID_VIEW, array(
     'type' => 'striped condensed bordered hover',
 
     'columns' => array(
+        /*array(
+            'name' => 'fullName',
+            'value' => '$data->getFullName()',
+        ),*/
+
         'last_name',
         'first_name',
         'middle_name',

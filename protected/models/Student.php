@@ -203,7 +203,6 @@ class Student extends ActiveRecord implements IDateContainable
             'hobby' => Yii::t('student', 'Hobby'),
             'exemptions' => Yii::t('student', 'Exemptions'),
             'exemptionNames' => Yii::t('student', 'Exemptions'),
-            'fullName' => Yii::t('terms', 'Full name'),
             'sseed_id' => Yii::t('student', 'SSEED Id'),
             'document' => Yii::t('student', 'Document'),
             'identification_code' => Yii::t('student', 'Identification code'),
@@ -271,6 +270,9 @@ class Student extends ActiveRecord implements IDateContainable
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
+            'pagination' => array(
+                'pageSize' => 20,
+            ),
         ));
     }
 

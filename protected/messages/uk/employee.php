@@ -85,4 +85,8 @@ return array(
     'Voluntarily' => 'За власним бажанням',
     'For absenteeism' => 'За прогули',
     'Cyclic commission' => 'Циклова комісія',
+    'Absent' => 'Відсутня',
+    'Experience years' => 'Стаж (років)',
+    'Experience months' => 'Стаж (місяців)',
+    'Experience days' => 'Стаж (днів)',
 );

@@ -22,9 +22,9 @@
  * @property string $postgraduate_trainings
  * @property string $last_job
  * @property string $last_job_position
- * @property integer $has_experience
- * @property string $experience_start
- * @property string $experience_end
+ * @property integer $experience_years
+ * @property integer $experience_months
+ * @property integer $experience_days
  * @property integer $dismissal_reason
  * @property string $dismissal_date
  * @property string $pension_data
@@ -69,7 +69,7 @@ class Employee extends ActiveRecord
 		return array(
 			array('position_id, participates_in_study_process, gender, cyclic_commission_id, education, postgraduate_training, has_experience, dismissal_reason, military_suitability', 'numerical', 'integerOnly'=>true),
 			array('last_name, first_name, middle_name, short_name, nationality, last_job, last_job_position, pension_data, family_status, place_of_residence, place_of_registration, passport, passport_issued_by, military_accounting_group, military_accounting_category, military_composition, military_rank, military_accounting_speciality_number, military_district_office_registration_name, military_district_office_residence_name', 'length', 'max'=>255),
-			array('start_date, birth_date, educations_list, postgraduate_trainings, experience_start, experience_end, dismissal_date, family_data, professional_education, appointments_and_transfers, vacations', 'safe'),
+			array('start_date, birth_date, educations_list, postgraduate_trainings, experience_years, experience_months, experience_days, dismissal_date, family_data, professional_education, appointments_and_transfers, vacations', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, position_id, participates_in_study_process, start_date, last_name, first_name, middle_name, short_name, gender, cyclic_commission_id, birth_date, nationality, education, educations_list, postgraduate_training, postgraduate_trainings, last_job, last_job_position, has_experience, experience_start, experience_end, dismissal_reason, dismissal_date, pension_data, family_status, family_data, place_of_residence, place_of_registration, passport, passport_issued_by, military_accounting_group, military_accounting_category, military_composition, military_rank, military_accounting_speciality_number, military_suitability, military_district_office_registration_name, military_district_office_residence_name, professional_education, appointments_and_transfers, vacations', 'safe', 'on'=>'search'),
@@ -112,9 +112,9 @@ class Employee extends ActiveRecord
             'postgraduate_trainings' => Yii::t('employee','Postgraduate trainings'),
             'last_job' => Yii::t('employee','Last job'),
             'last_job_position' => Yii::t('employee','Last job position'),
-            'has_experience' => Yii::t('employee','Has experience'),
-            'experience_start' => Yii::t('employee','Experience start'),
-            'experience_end' => Yii::t('employee','Experience end'),
+            'experience_years' => Yii::t('employee', 'Experience years'),
+            'experience_months' => Yii::t('employee', 'Experience months'),
+            'experience_days' => Yii::t('employee', 'Experience days'),
             'dismissal_reason' => Yii::t('employee','Dismissal reason'),
             'dismissal_date' => Yii::t('employee','Dismissal date'),
             'pension_data' => Yii::t('employee','Pension data'),
@@ -135,6 +135,7 @@ class Employee extends ActiveRecord
             'professional_education' => Yii::t('employee','Professional education'),
             'appointments_and_transfers' => Yii::t('employee','Appointments and transfers'),
             'vacations' => Yii::t('employee','Vacations'),
+            'fullName' => Yii::t('terms', 'Full name'),
 		);
 	}
 
@@ -174,9 +175,9 @@ class Employee extends ActiveRecord
 		$criteria->compare('postgraduate_trainings',$this->postgraduate_trainings,true);
 		$criteria->compare('last_job',$this->last_job,true);
 		$criteria->compare('last_job_position',$this->last_job_position,true);
-		$criteria->compare('has_experience',$this->has_experience);
-		$criteria->compare('experience_start',$this->experience_start,true);
-		$criteria->compare('experience_end',$this->experience_end,true);
+		$criteria->compare('experience_years',$this->experience_years, true);
+		$criteria->compare('experience_months',$this->experience_months, true);
+		$criteria->compare('experience_days',$this->experience_days, true);
 		$criteria->compare('dismissal_reason',$this->dismissal_reason);
 		$criteria->compare('dismissal_date',$this->dismissal_date,true);
 		$criteria->compare('pension_data',$this->pension_data,true);

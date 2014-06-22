@@ -11,7 +11,7 @@ $this->breadcrumbs = array(
 
 $this->menu = array(
     array('label' => Yii::t('teacher', 'Teacher list'), 'url' => array('index'), 'type' => BoosterHelper::TYPE_PRIMARY),
-    array('label' => Yii::t('teacher', 'Add new teacher'), 'url' => array('create'), 'type' => BoosterHelper::TYPE_PRIMARY),
+    array('label' => Yii::t('teacher', 'Add new teacher'), 'url' => array('hr/default/create'), 'type' => BoosterHelper::TYPE_PRIMARY),
     array(
         'label' => Yii::t('teacher', 'Update teacher'),
         'icon' => 'pencil',
@@ -31,7 +31,7 @@ $this->menu = array(
 );
 ?>
 
-<h2><?php echo Yii::t('teacher', 'View teacher') . " {$model->getFullName()}" ?></h2>
+<h2><?php echo $model->getFullName(); ?></h2>
 
 <?php $this->widget('bootstrap.widgets.TbDetailView', array(
     'data' => $model,

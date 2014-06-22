@@ -51,7 +51,6 @@ $this->widget(BoosterHelper::GRID_VIEW, array(
     'filter' => $model,
     'responsiveTable' => true,
     'type' => 'striped condensed bordered hover',
-
     'columns' => array(
         'code',
         array(

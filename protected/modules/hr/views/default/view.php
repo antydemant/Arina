@@ -4,7 +4,7 @@
 
 $this->breadcrumbs = array(
     Yii::t('employee', 'Employees') => array('index'),
-    $model->id,
+    $model->getFullName(),
 );
 
 $this->widget(
@@ -48,14 +48,29 @@ $this->widget(
 
 <h1><?php echo $model->getFullName(); ?></h1>
 
+<?php
+
+?>
+
 <?php $this->widget('booster.widgets.TbDetailView', array(
     'data' => $model,
     'attributes' => array(
         'fullName',
         array(
             'name' => 'birth_date',
-            'value' => Yii::app()->getDateFormatter()->format('dd MMM y', $model->birth_date)
+            'value' => (strtotime(date($model->birth_date))!== strtotime('0000-00-00') && isset($model->birth_date)) ? Yii::app()->getDateFormatter()->format('dd MMM y', $model->birth_date) : '',
         ),
-
+        array(
+            'name' => 'position_id',
+            'value' => isset($model->position) ? $model->position->title : 'Не визначена',
+        ),
+        array(
+            'name' => 'education',
+            'value' => isset($model->education) ? EmployeeHelper::getEducationTypes()[$model->education] : 'Не визначена',
+        ),
+        array(
+            'name' => 'postgraduate_training',
+            'value' => isset($model->postgraduate_training) ? EmployeeHelper::getPostgraduateTypes()[$model->postgraduate_training] : 'Не визначена',
+        ),
     ),
 )); ?>

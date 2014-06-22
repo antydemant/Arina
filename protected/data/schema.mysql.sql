@@ -257,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `position` (
   `max_load_hour_1` int(11) DEFAULT NULL,
   `max_load_hour_2` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 

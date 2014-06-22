@@ -459,9 +459,9 @@ INSERT INTO `group` (`id`, `title`, `speciality_id`, `curator_id`, `monitor_id`)
 --
 
 INSERT INTO `position` (`id`, `title`, `max_load_hour_1`, `max_load_hour_2`) VALUES
-(1, '????????', 720, 360),
-(2, '?????????? ???????????', 720, 360),
-(3, '????????', 720, 360);
+(1, 'Викладач', 720, 360),
+(2, 'Завідувач відділенням', 720, 360),
+(3, 'Директор', 720, 360);
 
 --
 -- Дамп данных таблицы `settings`

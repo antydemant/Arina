@@ -1,7 +1,7 @@
 <?php
 /* @var $this DefaultController */
 /* @var $model Employee */
-/* @var $form TbctiveForm */
+/* @var $form TbactiveForm */
 ?>
 
     <div class="form">
@@ -36,6 +36,7 @@
                 cyclic_commission.hide('slow');
             }
         }
+        checkParticipatesInStudyProcess();
         var participates_in_study_process = $('#participates_in_study_process');
         participates_in_study_process.change(function(){
             checkParticipatesInStudyProcess();
@@ -73,11 +74,12 @@
 
             <?php echo $form->textFieldRow($model, 'last_job_position', array('size' => 40, 'maxlength' => 40)); ?>
 
-            <?php echo $form->checkBoxRow($model, 'has_experience', array()); ?>
+            <?php echo $form->numberFieldRow($model, 'experience_years'); ?>
 
-            <?php echo $form->dateFieldRow($model, 'experience_start', array()); ?>
+            <?php echo $form->numberFieldRow($model, 'experience_months'); ?>
 
-            <?php echo $form->dateFieldRow($model, 'experience_end', array()); ?>
+            <?php echo $form->numberFieldRow($model, 'experience_days'); ?>
+
 
             <?php echo $form->dropDownListRow($model, 'dismissal_reason', EmployeeHelper::getDismissalReasons()); ?>
 

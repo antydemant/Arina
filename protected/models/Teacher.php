@@ -98,6 +98,7 @@ class Teacher extends Employee
         return array(
             'group' => array(self::HAS_ONE, 'Group', 'curator_id'),
             'cyclicCommission' => array(self::BELONGS_TO, 'CyclicCommission', 'cyclic_commission_id'),
+            'attestations' => array(self::HAS_MANY, 'Attestation', 'teacher_id'),
         );
     }
 
