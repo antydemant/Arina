@@ -40,9 +40,23 @@ $this->breadcrumbs = array(
 <?php echo $form->dropDownListRow($model, 'wp_subject_id', WorkSubject::getListByYear($model->study_year_id, true), array('empty' => '', 'class' => 'span6')); ?>
 <?php echo $form->dropDownListRow($model, 'group_id', Group::getTreeList(), array('empty' => '', 'class' => 'span6')); ?>
 <?php echo $form->dropDownListRow($model, 'workType', Load::getTypes(), array('empty' => '', 'class' => 'span6')); ?>
-<?php echo $form->numberFieldRow($model, 'students[0]', array('class' => 'span6')); ?>
+<?php echo $form->numberFieldRow($model, 'students[0]', array('class' => 'span6', 'readonly' => true)); ?>
 <?php echo $form->numberFieldRow($model, 'students[1]', array('class' => 'span6')); ?>
 <?php echo $form->numberFieldRow($model, 'students[2]', array('class' => 'span6')); ?>
 
 <?php $this->renderPartial('//formButtons', array('model' => $model)); ?>
 <?php $this->endWidget(); ?>
+
+<script>
+    function updateStudentsCount() {
+        var count = 0;
+        count += parseInt($("#Load_students_1").val());
+        count += parseInt($("#Load_students_2").val());
+        $("#Load_students_0").val(count);
+    }
+
+    $(function () {
+        $('#Load_students_1').change(updateStudentsCount);
+        $('#Load_students_2').change(updateStudentsCount);
+    });
+</script>

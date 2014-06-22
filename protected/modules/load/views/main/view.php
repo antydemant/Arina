@@ -194,9 +194,10 @@ foreach ($dataProvider->getData() as $data):
     ?>
     <tr>
         <td>
-            <?php if ($data->type == Load::TYPE_PROJECT)
+            <?php if ($data->type == Load::TYPE_PROJECT) {
+                echo CHtml::link('редагувати', $this->createUrl('edit', array('id' => $data->id))) . '<br>';
                 echo CHtml::link('видалити', $this->createUrl('delete', array('id' => $data->id)));
-            else echo CHtml::link('редагувати', $this->createUrl('update', array('id' => $data->id))); ?>
+            } else echo CHtml::link('редагувати', $this->createUrl('update', array('id' => $data->id))); ?>
         </td>
         <td><b><?php echo $data->planSubject->subject->title; ?></b></td>
         <td><b><?php echo isset($data->teacher) ? $data->teacher->getFullName() :
@@ -206,7 +207,7 @@ foreach ($dataProvider->getData() as $data):
         <td class="general"><?php echo $data->getStudentsCount(); ?></td>
         <td class="general"><?php echo $data->getBudgetStudentsCount(); ?></td>
         <td class="general"><?php echo $data->getContractStudentsCount(); ?></td>
-        <td class="general">Кредитів ECTS</td>
+        <td class="general"><?php echo $data->getPlanCredits(); ?></td>
         <td class="general"><?php echo $data->getPlanTotal(); ?></td>
         <td class="general"><?php echo $data->getPlanClasses(); ?></td>
         <td class="general"><?php echo $data->getPlanSelfwork(); ?></td>
@@ -268,8 +269,8 @@ foreach ($dataProvider->getData() as $data):
             $fall['test'] += intval($test); ?>
         </td>
         <td class="fall">
-            <?php echo $pay_fall = $data->getPay($fallSemester);
-            $fall['pay'] += intval($pay_fall); ?>
+            <b><?php echo $pay_fall = $data->getPay($fallSemester);
+                $fall['pay'] += intval($pay_fall); ?></b>
         </td>
 
         <td class="spring">
@@ -330,8 +331,8 @@ foreach ($dataProvider->getData() as $data):
             $spring['test'] += $data->getTest($springSemester); ?>
         </td>
         <td class="spring">
-            <?php echo $pay_spring = $data->getPay($springSemester);
-            $spring['pay'] += $pay_spring; ?>
+            <b><?php echo $pay_spring = $data->getPay($springSemester);
+                $spring['pay'] += $pay_spring; ?></b>
         </td>
 
         <td>
