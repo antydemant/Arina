@@ -352,4 +352,14 @@ class ExcelMaker extends CComponent
         return $objPHPExcel;
     }
 
+    /**
+     * @param $plan WorkPlan
+     * @return PHPExcel
+     */
+    protected function makeWorkPlan($plan)
+    {
+        $objPHPExcel = $this->loadTemplate('work_plan.xls');
+
+        return $objPHPExcel;
+    }
 }

@@ -3,7 +3,7 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	Yii::t('base', 'Study Years'),
+	Yii::t('base', 'Study years'),
 );
 
 $this->menu=array(
@@ -17,7 +17,6 @@ $this->menu=array(
 
 <?php
 $columns = array(
-    'id',
     'begin',
     'end',
     array(
