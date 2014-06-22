@@ -421,6 +421,15 @@ class Load extends ActiveRecord
     }
 
     /**
+     * @return float|string
+     */
+    public function getPlanCredits()
+    {
+        if ($this->type == self::TYPE_PROJECT) return '';
+        return round($this->getPlanTotal() / 54, 2);
+    }
+
+    /**
      * @return int
      */
     public function getPlanTotal()
@@ -516,4 +525,6 @@ class Load extends ActiveRecord
             2 => 'Дипломний проект',
         );
     }
+
+
 }

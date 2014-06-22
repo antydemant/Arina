@@ -207,7 +207,7 @@ foreach ($dataProvider->getData() as $data):
         <td class="general"><?php echo $data->getStudentsCount(); ?></td>
         <td class="general"><?php echo $data->getBudgetStudentsCount(); ?></td>
         <td class="general"><?php echo $data->getContractStudentsCount(); ?></td>
-        <td class="general">Кредитів ECTS</td>
+        <td class="general"><?php echo $data->getPlanCredits(); ?></td>
         <td class="general"><?php echo $data->getPlanTotal(); ?></td>
         <td class="general"><?php echo $data->getPlanClasses(); ?></td>
         <td class="general"><?php echo $data->getPlanSelfwork(); ?></td>
