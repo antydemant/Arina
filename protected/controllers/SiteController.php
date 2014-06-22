@@ -54,39 +54,6 @@ class SiteController extends Controller
         }
     }
 
-    public function actionTest()
-    {
-
-        $auth = Yii::app()->authManager;
-        $auth->assign('dephead',10);
-        echo "ok";
-        $this->render('test');
-    }
-
-    /**
-     * Displays the contact page
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm;
-        if (isset($_POST['ContactForm'])) {
-            $model->attributes = $_POST['ContactForm'];
-            if ($model->validate()) {
-                $name = '=?UTF-8?B?' . base64_encode($model->name) . '?=';
-                $subject = '=?UTF-8?B?' . base64_encode($model->subject) . '?=';
-                $headers = "From: $name <{$model->email}>\r\n" .
-                    "Reply-To: {$model->email}\r\n" .
-                    "MIME-Version: 1.0\r\n" .
-                    "Content-Type: text/plain; charset=UTF-8";
-
-                mail(Yii::app()->params['adminEmail'], $subject, $model->body, $headers);
-                Yii::app()->user->setFlash('contact', 'Thank you for contacting us. We will respond to you as soon as possible.');
-                $this->refresh();
-            }
-        }
-        $this->render('contact', array('model' => $model));
-    }
-
     protected static function generateRandomString($length = 10)
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -101,7 +68,9 @@ class SiteController extends Controller
      * Операція "Що попові можна, то дякові - зась"
      */
 
-    public function actionSetup() {
+    public function actionSetup()
+    {
+        /** @var CAuthManager $auth */
         $auth = Yii::app()->authManager;
 
         /*
