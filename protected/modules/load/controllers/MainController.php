@@ -136,8 +136,27 @@ class MainController extends Controller
 
         if (isset($_POST['Load'])) {
             $model->setAttributes($_POST['Load'], false);
+            $model->course = $model->group->getCourse($model->study_year_id);
             if ($model->save()) {
                 $this->redirect($this->createUrl('view', array('id' => $id)));
+            }
+        }
+
+        $this->render('project', array('model' => $model));
+    }
+
+    public function actionEdit($id)
+    {
+        /** @var Load $model */
+        $model = Load::model()->loadContent($id);
+        $model->setScenario('project');
+        $model->commissionId = $model->teacher->cyclic_commission_id;
+
+        if (isset($_POST['Load'])) {
+            $model->setAttributes($_POST['Load'], false);
+            $model->course = $model->group->getCourse($model->study_year_id);
+            if ($model->save()) {
+                $this->redirect($this->createUrl('view', array('id' => $model->study_year_id)));
             }
         }
 

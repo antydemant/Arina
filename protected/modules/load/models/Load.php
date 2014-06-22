@@ -46,6 +46,8 @@ class Load extends ActiveRecord
 
     public $workType;
 
+    protected static $HOURS = array('', '', '', '', '');
+
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!
@@ -71,8 +73,10 @@ class Load extends ActiveRecord
     public function rules()
     {
         return array(
-            array('fall_hours, spring_hours', 'default', 'value' => array('', '', '', '', '')),
+            array('fall_hours', 'default', 'setOnEmpty' => false, 'safe' => true, 'value' => !empty($this->fall_hours) ? CMap::mergeArray(self::$HOURS, $this->fall_hours) : self::$HOURS),
+            array('spring_hours', 'default', 'setOnEmpty' => false, 'safe' => true, 'value' => !empty($this->spring_hours) ? CMap::mergeArray(self::$HOURS, $this->spring_hours) : self::$HOURS),
             array('consult', 'validateConsultation'),
+            array('teacher_id', 'required', 'on' => 'project'),
         );
     }
 
@@ -136,9 +140,11 @@ class Load extends ActiveRecord
         $criteria = new CDbCriteria;
 
         $criteria->compare('id', $this->id);
-        $criteria->compare('teacher_id', $this->teacher_id);
-        $criteria->compare('planSubject.cyclic_commission_id', $this->commissionId);
-
+        if (isset($this->teacher_id)) {
+            $criteria->compare('teacher_id', $this->teacher_id);
+        } else {
+            $criteria->compare('planSubject.cyclic_commission_id', $this->commissionId);
+        }
         $criteria->with = array('planSubject' => array('together' => true));
 
         return new CActiveDataProvider($this, array(
