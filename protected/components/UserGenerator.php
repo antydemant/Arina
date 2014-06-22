@@ -28,7 +28,7 @@ class UserGenerator {
         {
             $password .= $lower[mt_rand(0, $lower_length-1)];
         }
-        return md5($password);
+        return $password;
     }
 
     public static function generateUser($identityId, $identityType) {

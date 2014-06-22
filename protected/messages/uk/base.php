@@ -6,7 +6,7 @@ return array(
     'Settings' => 'Налаштування',
     'Practice' => 'Практика',
     'References' => 'Довідники',
-    'Study Years' => 'Навчальні роки',
+    'Study years' => 'Навчальні роки',
     'Curator cabinet' => 'Кабінет куратора',
     'Semester' => 'Семестер',
     'Date' => 'Дата',
@@ -92,4 +92,7 @@ return array(
     'Human resources' => 'Відділ кадрів',
     'Students import' => 'Імпорт студентів з ЄДЕБО',
     'Other' => 'Інше',
+    'File Shares' => 'Файли',
+    'Download' => 'Скачати',
+    'users'=>'Користувачі',
 );

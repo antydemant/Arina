@@ -16,10 +16,10 @@ class PlanController extends Controller
 
     public function actionCreate()
     {
-        if (!Yii::app()->user->checkAccess('dephead'))
+       /* if (!Yii::app()->user->checkAccess('dephead'))
         {
             throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
-        }
+        }*/
         $model = new StudyPlan('create');
 
         if (isset($_POST['StudyPlan'])) {
@@ -124,7 +124,7 @@ class PlanController extends Controller
     public function actionUpdate($id)
     {
         $model = StudyPlan::model()->loadContent($id);
-        if (!Yii::app()->user->checkAccess('manageStudyPlan',
+      /*  if (!Yii::app()->user->checkAccess('manageStudyPlan',
                 array(
                     'id' => $model->speciality->department->head_id,
                     'type' => User::TYPE_TEACHER,
@@ -133,7 +133,7 @@ class PlanController extends Controller
         )
         {
             throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
-        }
+        }*/
         if (isset($_POST['StudyPlan'])) {
             $model->attributes = $_POST['StudyPlan'];
             if (isset(Yii::app()->session['weeks'])) {

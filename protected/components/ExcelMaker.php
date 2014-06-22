@@ -163,6 +163,17 @@ class ExcelMaker extends CComponent
     }
 
     /**
+     * @param $data TeacherDocument
+     * @return PHPExcel
+     */
+    protected function makeTeacherList($data)
+    {
+        $objPHPExcel = $this->loadTemplate('teacherList.xls');
+
+        return $objPHPExcel;
+    }
+
+    /**
      * Generate study plan document
      * @param $plan StudyPlan
      * @return PHPExcel
@@ -303,7 +314,7 @@ class ExcelMaker extends CComponent
             foreach ($group as $item) {
                 /**@var $item StudySubject */
                 $sheet->setCellValue("A$i", $item->subject->code);
-                $sheet->setCellValue("B$i", $item->subject->getCycle($plan->speciality_id) . $jj . $item->getTitle());
+                $sheet->setCellValue("B$i", $item->subject->getCycle($plan->speciality_id)->id . '.' . $jj . $item->getTitle());
                 $sheet->setCellValue("C$i", $item->getExamSemesters());
                 $sheet->setCellValue("D$i", $item->getTestSemesters());
                 $sheet->setCellValue("E$i", $item->getWorkSemesters());
@@ -341,4 +352,14 @@ class ExcelMaker extends CComponent
         return $objPHPExcel;
     }
 
+    /**
+     * @param $plan WorkPlan
+     * @return PHPExcel
+     */
+    protected function makeWorkPlan($plan)
+    {
+        $objPHPExcel = $this->loadTemplate('work_plan.xls');
+
+        return $objPHPExcel;
+    }
 }

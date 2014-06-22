@@ -5,7 +5,7 @@
  */
 class ERestorePasswordForm extends CFormModel
 {
-    public $email;
+    public $username;
 
     /**
      * Declares attribute labels.
@@ -13,7 +13,7 @@ class ERestorePasswordForm extends CFormModel
     public function attributeLabels()
     {
         return array(
-            'email' => Yii::t('base', 'E-mail'),
+            'username' => "Ім'я користувача",
         );
     }
 
@@ -24,10 +24,7 @@ class ERestorePasswordForm extends CFormModel
     public function rules()
     {
         return array(
-            // email are required
-            array('email', 'required'),
-            // email must be email)
-            array('email', 'email'),
+            array('username', 'required'),
         );
     }
 }

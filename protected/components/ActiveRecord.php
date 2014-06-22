@@ -61,5 +61,42 @@ class ActiveRecord extends CActiveRecord
         return CHtml::listData(static::model()->findAll($criteria), $key, $value);
     }
 
+    protected function afterSave() {
+        $message = Yii::app()->user->username . ' ';
+        $attributes = $this->getAttributes();
+
+        /*
+        $userId = Yii::app()->user->identityId;
+        $userType = Yii::app()->user->identityType;
+        $identity = null;
+        if ($userType == User::TYPE_TEACHER) {
+            $identity = Teacher::model()->findByAttributes(array('id' => $userId));
+        } else if ($userType == User::TYPE_STUDENT) {
+            $identity = Student::model()->findByAttributes(array('id' => $userId));
+        } else if ($userType == User::TYPE_SUPER) {
+            $identity = 'admin';
+        }
+
+        if ($identity == null) {
+            return parent::afterSave();
+        }
+        */
+
+
+        if ($this->isNewRecord) {
+            $message = $message . 'created ';
+        } else {
+            $message = $message . 'updated ';
+        }
+        $table = $this->tableName();
+        $message = $message . $table . ' ';
+        foreach($attributes as $attribute) {
+            $message = $message . $attribute . ' ';
+        }
+        $message = $message . 'end';
+        Yii::getLogger()->autoFlush=3;
+        Yii::log($message, CLogger::LEVEL_INFO, 'record');
+        return parent::afterSave();
+    }
 
 }

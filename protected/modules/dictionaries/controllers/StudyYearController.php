@@ -7,7 +7,7 @@ class StudyYearController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 //	public $layout = '//layouts/column2';
-    public $name = 'Study_Years';
+    public $name = 'Study years';
 
 	/**
 	 * Creates a new model.
@@ -44,10 +44,6 @@ class StudyYearController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-        if(!Yii::app()->user->checkAccess('manageStudyYear'))
-        {
-            throw new CHttpException(403, Yii::t('yii','You are not authorized to perform this action.'));
-        }
 
         $model = StudyYear::model() -> loadContent($id);
 

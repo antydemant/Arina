@@ -59,7 +59,14 @@ class UserController extends Controller
 
         $this->ajaxValidation('restore-form', $model);
 
-        //TODO processing of request
+        if (isset($_POST['ERestorePasswordForm']['username'])) {
+            $username = $_POST['ERestorePasswordForm']['username'];
+            $user = User::model()->findByAttributes(array('username' => $username));
+            if (isset($user)) {
+                
+            }
+        }
+
         $this->render(
             'restore',
             array('model' => $model,)
@@ -77,8 +84,8 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a particular model.
-     * @param integer $id the ID of the model to be displayed
+     * @param $id
+     * @throws CHttpException
      */
     public function actionView($id)
     {
@@ -101,7 +108,7 @@ class UserController extends Controller
         }
         $model = new User;
 
-        $this->performAjaxValidation('user-form', $model);
+        //$this->performAjaxValidation('user-form', $model);
 
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
@@ -115,23 +122,25 @@ class UserController extends Controller
     }
 
     /**
-     * Updates a particular model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id the ID of the model to be updated
+     * @param $id
+     * @throws CHttpException
      */
     public function actionUpdate($id)
     {
         if ((!Yii::app()->user->checkAccess('admin')) && (Yii::app()->user->id != $id)) {
             throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
         }
+        /** @var User $model */
         $model = $this->loadModel($id);
-
+        $model->password = '';
         //$this->performAjaxValidation('user-form', $model);
 
         if (isset($_POST['User'])) {
             $model->attributes = $_POST['User'];
-            if ($model->save())
+            if ($model->save()){
+                Yii::app()->getUser()->setFlash('success','Дані були успішно змінені');
                 $this->redirect(array('update', 'id' => $model->id));
+            }
         }
 
         $this->render('update', array(
@@ -207,7 +216,7 @@ class UserController extends Controller
         return CMap::mergeArray(
             array(
                 array('allow',
-                    'actions' => array('login'),
+                    'actions' => array('login', 'restore'),
                     'users' => array('*'),
                 ),
             ),

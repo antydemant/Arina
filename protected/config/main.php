@@ -31,7 +31,6 @@ return CMap::mergeArray(
             'booster.components.*',
             'booster.helpers.*'
         ),
-
         'modules' => array(
             'studyPlan',
             'journal',
@@ -43,8 +42,12 @@ return CMap::mergeArray(
             'curator',
             'import',
             'load',
+            'fileShare',
+//            'gii'=>array(
+//                'class'=>'system.gii.GiiModule',
+//                'password'=>'123',
+//            ),
         ),
-
         'components' => array(
             'excel' => array(
                 'class' => 'application.components.ExcelMaker',
@@ -86,10 +89,16 @@ return CMap::mergeArray(
                 'class' => 'CLogRouter',
                 'routes' => array(
                     array(
-                        'class' => 'CWebLogRoute', 'levels' => 'trace, info, error, warning',
+                        'class' => 'CWebLogRoute',
+                        'levels' => 'error, warning',
                     ),
                     array(
-                        'class' => 'CFileLogRoute', 'levels' => 'trace, info, error, warning',
+                        'class' => 'CFileLogRoute',
+                        'levels' => CLogger::LEVEL_INFO,
+                        'logFile' => 'log',
+                        'maxFileSize' => 1,
+                        'maxLogFiles' => 100,
+                        'rotateByCopy' => false,
                     ),
                 ),
             ),

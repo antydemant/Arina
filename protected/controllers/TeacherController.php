@@ -159,6 +159,6 @@ class TeacherController extends Controller
         $condition = "cyclic_commission_id = :cyclic_commission_id";
         $params = array(':cyclic_commission_id' => $id);
         $teachers = Teacher::model()->findAll($condition, $params);
-        echo CHtml::dropDownList('', '', CHtml::listData($teachers, 'id', 'fullName'));
+        echo CHtml::dropDownList('', '', CHtml::listData($teachers, 'id', 'fullName'), array('empty'=>''));
     }
 }

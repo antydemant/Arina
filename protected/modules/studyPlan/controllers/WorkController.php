@@ -16,10 +16,10 @@ class WorkController extends Controller
 
     public function actionCreate()
     {
-        if (!Yii::app()->user->checkAccess('dephead'))
+        /*if (!Yii::app()->user->checkAccess('dephead'))
         {
             throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));
-        }
+        }*/
         $model = new WorkPlan();
 
         if (isset($_POST['WorkPlan'])) {

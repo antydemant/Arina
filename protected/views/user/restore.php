@@ -19,7 +19,7 @@
             'enableAjaxValidation' => true,
         )
     ); ?>
-    <?php echo $form->textFieldRow($model, 'email'); ?>
+    <?php echo $form->textFieldRow($model, 'username'); ?>
     <div class="form-actions">
         <?php $this->widget(
             'bootstrap.widgets.TbButtonGroup',

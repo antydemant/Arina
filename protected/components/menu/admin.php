@@ -5,7 +5,7 @@
  */
 $menu = array(
     array('label' => Yii::t('base', 'References'), 'items' => array(
-        array('label' => Yii::t('base', 'Study Years'), 'url' => array('/dictionaries/studyYear')),
+        array('label' => Yii::t('base', 'Study years'), 'url' => array('/dictionaries/studyYear')),
         array('label' => Yii::t('base', 'Audiences'), 'url' => array('/audience')),
         array('label' => Yii::t('base', 'Departments'), 'url' => array('/department')),
         array('label' => Yii::t('base', 'Specialities'), 'url' => array('/speciality')),
@@ -29,4 +29,5 @@ $menu = array(
         array('label' => Yii::t('base', 'Human resources'), 'url' => array('/hr')),
         array('label' => Yii::t('base', 'Students import'), 'url' => array('/import')),
     )),
+    array('label' => Yii::t('base', 'File Shares'), 'url' => array('/fileShare')),
 );
