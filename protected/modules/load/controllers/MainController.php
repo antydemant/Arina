@@ -170,10 +170,14 @@ class MainController extends Controller
         $model = new LoadDocGenerateModel();
         if (isset($_POST['LoadDocGenerateModel'])) {
             $model->setAttributes($_POST['LoadDocGenerateModel'], false);
-            $model->generate();
+            $model->yearId = $id;
+            if ($model->validate()) {
+                $model->generate();
+            }
         }
         $this->render('doc', array(
             'model' => $model,
+            'year'=>$year,
         ));
     }
 } 

@@ -89,4 +89,5 @@ return array(
     'Experience years' => 'Стаж (років)',
     'Experience months' => 'Стаж (місяців)',
     'Experience days' => 'Стаж (днів)',
+    'Get list in excel'=>'Генерувати список в Excel',
 );
