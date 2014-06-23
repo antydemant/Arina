@@ -134,6 +134,18 @@ class ExcelMaker extends CComponent
         $sheet->setCellValue($cell, str_replace($alias, $value, $sheet->getCell($cell)->getCalculatedValue()));
     }
 
+    protected static function getBorderStyle()
+    {
+        return array(
+            'borders' => array(
+                'allborders' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_THIN,
+                    'color' => array('argb' => '00000000'),
+                ),
+            ),
+        );
+    }
+
     /**
      * @param $model GroupDocForm
      * @return PHPExcel
@@ -201,14 +213,6 @@ class ExcelMaker extends CComponent
         }
 
         // table #2
-        $styleArray = array(
-            'borders' => array(
-                'allborders' => array(
-                    'style' => PHPExcel_Style_Border::BORDER_THIN,
-                    'color' => array('argb' => '00000000'),
-                ),
-            ),
-        );
         $i = 46;
         $totals = array(
             'T' => 0,
@@ -249,7 +253,7 @@ class ExcelMaker extends CComponent
             } else {
                 $sheet->setCellValue('P' . $i, 52);
             }
-            $sheet->getStyle("A$i:R$i")->applyFromArray($styleArray);
+            $sheet->getStyle("A$i:R$i")->applyFromArray(self::getBorderStyle());
             $i++;
         }
         $sheet->setCellValue('A' . $i, 'Разом');
@@ -274,7 +278,7 @@ class ExcelMaker extends CComponent
                         $sheet->setCellValue("AF$i", $j + 1);
                     }
                 }
-                $sheet->getStyle("T$i:AH$i")->applyFromArray($styleArray);
+                $sheet->getStyle("T$i:AH$i")->applyFromArray(self::getBorderStyle());
                 $i++;
             }
             for ($k = 0; $k < count($item->control); $k++) {
@@ -285,7 +289,7 @@ class ExcelMaker extends CComponent
                         $sheet->setCellValue("AJ$z", $item->subject->title);
                         $sheet->setCellValue("AT$z", $name);
                         $sheet->setCellValue("BC$z", $k + 1);
-                        $sheet->getStyle("AJ$z:BC$z")->applyFromArray($styleArray);
+                        $sheet->getStyle("AJ$z:BC$z")->applyFromArray(self::getBorderStyle());
                         $z++;
                     }
                 }
@@ -358,9 +362,189 @@ class ExcelMaker extends CComponent
      */
     protected function makeWorkPlan($plan)
     {
-        $objPHPExcel = $this->loadTemplate('work_plan.xls');
+        $objPHPExcel = $this->loadTemplate('work.xls');
 
+        $coursesAmount = $plan->getCourseAmount();
+        $groupsByCourse = $plan->speciality->getGroupsByStudyYear($plan->year_id);
+        $graphOffset = 0;
+        for ($i = 0; $i < $coursesAmount; $i++) {
+            $groups = array();
+            foreach ($groupsByCourse as $group => $course) {
+                if ($course == $i + 1) {
+                    $groups[] = $group;
+                }
+            }
+            $sheet = $sheet = $objPHPExcel->setActiveSheetIndex($i);
+            $this->makeWorkPlanPage($plan, $i + 1, $sheet, $groups, $graphOffset);
+            $graphOffset += count($groups);
+        }
+        $objPHPExcel->setActiveSheetIndex(0);
         return $objPHPExcel;
+    }
+
+    /**
+     * @param $plan WorkPlan
+     * @param $course
+     * @param $sheet PHPExcel_Worksheet
+     * @param $groups
+     * @param $graphOffset
+     */
+    protected function makeWorkPlanPage($plan, $course, $sheet, $groups, $graphOffset)
+    {
+        $this->setValue($sheet, 'R8', $course);
+
+        $sheet->setCellValue('R3', Settings::getValue('name'));
+        $beginYear = $plan->year->begin;
+        $endYear = $plan->year->end;
+        $this->setValue($sheet, 'R5', $beginYear, '@begin');
+        $this->setValue($sheet, 'R5', $endYear, '@end');
+        $this->setValue($sheet, 'Y17', $course);
+        $this->setValue($sheet, 'AS17', $course + 1);
+        $sheet->setCellValue('AP17', $plan->semesters[$course - 1]);
+        $sheet->setCellValue('BJ17', $plan->semesters[$course]);
+        $specialityFullName = $plan->speciality->number . ' "' . $plan->speciality->title . '"';
+        $this->setValue($sheet, 'R6', $specialityFullName);
+        //groups graph;
+        $colNumber = PHPExcel_Cell::columnIndexFromString('G');
+        for ($i = 0; $i < count($groups); $i++) {
+            $rowIndex = $i + 11;
+            $sheet->setCellValue("G$rowIndex", $groups[$i]);
+            for ($j = 0; $j < 52; $j++) {
+                $colString = PHPExcel_Cell::stringFromColumnIndex($colNumber + $j);
+                $k = $i + $graphOffset;
+                if (isset($plan->graph[$k][$j])) {
+                    $sheet->setCellValue($colString . $rowIndex, Yii::t('plan', $plan->graph[$k][$j]));
+                }
+            }
+            $sheet->getStyle("G$rowIndex:BG$rowIndex")->applyFromArray(self::getBorderStyle());
+        }
+
+        //hours table
+        switch ($course) {
+            case 1:
+                $fall = 0;
+                $spring = 1;
+                break;
+            case 2:
+                $fall = 2;
+                $spring = 3;
+                break;
+            case 3:
+                $fall = 4;
+                $spring = 5;
+                break;
+            case 4:
+                $fall = 6;
+                $spring = 7;
+                break;
+            default:
+                $fall = 0;
+                $spring = 1;
+        }
+
+        $row = 23;
+        $i = 0;
+        $id = 1;
+        $totals = array();
+        $subjectsGroups = $plan->getSubjectsByCycles($course);
+        foreach ($subjectsGroups as $cycle => $subjects) {
+
+            $sheet->setCellValue("C$row", $cycle);
+            $sheet->setCellValue("A$row", $id++);
+
+
+            $i++;
+            $row++;
+
+            $this->workPlanInsertNewLine($sheet, $row);
+
+
+            $j = 0;
+            $begin = $row;
+            foreach ($subjects as $item) {
+
+
+                /**@var $item WorkSubject */
+                $sheet->setCellValue("B$row", $item->subject->code);
+                $sheet->setCellValue("A$row", $id++);
+                $sheet->setCellValue("C$row", $item->subject->getCycle($plan->speciality_id)->id . '.' . ($j + 1) . ' ' . $item->getTitle());
+                $sum = array_sum(isset($item->subject) ? $item->total : array());
+                $sheet->setCellValue("O$row", $sum / 54);
+                $sheet->setCellValue("Q$row", $sum);
+                //FALL
+                $sheet->setCellValue("Y$row", $item->total[$fall]);
+                $sheet->setCellValue("AA$row", $item->getClasses($fall));
+                $sheet->setCellValue("AC$row", $item->lectures[$fall]);
+                $sheet->setCellValue("AE$row", $item->labs[$fall]);
+                $sheet->setCellValue("AG$row", $item->practs[$fall]);
+                $sheet->setCellValue("AI$row", $item->getSelfwork($fall));
+                $sheet->setCellValue("AK$row", ($item->control[$fall][4] || $item->control[$fall][5]) ? $item->project_hours : '');
+                $sheet->setCellValue("AN$row", $item->weeks[$fall]);
+                $sheet->setCellValue("AO$row", (($item->control[$fall][1]) ? 1 : ''));
+                $sheet->setCellValue("AQ$row", (($item->control[$fall][0]) ? 1 : ''));
+
+                //SPRING
+                $sheet->setCellValue("AS$row", $item->total[$spring]);
+                $sheet->setCellValue("AU$row", $item->getClasses($spring));
+                $sheet->setCellValue("AW$row", $item->lectures[$spring]);
+                $sheet->setCellValue("AY$row", $item->labs[$spring]);
+                $sheet->setCellValue("BA$row", $item->practs[$spring]);
+                $sheet->setCellValue("BC$row", $item->getSelfwork($spring));
+                $sheet->setCellValue("BE$row", ($item->control[$spring][4] || $item->control[$spring][5]) ? $item->project_hours : '');
+                $sheet->setCellValue("BH$row", $item->weeks[$spring]);
+                $sheet->setCellValue("BI$row", (($item->control[$spring][1]) ? 1 : ''));
+                $sheet->setCellValue("BK$row", (($item->control[$spring][0]) ? 1 : ''));
+
+                //CYCLE COMMISSION
+
+                $sheet->setCellValue("BM$row", $item->cycleCommission->title);
+
+                $j++;
+                $row++;
+
+                $this->workPlanInsertNewLine($sheet, $row);
+
+            }
+
+            $end = $row - 1;
+
+            $sheet->setCellValue("C$row", Yii::t('base', 'Total'));
+            $totals[] = $row;
+            for ($c = 14; $c < 45; $c++) {
+                $index = PHPExcel_Cell::stringFromColumnIndex($c);
+                $sheet->setCellValue("$index$row", "=SUM($index$begin:$index$end)");
+            }
+
+            $row++;
+
+            $this->workPlanInsertNewLine($sheet, $row);
+        }
+        $sheet->removeRow($row);
+        $sheet->setCellValue("C$row", 'Разом');
+
+        for ($c = 14; $c < 45; $c++) {
+            $index = PHPExcel_Cell::stringFromColumnIndex($c);
+            $sheet->setCellValue("$index$row", "=SUM($index" . implode("+$index", $totals) . ')');
+        }
+        $row += 6;
+        $this->setValue($sheet, "AD$row", $plan->speciality->department->head->getFullName());
+    }
+
+    /**
+     * @param $sheet PHPExcel_Worksheet
+     * @param $row
+     */
+    public function workPlanInsertNewLine($sheet, $row)
+    {
+        $sheet->insertNewRowBefore($row, 1);
+        $sheet->mergeCells("C$row:N$row");
+        $exclude = array(32, 38, 52, 58);
+        for ($i = 14; $i < 66; $i += 2) {
+            if (in_array($i, $exclude)) continue;
+            $index1 = PHPExcel_Cell::stringFromColumnIndex($i);
+            $index2 = PHPExcel_Cell::stringFromColumnIndex($i + 1);
+            $sheet->mergeCells("$index1$row:$index2$row");
+        }
     }
 
     protected function makeEmployeesList($data)

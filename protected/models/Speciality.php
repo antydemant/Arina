@@ -100,7 +100,7 @@ class Speciality extends ActiveRecord implements IDateContainable
     public function relations()
     {
         return array(
-            'groups' => array(self::HAS_MANY, 'Group', 'speciality_id', 'order' => 'title ASC'),
+            'groups' => array(self::HAS_MANY, 'Group', 'speciality_id', 'order' => 'title DESC'),
             'department' => array(self::BELONGS_TO, 'Department', 'department_id'),
             'studyPlans' => array(self::HAS_MANY, 'StudyPlan', 'speciality_id'),
             'workPlans' => array(self::HAS_MANY, 'WorkPlan', 'speciality_id'),

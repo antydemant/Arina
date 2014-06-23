@@ -22,6 +22,18 @@
  */
 class WorkPlan extends ActiveRecord
 {
+    public function getCourseAmount()
+    {
+        /** @var StudyPlan $studyPlan */
+        $studyPlan = StudyPlan::model()->findByAttributes(array(
+            'speciality_id' => $this->speciality_id));
+        if ($studyPlan) {
+            return count($studyPlan->graph);
+        } else {
+            return 0;
+        }
+    }
+
     /** Допустима різниця між годинами в навчальному та робочому плані */
     const HOURS_DIFF = 5;
     public $plan_origin;
@@ -35,6 +47,27 @@ class WorkPlan extends ActiveRecord
         return 'wp_plan';
     }
 
+    /**
+     * Group subject by cycles
+     * @param $course
+     * @return array
+     */
+    public function getSubjectsByCycles($course)
+    {
+        $list = array();
+        foreach ($this->subjects as $item) {
+            if ($item->presentIn($course)){
+                $cycle = $item->subject->getCycle($this->speciality_id);
+                $name = $cycle->id .' '. $cycle->title;
+                if (isset($list[$name])) {
+                    $list[$name][] = $item;
+                } else {
+                    $list[$name] = array($item);
+                }
+            }
+        }
+        return $list;
+    }
 
     /**
      * @param $id
@@ -165,7 +198,7 @@ class WorkPlan extends ActiveRecord
         foreach ($this->subjects as $subject) {
             if (abs(array_sum($subject->total) - $subject->control_hours['total']) > self::HOURS_DIFF) {
                 if (isset($subject->subject))
-                $warnings[] = 'Предмет "' . $subject->subject->title . '" за загальною кількістю годин відрізняється від навчального плану більше ніж на ' . self::HOURS_DIFF . ' годин';
+                    $warnings[] = 'Предмет "' . $subject->subject->title . '" за загальною кількістю годин відрізняється від навчального плану більше ніж на ' . self::HOURS_DIFF . ' годин';
             }
         }
         return implode(CHtml::tag('br'), $warnings);

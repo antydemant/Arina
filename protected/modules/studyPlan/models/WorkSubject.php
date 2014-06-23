@@ -27,6 +27,7 @@
  * The followings are the available model relations:
  * @property WorkPlan $plan
  * @property Subject $subject
+ * @property CyclicCommission $cycleCommission
  */
 class WorkSubject extends ActiveRecord
 {
@@ -47,6 +48,12 @@ class WorkSubject extends ActiveRecord
     public static function model($className = __CLASS__)
     {
         return parent::model($className);
+    }
+
+
+    public function getTitle()
+    {
+        return (!(empty($this->diploma_name) && empty($this->certificate_name)) ? '* ' : '') . $this->subject->title . (($this->dual_labs || $this->dual_practice) ? ' *' : '');
     }
 
     /**
@@ -78,6 +85,7 @@ class WorkSubject extends ActiveRecord
     {
         return array(
             'plan' => array(self::BELONGS_TO, 'WorkPlan', 'plan_id'),
+            'cycleCommission' => array(self::BELONGS_TO, 'CyclicCommission', 'cyclic_commission_id'),
             'subject' => array(self::BELONGS_TO, 'Subject', 'subject_id'),
         );
     }
