@@ -152,6 +152,7 @@ class DefaultController extends Controller
                 'provider' => $provider,
                 'groupName' => $groupName,
                 'group' => $group,
+                'id'=>$id,
             )
         );
     }

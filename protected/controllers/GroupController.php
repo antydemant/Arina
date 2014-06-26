@@ -169,4 +169,11 @@ class GroupController extends Controller
             $this->redirect(array('index'));
         }
     }
+
+    public function actionSimpleList($id)
+    {
+        /**@var $excel ExcelMaker */
+        $excel = Yii::app()->getComponent('excel');
+        $excel->getDocument(Group::model()->loadContent($id), 'groupList');
+    }
 }

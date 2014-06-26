@@ -206,7 +206,7 @@ foreach ($dataProvider->getData() as $data):
         </td>
         <td><b><?php echo $data->planSubject->subject->title; ?></b></td>
         <td><b><?php echo isset($data->teacher) ? $data->teacher->getFullName() :
-                    '<span style="color: red">непризначено</span>'; ?></b></td>
+                    '<span style="color: red">не призначено</span>'; ?></b></td>
         <td class="general"><?php echo $data->course; ?></td>
         <td><b><?php echo $data->group->title; ?></b></td>
         <td class="general"><?php echo $data->getStudentsCount(); ?></td>

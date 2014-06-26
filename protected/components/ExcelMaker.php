@@ -163,6 +163,34 @@ class ExcelMaker extends CComponent
     }
 
     /**
+     * @param $group
+     * @return PHPExcel
+     */
+    public function makeGroupList($group)
+    {
+        $objPHPExcel = $this->loadTemplate('simple_group_list.xls');
+        $sheet = $objPHPExcel->setActiveSheetIndex(0);
+        $sheet->setCellValue('A10', Settings::getValue('name'));
+        $this->setValue($sheet, 'A13', $group->speciality->department->title);
+        $this->setValue($sheet, 'A14', $group->speciality->title);
+        $this->setValue($sheet, 'A15', $group->getCourse());
+        $this->setValue($sheet, 'C15', $group->title);
+        $this->setValue($sheet, 'C17', GlobalHelper::getCurrentYear(1), '@value1');
+        $this->setValue($sheet, 'C17', GlobalHelper::getCurrentYear(2), '@value2');
+        $k = $i = 24;
+        foreach ($group->students as $item) {
+            /**@var Student $item */
+            $sheet->setCellValue("A$i", $i - $k + 1);
+            $sheet->setCellValue("B$i", $item->getShortFullName());
+            $sheet->setCellValue("C$i", ($item->contract?'к':''));
+            $sheet->insertNewRowBefore($i + 1, 1);
+            $i++;
+        }
+        $sheet->removeRow($i);
+        return $objPHPExcel;
+    }
+
+    /**
      * Load template document
      * @param $alias
      * @param string $fileType version of template

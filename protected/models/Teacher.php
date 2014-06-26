@@ -68,15 +68,6 @@ class Teacher extends Employee
         return parent::model($className);
     }
 
-
-    /**
-     * @return string the associated database table name
-     */
-/*    public function tableName()
-    {
-        return 'teacher';
-    }*/
-
     /**
      * @return array validation rules for model attributes.
      */

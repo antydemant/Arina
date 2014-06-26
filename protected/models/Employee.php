@@ -226,7 +226,7 @@ class Employee extends ActiveRecord
     public function getNameWithInitials()
     {
         $firstNameInitial = mb_substr($this->first_name, 0, 1, 'UTF-8');
-        $middleNameInitial = mb_substr($this->last_name, 0, 1, 'UTF-8');
+        $middleNameInitial = mb_substr($this->middle_name, 0, 1, 'UTF-8');
         return trim("$this->last_name {$firstNameInitial}. {$middleNameInitial}.");
     }
 }
