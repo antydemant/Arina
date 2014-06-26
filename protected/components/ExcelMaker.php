@@ -640,7 +640,7 @@ class ExcelMaker extends CComponent
 
         $sheet = $objPHPExcel->setActiveSheetIndex(0);
 
-        $employees = Employee::model()->findAll();
+        $employees = Employee::model()->with(array('position'=>array('together'=>true)))->findAll();
 
         $i = 9;
         /** @var $employee Employee */
@@ -649,10 +649,14 @@ class ExcelMaker extends CComponent
             $sheet->setCellValue("B$i", $employee->getFullName());
             $sheet->setCellValue("C$i", isset($employee->position) ? $employee->position->title : '');
 
-            $sheet->insertNewRowBefore($i + 1, 1);
+            //$sheet->insertNewRowBefore($i + 1, 1);
             $i++;
+            $sheet->getStyle("A$i:C$i")->applyFromArray(self::getBorderStyle());
         }
 
+        $i+=2;
+        $sheet->setCellValue("A$i", "Директор інституту, декан факультету, завідувач відділення ______________ ______________");
+        $sheet->setCellValue("E$i", "     (прізвище та ініціали)");
 
         return $objPHPExcel;
     }
