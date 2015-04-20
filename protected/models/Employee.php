@@ -229,4 +229,9 @@ class Employee extends ActiveRecord
         $middleNameInitial = mb_substr($this->middle_name, 0, 1, 'UTF-8');
         return trim("$this->last_name {$firstNameInitial}. {$middleNameInitial}.");
     }
+
+    public function getShortName()
+    {
+        return $this->first_name . ' ' . $this->middle_name . ' ' . $this->last_name;
+    }
 }
