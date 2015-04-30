@@ -21,7 +21,7 @@ class DefaultController extends Controller
             return;
         }
 
-        /*
+
         $model = new JournalViewer();
 
         $model->setScenario('group');
@@ -43,7 +43,7 @@ class DefaultController extends Controller
         $this->render('index', array(
             'model' => $model,
         ));
-        */
+
     }
 
     protected function adminView()
