@@ -218,125 +218,125 @@ foreach ($dataProvider->getData() as $data):
         <td class="general"><?php echo $data->getPlanSelfwork(); ?></td>
 
         <td class="fall">
-            <?php echo $total = $data->getTotal($fallSemester);
+            <?php echo $total = $data->getTotal($fallSemester-1);
             $fall['total'] += intval($total); ?>
         </td>
         <td class="fall">
-            <?php echo $selfwork = $data->getSelfwork($fallSemester);
+            <?php echo $selfwork = $data->getSelfwork($fallSemester-1);
             $fall['selfwork'] += intval($selfwork); ?>
         </td>
         <td class="fall">
-            <?php echo $classes = $data->getClasses($fallSemester);
+            <?php echo $classes = $data->getClasses($fallSemester-1);
             $fall['classes'] += intval($classes); ?>
         </td>
         <td class="fall">
-            <?php echo $lectures = $data->getLectures($fallSemester);
+            <?php echo $lectures = $data->getLectures($fallSemester-1);
             $fall['lectures'] += intval($lectures); ?>
         </td>
         <td class="fall">
-            <?php echo $labs = $data->getLabs($fallSemester);
+            <?php echo $labs = $data->getLabs($fallSemester-1);
             $fall['labs'] += intval($labs); ?>
         </td>
         <td class="fall">
-            <?php echo $practs = $data->getPracts($fallSemester);
+            <?php echo $practs = $data->getPracts($fallSemester-1);
             $fall['practs'] += intval($practs); ?>
         </td>
         <td class="fall">
-            <?php echo $project = $data->getProject($fallSemester);
+            <?php echo $project = $data->getProject($fallSemester-1);
             $fall['project'] = intval($project); ?>
         </td>
         <td class="fall">
-            <?php echo $check = $data->getCheck($fallSemester);
+            <?php echo $check = $data->getCheck($fallSemester-1);
             $fall['check'] = intval($check); ?>
         </td>
         <td class="fall">
-            <?php echo $control = $data->getControl($fallSemester);
+            <?php echo $control = $data->getControl($fallSemester-1);
             $fall['control'] = intval($control); ?>
         </td>
         <td class="fall">
-            <?php echo $works = $data->getControlWorks($fallSemester);
+            <?php echo $works = $data->getControlWorks($fallSemester-1);
             $fall['works'] += intval($works); ?>
         </td>
         <td class="fall">
-            <?php echo $dkk = $data->getDkk($fallSemester);
+            <?php echo $dkk = $data->getDkk($fallSemester-1);
             $fall['dkk'] += intval($dkk); ?>
         </td>
         <td class="fall">
-            <?php echo $consult = $data->getConsultation($fallSemester);
+            <?php echo $consult = $data->getConsultation($fallSemester-1);
             $fall['consult'] += intval($consult); ?>
         </td>
         <td class="fall">
-            <?php echo $exam = $data->getExam($fallSemester);
+            <?php echo $exam = $data->getExam($fallSemester-1);
             $fall['exam'] += intval($exam); ?>
         </td>
         <td class="fall">
-            <?php echo $test = $data->getTest($fallSemester);
+            <?php echo $test = $data->getTest($fallSemester-1);
             $fall['test'] += intval($test); ?>
         </td>
         <td class="fall">
-            <b><?php echo $pay_fall = $data->getPay($fallSemester);
+            <b><?php echo $pay_fall = $data->getPay($fallSemester-1);
                 $fall['pay'] += intval($pay_fall); ?></b>
         </td>
 
         <td class="spring">
-            <?php echo $total = $data->getTotal($springSemester);
+            <?php echo $total = $data->getTotal($springSemester-1);
             $spring['total'] += intval($total); ?>
         </td>
         <td class="spring">
-            <?php echo $selfwork = $data->getSelfWork($springSemester);
+            <?php echo $selfwork = $data->getSelfWork($springSemester-1);
             $spring['selfwork'] += intval($selfwork); ?>
         </td>
         <td class="spring">
-            <?php echo $classes = $data->getClasses($springSemester);
+            <?php echo $classes = $data->getClasses($springSemester-1);
             $spring['classes'] += intval($classes); ?>
         </td>
         <td class="spring">
-            <?php echo $lectures = $data->getLectures($springSemester);
+            <?php echo $lectures = $data->getLectures($springSemester-1);
             $spring['lectures'] += intval($lectures); ?>
         </td>
         <td class="spring">
-            <?php echo $labs = $data->getLabs($springSemester);
+            <?php echo $labs = $data->getLabs($springSemester-1);
             $spring['labs'] += intval($labs); ?>
         </td>
         <td class="spring">
-            <?php echo $practs = $data->getPracts($springSemester);
+            <?php echo $practs = $data->getPracts($springSemester-1);
             $spring['practs'] += intval($practs); ?>
         </td>
         <td class="spring">
-            <?php echo $project = $data->getProject($springSemester);
+            <?php echo $project = $data->getProject($springSemester-1);
             $spring['project'] += intval($project); ?>
         </td>
         <td class="spring">
-            <?php echo $check = $data->getCheck($springSemester);
+            <?php echo $check = $data->getCheck($springSemester-1);
             $spring['check'] += intval($check); ?>
         </td>
         <td class="spring">
-            <?php echo $control = $data->getControl($springSemester);
+            <?php echo $control = $data->getControl($springSemester-1);
             $spring['control'] += intval($control); ?>
         </td>
         <td class="spring">
-            <?php echo $works = $data->getControlWorks($springSemester);
+            <?php echo $works = $data->getControlWorks($springSemester-1);
             $spring['works'] += intval($works);?>
         </td>
         <td class="spring">
-            <?php echo $dkk = $data->getDkk($springSemester);
+            <?php echo $dkk = $data->getDkk($springSemester-1);
             $spring['dkk'] += intval($dkk); ?>
         </td>
         <td class="spring">
-            <?php echo $consult = $data->getConsultation($springSemester);
+            <?php echo $consult = $data->getConsultation($springSemester-1);
             $spring['consult'] += intval($consult);
             ?>
         </td>
         <td class="spring">
-            <?php echo $exam = $data->getExam($springSemester);
+            <?php echo $exam = $data->getExam($springSemester-1);
             $spring['exam'] += $exam; ?>
         </td>
         <td class="spring">
-            <?php echo $test = $data->getTest($springSemester);
-            $spring['test'] += $data->getTest($springSemester); ?>
+            <?php echo $test = $data->getTest($springSemester-1);
+            $spring['test'] += $data->getTest($springSemester-1); ?>
         </td>
         <td class="spring">
-            <b><?php echo $pay_spring = $data->getPay($springSemester);
+            <b><?php echo $pay_spring = $data->getPay($springSemester-1);
                 $spring['pay'] += $pay_spring; ?></b>
         </td>
 

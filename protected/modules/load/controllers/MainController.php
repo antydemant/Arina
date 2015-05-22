@@ -50,14 +50,14 @@ class MainController extends Controller
                     $spring = $course * 2;
                     $fall = $spring - 1;
                     $group = Group::model()->find("title='$title'");
-                    if (!empty($subject->total[$fall]) || !empty($subject->total[$spring])) {
+                    if (!empty($subject->total[$fall-1]) || !empty($subject->total[$spring-1])) {
                         $this->getNewLoad($year, $subject, $group, $course, Load::TYPE_LECTURES);
 
-                        if ($subject->dual_practice && (!empty($subject->practs[$fall]) || !empty($subject->practs[$spring]))) {
+                        if ($subject->dual_practice && (!empty($subject->practs[$fall-1]) || !empty($subject->practs[$spring-1]))) {
                             $this->getNewLoad($year, $subject, $group, $course, Load::TYPE_PRACTS);
                         }
 
-                        if ($subject->dual_labs && (!empty($subject->labs[$fall]) || !empty($subject->labs[$spring]))) {
+                        if ($subject->dual_labs && (!empty($subject->labs[$fall-1]) || !empty($subject->labs[$spring-1]))) {
                             $this->getNewLoad($year, $subject, $group, $course, Load::TYPE_LABS);
                         }
 

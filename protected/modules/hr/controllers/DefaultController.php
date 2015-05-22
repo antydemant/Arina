@@ -41,7 +41,7 @@ class DefaultController extends Controller
         $this->ajaxValidation('employee-form', $model);
 
         if (isset($_POST['Employee'])) {
-            $model->attributes = $_POST['Employee'];
+            $model->setAttributes($_POST['Employee']);
             $model->short_name = $model->getShortName();
             if ($model->save()) {
                 $this->redirect(array('index'));//, 'id' => $model->id));
