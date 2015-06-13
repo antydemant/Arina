@@ -384,9 +384,9 @@ class Load extends ActiveRecord
     public function calcConsultation($semester)
     {
         if ($this->type == self::TYPE_PROJECT) return 0;
-        $control = $this->planSubject->control[$semester];
+        $control = $this->planSubject->control[$semester-1];
         return floor(
-            $this->planSubject->total[$semester] * 0.06
+            $this->planSubject->total[$semester-1] * 0.06
         ) + ($control[WorkSubject::CONTROL_EXAM] || $control[WorkSubject::CONTROL_DPA] ? 2 : 0);
     }
 
@@ -437,7 +437,7 @@ class Load extends ActiveRecord
         if ($this->type == self::TYPE_PROJECT) return '';
         $spring = $this->course * 2;
         $fall = $spring - 1;
-        return $this->planSubject->total[$fall] + $this->planSubject->total[$spring];
+        return $this->planSubject->total[$fall-1] + $this->planSubject->total[$spring-1];
     }
 
     /**
@@ -448,7 +448,7 @@ class Load extends ActiveRecord
         if ($this->type == self::TYPE_PROJECT) return '';
         $spring = $this->course * 2;
         $fall = $spring - 1;
-        return $this->planSubject->getClasses($fall) + $this->planSubject->getClasses($spring);
+        return $this->planSubject->getClasses($fall-1) + $this->planSubject->getClasses($spring-1);
     }
 
     /**
@@ -459,7 +459,7 @@ class Load extends ActiveRecord
         if ($this->type == self::TYPE_PROJECT) return '';
         $spring = $this->course * 2;
         $fall = $spring - 1;
-        return $this->planSubject->getSelfwork($fall) + $this->planSubject->getSelfwork($spring);
+        return $this->planSubject->getSelfwork($fall-1) + $this->planSubject->getSelfwork($spring-1);
     }
 
 
