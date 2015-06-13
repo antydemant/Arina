@@ -10,7 +10,7 @@ $menu = array(
         array('label' => Yii::t('base', 'Departments'), 'url' => array('/department')),
         array('label' => Yii::t('base', 'Specialities'), 'url' => array('/speciality')),
         array('label' => Yii::t('base', 'Positions'), 'url' => array('/position')),
-        array('label' => Yii::t('base', 'Subjects'), 'url'  => array('/subject'), 'items' => array(
+        array('label' => Yii::t('base', 'Subjects'), 'url' => array('/subject'), 'items' => array(
             array('label' => Yii::t('base', 'List'), 'url' => array('/subject')),
             array('label' => Yii::t('base', 'Cycles'), 'url' => array('/cycle')),
         )),
@@ -30,5 +30,8 @@ $menu = array(
         array('label' => Yii::t('base', 'Students import'), 'url' => array('/import')),
     )),
     array('label' => Yii::t('base', 'File Shares'), 'url' => array('/fileShare')),
-    array('label' => Yii::t('base', 'Schedule'), 'url' => array('/schedule')),
+    array('label' => Yii::t('base', 'Schedule'), 'items' => array(
+        array('label' => Yii::t('base', 'Schedule'), 'url' => array('/schedule')),
+        array('label' => Yii::t('student', 'Create document'), 'url' => array('/site/schedule')),
+    )),
 );

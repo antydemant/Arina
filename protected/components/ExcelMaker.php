@@ -30,6 +30,42 @@ class ExcelMaker extends CComponent
         spl_autoload_register(array('YiiBase', 'autoload'));
     }
 
+    public function rome($num)
+    {
+        $n = intval($num);
+        $res = '';
+
+        //array of roman numbers
+        $romanNumber_Array = array(
+            'M' => 1000,
+            'CM' => 900,
+            'D' => 500,
+            'CD' => 400,
+            'C' => 100,
+            'XC' => 90,
+            'L' => 50,
+            'XL' => 40,
+            'X' => 10,
+            'IX' => 9,
+            'V' => 5,
+            'IV' => 4,
+            'I' => 1);
+
+        foreach ($romanNumber_Array as $roman => $number) {
+            //divide to get  matches
+            $matches = intval($n / $number);
+
+            //assign the roman char * $matches
+            $res .= str_repeat($roman, $matches);
+
+            //substract from the number
+            $n = $n % $number;
+        }
+
+        // return the result
+        return $res;
+    }
+
     /**
      * Call method for generation current document
      * @param mixed $data source for document
@@ -52,6 +88,115 @@ class ExcelMaker extends CComponent
         }
     }
 
+    public function makeSchedule($data)
+    {
+        $objPHPExcel = $this->loadTemplate('schedule_3.xls');
+        /** @var StudyYear $studyYear */
+        $studyYear = StudyYear::model()->findByPk($data['id']);
+        $id = $data['id'];
+        $semester = $data['semester'];
+        $sql = <<<SQL
+SELECT
+    `tim`.`id`,
+    `tim`.`study_year_id`,
+    `tim`.`semester`,
+    `tim`.`para`,
+    `tim`.`day`,
+    `tim`.`group_id`,
+    `tim`.`subject_id`,
+    `sb`.`title` AS `subject`,
+    `tim`.`teacher1_id`,
+    `tim`.`teacher2_id`,
+    `tim`.`audience1_id`,
+    `tim`.`audience2_id`,
+    `tim`.`type`
+FROM
+    `timetable` `tim`
+        INNER JOIN
+    `subject` `sb` ON `tim`.`subject_id` = `sb`.`id`
+WHERE
+    `tim`.`study_year_id` = $id
+        AND `tim`.`semester` = "$semester"
+ORDER BY `tim`.`para` , `tim`.`type` ASC
+SQL;
+
+        $cmd = Yii::app()->db->createCommand($sql);
+        $data = $cmd->queryAll();
+        $sql = <<<SQL
+SELECT
+    `l`.`group_id`,
+    `g`.`title` AS `group`,
+    `l`.`course`
+FROM
+    `wp_plan` `pl`
+        INNER JOIN
+    (`subject` `sb`
+    INNER JOIN (`wp_subject` `wp`
+    INNER JOIN (`group` `g`
+    INNER JOIN (`load` `l`
+    INNER JOIN `employee` `t` ON `l`.`teacher_id` = `t`.`id`) ON `g`.`id` = `l`.`group_id`) ON `wp`.`id` = `l`.`wp_subject_id`) ON `sb`.`id` = `wp`.`subject_id`) ON `pl`.`id` = `wp`.`plan_id`
+WHERE
+    `l`.`study_year_id` = $id
+group By `g`.`id`
+ORDER BY `l`.`course` , `g`.`title` , `t`.`last_name` ASC
+SQL;
+
+
+        $cmd = Yii::app()->db->createCommand($sql);
+        $groups = $cmd->queryAll();
+        $list = array();
+        foreach ($groups as $group) {
+            if (!isset($list[$group['course']])) {
+                $list[$group['course']] = array();
+            }
+            $list[$group['course']][$group['group_id']] = $group['group'];
+        }/*
+        echo "<pre>";
+        print_r($list);
+        echo "</pre>";
+        die;*/
+
+        $objWorkSheetBase = $objPHPExcel->getSheet(0);
+
+
+        for ($i = 1; $i <= count($list); $i++) {
+            $objWorkSheet1 = clone $objWorkSheetBase;
+            $objWorkSheet1->setTitle($i . ' курс');
+            $objPHPExcel->addSheet($objWorkSheet1);
+        }
+        $objPHPExcel->removeSheetByIndex(0);
+
+
+        for ($i = 1; $i <= count($list); $i++) { //course
+            $sheet = $objPHPExcel->setActiveSheetIndex($i - 1);
+            $value = $sheet->getCell('H3')->getCalculatedValue();
+            $value = str_replace('<years>', $studyYear->begin . ' - ' . $studyYear->end, $value);
+            $value = str_replace('<semester>', $this->rome($semester == 'fill' ? 1 : 2), $value);
+            $value = str_replace('<course>', $this->rome($i), $value);
+            $sheet->setCellValue('H3', $value);
+            $row = 12;
+            $j = 0;
+            foreach ($list[$i] as $id => $group) { //group
+                $from = 4 + 3 * $j;
+                $col = PHPExcel_Cell::stringFromColumnIndex($from); //E
+                $end = PHPExcel_Cell::stringFromColumnIndex($from + 2); //G
+                $sheet->setCellValue($col . $row, $group);
+                $sheet->mergeCells("$col$row:$end$row");
+                $style = $sheet->getStyle("$col$row:$end$row");
+                $style->getAlignment()
+                    ->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $style->getFont()->setBold(true);
+                $j++;
+
+                //@TODO classes
+            }
+
+        }
+
+        $objPHPExcel->setActiveSheetIndex(0);
+        return $objPHPExcel;
+    }
+
     /**
      *
      * @param $data Load[]
@@ -65,7 +210,7 @@ class ExcelMaker extends CComponent
         $i = 1;
         foreach ($data as $load) {
 
-            $springSemester = $load->course * 2-1;
+            $springSemester = $load->course * 2 - 1;
             $fallSemester = $springSemester - 1;
 
             $sheet->setCellValue("A$row", $i);
@@ -182,7 +327,7 @@ class ExcelMaker extends CComponent
             /**@var Student $item */
             $sheet->setCellValue("A$i", $i - $k + 1);
             $sheet->setCellValue("B$i", $item->getShortFullName());
-            $sheet->setCellValue("C$i", ($item->contract?'к':''));
+            $sheet->setCellValue("C$i", ($item->contract ? 'к' : ''));
             $sheet->insertNewRowBefore($i + 1, 1);
             $i++;
         }
@@ -640,7 +785,7 @@ class ExcelMaker extends CComponent
 
         $sheet = $objPHPExcel->setActiveSheetIndex(0);
 
-        $employees = Employee::model()->with(array('position'=>array('together'=>true)))->findAll();
+        $employees = Employee::model()->with(array('position' => array('together' => true)))->findAll();
 
         $i = 9;
         /** @var $employee Employee */
@@ -654,7 +799,7 @@ class ExcelMaker extends CComponent
             $sheet->getStyle("A$i:C$i")->applyFromArray(self::getBorderStyle());
         }
 
-        $i+=2;
+        $i += 2;
         $sheet->setCellValue("A$i", "Директор інституту, декан факультету, завідувач відділення ______________ ______________");
         $sheet->setCellValue("E$i", "     (прізвище та ініціали)");
 
