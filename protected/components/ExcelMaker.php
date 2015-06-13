@@ -65,7 +65,7 @@ class ExcelMaker extends CComponent
         $i = 1;
         foreach ($data as $load) {
 
-            $springSemester = $load->course * 2;
+            $springSemester = $load->course * 2-1;
             $fallSemester = $springSemester - 1;
 
             $sheet->setCellValue("A$row", $i);
