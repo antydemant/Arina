@@ -95,7 +95,6 @@ class Subject extends ActiveRecord
     public function relations()
     {
         return array(
-            'studyPlanSubjects' => array(self::HAS_MANY, 'StudyPlanSubject', 'subject_id'),
             'relations' => array(self::HAS_MANY, 'SubjectRelation', 'subject_id'),
         );
     }

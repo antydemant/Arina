@@ -43,10 +43,10 @@ return CMap::mergeArray(
             'import',
             'load',
             'fileShare',
-//            'gii'=>array(
-//                'class'=>'system.gii.GiiModule',
-//                'password'=>'123',
-//            ),
+            'gii' => array(
+                'class' => 'system.gii.GiiModule',
+                'password' => '123',
+            ),
         ),
         'components' => array(
             'excel' => array(

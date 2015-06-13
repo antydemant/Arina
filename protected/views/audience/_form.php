@@ -18,6 +18,8 @@ $form = $this->beginWidget(BoosterHelper::FORM, array(
 
 <?php echo $form->dropDownListRow($model, 'type', Audience::getTypeList(), array('empty' => Yii::t('audience', 'Select audience type'), 'class' => 'span5')); ?>
 
+<?php echo $form->dropDownListRow($model, 'id_teacher', Teacher::getList(), array('empty' => Yii::t('audience', 'Select head teacher'), 'class' => 'span5')); ?>
+
 <?php $this->renderPartial('//formButtons', array('model' => $model,)); ?>
 
 <?php $this->endWidget(); ?>

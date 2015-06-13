@@ -4,24 +4,6 @@ class DefaultController extends Controller
 {
     public function actionIndex()
     {
-        if (Yii::app()->user->checkAccess('student')) {
-            $this->studentView();
-            return;
-        } else if (Yii::app()->user->checkAccess('teacher')) {
-            $this->teacherView();
-            return;
-        } else if (Yii::app()->user->checkAccess('curator') || Yii::app()->user->checkAccess('prefect')) {
-            $this->curatorAndPrefectView();
-            return;
-        } else if (Yii::app()->user->checkAccess('admin')) {
-            $this->adminView();
-            return;
-        } else if (Yii::app()->user->checkAccess('dephead')) {
-            $this->depheadView();
-            return;
-        }
-
-
         $model = new JournalViewer();
 
         $model->setScenario('group');
@@ -36,6 +18,24 @@ class DefaultController extends Controller
                     'model' => $model,
                 ));
             }
+
+            if (Yii::app()->user->checkAccess('student')) {
+                $this->studentView();
+                return;
+            } else if (Yii::app()->user->checkAccess('teacher')) {
+                $this->teacherView();
+                return;
+            } else if (Yii::app()->user->checkAccess('curator') || Yii::app()->user->checkAccess('prefect')) {
+                $this->curatorAndPrefectView();
+                return;
+            } else if (Yii::app()->user->checkAccess('admin')) {
+                $this->adminView();
+                return;
+            } else if (Yii::app()->user->checkAccess('dephead')) {
+                $this->depheadView();
+                return;
+            }
+
             Yii::app()->end();
         }
 
@@ -43,6 +43,9 @@ class DefaultController extends Controller
         $this->render('index', array(
             'model' => $model,
         ));
+
+
+
 
     }
 

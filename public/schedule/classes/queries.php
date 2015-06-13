@@ -2,8 +2,10 @@
     require_once "connect.php";
     class Query{
         private $db;
-
-        public function openConnect($userName, $password, $dbName = "crt"){
+        public function openConnect(){
+            $userName = "root";
+            $password = "1234";
+            $dbName = "khpk";
             $this->db = new Connect($userName, $password, $dbName);
         }
 

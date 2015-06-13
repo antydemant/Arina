@@ -2,6 +2,7 @@
 /**
  * @var $this AudienceController
  * @var $dataProvider CActiveDataProvider
+ * @var $model Audience
  */
 $this->breadcrumbs = array(
     Yii::t('base', 'Audiences'),
@@ -25,5 +26,5 @@ $columns = array(
         'header' => Yii::t('base', 'Actions'),
     ),
 );
-$this->renderPartial('//tableList', array('provider' => $dataProvider, 'columns' => $columns,));
+$this->renderPartial('//tableList', array('provider' => $model->search(), 'columns' => $columns,));
 ?>

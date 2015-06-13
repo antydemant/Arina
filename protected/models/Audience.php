@@ -8,6 +8,7 @@
  * @property string $number
  * @property string $name
  * @property integer $type
+ * @property integer $id_teacher
  *
  * @author Dmytro Karpovych <ZAYEC77@gmail.com>
  */
@@ -70,6 +71,7 @@ class Audience extends ActiveRecord
             array('type', 'numerical', 'integerOnly' => true),
             array('number', 'length', 'max' => 5),
             array('number', 'unique'),
+            array('id_teacher', 'safe'),
             array('id, number, type', 'safe', 'on' => 'search'),
         );
     }
@@ -92,6 +94,7 @@ class Audience extends ActiveRecord
             'number' => Yii::t('audience', 'Number'),
             'type' => Yii::t('base', 'Type'),
             'typeName' => Yii::t('base', 'Type'),
+            'id_teacher' => Yii::t('audience', 'Teacher'),
         );
     }
 

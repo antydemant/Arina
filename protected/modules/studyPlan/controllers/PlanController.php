@@ -189,11 +189,11 @@ class PlanController extends Controller
     {
         $model = StudyPlan::model()->loadContent($id);
         if (!Yii::app()->user->checkAccess('manageStudyPlan',
-                array(
-                    'id' => $model->speciality->department->head_id,
-                    'type' => User::TYPE_TEACHER,
-                )
+            array(
+                'id' => $model->speciality->department->head_id,
+                'type' => User::ROLE_ADMIN,
             )
+        )
         )
         {
             throw new CHttpException(403, Yii::t('yii', 'You are not authorized to perform this action.'));

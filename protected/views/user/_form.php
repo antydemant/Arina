@@ -1,4 +1,8 @@
-<?php $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<?php
+/** @var User $model  */
+/** @var UserController $this  */
+/** @var TbActiveForm $form */
+$form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
     'id' => 'user-form',
     'enableAjaxValidation' => false,
 )); ?>

@@ -9,7 +9,7 @@ class GlobalFunction{
     public function __construct($id)
     {
         $select = new Query();
-        $select->openConnect("root", "root", "khpk");
+        $select->openConnect();
         $q = $select->selectLoad($id);
         while ($us = mysql_fetch_array($q)) {
             $this->data[] = $us;
@@ -305,7 +305,7 @@ class GlobalFunction{
 
     function getAudience(){
         $select = new Query();
-        $select->openConnect("root", "root", "khpk");
+        $select->openConnect();
         $q = $select->selectQuery(array("number"), "audience");
         $audience='';
         while($us = mysql_fetch_array($q)){
@@ -316,7 +316,7 @@ class GlobalFunction{
 
     function getFullAudiences(){
         $select = new Query();
-        $select->openConnect("root", "root", "khpk");
+        $select->openConnect();
         $q = $select->selectQuery(array("id","number"), "audience");
         $arr = array();
         while($us = mysql_fetch_array($q)){
@@ -330,7 +330,7 @@ class GlobalFunction{
 
     function getTimetable($year, $semester){
         $select = new Query();
-        $select->openConnect("root", "root", "khpk");
+        $select->openConnect();
         $arr = array();
         $arr_teacher = array();
         $arr_audience = array();

@@ -42,6 +42,7 @@ class AudienceController extends Controller
         }
         $model = Audience::model()->loadContent($id);
 
+
         $this->ajaxValidation('audience-form', $model);
 
         if (isset($_POST['Audience'])) {
@@ -49,7 +50,6 @@ class AudienceController extends Controller
             if ($model->save())
                 $this->redirect(array('index'));
         }
-
         $this->render('update', array(
             'model' => $model,
         ));
@@ -77,11 +77,19 @@ class AudienceController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new CActiveDataProvider('Audience', array( 'criteria'=>array(
+        /*$dataProvider = new CActiveDataProvider('Audience', array( 'criteria'=>array(
             'order'=>'number ASC',
         )));
         $this->render('index', array(
             'dataProvider' => $dataProvider,
+        ));*/
+        $model = new Audience('search');
+        $model->unsetAttributes(); // clear any default values
+        if (isset($_GET['Audience']))
+            $model->attributes = $_GET['Audience'];
+
+        $this->render('index', array(
+            'model' => $model,
         ));
     }
 

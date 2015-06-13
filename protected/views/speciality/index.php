@@ -32,7 +32,7 @@ $columns = array(
     ),
 );
 
-$this->renderPartial('//tableList', array('provider' => $model->search(), 'columns' => $columns));
+$this->renderPartial('//tableList', array('provider' => $model->search(), 'columns' => $columns, 'filter' => $model));
 
 
 ?>

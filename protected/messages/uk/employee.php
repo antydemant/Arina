@@ -14,6 +14,7 @@ return array(
     'ID' => 'ID',
     'Position' => 'Посада',
     'Participates in study process' => 'Бере участь у навчальному процесі',
+    'Type' => 'Тип',
     'Start date' => 'Дата прийому на роботу',
     'Last name' => 'Прізвище',
     'First name' => 'Ім’я',

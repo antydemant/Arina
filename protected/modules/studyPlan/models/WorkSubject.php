@@ -168,7 +168,8 @@ class WorkSubject extends ActiveRecord
     public function presentIn($course)
     {
         $spring = $course * 2;
-        $fall = $spring - 1;
+        $fall = $spring - 2;
+        $spring--;
         return !empty($this->total[$fall]) ||
         !empty($this->weeks[$fall]) ||
         !empty($this->total[$spring]) ||
