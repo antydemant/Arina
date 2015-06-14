@@ -555,6 +555,9 @@ function addDualSubjects(id, teacher_name, group, tr, tr2, elem) {
             if (tr[2].getElementsByTagName("td")[i].innerHTML == teacher_name2) teacher2_perevirka = false;
         }
 
+
+
+
         if (teacher2_perevirka) {
             var teacher1 = tr[1].getElementsByClassName("teacher:" + group)[0];
             var audience1 = tr[1].getElementsByClassName("audience:" + group)[0];
@@ -700,21 +703,21 @@ function hoverDenumerator(btn) {
 
 function paintCell(sel, teach, audience, teach2, audience2, success) {
     if (success) {
-        sel.style.backgroundColor = "#15D844";
-        teach.style.backgroundColor = "#15D844";
-        audience.style.backgroundColor = "#15D844";
+        sel.style.backgroundColor = "#51a351";
+        teach.style.backgroundColor = "#51a351";
+        audience.style.backgroundColor = "#51a351";
         audience.childNodes[0].style.backgroundColor = "#E76060";
-        teach2.style.backgroundColor = "#15D844";
-        audience2.style.backgroundColor = "#15D844";
+        teach2.style.backgroundColor = "#51a351";
+        audience2.style.backgroundColor = "#51a351";
         if (audience2.childNodes[0].readOnly == false) audience2.childNodes[0].style.backgroundColor = "#E76060";
     }
     else {
-        sel.style.backgroundColor = "#FFF";
-        teach.style.backgroundColor = "#FFF";
-        audience.style.backgroundColor = "#FFF";
+        sel.style.backgroundColor = "";
+        teach.style.backgroundColor = "#F9F9F9";
+        audience.style.backgroundColor = "#F9F9F9";
         audience.childNodes[0].style.backgroundColor = "#C3C7C2";
-        teach2.style.backgroundColor = "#FFF";
-        audience2.style.backgroundColor = "#FFF";
+        teach2.style.backgroundColor = "#F9F9F9";
+        audience2.style.backgroundColor = "#F9F9F9";
         audience2.childNodes[0].style.backgroundColor = "#C3C7C2";
     }
 }
@@ -882,7 +885,7 @@ function peintInputs(rows) {
     pochozi = arr_res;
 
     for (i = 0; i < arr_normal.length; i++) {
-        arr_normal[i].style.backgroundColor = "#15D844";
+        arr_normal[i].style.backgroundColor = "#51a351";
     }
 
     for (i = 0; i < pochozi.length; i++) {
@@ -903,18 +906,18 @@ function paintCells() {
         tr2 = document.getElementsByClassName("rozklad")[1].getElementsByClassName("row:" + i);
         groups.forEach(function (d) {
             if (tr[0].getElementsByClassName("id_group:" + d)[0].getElementsByTagName("select")[0].options[tr[0].getElementsByClassName("id_group:" + d)[0].getElementsByTagName("select")[0].selectedIndex].value != -1) {
-                tr[1].getElementsByClassName("teacher:" + d)[0].style.backgroundColor = "#15D844";
-                tr[1].getElementsByClassName("audience:" + d)[0].parentNode.style.backgroundColor = "#15D844";
-                tr[2].getElementsByClassName("teacher_pract:" + d)[0].style.backgroundColor = "#15D844";
-                tr[2].getElementsByClassName("audience_pract:" + d)[0].parentNode.style.backgroundColor = "#15D844";
-                tr[0].getElementsByClassName("id_group:" + d)[0].style.backgroundColor = "#15D844";
+                tr[1].getElementsByClassName("teacher:" + d)[0].style.backgroundColor = "#51a351";
+                tr[1].getElementsByClassName("audience:" + d)[0].parentNode.style.backgroundColor = "#51a351";
+                tr[2].getElementsByClassName("teacher_pract:" + d)[0].style.backgroundColor = "#51a351";
+                tr[2].getElementsByClassName("audience_pract:" + d)[0].parentNode.style.backgroundColor = "#51a351";
+                tr[0].getElementsByClassName("id_group:" + d)[0].style.backgroundColor = "#51a351";
             }
             if (tr2[0].getElementsByClassName("id_group:" + d)[0].getElementsByTagName("select")[0].options[tr2[0].getElementsByClassName("id_group:" + d)[0].getElementsByTagName("select")[0].selectedIndex].value != -1) {
-                tr2[1].getElementsByClassName("teacher:" + d)[0].style.backgroundColor = "#15D844";
-                tr2[1].getElementsByClassName("audience:" + d)[0].parentNode.style.backgroundColor = "#15D844";
-                tr2[2].getElementsByClassName("teacher_pract:" + d)[0].style.backgroundColor = "#15D844";
-                tr2[2].getElementsByClassName("audience_pract:" + d)[0].parentNode.style.backgroundColor = "#15D844";
-                tr2[0].getElementsByClassName("id_group:" + d)[0].style.backgroundColor = "#15D844";
+                tr2[1].getElementsByClassName("teacher:" + d)[0].style.backgroundColor = "#51a351";
+                tr2[1].getElementsByClassName("audience:" + d)[0].parentNode.style.backgroundColor = "#51a351";
+                tr2[2].getElementsByClassName("teacher_pract:" + d)[0].style.backgroundColor = "#51a351";
+                tr2[2].getElementsByClassName("audience_pract:" + d)[0].parentNode.style.backgroundColor = "#51a351";
+                tr2[0].getElementsByClassName("id_group:" + d)[0].style.backgroundColor = "#51a351";
             }
         });
         peintInputs(tr);
@@ -968,7 +971,7 @@ function hoverCourse(btn) {
             count++;
         }
 
-        table_width = table1.style.width.replace(/[^-0-9]/g, '') - (count * 225);
+        table_width = table1.style.width.replace(/[^-0-9]/g, '') - (count * 307);
         table1.style.width = table_width + 'px';
         table2.style.width = table_width + 'px';
         document.getElementById("header").style.width = table_width + 'px';
@@ -1013,11 +1016,80 @@ function hoverCourse(btn) {
             count++;
         }
 
-        table_width = parseInt(table1.style.width.replace(/[^-0-9]/g, '')) + (count * 225);
+        table_width = parseInt(table1.style.width.replace(/[^-0-9]/g, '')) + (count * 307);
         table1.style.width = table_width + 'px';
         table2.style.width = table_width + 'px';
         document.getElementById("header").style.width = table_width + 'px';
         btn.style.backgroundColor = "rgb(238, 87, 0)";
         btn.innerHTML = 'Сховати ' + course + ' курс';
+    }
+}
+
+function clear_schedule(){
+    if(confirm("Ви дійсно хочете очистити весь розклад?")) {
+        var tr = document.getElementsByClassName("rozklad")[0].getElementsByClassName("row:0")[0].getElementsByTagName("td");
+        var tr2;
+        var groups = [];
+        for (var i = 0; i < tr.length; i++) {
+            if (tr[i].className.replace(/[^a-z_:]/g, '') == "id_group:") groups.push(tr[i].className.replace(/[^0-9]/g, ''));
+        }
+        for (i = 0; i < 20; i++) {
+            tr = document.getElementsByClassName("rozklad")[0].getElementsByClassName("row:" + i);
+            tr2 = document.getElementsByClassName("rozklad")[1].getElementsByClassName("row:" + i);
+            groups.forEach(function (d) {
+                if (tr[0].getElementsByClassName("id_group:" + d)[0].getElementsByTagName("select")[0].options[tr[0].getElementsByClassName("id_group:" + d)[0].getElementsByTagName("select")[0].selectedIndex].value != -1) {
+                    var sel = tr[0].getElementsByClassName("id_group:" + d)[0].getElementsByTagName("select")[0];
+                    var teach1 = tr[1].getElementsByClassName("teacher:" + d)[0];
+                    var teach2 = tr[2].getElementsByClassName("teacher_pract:" + d)[0];
+
+                    for(var j=0; j<predmets.length; j++){
+                        if ((d==predmets[j]['group_id'])&&(sel.options[sel.selectedIndex].value==predmets[j]['id'])&&(teach1.innerHTML==predmets[j]['teacher'])){
+                            if((predmets[j]['teacher2']!='')&&(teach2.innerHTML==predmets[j]['teacher2'])) predmets[j]['count_dual'] = predmets[j]['count_dual']+0.5;
+                            else predmets[j]['count_first'] = predmets[j]['count_first']+0.5;
+                        }
+                    }
+                    sel.selectedIndex=0;
+                    teach1.innerHTML = '';
+                    teach2.innerHTML = '';
+                    tr[1].getElementsByClassName("teacher:" + d)[0].style.backgroundColor = "#F9F9F9";
+                    tr[1].getElementsByClassName("audience:" + d)[0].parentNode.style.backgroundColor = "#F9F9F9";
+                    tr[1].getElementsByClassName("audience:" + d)[0].value = '';
+                    tr[1].getElementsByClassName("audience:" + d)[0].readOnly = true;
+                    tr[1].getElementsByClassName("audience:" + d)[0].style.backgroundColor = "#C3C7C2";
+                    tr[2].getElementsByClassName("teacher_pract:" + d)[0].style.backgroundColor = "#F9F9F9";
+                    tr[2].getElementsByClassName("audience_pract:" + d)[0].parentNode.style.backgroundColor = "#F9F9F9";
+                    tr[2].getElementsByClassName("audience_pract:" + d)[0].value = '';
+                    tr[2].getElementsByClassName("audience_pract:" + d)[0].style.backgroundColor = "#C3C7C2";
+                    tr[2].getElementsByClassName("audience_pract:" + d)[0].readOnly = true;
+                    tr[0].getElementsByClassName("id_group:" + d)[0].style.backgroundColor = "#F9F9F9";
+                }
+                if (tr2[0].getElementsByClassName("id_group:" + d)[0].getElementsByTagName("select")[0].options[tr2[0].getElementsByClassName("id_group:" + d)[0].getElementsByTagName("select")[0].selectedIndex].value != -1) {
+                    sel = tr2[0].getElementsByClassName("id_group:" + d)[0].getElementsByTagName("select")[0];
+                    teach1 = tr2[1].getElementsByClassName("teacher:" + d)[0];
+                    teach2 = tr2[2].getElementsByClassName("teacher_pract:" + d)[0];
+
+                    for(j=0; j<predmets.length; j++){
+                        if ((d==predmets[j]['group_id'])&&(sel.options[sel.selectedIndex].value==predmets[j]['id'])&&(teach1.innerHTML==predmets[j]['teacher'])){
+                            if((predmets[j]['teacher2']!='')&&(teach2.innerHTML==predmets[j]['teacher2'])) predmets[j]['count_dual'] = predmets[j]['count_dual']+0.5;
+                            else predmets[j]['count_first'] = predmets[j]['count_first']+0.5;
+                        }
+                    }
+                    sel.selectedIndex=0;
+                    teach1.innerHTML = '';
+                    teach2.innerHTML = '';
+                    tr2[1].getElementsByClassName("teacher:" + d)[0].style.backgroundColor = "#F9F9F9";
+                    tr2[1].getElementsByClassName("audience:" + d)[0].parentNode.style.backgroundColor = "#F9F9F9";
+                    tr2[1].getElementsByClassName("audience:" + d)[0].value = '';
+                    tr2[1].getElementsByClassName("audience:" + d)[0].readOnly = true;
+                    tr2[1].getElementsByClassName("audience:" + d)[0].style.backgroundColor = "#C3C7C2";
+                    tr2[2].getElementsByClassName("teacher_pract:" + d)[0].style.backgroundColor = "#F9F9F9";
+                    tr2[2].getElementsByClassName("audience_pract:" + d)[0].parentNode.style.backgroundColor = "#F9F9F9";
+                    tr2[2].getElementsByClassName("audience_pract:" + d)[0].value = '';
+                    tr2[2].getElementsByClassName("audience_pract:" + d)[0].readOnly = true;
+                    tr2[2].getElementsByClassName("audience_pract:" + d)[0].style.backgroundColor = "#C3C7C2";
+                    tr2[0].getElementsByClassName("id_group:" + d)[0].style.backgroundColor = "#F9F9F9";
+                }
+            });
+        }
     }
 }

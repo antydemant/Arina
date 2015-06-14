@@ -13,6 +13,7 @@ $func = new GlobalFunction($_GET['id']);
     <script type="text/javascript" src="js/jquery.autocomplete.js"></script>
     <script type="text/javascript" src="js/function.js"></script>
     <script type="text/javascript" src="js/save_data.js"></script>
+    <script type="text/javascript" src="js/helps.js"></script>
     <title>Складання розкладу</title>
 </head>
 <body>
@@ -28,9 +29,11 @@ $func = new GlobalFunction($_GET['id']);
 $table_width = 0;
 foreach ($gr as $kurs)
     foreach ($kurs as $grupa) $table_width++;
-$table_width = $table_width * 225;
+$table_width = $table_width * 307;
+$teachers = $func->getTeachers($subj);
 $audience = $func->getAudience();
 $arr_audience = $func->getFullAudiences();
+
 $arr_data_timetable = $func->getTimetable($_GET["id"], $_GET["sem"]);
 ?>
 <script>var year =<?=json_encode($_GET['id'])?>;
@@ -67,7 +70,13 @@ $arr_data_timetable = $func->getTimetable($_GET["id"], $_GET["sem"]);
          onmouseout="if(this.style.backgroundColor=='rgb(238, 87, 0)') this.style.backgroundColor='#CB5151'; else this.style.backgroundColor='green'">
         Сховати 4 курс
     </div>
+    <button class="button_help"  onclick="show_help_teacher('block')">Інформація про викладачів</button>
+    <button class="button_help" onclick="show_help_audience('block')">Інформація про аудиторії</button>
+
+    <button id="button_help_hours" onclick="show_help_subjects('block')">Інформація про не використані години</button>
+    <button id="clear" onclick="clear_schedule()">Очистити</button>
 </div>
+
 <h2 class="type_table">Чисельник</h2>
 
 <div id="header" style="width: <?= $table_width + 65; ?>px;"></div>
@@ -621,6 +630,158 @@ for ($i = 0; $i < 5; $i++):
 <?php endfor ?>
 </table>
 </div>
+
+<div onclick="hideHelp('none')" id="wrap"></div>
+
+<div id="help_block">
+
+    <a class="close_button" onclick="hideHelp('none')"></a>
+
+    <div id="teacher_block">
+    <center>
+    <h3 class="table_type">Чисельник</h3>
+    <table class="table_teacher" id="teacher_numerator">
+        <tr>
+            <th rowspan="2">Викладач</th>
+            <th colspan="4">Понеділок</th>
+            <th colspan="4">Вівторок</th>
+            <th colspan="4">Середа</th>
+            <th colspan="4">Четвер</th>
+            <th colspan="4">Пятниця</th>
+        </tr>
+        <tr>
+            <?php for($i=0; $i<5; $i++) { ?>
+                <th id="begin_para">1-2</th>
+                <th id="para">3-4</th>
+                <th id="para">5-6</th>
+                <th id="para">7-8</th>
+            <?php } ?>
+        </tr>
+
+        <?php foreach($teachers as $key => $tmp):?>
+        <tr id="row:<?=$key?>">
+            <td class="teacherName"><?=$tmp?></td>
+            <?php $c=0; for($i=0; $i<5; $i++):?>
+                <td class="td:<?=$c?>" id="begin_day"></td> <?php $c++?>
+                <td class="td:<?=$c?>"></td> <?php $c++?>
+                <td class="td:<?=$c?>"></td> <?php $c++?>
+                <td class="td:<?=$c?>"></td> <?php $c++?>
+            <?endfor;?>
+        </tr>
+
+        <?php endforeach; ?>
+    </table>
+        <h3 class="table_type">Знаменник</h3>
+        <table class="table_teacher" id="teacher_denumerator">
+            <tr>
+                <th rowspan="2">Викладач</th>
+                <th colspan="4">Понеділок</th>
+                <th colspan="4">Вівторок</th>
+                <th colspan="4">Середа</th>
+                <th colspan="4">Четвер</th>
+                <th colspan="4">Пятниця</th>
+            </tr>
+            <tr>
+                <?php for($i=0; $i<5; $i++) { ?>
+                    <th id="begin_para">1-2</th>
+                    <th id="para">3-4</th>
+                    <th id="para">5-6</th>
+                    <th id="para">7-8</th>
+                <?php } ?>
+            </tr>
+
+            <?php foreach($teachers as $key => $tmp):?>
+                <tr id="row:<?=$key?>">
+                    <td class="teacherName"><?=$tmp?></td>
+                    <?php $c=0; for($i=0; $i<5; $i++):?>
+                        <td class="td:<?=$c?>" id="begin_day"></td> <?php $c++?>
+                        <td class="td:<?=$c?>"></td> <?php $c++?>
+                        <td class="td:<?=$c?>"></td> <?php $c++?>
+                        <td class="td:<?=$c?>"></td> <?php $c++?>
+                    <?endfor;?>
+                </tr>
+
+            <?php endforeach; ?>
+        </table>
+    </center>
+    </div>
+
+    <div id="audience_block">
+        <center>
+            <h3 class="table_type">Чисельник</h3>
+            <table class="table_audience" id="audience_numerator">
+                <tr>
+                    <th rowspan="2">Аудиторія</th>
+                    <th colspan="4">Понеділок</th>
+                    <th colspan="4">Вівторок</th>
+                    <th colspan="4">Середа</th>
+                    <th colspan="4">Четвер</th>
+                    <th colspan="4">Пятниця</th>
+                </tr>
+                <tr>
+                    <?php for($i=0; $i<5; $i++) { ?>
+                        <th id="begin_para">1-2</th>
+                        <th id="para">3-4</th>
+                        <th id="para">5-6</th>
+                        <th id="para">7-8</th>
+                    <?php } ?>
+                </tr>
+
+                <?php foreach($arr_audience as $tmp):?>
+                    <tr id="row:<?=$tmp['id']?>">
+                        <td class="audienceNumber"><?=$tmp['number']?></td>
+                        <?php $c=0; for($i=0; $i<5; $i++):?>
+                            <td class="td:<?=$c?>" id="begin_day"></td> <?php $c++?>
+                            <td class="td:<?=$c?>"></td> <?php $c++?>
+                            <td class="td:<?=$c?>"></td> <?php $c++?>
+                            <td class="td:<?=$c?>"></td> <?php $c++?>
+                        <?endfor;?>
+                    </tr>
+
+                <?php endforeach; ?>
+            </table>
+            <h3 class="table_type">Знаменник</h3>
+            <table class="table_audience" id="audience_denumerator">
+                <tr>
+                    <th rowspan="2">Аудиторія</th>
+                    <th colspan="4">Понеділок</th>
+                    <th colspan="4">Вівторок</th>
+                    <th colspan="4">Середа</th>
+                    <th colspan="4">Четвер</th>
+                    <th colspan="4">Пятниця</th>
+                </tr>
+                <tr>
+                    <?php for($i=0; $i<5; $i++) { ?>
+                        <th id="begin_para">1-2</th>
+                        <th id="para">3-4</th>
+                        <th id="para">5-6</th>
+                        <th id="para">7-8</th>
+                    <?php } ?>
+                </tr>
+
+                <?php foreach($arr_audience as $tmp):?>
+                    <tr id="row:<?=$tmp['id']?>">
+                        <td class="audienceNumber"><?=$tmp['number']?></td>
+                        <?php $c=0; for($i=0; $i<5; $i++):?>
+                            <td class="td:<?=$c?>" id="begin_day"></td> <?php $c++?>
+                            <td class="td:<?=$c?>"></td> <?php $c++?>
+                            <td class="td:<?=$c?>"></td> <?php $c++?>
+                            <td class="td:<?=$c?>"></td> <?php $c++?>
+                        <?endfor;?>
+                    </tr>
+
+                <?php endforeach; ?>
+            </table>
+        </center>
+    </div>
+
+    <div id="subject_block">
+        <center><table></table></center>
+    </div>
+
+</div>
+
+
 
 <?php if ($count_reset) { ?>
     <script>predmets = <?=json_encode($subj)?>;</script><?php } ?>

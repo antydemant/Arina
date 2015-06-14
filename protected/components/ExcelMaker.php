@@ -90,7 +90,7 @@ class ExcelMaker extends CComponent
 
     public function makeSchedule($data)
     {
-        $objPHPExcel = $this->loadTemplate('schedule_3.xls');
+        $objPHPExcel = $this->loadTemplate('schedule.xls');
         /** @var StudyYear $studyYear */
         $studyYear = StudyYear::model()->findByPk($data['id']);
         $id = $data['id'];

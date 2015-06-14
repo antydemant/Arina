@@ -363,4 +363,25 @@ class SiteController extends Controller
         echo "OK";
         return;
     }
+
+    /**
+    +     * @throws CException
+    +     */
+    public function actionSchedule()
+    {
+        $data = array(
+            'year' => null,
+            'semester' => null,
+        );
+        if (Yii::app()->request->isPostRequest) {
+           $data = array(
+                'year' => Yii::app()->request->getPost('year'),
+                'semester' => Yii::app()->request->getPost('semester'),
+            );
+            /**@var $excel ExcelMaker */
+            $excel = Yii::app()->getComponent('excel');
+            $excel->getDocument(['id' => $data['year'], 'semester' => $data['semester']], 'schedule');
+        }
+        $this->render('schedule', ['data' => $data]);
+    }
 }

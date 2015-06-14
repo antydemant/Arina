@@ -325,6 +325,17 @@ class GlobalFunction{
             $tmp["number"] = $us["number"];
             $arr[] = $tmp;
         }
+
+        for ($i=0; $i<count($arr)-1; $i++) {
+            for ($j = 0; $j<count($arr)-$i-1; $j++){
+                if($arr[$j]['number']>$arr[$j+1]['number']){
+                    $tmp = $arr[$j];
+                    $arr[$j] = $arr[$j+1];
+                    $arr[$j+1] = $tmp;
+                }
+            }
+        }
+
         return $arr;
     }
 
@@ -381,6 +392,17 @@ class GlobalFunction{
         }
 
         return $arr;
+    }
+
+    function getTeachers($load){
+        $teachers = array();
+        foreach($load as $tmp){
+            $teachers[$tmp['teacher_id']] = $tmp['teacher'];
+            if($tmp['count_dual']!=0) $teachers[$tmp['teacher2_id']] = $tmp['teacher2'];
+        }
+        asort($teachers);
+        return $teachers;
+
     }
 }
 ?>

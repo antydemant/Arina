@@ -18,7 +18,7 @@ function save_timetable(){
         }
     }
     else {
-        alert("Все гуд");
+        createArrayTimetable();
     }
 }
 
@@ -151,10 +151,6 @@ function createArrayTimetable(){
                 arr.push(tmp_arr);
             }
         }
-    }
-
-    for (i=0; i<arr.length; i++){
-        alert(arr[i]["year"]+" семестр:"+arr[i]["semester"]+" para:"+arr[i]["para"]+" day:"+arr[i]["day"]+" group_id:"+arr[i]["group_id"]+" subject_id:"+arr[i]["subject_id"]+" teacher1_id:"+arr[i]["teacher1_id"]+" audience1_id:"+arr[i]["audience1_id"]+" teacher2_id:"+arr[i]["teacher2_id"]+" audience2_id:"+arr[i]["audience2_id"]+" тип:"+arr[i]["type"]);
     }
 
     var result = "";
