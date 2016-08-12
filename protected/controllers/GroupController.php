@@ -136,7 +136,7 @@ class GroupController extends Controller
             }
         }
 
-        $this->render('update', array('model' => $model,));
+        $this->render('update', array('model' => $model));
     }
 
     /**
@@ -145,7 +145,7 @@ class GroupController extends Controller
     public function actionView($id)
     {
         $model = Group::model()->loadContent($id);
-        $this->render('view', array('model' => $model,));
+        $this->render('view', array('model' => $model));
     }
 
     /**
